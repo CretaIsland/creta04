@@ -1,0 +1,126 @@
+ {
+   "editHost": "プロパティ",
+   "setBook": "放送の変更",
+   "powerOff": "電源オフ",
+   "powerOn": "電源オン",
+   "reboot": "再起動",
+   "setPower": "自動電源設定",
+   "newHost": "新しいデバイスの登録",
+   "used": "使用",
+   "unUsed": "未使用",
+   "licensed": "登録",
+   "unLicensed": "未登録",
+   "myCretaDevice": "私のデバイス",
+   "teamCretaDevice": "チームデバイス",
+   "sharedCretaDevice": "共有デバイス",
+   "myCretaDeviceDesc": "さんのCretaデバイスを管理します",
+   "myCretaAdminDesc": "クレタデバイスのライセンスを管理します。",
+   "enterpriseDesc": "クレタの顧客情報を管理します。", 
+   "inputHostInfo": "作成するデバイス情報を入力してください",
+   "deviceId": "デバイスID",
+   "deviceName": "デバイス名",
+   "shouldInputDeviceId": "デバイスIDを入力してください",
+   "shouldInputDeviceName": "デバイス名を入力してください",
+   "deviceDetail": "デバイス詳細画面",
+   "device": "デバイス",
+   "studio": "スタジオ",
+   "community": "コミュニティ",
+   "admin": "認証センター",
+   "license": "ライセンス設定",
+   "enterprise": "顧客設定",
+   "selectBook": "放送するクレタブックを選択してください",
+   "basicHostFilter": ["用途別(全体)", "サイネージ", "デジタルバリケード", "エスカレーター", "ボード", "CDU", "その他"],
+   "usageHostFilter": ["全体", "使用", "未使用"],
+   "connectedHostFilter": ["全体", "接続", "未接続"],
+   "notice": "緊急通知",
+
+
+    "usageSetting": "使用状態設定",
+    "generalSetting": "一般設定",
+    "powerSetting": "電源設定",
+    "currentBookSetting": "現在の放送設定",
+
+    "remoteLogin": "リモートログイン",
+    "powerOffConfirm": "電源をオフにしますか？",
+    "powerOffRequested":    "電源オフ要求が完了しました。",
+
+    "rebootConfirm": "再起動しますか？",
+    "rebootRequested":    "再起動要求が完了しました。",
+
+    "delete" : "削除",
+    "deleteConfirm" : "削除しますか？",
+    "deleteRequested" : "個が削除されました。",
+
+    "dupCheck":    "ID重複チェック",
+    "alreadyExist":    "既に存在するIDです。",
+    "availiableID":    "使用可能なIDです。",
+    "needToDupCheck":    "ID重複チェックを行ってください。",
+
+    "newEnterprise": "新しいエンタープライズの登録",
+    "shouldInputEntterpriseName": "エンタープライズ名を入力してください",
+    "enterpriseName": "エンタープライズ名",
+    "description": "説明",  
+    "enterpriseDetail": "エンタープライズ詳細画面",
+    "enterpriseUrl": "エンタープライズURL",
+
+    "adminEmail": "管理者 email",
+    "inputEnterpriseInfo": "作成するエンタープライズ情報を入力してください",
+    "inputEnterpriseAdmin" : "エンタープライズの管理者情報を入力してください",
+    "Invalidemail": "無効なメールアドレスです。",
+
+    "NoScreenshotFile" : "スクリーンショットファイルがありません。",
+    "noUserExist" : "そのメールのユーザーは存在しません。会員登録されたユーザーだけがアドミンになることができます。",
+    "NewEnterpriseCreated" : "次のように新しいエンタープライズが作成されました。",
+    "changePassword" : "次のように新しいエンタープライズが作成されました。",
+
+    "licenseSetting" : "ライセンス設定",
+    "mute" : "ミュート",
+    "soundVolume" : "音量",
+
+    "moveToDevice" : "デバイス管理ページに移動しますか?",
+    "selectDevice" : "デバイスを選択してください",
+
+    "newTeam": "新しいチームの登録",
+    "shouldInputTeamName": "チーム名を入力してください",
+    "shouldInputEmail": "メールアドレスを入力してください",
+    "teamName": "チーム名",
+    "email": "メールアドレス",  
+
+    "chooseEnterprise": "スーパーアドミンの現在選択されているエンタープライズはありません。\n必ず最初に使用するエンタープライズをマウスでクリックして選択してください。",
+    "teamManage" : "チーム管理",
+    "teamDesc": "さんのクレタチーム情報を管理します。",
+    "inputTeamInfo" : "作成するチーム情報を入力してください",
+    "NewTeamCreated" : "次のように新しいチームが作成されました。",
+    "teamDetail" : "チーム詳細",
+
+    "alreayAnotherEnterpriseMember" : "もう他のエンタープライズのチームメンバーです。  他のエンタープライズに所属するメンバーは重複して参加できません。この人の他のemailで試してください。",
+    "alreayPrivateMember" : "すでに個人会員として登録されているemailです。  個人会員として登録されたemailでは、エンタープライズ所属の会員になることはできません。  この人の他のemailで試してください。",
+
+    "currentTeamCantDelete" : "現在のチームは削除できません。",
+    "onlyChild" : "このチームが唯一の所属チームであるユーザーがいます。  この場合、ユーザーを最初に削除してチームを削除する必要があります。",
+
+    "userManage"  : "ユーザー管理",
+
+    "onlyTeamMemberCanbeAdmin" : "チームメンバーだけが管理者になれます。  ユーザーをチームに追加してからもう一度お試しください。",
+    "alreadyExistEmail":    "同じemail IDがすでに存在します",
+    "alreadyExistTeam":    "同じチームIDがすでに存在します",
+
+    "teamsAlsoBeDeleted" : "次のチームも削除されます。",
+
+    "userDetail" : "ユーザー詳細画面",
+    "newUser" : "新しいユーザーの登録",
+    "userName" : "ユーザー名",
+    "shouldInputUserName": "ユーザー名を入力してください",
+
+    "alreadyExistName":    "同じ名前がすでに存在します。",
+    "availiableName":    "名前は利用可能です。",
+
+    "noTeamExist" : "チームが存在しません。",
+    "BooksWillLoseTtsOwner" : "이 유저는 다음과 같은 Book 의 소유자 입니다. 유저를 삭제하면 Book 의 접근권한이 사라질 수도 있습니다. 삭제하기 전에 Book의 소유권을 다른 사람에게 이전하시기 바랍니다.",
+
+
+   "end"  : "End"
+
+
+ }
+

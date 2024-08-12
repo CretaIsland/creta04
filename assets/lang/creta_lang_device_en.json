@@ -1,0 +1,124 @@
+ {
+   "editHost": "Property",
+   "setBook": "Change Book",
+   "powerOff": "Power off",
+   "powerOn": "Power on",
+   "reboot": "Reboot",
+   "setPower": "Auto Power",
+   "newHost": "Register new device",
+   "used": "Enabled",
+   "unUsed": "Unused",
+   "licensed": "Licensed",
+   "unLicensed": "Unregistered",
+   "myCretaDevice": "My devices",
+   "teamCretaDevice": "Team device",
+   "sharedCretaDevice": "Shared device",
+   "myCretaDeviceDesc": "Manage your Creta device",
+   "myCretaAdminDesc": "Manages your Creta device's licenses",
+   "enterpriseDesc": "Manages your Creta customer information",
+   "inputHostInfo": "Enter the device information to create",
+   "deviceId": "Device ID",
+   "deviceName": "Device name",
+   "shouldInputDeviceId": "Please enter your device ID",
+   "shouldInputDeviceName": "Please enter the device name",
+   "deviceDetail": "Device detail",
+   "device": "Device",
+   "studio": "Studio",
+   "community": "Community",
+   "admin": "Admin",
+   "license": "License settings",
+   "enterprise": "Customer settings",
+   "selectBook": "Select a Cretan book to broadcast",
+   "basicHostFilter": ["usage (all)", "signage", "digitalbarricade", "escalator", "board", "CDU", "other"],
+   "usageHostFilter": ["all", "used", "unused"],
+   "connectedHostFilter": ["all", "connected", "unconnected"],
+   "notice": "Urgent notice",
+
+  
+    "usageSetting": "Usage Status Settings",
+    "generalSetting": "General Settings",
+    "powerSetting": "Power Settings",
+    "currentBookSetting": "Current Broadcast Settings",
+
+    "remoteLogin": "Remote Login",
+    "powerOffConfirm": "Are you sure you want to turn off the device?",
+    "powerOffRequested":    "The device is being turned off.",
+
+    "rebootConfirm": "Are you sure you want to reboot the device?",
+    "rebootRequested":    "The device is being rebooted.",
+
+    "delete" : "Delete",
+    "deleteConfirm" : "Are you sure you want to delete the items?",
+    "deleteRequested" : "items have been deleted.",
+
+    "dupCheck":    "Duplicate Check",
+    "alreadyExist":    "The ID already exists.",
+    "availiableID":    "The ID is available.",
+    "needToDupCheck":    "Please check the ID duplication.",
+
+    "newEnterprise": "Register new enterprise",
+    "shouldInputEntterpriseName": "Please enter the enterprise name",
+    "enterpriseName": "Enterprise name",
+    "description": "Description",
+    "enterpriseDetail": "Enterprise detail",
+    "enterpriseUrl": "Enterprise URL",
+    
+    "adminEmail": "Admin email",
+    "inputEnterpriseInfo": "Enter the enterprise information to create",
+    "inputEnterpriseAdmin" : "Enter the enterprise admin information to create",
+    "Invalidemail": "Invalid email address",
+
+    "NoScreenshotFile" : "No screenshot file",
+    "noUserExist" : "The user for that email does not exist. Only registered users can become administrators.",
+    "NewEnterpriseCreated" : "A new enterprise has been created as follows",
+    "changePassword" : "Please log in again as the above user and change your password before using.",
+
+    "licenseSetting" : "License Setting",
+    "mute" : "Mute",
+    "soundVolume" : "Sound Volume",
+    "moveToDevice" : "Would you like to go to the device management page ?",
+    "selectDevice" : "Please select a device.",
+    
+    "newTeam": "Register new team",
+    "shouldInputTeamName": "Please enter the team name",
+    "shouldInputEmail": "Please enter the email address",
+    "teamName": "Team name",
+    "email": "Email",  
+
+    "chooseEnterprise" : "There is no currently selected enterprise in Super Admin.\n Be sure to select the enterprise you want to use first by clicking it with the mouse.",
+    "teamManage" : "Team Management",
+    "teamDesc": "Manage your team information",
+    "inputTeamInfo" : "Enter the team information to create",
+    "NewTeamCreated" : "A new team has been created as follows",
+    "teamDetail" : "Team detail",
+
+    "alreayAnotherEnterpriseMember" : "The email is already a member of another enterprise.  Members of other enterprises cannot register multiple times. Please try with another email from this person.",
+    "alreayPrivateMember" : "This email has already been registered as an individual member. An email registered as an individual member cannot become an enterprise member.  Please try with another email from this person.",
+
+    "currentTeamCantDelete" : "The current team cannot be deleted.",
+    "onlyChild" : "There is a user whose only team is this team.  In this case, you must first delete the user and then delete the team.",
+
+    "userManage"  : "User Management",
+
+    "onlyTeamMemberCanbeAdmin" : "Only team members can be administrators. Please try again after adding the user to the team.",
+    "alreadyExistEmail":    "The same email ID already exists",
+    "alreadyExistTeam":    "The same Team ID already exists",
+
+    "teamsAlsoBeDeleted" : "The following teams will also be deleted.",
+
+    "userDetail" : "User Detail",
+    "newUser" : "Register new user",
+    "userName" : "User name",
+    "shouldInputUserName": "Please enter the user name",
+
+    "alreadyExistName":    "The same name already exists.",
+    "availiableName":    "The name is available.",
+
+    "noTeamExist" : "There is no such team.",
+    "BooksWillLoseTtsOwner" : "This user is the owner of the following Book. If you delete a user, your Book access rights may be lost. Please transfer ownership of the Book to someone else before deleting it.",
+
+
+
+    "end"  : "End"
+
+}

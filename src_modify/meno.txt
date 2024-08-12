@@ -1,0 +1,43 @@
+꼭지점 Drag 시
+
+ResizePointDraggable
+ResizePoint
+SelectedBox
+DraggableResizable  여기서 주의할 점은 DraggablePoint 는 Rotate 용으로 쓰이기 때문에, onTap 말고는 쓰는 함수가 없다는 점이다.
+                    꼭지점 Drag 는 SelectedBox 에 의한다는 점에 주의하자.
+DraggableStickers
+StickerView
+FrameMain
+
+ResizePointDraggable.onScaleStart --> FrameMain.onScaleStart
+ResizePointDraggable.onScaleEnd --> FrameMain.onComplete
+ResizePointDraggable.onScaleUpdate 
+  -->DraggableResizable.onDragTopLeft --> onUpdate
+  -->DraggableStickers.onUpdate --> FrameMain.onUpdate 여기의 -setItem 함수에서 비로서 save 하게 된다.
+
+- Frame click 시  GestureDetector 와 InkWell 두개 루트에서 동작한다.
+
+1. GestureDetector Routes 는 다음과 같다. 
+
+DraggablePoint.GestureDetector.onLongPressDown   <-- 여기서 끝난다. 여기서, frame 을 눌렀다는 사실을 알아낼수 있다.
+
+
+2. InkWell 루트는 다음과 같다.
+DraggableStickers.InkWell.onTap
+StickerView.onTap
+FrameMain.onTap   <-- 함수에서 모든일이 일언다.
+
+따라서, InkWell 루트는 GuesterDetector 루트와 쫑이 나고 있다.
+
+3. page 쪽은 다음과 같다.
+ℹ️   INFO: Gest3 : onLongPressDown in PageMain false
+ℹ️   INFO: page clicked
+   FINEST: unselected,
+   prev=frame=d0175472-7964-4fb5-ae0e-afde91964c4d
+ℹ️   INFO: BookMainPage.containeeNotifier!.set(ContaineeEnum.Page);
+   FINE: _eachTitle ContaineeEnum.Page
+   FINEST: _showTitletext 이름없는 페이지 2
+   FINER: _PagePropertyState.initState
+   FINEST: pageTransition=0
+ℹ️   INFO: ...hashTagList=[]
+ℹ️   INFO: Consumer<MiniMenuNotifier>

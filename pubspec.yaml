@@ -1,0 +1,481 @@
+name: creta03
+description: A new Flutter project.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  creta_common:
+    git:
+      url: https://github.com/CretaIsland/creta_common.git
+      ref: main  
+  creta_user_model:
+    git:
+      url: https://github.com/CretaIsland/creta_user_model.git
+      ref: main  
+  creta_studio_model:
+    git:
+      url: https://github.com/CretaIsland/creta_studio_model.git
+      ref: main  
+  creta_user_io:
+    git:
+      url: https://github.com/CretaIsland/creta_user_io.git
+      ref: main  
+  creta_studio_io:
+    git:
+      url: https://github.com/CretaIsland/creta_studio_io.git
+      ref: main  
+
+  cupertino_icons: ^1.0.2
+  flutter_riverpod: ^1.0.4
+  flutter_speed_dial: ^6.1.0+1
+  routemaster: ^1.0.1
+  hycop: ^0.4.54
+  outline_search_bar: ^2.3.0
+  custom_radio_grouped_button: 2.2.1
+  # elegant_radio_button_group: ^0.0.1
+  # roundcheckbox: ^2.0.5
+  # flutter_awesome_select: ^6.5.0
+  # radio_grouped_buttons: ^1.0.1
+  group_radio_button: 1.3.0
+  another_xlider: ^1.1.2
+  dropdown_button2: ^1.8.9
+  url_strategy: ^0.2.0
+  # flutter_xlider: ^3.4.0
+  flutter_vector_icons: ^2.0.0
+  url_launcher: ^6.1.7
+  cached_network_image: 3.3.0
+  image_network: 2.5.4+1
+  http: ^1.1.0
+  universal_html: ^2.0.8
+  #firebase_core_platform_interface: ^5.0.0
+  adaptive_scrollbar: 2.1.2
+  mutex: ^3.0.1
+  loading_animation_widget: ^1.2.0+4
+  #sortedmap: ^0.5.2
+  deep_collection: ^1.0.2
+  get: ^4.6.5
+  dotted_border: ^2.0.0+3
+  material_tag_editor: 0.1.2
+  quiver: ^3.2.1
+  flex_color_picker: 3.4.1
+  flutter_animate: ^4.0.0
+  r_dotted_line_border: 0.1.1
+  flutter_inner_shadow: ^0.0.1
+  inner_shadow_widget: ^0.0.3
+  confetti: ^0.7.0
+  snowfall: 0.0.2
+  parallax_rain: ^1.1.0
+  floating_bubbles: ^2.3.0
+  starsview: ^0.0.2
+  flutter_dropzone: ^3.0.5
+  blobs: ^2.0.0
+  video_player: 2.8.6
+  # youtube_player_iframe: ^3.1.0
+  youtube_player_iframe: ^4.0.4
+  animated_text_kit: ^4.2.2
+  #auto_size_text: ^3.0.0
+  scroll_loop_auto_scroll: 0.0.5
+  widget_and_text_animator: ^1.0.9
+  text_to_speech: ^0.2.3
+  image_picker: ^0.8.7
+  intl: ^0.19.0
+  translator_plus: ^1.0.1
+  progress_bar_steppers: ^0.0.2+2
+  flutter_sequence_animation: ^4.0.0
+  cloud_firestore: ^4.3.1
+  flutter_keyboard_visibility: ^5.4.1
+  #webview_flutter: ^4.0.7     # added by Mai 20230619
+  #adjusted_html_view_web: ^0.0.1
+  #flutter_rte: ^0.4.13
+  syncfusion_flutter_pdfviewer: ^24.2.8
+  #appflowy_editor: 1.3.0
+  #quill_html_editor: ^2.1.9
+  shimmer: ^2.0.0
+  circular_reveal_animation: ^2.0.1
+  neonpen: 2.0.5
+  simple_tooltip: ^1.2.0
+  # pdfx: ^2.3.0
+  # internet_file: ^1.2.0
+  # universal_platform: ^1.0.0+1
+  # performance: ^0.1.0+1
+  # html_editor_enhanced: ^2.5.1
+  # numberpicker: ^2.1.2
+  file_picker: ^5.3.1
+  flutter_weather_bg_null_safety: 1.0.0
+  weather_animation: ^0.0.2
+  just_audio_background: ^0.0.1-beta.10
+  flutter_excel: ^1.0.1
+  collection: ^1.17.1
+  audio_session: ^0.1.16
+  audio_video_progress_bar: ^1.0.1
+
+  rxdart: ^0.27.7
+  id3_codec: ^1.0.3
+
+  #one_clock: ^1.0.1
+  mediasoup_client_flutter: ^0.8.5
+  protoo_client: ^0.3.3
+  flutter_webrtc: 0.9.35
+  random_string: ^2.3.1
+  audio_service: ^0.18.10
+  just_audio: 0.9.37
+  mini_music_visualizer: ^1.0.2
+  marquee: ^2.2.3
+  flutter_media_metadata: ^1.0.0+1
+  geolocator: ^10.0.0
+  # //구글맵 임시로 사용안함.
+  # google_maps_flutter_web: ^0.5.7
+  # google_maps_flutter: ^2.4.0
+  html_editor_enhanced: 2.5.1
+  flutter_html: ^3.0.0-beta.2
+  stop_watch_timer: ^3.0.1
+  timeline_tile: ^2.0.0
+  google_fonts: ^4.0.4
+  weather_icons: ^3.0.0
+  giphy_get: ^3.5.2
+  #flutter_treeview: ^1.0.7+1
+  
+  image: ^4.1.3
+  just_the_tooltip: ^0.0.12
+  flutter_svg: ^2.0.8
+  google_geocoding_api: ^1.4.1
+  gap: ^3.0.1
+  # enough_giphy_flutter: ^0.4.1
+  animated_switcher_plus: ^1.1.0
+  glowy_borders: ^1.0.2
+  avatar_glow: ^3.0.1
+  flutter_glow: ^0.3.0
+  quoter: ^0.0.1
+  carousel_slider: ^4.2.1
+  expandable_slider: ^2.0.0
+  email_validator: ^2.1.17
+  animate_icons: ^2.0.0
+  tcard: ^1.3.5
+  # flutter_web_data_table: ^1.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^2.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/hycop_config.json
+
+    - assets/lang/creta_lang_studio_kr.json
+    - assets/lang/creta_lang_studio_en.json
+    - assets/lang/creta_lang_studio_jp.json
+    - assets/lang/creta_lang_commu_kr.json
+    - assets/lang/creta_lang_commu_en.json
+    - assets/lang/creta_lang_commu_jp.json
+    - assets/lang/creta_lang_mypage_kr.json
+    - assets/lang/creta_lang_mypage_en.json
+    - assets/lang/creta_lang_mypage_jp.json
+    - assets/lang/creta_lang_device_kr.json
+    - assets/lang/creta_lang_device_en.json
+    - assets/lang/creta_lang_device_jp.json
+
+    - assets/no_image_available.png
+    - assets/creta_logo_blue.png
+    - assets/creta_logo_only_white.png
+    - assets/creta_default.png
+    - assets/logo_en.png
+    - assets/grid.png
+    - assets/noise.png
+    - assets/youtube.png
+    - assets/delete.svg
+    - assets/delete_content.svg
+    - assets/delete_frame.svg
+    - assets/expiredTime.png
+    - assets/nextPage.png
+    - assets/cardInsert.jpg
+
+    - assets/no_image.png
+    - assets/ai_tip_image.png
+    - assets/creta-photo.png
+    - assets/creta-illustration.png
+    - assets/creta-digital-art.png
+    - assets/creta-popart.png
+    - assets/creta-watercolor.png
+    - assets/creta-oilpainting.png
+    - assets/creta-printmaking.png
+    - assets/creta-drawing.png
+    - assets/creta-orientalpainting.png
+    - assets/creta-outlinedrawing.png
+    - assets/creta-crayon.png
+    - assets/creta-sketch.png
+    - assets/tipImage-1-1.png
+    - assets/tipImage-1-2.png
+    - assets/tipImage-1-3.png
+    - assets/tipImage-1-4.png
+    - assets/tipImage-2-1.png
+    - assets/tipImage-2-2.png
+    - assets/tipImage-2-3.png
+    - assets/tipImage-2-4.png
+    - assets/bgd.png
+    - assets/google__g__logo.svg
+
+    - assets/icon.png
+    - assets/landing_page_banner.mp4
+    - assets/audio/canone.mp3
+    - assets/Artboard12.png
+    - assets/bigSize_music_app.png
+    - assets/medSize_music_app.png
+    - assets/smallSize_music_app.png
+    - assets/miniSize_music_app.png
+    - assets/music-big.png
+    - assets/music-med.png
+    - assets/music-small.png
+    - assets/music-tiny.png
+    - assets/music-visualizer.gif
+    - assets/music-visual-big.png
+    - assets/music-visual-med.png
+    - assets/music-visual-small.png
+    - assets/underConstruction.gif
+
+    - assets/google_map_thumbnail.png
+
+    - assets/timeline_samples/
+    - assets/weather_sticker/
+    - assets/weather_sticker/weather_icon_vector/
+
+    - assets/social/
+    - assets/giphy_official_logo.png
+    - assets/money-exchange.png
+    - assets/word_BG.jpg
+
+    - assets/landing_page/image/arrow_1.png
+    - assets/landing_page/image/arrow_2.png
+    - assets/landing_page/image/arrow_3.png
+    - assets/landing_page/image/creta_animation_logo.png
+    - assets/landing_page/image/creta_animation_logo2.png
+    - assets/landing_page/image/guide_1.png
+    - assets/landing_page/image/guide_2.png
+    - assets/landing_page/image/guide_3.png
+    - assets/landing_page/image/guide_4.png
+    - assets/landing_page/image/promotion_1.png
+    - assets/landing_page/image/promotion_2.png
+    - assets/landing_page/image/promotion_3.png
+    - assets/landing_page/image/promotion_4.png
+    - assets/landing_page/image/text_effect_1.png
+    - assets/landing_page/image/text_effect_1_big.png
+    - assets/landing_page/image/text_effect_2.png
+    - assets/landing_page/image/text_effect_2_eng.png
+    - assets/landing_page/image/text_effect_3.png
+    - assets/landing_page/image/text_effect_4.png
+
+    - assets/landing_page/video/community_animation.mp4
+    - assets/landing_page/video/presentation_animation.mp4
+    - assets/landing_page/video/signage_animation.mp4
+    - assets/landing_page/video/quick_start_animation.mp4
+
+    - assets/landing_page/image/banner/banner_top1.png
+    - assets/landing_page/image/banner/banner_top2.png
+    - assets/landing_page/image/banner/banner_top3.png
+    - assets/landing_page/image/banner/banner_top4.png
+    - assets/landing_page/image/banner/banner_top5.png
+    - assets/landing_page/image/banner/banner_top6.png
+    - assets/landing_page/image/banner/banner_top7.png
+    - assets/landing_page/image/banner/banner_top8.png
+    - assets/landing_page/image/banner/banner_top9.png
+    - assets/landing_page/image/banner/banner_top10.png
+    - assets/landing_page/image/banner/banner_top11.png
+
+    - assets/landing_page/image/banner/banner_bottom1.png
+    - assets/landing_page/image/banner/banner_bottom2.png
+    - assets/landing_page/image/banner/banner_bottom3.png
+    - assets/landing_page/image/banner/banner_bottom4.png
+    - assets/landing_page/image/banner/banner_bottom5.png
+    - assets/landing_page/image/banner/banner_bottom6.png
+    - assets/landing_page/image/banner/banner_bottom7.png
+    - assets/landing_page/image/banner/banner_bottom8.png
+    - assets/landing_page/image/banner/banner_bottom9.png
+    - assets/landing_page/image/banner/banner_bottom10.png
+    - assets/landing_page/image/banner/banner_bottom11.png
+    - assets/landing_page/image/banner/banner_bottom12.png
+    
+    - assets/icons/signage.png
+    - assets/icons/barricade.png
+    - assets/icons/presentation.png
+    - assets/icons/escalator.png
+    - assets/icons/board.png
+    - assets/icons/cdu.png
+    - assets/icons/etc.png
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: Pretendard
+      fonts:
+        - asset: fonts/Pretendard/Pretendard-Thin.otf
+          weight: 100
+        - asset: fonts/Pretendard/Pretendard-ExtraLight.otf
+          weight: 200
+        - asset: fonts/Pretendard/Pretendard-Light.otf
+          weight: 300
+        - asset: fonts/Pretendard/Pretendard-Regular.otf
+          weight: 400
+        - asset: fonts/Pretendard/Pretendard-Medium.otf
+          weight: 500
+        - asset: fonts/Pretendard/Pretendard-SemiBold.otf
+          weight: 600
+        - asset: fonts/Pretendard/Pretendard-Bold.otf
+          weight: 700
+        - asset: fonts/Pretendard/Pretendard-ExtraBold.otf
+          weight: 800
+        - asset: fonts/Pretendard/Pretendard-Black.otf
+          weight: 900
+    - family: NotoSerifJP
+      fonts:
+        - asset: fonts/NotoSerifJP/NotoSerifJP-ExtraLight.otf                                           
+          weight: 200
+        - asset: fonts/NotoSerifJP/NotoSerifJP-Light.otf                                                
+          weight: 300
+        - asset: fonts/NotoSerifJP/NotoSerifJP-Regular.otf                                              
+          weight: 400
+        - asset: fonts/NotoSerifJP/NotoSerifJP-Medium.otf                                               
+          weight: 500
+        - asset: fonts/NotoSerifJP/NotoSerifJP-SemiBold.otf                                             
+          weight: 600
+        - asset: fonts/NotoSerifJP/NotoSerifJP-Bold.otf                                                 
+          weight: 700
+        - asset: fonts/NotoSerifJP/NotoSerifJP-Black.otf                                                
+          weight: 900
+    - family: NanumMyeongjo
+      fonts:
+        - asset: fonts/Nanum_Myeongjo/NanumMyeongjo-Regular.ttf
+          weight: 400
+        - asset: fonts/Nanum_Myeongjo/NanumMyeongjo-Bold.ttf
+          weight: 700
+        - asset: fonts/Nanum_Myeongjo/NanumMyeongjo-ExtraBold.ttf
+          weight: 800
+    - family: Jua
+      fonts:
+        - asset: fonts/Jua/Jua-Regular.ttf
+          weight: 400
+    - family: NanumGothic
+      fonts:
+        - asset: fonts/Nanum_Gothic/NanumGothic-Regular.ttf
+          weight: 400
+        - asset: fonts/Nanum_Gothic/NanumGothic-Bold.ttf
+          weight: 700
+        - asset: fonts/Nanum_Gothic/NanumGothic-ExtraBold.ttf
+          weight: 800
+    - family: NanumPenScript
+      fonts:
+        - asset: fonts/Nanum_Pen_Script/NanumPenScript-Regular.ttf
+          weight: 400
+    - family: NotoSansKR
+      fonts:
+        - asset: fonts/Noto_Sans_KR/NotoSansKR-Thin.otf
+          weight: 100
+        - asset: fonts/Noto_Sans_KR/NotoSansKR-Light.otf
+          weight: 300
+        - asset: fonts/Noto_Sans_KR/NotoSansKR-Regular.otf
+          weight: 400
+        - asset: fonts/Noto_Sans_KR/NotoSansKR-Medium.otf
+          weight: 500
+        - asset: fonts/Noto_Sans_KR/NotoSansKR-Bold.otf
+          weight: 700
+        - asset: fonts/Noto_Sans_KR/NotoSansKR-Black.otf
+          weight: 900
+    - family: Macondo
+      fonts:
+        - asset: fonts/Macondo/Macondo-Regular.ttf
+          weight: 400
+    - family: GodoRounded
+      fonts:
+        - asset: fonts/GodoRounded/godoRounded-R.ttf
+          weight: 400
+    - family: NotoSans
+      fonts:
+        - asset: fonts/NotoSans/NotoSans-Thin.ttf
+          weight: 100
+        - asset: fonts/NotoSans/NotoSans-ExtraLight.ttf
+          weight: 200
+        - asset: fonts/NotoSans/NotoSans-Light.ttf
+          weight: 300
+        - asset: fonts/NotoSans/NotoSans-Regular.ttf
+          weight: 400
+        - asset: fonts/NotoSans/NotoSans-Medium.ttf
+          weight: 500
+        - asset: fonts/NotoSans/NotoSans-SemiBold.ttf
+          weight: 600
+        - asset: fonts/NotoSans/NotoSans-Bold.ttf
+          weight: 700
+        - asset: fonts/NotoSans/NotoSans-ExtraBold.ttf
+          weight: 800
+        - asset: fonts/NotoSans/NotoSans-Black.ttf
+          weight: 900
+
+          
+

@@ -1,0 +1,125 @@
+{
+    "editHost": "속성 수정",
+    "setBook": "방송 변경",
+    "powerOff": "전원 off",
+    "powerOn": "전원 On",
+    "reboot": "리부트",
+    "setPower": "자동 전원 설정",
+    "newHost": "새 디바이스 등록",
+    "used": "사용",
+    "unUsed": "미사용",
+    "licensed": "등록",
+    "unLicensed": "미등록",
+    "myCretaDevice": "내 디바이스",
+    "teamCretaDevice": "팀 디바이스",
+    "sharedCretaDevice": "공유 디바이스",
+    "myCretaDeviceDesc": "님의 크레타 디바이스를 관리합니다.",
+    "myCretaAdminDesc": "님의 크레타 디바이스의 라이센스를 관리합니다.",
+    "enterpriseDesc": "님의 크레타 고객 정보를 관리합니다.",
+    "inputHostInfo": "생성할 디바이스 정보를 입력하세요",
+    "deviceId": "디바이스 ID",
+    "deviceName": "디바이스 이름",
+    "shouldInputDeviceId": "디바이스 ID를 입력하세요.",
+    "shouldInputDeviceName": "디바이스 이름을 입력하세요.",
+    "deviceDetail": "디바이스 상세화면",
+    "device": "디바이스",
+    "studio": "스튜디오",
+    "community": "커뮤니티",
+    "admin": "인증센터",
+    "license": "라이센스 설정",
+    "enterprise": "엔터프라이즈 설정",
+    "selectBook": "방송할 크레타 북을 선택하세요.",
+    "basicHostFilter": ["용도별(전체)", "사이니지", "디지털바리케이드", "에스컬레이터", "보드", "CDU", "기타"],
+    "usageHostFilter": ["전체", "사용", "미사용"],
+    "connectedHostFilter": ["전체", "연결", "미연결"],
+    "notice": "긴급공지",
+
+    "usageSetting": "사용상태 설정",
+    "generalSetting": "일반 정보 설정",
+    "powerSetting": "전원 설정", 
+    "currentBookSetting": "현재 방송 설정",
+
+    "remoteLogin": "원격 로그인",
+
+    "powerOffConfirm": "선택된 장비의 전원을 정말로 off 하시겠습니까?",
+    "powerOffRequested":    "전원 off 요청이 완료되었습니다.",
+    
+    "rebootConfirm": "선택된 장비를 정말로 reboot 하시겠습니까?",
+    "rebootRequested":    "reboot 요청이 완료되었습니다.",
+
+    "delete" : "삭제",
+    "deleteConfirm" : "정말로 삭제하시겠습니까 ?",
+    "deleteRequested" : "개가 삭제되었습니다.",
+
+    "dupCheck":    "중복체크",
+    "alreadyExist":    "같은 ID 가 이미 존재합니다",
+    "availiableID":    "사용할 수 있는 ID 입니다.",
+    "needToDupCheck":    "중복체크를 먼저 하시기 바랍니다",
+    
+ 
+    "newEnterprise": "새 엔터프라이즈 등록",
+    "shouldInputEntterpriseName": "엔터프라이즈 이름을 입력하세요.",
+    "enterpriseName": "엔터프라이즈 이름",
+    "description": "설명",  
+    "enterpriseDetail": "엔터프라이즈 상세화면",
+    "enterpriseUrl": "엔터프라이즈 URL",
+    
+    "adminEmail": "관리자 email",
+    "inputEnterpriseInfo": "생성할 엔터프라이즈 정보를 입력하세요",
+    "inputEnterpriseAdmin" : "엔터프라이즈 관리자 정보를 입력하세요",
+    "Invalidemail": "유효하지 않은 email 형식입니다.",
+
+    "NoScreenshotFile" : "스크린샷 파일이 없습니다.",
+    "noUserExist" : "해당 이메일의 사용자가 존재하지 않습니다. 회원가입된 사용자만 어드민이 될 수 있습니다.",
+    "NewEnterpriseCreated" : "다음과 같이 새로운 엔터프라이즈가 생성되었습니다.",
+    "changePassword" : "위 사용자로 다시 로그인 하여 비밀번호를 변경한 후 사용해 주세요",
+
+    "licenseSetting" : "라이센스 설정",
+    "mute" : "뮤트",
+    "soundVolume" : "소리 음량",
+    "moveToDevice" : "디바이스 관리 페이지로 이동하시겠습니까?",
+    "selectDevice" : "먼저 디바이스를 선택하세요",
+
+    "newTeam": "새 팀 등록",
+    "shouldInputTeamName": "팀 이름을 입력하세요.",
+    "shouldInputEmail": "이메일을 입력하세요.",
+    "teamName": "팀 이름",
+    "email": "이메일",  
+
+    "chooseEnterprise" : "슈퍼 어드민의 현재 선택된 엔터프라이즈가 없습니다.\n 반드시 먼저 사용할 엔터프라이즈를 마우스로 클릭하여 선택하세요",
+    "teamManage" : "팀 관리",
+    "teamDesc": "님의 크레타 팀 정보를 관리합니다.",
+
+    "inputTeamInfo" : "생성할 팀 정보를 입력하세요.",
+    "NewTeamCreated" : "다음과 같이 새로운 팀이 생성되었습니다.",
+    "teamDetail" : "팀 상세화면",
+
+    "alreayAnotherEnterpriseMember" : "이미 다른 엔터프라이즈의 팀원입니다.  다른 엔터프라이즈의 소속 회원은 중복 가입할 수 없습니다. 이 사람의 다른 email 로 시도하십시오.",
+    "alreayPrivateMember" : "이미 개인 회원으로 가입된 email입니다.  개인 회원으로 가입된 email로는 엔터프라이즈 소속 회원이 될 수 없습니다.  이 사람의 다른 email 로 시도하십시오.",
+
+    "currentTeamCantDelete" : "현재 소속된 팀은 삭제할 수 없습니다",
+    "onlyChild" : "이 팀이 유일한 소속팀인 유저가 있습니다.  이런 경우 유저를 먼저 삭제하고 팀을 삭제해야 합니다.",
+
+    "userManage"  : "유저 관리",
+
+    "onlyTeamMemberCanbeAdmin" : "오직 현재 소속 팀의 팀원만 어드민이 될 수 있습니다.  먼저 팀관리 화면에서 팀원으로 등록후 어드민으로 등록해주세요",
+    "alreadyExistEmail":    "같은 email ID 가 이미 존재합니다",
+    "alreadyExistTeam":    "같은 Team ID 가 이미 존재합니다",
+
+    "teamsAlsoBeDeleted" : "다음과 같은 소속팀이 함께 삭제됩니다.",
+
+    "userDetail" : "유저 상세화면",
+    "newUser" : "신규 유저 등록",
+    "userName" : "유저 이름",
+    "shouldInputUserName": "유저 이름을 입력하세요.",
+    "userEmail" : "유저 ID(Email)",
+    "shouldInputUserEmail": "유저 ID(Email)을 입력해주세요.",
+
+    "alreadyExistName":    "같은 이름이 이미 존재합니다",
+    "availiableName":    "사용할 수 있는 이름 입니다.",
+
+    "noTeamExist" : "존재하지 않는 팀 이름입니다.",
+    "BooksWillLoseTtsOwner" : "이 유저는 다음과 같은 Book 의 소유자 입니다. 유저를 삭제하면 Book 의 접근권한이 사라질 수도 있습니다. 삭제하기 전에 Book의 소유권을 다른 사람에게 이전하시기 바랍니다.",
+
+    "END" : ""
+}

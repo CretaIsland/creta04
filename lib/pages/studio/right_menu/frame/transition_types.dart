@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:creta03/design_system/component/example_box_mixin.dart';
+import 'package:creta04/design_system/component/example_box_mixin.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../data_io/contents_manager.dart';

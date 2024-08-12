@@ -1,4 +1,4 @@
-import 'package:creta03/design_system/component/shape/shape_path.dart';
+import 'package:creta04/design_system/component/shape/shape_path.dart';
 import 'package:flutter/material.dart';
 
 /// Clip widget in wave shape shape

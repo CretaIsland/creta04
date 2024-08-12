@@ -1,6 +1,6 @@
 //import 'dart:ui';
 
-import 'package:creta03/pages/studio/book_main_page.dart';
+import 'package:creta04/pages/studio/book_main_page.dart';
 import 'package:creta_common/common/creta_const.dart';
 import 'package:creta_common/common/creta_vars.dart';
 import 'package:creta_studio_io/data_io/base_frame_manager.dart';

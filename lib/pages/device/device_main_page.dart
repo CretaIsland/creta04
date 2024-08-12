@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'dart:math';
 //import 'package:flutter_web_data_table/web_data_table.dart';
 
-import 'package:creta03/pages/device/device_header_info.dart';
+import 'package:creta04/pages/device/device_header_info.dart';
 import 'package:creta_common/common/creta_color.dart';
 import 'package:creta_common/common/creta_snippet.dart';
 import 'package:creta_common/common/creta_vars.dart';

@@ -1,5 +1,5 @@
-import 'package:creta03/design_system/component/snippet.dart';
-import 'package:creta03/drawer_mixin.dart';
+import 'package:creta04/design_system/component/snippet.dart';
+import 'package:creta04/drawer_mixin.dart';
 import 'package:creta_common/common/creta_color.dart';
 import 'package:creta_common/common/creta_const.dart';
 import 'package:flutter/material.dart';
@@ -17,28 +17,28 @@ class DrawerHandle extends StatefulWidget {
 
 class DrawerHandleState extends State<DrawerHandle> with DrawerMixin {
   OverlayEntry? _overlayEntry;
-  List<double> subMenuWidth = [];
-  List<double> subMenuHeight = [];
+  // List<double> subMenuWidth = [];
+  // List<double> subMenuHeight = [];
 
   @override
   void initState() {
     super.initState();
     initMixin(context);
 
-    for (var item in topMenuItems) {
-      int index = 0;
-      for (var subItem in item.subMenuItems) {
-        final textPainter = TextPainter(
-          text: TextSpan(text: subItem.caption, style: const TextStyle(fontSize: 16.0)),
-          maxLines: 1,
-          textDirection: TextDirection.ltr,
-        )..layout();
-        if (textPainter.width > subMenuWidth[index]) {
-          subMenuWidth[index] = textPainter.width;
-        }
-        index++;
-      }
-    }
+    // for (var item in topMenuItems) {
+    //   int index = 0;
+    //   for (var subItem in item.subMenuItems) {
+    //     final textPainter = TextPainter(
+    //       text: TextSpan(text: subItem.caption, style: const TextStyle(fontSize: 16.0)),
+    //       maxLines: 1,
+    //       textDirection: TextDirection.ltr,
+    //     )..layout();
+    //     if (textPainter.width > subMenuWidth[index]) {
+    //       subMenuWidth[index] = textPainter.width;
+    //     }
+    //     index++;
+    //   }
+    // }
   }
 
   void invalidate() {
@@ -118,26 +118,30 @@ class DrawerHandleState extends State<DrawerHandle> with DrawerMixin {
             const SizedBox(height: 8),
             ...List.generate(topMenuItems.length, (index) {
               var topItem = topMenuItems[index];
-              return MouseRegion(
-                onEnter: (event) {
-                  _showSubMenu(context, event.position);
-                },
-                child: InkWell(
-                  onTap: topItem.onPressed,
-                  hoverColor: Colors.grey[200], // Hover effect color
-                  splashColor: Colors.blue,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-                    child: Icon(topItem.iconData),
-                    // child: Row(
-                    //   children: [
-                    //     Icon(topItem.iconData),
-                    //     const SizedBox(width: 16.0),
-                    //     Text(topItem.title), // Assuming topItem has a title property
-                    //   ],
-                    // ),
-                  ), // Button effect color
-                ),
+              return
+
+                  //  MouseRegion(
+                  //   onEnter: (event) {
+                  //     _showSubMenu(context, event.position);
+                  //   },
+                  //   child:
+
+                  InkWell(
+                onTap: topItem.onPressed,
+                hoverColor: Colors.grey[200], // Hover effect color
+                splashColor: Colors.blue,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+                  child: Icon(topItem.iconData),
+                  // child: Row(
+                  //   children: [
+                  //     Icon(topItem.iconData),
+                  //     const SizedBox(width: 16.0),
+                  //     Text(topItem.title), // Assuming topItem has a title property
+                  //   ],
+                  // ),
+                ), // Button effect color
+                //),
               );
               // return ListTile(
               //   title: Icon(topItem.iconData),
@@ -179,6 +183,8 @@ class DrawerHandleState extends State<DrawerHandle> with DrawerMixin {
               child: Material(
                 elevation: 4.0,
                 child: Container(
+                  width: 160,
+                  height: 320,
                   color: Colors.white,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -209,24 +215,23 @@ class DrawerHandleState extends State<DrawerHandle> with DrawerMixin {
   }
 }
 
-
-                  //Snippet.TooltipWrapper(
-                  //preferredDirection: AxisDirection.up,
-                  //fgColor: Colors.white,
-                  //bgColor: Colors.grey[400]!,
-                  //tooltip: topItem.caption,
-                  // child:
-                  //   MouseRegion(
-                  // onEnter: (details) {
-                  //   print('mouse enter....');
-                  //   if (widget.scaffoldKey.currentState == null) {
-                  //     print('scaffoldKey.currentState is null');
-                  //     return;
-                  //   }
-                  //   DrawerMain.expandedMenuItemIndex = index;
-                  //   widget.scaffoldKey.currentState?.openDrawer();
-                  // },
-                  // onExit: (details) {
-                  //   print('mouse exit');
-                  // },
-                  // child:
+//Snippet.TooltipWrapper(
+//preferredDirection: AxisDirection.up,
+//fgColor: Colors.white,
+//bgColor: Colors.grey[400]!,
+//tooltip: topItem.caption,
+// child:
+//   MouseRegion(
+// onEnter: (details) {
+//   print('mouse enter....');
+//   if (widget.scaffoldKey.currentState == null) {
+//     print('scaffoldKey.currentState is null');
+//     return;
+//   }
+//   DrawerMain.expandedMenuItemIndex = index;
+//   widget.scaffoldKey.currentState?.openDrawer();
+// },
+// onExit: (details) {
+//   print('mouse exit');
+// },
+// child:

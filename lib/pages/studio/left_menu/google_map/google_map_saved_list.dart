@@ -1,6 +1,6 @@
 import 'package:creta_common/common/creta_font.dart';
-import 'package:creta03/lang/creta_studio_lang.dart';
-import 'package:creta03/pages/studio/right_menu/property_mixin.dart';
+import 'package:creta04/lang/creta_studio_lang.dart';
+import 'package:creta04/pages/studio/right_menu/property_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:hycop/common/util/logger.dart';
 // ignore: depend_on_referenced_packages

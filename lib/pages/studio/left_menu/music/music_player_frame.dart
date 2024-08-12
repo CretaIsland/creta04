@@ -5,7 +5,7 @@ import 'package:audio_session/audio_session.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:creta_common/common/creta_color.dart';
 import 'package:creta_studio_model/model/contents_model.dart';
-import 'package:creta03/pages/studio/left_menu/music/control_buttons.dart';
+import 'package:creta04/pages/studio/left_menu/music/control_buttons.dart';
 import 'package:creta_common/model/app_enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

@@ -1,8 +1,8 @@
 // ignore_for_file: depend_on_referenced_packages, prefer_const_constructors
 import 'dart:math';
 
-import 'package:creta03/player/doc/creta_doc_mixin.dart';
-import 'package:creta03/player/music/creta_music_mixin.dart';
+import 'package:creta04/player/doc/creta_doc_mixin.dart';
+import 'package:creta04/player/music/creta_music_mixin.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -1,9 +1,8 @@
 // stream list
 
-
-import 'package:creta03/pages/studio/left_menu/left_template_mixin.dart';
-import 'package:creta03/pages/studio/left_menu/web_conference/stream/list_remote_stream.dart';
-import 'package:creta03/pages/studio/left_menu/web_conference/stream/local_stream.dart';
+import 'package:creta04/pages/studio/left_menu/left_template_mixin.dart';
+import 'package:creta04/pages/studio/left_menu/web_conference/stream/list_remote_stream.dart';
+import 'package:creta04/pages/studio/left_menu/web_conference/stream/local_stream.dart';
 import 'package:flutter/material.dart';
 import 'package:hycop/hycop/account/account_manager.dart';
 import 'package:hycop/hycop/webrtc/media_devices/media_devices_data.dart';
@@ -22,8 +21,7 @@ class LeftMenuWebConference extends StatefulWidget {
   State<LeftMenuWebConference> createState() => _LeftMenuWebConferenceState();
 }
 
-class _LeftMenuWebConferenceState extends State<LeftMenuWebConference> with LeftTemplateMixin  {
-
+class _LeftMenuWebConferenceState extends State<LeftMenuWebConference> with LeftTemplateMixin {
   @override
   void initState() {
     super.initState();
@@ -42,18 +40,17 @@ class _LeftMenuWebConferenceState extends State<LeftMenuWebConference> with Left
   Future<void> connectServer() async {
     //for webRTC
     mediaDeviceDataHolder ??= MediaDeviceData();
-    peersDataHolder = PeersData();   
+    peersDataHolder = PeersData();
     producerDataHolder = ProducerData();
     await mediaDeviceDataHolder!.loadMediaDevice();
     webRTCClient = WebRTCClient(
-      roomId: StudioVariables.selectedBookMid,
-      peerId: AccountManager.currentLoginUser.email,
-      serverUrl: CretaAccountManager.getEnterprise!.webrtcUrl,
-      peerName: CretaAccountManager.getUserProperty!.nickname
-    );
+        roomId: StudioVariables.selectedBookMid,
+        peerId: AccountManager.currentLoginUser.email,
+        serverUrl: CretaAccountManager.getEnterprise!.webrtcUrl,
+        peerName: CretaAccountManager.getUserProperty!.nickname);
     webRTCClient!.connectSocket();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -61,13 +58,11 @@ class _LeftMenuWebConferenceState extends State<LeftMenuWebConference> with Left
       child: Scrollbar(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: horizontalPadding),
+            padding:
+                EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: horizontalPadding),
             child: const SingleChildScrollView(
               child: Column(
-                children: [
-                  LocalStream(),
-                  ListRemoteStreams()
-                ],
+                children: [LocalStream(), ListRemoteStreams()],
               ),
             ),
           ),

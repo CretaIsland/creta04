@@ -5,20 +5,20 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "creta03",
+            "name": "creta04",
             "request": "launch",
             "type": "dart",
             "args": ["-d", "web-server","--web-port", "8000"],
         },
         {
-            "name": "creta03 (profile mode)",
+            "name": "creta04 (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile",
             "args": ["-d", "web-server","--web-port", "8000"],
         },
         {
-            "name": "creta03 (release mode)",
+            "name": "creta04 (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

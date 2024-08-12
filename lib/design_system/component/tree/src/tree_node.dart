@@ -3,7 +3,7 @@
 import 'dart:math' show pi;
 
 import 'package:creta_user_io/data_io/team_manager.dart';
-import 'package:creta03/pages/studio/book_main_page.dart';
+import 'package:creta04/pages/studio/book_main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hycop/common/undo/undo.dart';
 import 'package:hycop/common/util/logger.dart';

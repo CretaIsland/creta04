@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, depend_on_referenced_packages
 
-import 'package:creta03/pages/studio/left_menu/word_pad/left_wordpad_template.dart';
+import 'package:creta04/pages/studio/left_menu/word_pad/left_wordpad_template.dart';
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:flutter/material.dart';
 import 'package:hycop/common/util/logger.dart';

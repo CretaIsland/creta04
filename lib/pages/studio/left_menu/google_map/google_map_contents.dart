@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:creta03/design_system/text_field/creta_search_bar.dart';
-import 'package:creta03/lang/creta_studio_lang.dart';
+import 'package:creta04/design_system/text_field/creta_search_bar.dart';
+import 'package:creta04/lang/creta_studio_lang.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/browser_client.dart';

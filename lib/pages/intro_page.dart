@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:creta03/pages/popup/release_note_popup.dart';
+import 'package:creta04/pages/popup/release_note_popup.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:hycop/hycop.dart';
@@ -14,6 +14,7 @@ import 'package:creta_common/common/creta_font.dart';
 class IntroPage extends StatefulWidget {
   const IntroPage({super.key});
   static final List<String> cretaVersionList = [
+    "0.6.71",
     "0.6.70",
     "0.6.69",
     "0.6.68",
@@ -37,7 +38,7 @@ class IntroPage extends StatefulWidget {
     "0.6.50",
   ];
   static const String hycopVersion = "0.4.54";
-  static final String buildNumber = "20240808-21(${HycopFactory.toServerTypeString()})";
+  static final String buildNumber = "20240811-17(${HycopFactory.toServerTypeString()})";
 
   @override
   State<IntroPage> createState() => _IntroPageState();

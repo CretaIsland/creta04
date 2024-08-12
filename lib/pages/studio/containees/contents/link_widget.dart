@@ -1,4 +1,4 @@
-import 'package:creta03/pages/studio/studio_variables.dart';
+import 'package:creta04/pages/studio/studio_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hycop/common/util/logger.dart';

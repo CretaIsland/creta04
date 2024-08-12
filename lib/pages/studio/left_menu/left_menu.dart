@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
-import 'package:creta03/pages/studio/left_menu/left_menu_image.dart';
-import 'package:creta03/pages/studio/left_menu/left_menu_template.dart';
-import 'package:creta03/pages/studio/left_menu/left_menu_web_conference.dart';
+import 'package:creta04/pages/studio/left_menu/left_menu_image.dart';
+import 'package:creta04/pages/studio/left_menu/left_menu_template.dart';
+import 'package:creta04/pages/studio/left_menu/left_menu_web_conference.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';

@@ -1,6 +1,6 @@
 import 'package:creta_common/common/creta_font.dart';
 import 'package:flutter/material.dart';
-import 'package:creta03/design_system/buttons/creta_button_wrapper.dart';
+import 'package:creta04/design_system/buttons/creta_button_wrapper.dart';
 import 'package:creta_common/common/creta_color.dart';
 
 class CretaDialog extends StatelessWidget {

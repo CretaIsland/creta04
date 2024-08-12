@@ -1,4 +1,4 @@
-import 'package:creta03/pages/studio/left_menu/imageAI/search_tip_position.dart';
+import 'package:creta04/pages/studio/left_menu/imageAI/search_tip_position.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../design_system/buttons/creta_button_wrapper.dart';

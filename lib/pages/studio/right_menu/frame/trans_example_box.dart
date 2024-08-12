@@ -1,7 +1,7 @@
 // import 'dart:math';
 
-import 'package:creta03/design_system/component/example_box_mixin.dart';
-import 'package:creta03/pages/studio/right_menu/frame/transition_types.dart';
+import 'package:creta04/design_system/component/example_box_mixin.dart';
+import 'package:creta04/pages/studio/right_menu/frame/transition_types.dart';
 import 'package:flutter/material.dart';
 import '../../../../data_io/frame_manager.dart';
 //import '../../../../design_system/dialog/creta_alert_dialog.dart';

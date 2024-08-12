@@ -1,8 +1,8 @@
-import 'package:creta03/data_io/frame_manager.dart';
+import 'package:creta04/data_io/frame_manager.dart';
 import 'package:creta_common/common/creta_snippet.dart';
 import 'package:creta_common/model/app_enums.dart';
 import 'package:creta_studio_model/model/page_model.dart';
-import 'package:creta03/pages/studio/book_main_page.dart';
+import 'package:creta04/pages/studio/book_main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hycop/common/undo/undo.dart';
 import 'package:hycop/hycop/webrtc/media_devices/media_devices_data.dart';

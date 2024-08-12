@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, depend_on_referenced_packages
 
-import 'package:creta03/pages/studio/containees/frame/frame_mixin.dart';
+import 'package:creta04/pages/studio/containees/frame/frame_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:hycop/common/util/logger.dart';
 import 'package:provider/provider.dart';

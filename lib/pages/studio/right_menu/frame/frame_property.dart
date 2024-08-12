@@ -1,6 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages, prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields
 import 'dart:math' as math;
-import 'package:creta03/pages/studio/right_menu/frame/trans_example_box.dart';
+import 'package:creta04/pages/studio/right_menu/frame/trans_example_box.dart';
 import 'package:creta_common/lang/creta_lang.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -464,31 +464,31 @@ class _FramePropertyState extends State<FrameProperty> with PropertyMixin {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       //SizedBox(
-                        //width: 97,
-                       // child: 
-                       Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              CretaStudioLang['width']!,
-                              style: titleStyle,
-                            ),
-                            CretaTextField.xshortNumber(
-                              defaultBorder: Border.all(color: CretaColor.text[100]!),
-                              width: 45,
-                              limit: 5,
-                              textFieldKey: GlobalKey(),
-                              value: widget.model.width.value.round().toString(),
-                              hintText: '',
-                              onEditComplete: ((value) {
-                                logger.info('onEditComplete');
-                                _sizeChanged(value, widget.model.width, widget.model.height);
-                              }),
-                              minNumber: LayoutConst.minFrameSize.toDouble(),
-                              maxNumber: _bookModel!.width.value,
-                            ),
-                          ],
-                        ),
+                      //width: 97,
+                      // child:
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            CretaStudioLang['width']!,
+                            style: titleStyle,
+                          ),
+                          CretaTextField.xshortNumber(
+                            defaultBorder: Border.all(color: CretaColor.text[100]!),
+                            width: 45,
+                            limit: 5,
+                            textFieldKey: GlobalKey(),
+                            value: widget.model.width.value.round().toString(),
+                            hintText: '',
+                            onEditComplete: ((value) {
+                              logger.info('onEditComplete');
+                              _sizeChanged(value, widget.model.width, widget.model.height);
+                            }),
+                            minNumber: LayoutConst.minFrameSize.toDouble(),
+                            maxNumber: _bookModel!.width.value,
+                          ),
+                        ],
+                      ),
                       //),
                       BTN.fill_gray_i_m(
                           tooltip: CretaStudioLang['fixedRatio']!,

@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:creta03/pages/studio/left_menu/news/article_model.dart';
+import 'package:creta04/pages/studio/left_menu/news/article_model.dart';
 import 'package:http/http.dart' as http;
 import '../../../login/creta_account_manager.dart';
 

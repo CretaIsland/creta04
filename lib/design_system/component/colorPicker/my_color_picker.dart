@@ -1,4 +1,4 @@
-import 'package:creta03/pages/studio/studio_variables.dart';
+import 'package:creta04/pages/studio/studio_variables.dart';
 import 'package:creta_common/common/creta_const.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';

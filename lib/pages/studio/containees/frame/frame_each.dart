@@ -1,9 +1,9 @@
 // ignore_for_file: depend_on_referenced_packages, avoid_web_libraries_in_flutter
 
-import 'package:creta03/design_system/component/shape/creta_clipper.dart';
+import 'package:creta04/design_system/component/shape/creta_clipper.dart';
 import 'package:creta_common/model/creta_model.dart';
-import 'package:creta03/pages/studio/containees/frame/camera_frame.dart';
-import 'package:creta03/pages/studio/right_menu/frame/transition_types.dart';
+import 'package:creta04/pages/studio/containees/frame/camera_frame.dart';
+import 'package:creta04/pages/studio/right_menu/frame/transition_types.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:get/get.dart';
 import 'package:hycop/hycop.dart';
@@ -13,7 +13,7 @@ import 'package:hycop/common/util/logger.dart';
 import 'package:creta_common/common/creta_common_utils.dart';
 import 'package:creta_common/common/creta_snippet.dart';
 
-import 'package:creta03/design_system/component/creta_texture_widget.dart';
+import 'package:creta04/design_system/component/creta_texture_widget.dart';
 import '../../../../data_io/key_handler.dart';
 import '../../../../data_io/contents_manager.dart';
 import '../../../../data_io/depot_manager.dart';

@@ -1,8 +1,8 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'dart:async';
-import 'package:creta03/player/pdf/creta_pdf_player.dart';
-import 'package:creta03/player/pdf/creta_pdf_widget.dart';
+import 'package:creta04/player/pdf/creta_pdf_player.dart';
+import 'package:creta04/player/pdf/creta_pdf_widget.dart';
 import 'package:flutter/material.dart';
 //import 'package:get/get.dart';
 import 'package:hycop/common/util/logger.dart';

@@ -1,9 +1,9 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:creta03/design_system/text_field/creta_search_bar.dart';
-import 'package:creta03/lang/creta_studio_lang.dart';
-import 'package:creta03/pages/studio/left_menu/image_giphy/giphy_service.dart';
-import 'package:creta03/pages/studio/studio_variables.dart';
+import 'package:creta04/design_system/text_field/creta_search_bar.dart';
+import 'package:creta04/lang/creta_studio_lang.dart';
+import 'package:creta04/pages/studio/left_menu/image_giphy/giphy_service.dart';
+import 'package:creta04/pages/studio/studio_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:hycop/common/util/logger.dart';
 import 'package:translator_plus/translator_plus.dart';

@@ -1,6 +1,6 @@
-import 'package:creta03/data_io/contents_manager.dart';
+import 'package:creta04/data_io/contents_manager.dart';
 import 'package:creta_common/common/creta_color.dart';
-import 'package:creta03/pages/studio/book_main_page.dart';
+import 'package:creta04/pages/studio/book_main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hycop/common/util/logger.dart';
 import 'package:just_audio/just_audio.dart';

@@ -1,4 +1,4 @@
-import 'package:creta03/design_system/component/shape/shape_path.dart';
+import 'package:creta04/design_system/component/shape/shape_path.dart';
 import 'package:flutter/material.dart';
 
 /// [CretaDiagonalBottomLeft], can be used with [ClipPath] widget, and clips the widget diagonally

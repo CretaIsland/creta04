@@ -2,7 +2,7 @@
 
 import 'dart:math';
 
-//import 'package:creta03/lang/creta_studio_lang.dart';
+//import 'package:creta04/lang/creta_studio_lang.dart';
 import 'package:creta_common/lang/creta_lang.dart';
 import 'package:creta_user_io/data_io/team_manager.dart';
 import 'package:creta_user_model/model/team_model.dart';

@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable, prefer_const_constructors_in_immutables
 
-import 'package:creta03/pages/studio/studio_variables.dart';
+import 'package:creta04/pages/studio/studio_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:hycop/common/util/logger.dart';
 //import 'package:creta_common/lang/creta_lang.dart';

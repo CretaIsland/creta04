@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.creta03">
+    package="com.example.creta04">
    <application
-        android:label="creta03"
+        android:label="creta04"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

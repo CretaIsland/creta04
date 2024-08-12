@@ -1,9 +1,9 @@
-import 'package:creta03/lang/creta_studio_lang.dart';
-import 'package:creta03/pages/studio/left_menu/camera/left_menu_camera.dart';
-import 'package:creta03/pages/studio/left_menu/music/left_menu_music.dart';
-import 'package:creta03/pages/studio/left_menu/sticker/left_menu_sticker.dart';
-import 'package:creta03/pages/studio/left_menu/timeline/left_menu_timeline.dart';
-import 'package:creta03/pages/studio/studio_variables.dart';
+import 'package:creta04/lang/creta_studio_lang.dart';
+import 'package:creta04/pages/studio/left_menu/camera/left_menu_camera.dart';
+import 'package:creta04/pages/studio/left_menu/music/left_menu_music.dart';
+import 'package:creta04/pages/studio/left_menu/sticker/left_menu_sticker.dart';
+import 'package:creta04/pages/studio/left_menu/timeline/left_menu_timeline.dart';
+import 'package:creta04/pages/studio/studio_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:hycop/common/util/logger.dart';
 
@@ -181,7 +181,7 @@ class _LeftMenuWidgetState extends State<LeftMenuWidget> with LeftTemplateMixin 
                 titleStyle: titleStyle,
                 dataStyle: dataStyle,
               ),
-           // 구글맵 임시로 사용안함.
+              // 구글맵 임시로 사용안함.
               // LeftMenuMap(
               //   title: CretaStudioLang['map']!,
               //   width: _itemWidth,

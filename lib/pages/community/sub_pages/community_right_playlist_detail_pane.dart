@@ -39,7 +39,7 @@ import 'package:creta_studio_model/model/book_model.dart';
 import '../../../model/playlist_model.dart';
 
 //import '../../../design_system/component/custom_image.dart';
-//import 'package:creta03/design_system/component/custom_image.dart';
+//import 'package:creta04/design_system/component/custom_image.dart';
 
 //const double _rightViewTopPane = 40;
 //const double _rightViewLeftPane = 40-4;

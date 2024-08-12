@@ -1,4 +1,4 @@
-import 'package:creta03/pages/studio/left_menu/weather/wether_variables.dart';
+import 'package:creta04/pages/studio/left_menu/weather/wether_variables.dart';
 import 'package:flutter/material.dart';
 
 import 'package:creta_common/common/creta_color.dart';
@@ -58,7 +58,9 @@ class _WeatherElementState extends State<WeatherElement> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 8.0,),
+                padding: const EdgeInsets.only(
+                  right: 8.0,
+                ),
                 child:
                     Text(WeatherVariables.getTitleText(widget.infoType), style: _titleTextStyle!),
               ),

@@ -1,8 +1,8 @@
 // ignore_for_file: depend_on_referenced_packages, prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields
 import 'package:creta_common/common/creta_const.dart';
 import 'package:provider/provider.dart';
-import 'package:creta03/design_system/text_field/creta_text_field.dart';
-import 'package:creta03/pages/studio/left_menu/music/music_player_frame.dart';
+import 'package:creta04/design_system/text_field/creta_text_field.dart';
+import 'package:creta04/pages/studio/left_menu/music/music_player_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hycop/hycop.dart';

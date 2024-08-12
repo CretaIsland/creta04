@@ -320,6 +320,16 @@ mixin DrawerMixin {
             ),
         ],
       ),
+      // TopMenuItem(
+      //   caption: 'Logout',
+      //   iconData: Icons.exit_to_app,
+      //   onPressed: () {
+      //     StudioVariables.selectedBookMid = '';
+      //     CretaAccountManager.logout()
+      //         .then((value) => Routemaster.of(context).push(AppRoutes.login));
+      //   },
+      //   subMenuItems: [],
+      // ),
     ];
   }
 }

@@ -3,6 +3,12 @@ import 'package:creta04/drawer_mixin.dart';
 import 'package:creta_common/common/creta_color.dart';
 import 'package:creta_common/common/creta_const.dart';
 import 'package:flutter/material.dart';
+import 'package:routemaster/routemaster.dart';
+
+import 'drawer_main.dart';
+import 'pages/login/creta_account_manager.dart';
+import 'pages/studio/studio_variables.dart';
+import 'routes.dart';
 
 class DrawerHandle extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -119,14 +125,22 @@ class DrawerHandleState extends State<DrawerHandle> with DrawerMixin {
             ...List.generate(topMenuItems.length, (index) {
               var topItem = topMenuItems[index];
               return
-
-                  //  MouseRegion(
+                  // MouseRegion(
                   //   onEnter: (event) {
-                  //     _showSubMenu(context, event.position);
+                  //     //_showSubMenu(context, event.position);
+                  //     DrawerMain.expandedMenuItemIndex = index;
+                  //     widget.isStudioEditor
+                  //         ? widget.scaffoldKey.currentState?.closeDrawer()
+                  //         : widget.scaffoldKey.currentState?.openDrawer();
                   //   },
-                  //   child:
-
+                  //  child:
                   InkWell(
+                onHover: (event) {
+                  DrawerMain.expandedMenuItemIndex = index;
+                  widget.isStudioEditor
+                      ? widget.scaffoldKey.currentState?.closeDrawer()
+                      : widget.scaffoldKey.currentState?.openDrawer();
+                },
                 onTap: topItem.onPressed,
                 hoverColor: Colors.grey[200], // Hover effect color
                 splashColor: Colors.blue,
@@ -140,23 +154,26 @@ class DrawerHandleState extends State<DrawerHandle> with DrawerMixin {
                   //     Text(topItem.title), // Assuming topItem has a title property
                   //   ],
                   // ),
-                ), // Button effect color
-                //),
+                  //), // Button effect color
+                ),
               );
               // return ListTile(
               //   title: Icon(topItem.iconData),
               //   onTap: topItem.onPressed,
               // );
             }),
-            // ListTile(
-            //   title: const Icon(Icons.exit_to_app), // 로그아웃 아이콘
-            //   onTap: () {
-            //     StudioVariables.selectedBookMid = '';
-            //     CretaAccountManager.logout()
-            //         .then((value) => Routemaster.of(context).push(AppRoutes.login));
-            //   },
-            //   //),
-            // ),
+            ListTile(
+              title: const Padding(
+                padding: EdgeInsets.only(left: 4.0),
+                child: Icon(Icons.exit_to_app),
+              ), // 로그아웃 아이콘
+              onTap: () {
+                StudioVariables.selectedBookMid = '';
+                CretaAccountManager.logout()
+                    .then((value) => Routemaster.of(context).push(AppRoutes.login));
+              },
+              //),
+            ),
           ],
         ),
       ),
@@ -168,6 +185,7 @@ class DrawerHandleState extends State<DrawerHandle> with DrawerMixin {
     ];
   }
 
+  // ignore: unused_element
   void _showSubMenu(BuildContext context, Offset position) {
     _overlayEntry = OverlayEntry(
       builder: (context) => GestureDetector(

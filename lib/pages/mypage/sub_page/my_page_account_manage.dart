@@ -231,6 +231,7 @@ class _MyPageAccountManageState extends State<MyPageAccountManage> {
                                                   if (fileBytes.isNotEmpty) {
                                                     // popup 호출
                                                     showDialog(
+                                                        // ignore: use_build_context_synchronously
                                                         context: context,
                                                         builder: (context) {
                                                           return EditBannerImgPopUp(

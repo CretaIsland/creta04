@@ -99,6 +99,7 @@ class AdminMainPage extends StatefulWidget {
     if (AccountManager.currentLoginUser.isSuperUser && CretaAccountManager.getEnterprise == null) {
       Future.delayed(Duration.zero, () {
         CretaPopup.simple(
+          // ignore: use_build_context_synchronously
           context: context,
           title: "Warning : No Enterprise Selected",
           icon: Icons.warning_amber_outlined,

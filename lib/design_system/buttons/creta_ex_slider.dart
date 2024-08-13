@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:expandable_slider/expandable_slider.dart';
+import 'package:flutter/material.dart';
 import 'package:hycop/common/util/logger.dart';
 
 //import '../component/creta_cupertino_slider.dart';
@@ -93,6 +93,7 @@ class _CretaExSliderState extends State<CretaExSlider> {
       min: widget.min,
       max: widget.max,
       estimatedValueStep: 1,
+      inactiveColor: Colors.white30,
     );
 
     return Row(

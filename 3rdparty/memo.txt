@@ -573,3 +573,78 @@ firebase emulators:start
     }
   }
 }
+
+
+###########################################
+################# Supabase ##################
+###########################################
+
+https://supabase.com/docs/guides/functions/quickstart  참조
+
+
+1. scoop 설치
+
+먼저 scoop 부터 깔아야 함.  젠장
+
+파워쉘 창에서
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+
+2. supabase cli 설치
+
+scoop bucket add supabase https://github.com/supabase/scoop-bucket.git
+scoop install supabase
+
+3. init
+
+cd 3rdparty/supabase
+supabase init
+
+
+3.1 Visual Studio Deno extention  설치
+
+설치하고 enable 시키고,  Ctrl+Shift+p 한다음  Deno: Initialize Workspace Configuration 할것.
+
+4. 함수의 생성
+
+supabase functions new hello-world
+
+cd upabase\functions\hello-world
+
+5. 함수의 릴리즈
+
+supabase login
+
+이게 이해가 안되는게,  function 을 Cloud 서버에 올릴려고 하는데, 도커가 필요하다네 ???? 이런..씨...
+docker desktop 을 설치하고, docker 를 구동시킨다음 아래의 명령을 수행하여 deploy 할 수 있 다.
+
+supabase functions deploy hello-world --project-ref jaeumzhrdayuyqhemhyk
+중간에 Docker 를 share 하겠냐는 팝업창이 하나 뜨는데, yes  해주어야 한다.
+
+6. run  (반드시 curl.exe 라고 해야함.  curl 이라고 하면 안됨)
+
+curl.exe -L -X POST 'https://jaeumzhrdayuyqhemhyk.supabase.co/functions/v1/hello-world' -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImphZXVtemhyZGF5dXlxaGVtaHlrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI4NDM3ODMsImV4cCI6MjAzODQxOTc4M30.vxtt7hpxKk303FcT4skRuHwVljocRqDjInFbPJL2nxM"  -H "Content-Type: application/json"  --data '{"name": "MyHello"}'
+
+이유는 알수 없지만,  curl.exe 로는 아무리 해도,  잘 되지 않는다.
+다음과 같이 powershell 명령으로 하면 잘 된다.
+
+$headers = @{
+    "Authorization" = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImphZXVtemhyZGF5dXlxaGVtaHlrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI4NDM3ODMsImV4cCI6MjAzODQxOTc4M30.vxtt7hpxKk303FcT4skRuHwVljocRqDjInFbPJL2nxM"
+    "Content-Type" = "application/json"
+}
+
+$body = @{
+    "name" = "Functions"
+} | ConvertTo-Json
+
+Invoke-WebRequest -Uri 'https://jaeumzhrdayuyqhemhyk.supabase.co/functions/v1/hello-world' -Method POST -Headers $headers -Body $body
+
+
+
+
+7. secret 보기
+
+supabase secrets list
+
+

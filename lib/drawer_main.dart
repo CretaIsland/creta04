@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:creta04/design_system/component/snippet.dart';
 import 'package:creta04/lang/creta_commu_lang.dart';
 import 'package:creta04/pages/login/creta_account_manager.dart';
@@ -67,7 +69,8 @@ class DrawerMainState extends State<DrawerMain> with DrawerMixin {
       elevation: 5,
       child: MouseRegion(
         onExit: (event) {
-          if (widget.scaffoldKey.currentState!.isDrawerOpen) {
+          if (widget.scaffoldKey.currentState != null &&
+              widget.scaffoldKey.currentState!.isDrawerOpen) {
             widget.scaffoldKey.currentState?.closeDrawer();
           }
         },

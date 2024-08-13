@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
 //import 'package:creta04/design_system/buttons/creta_button.dart';
 import 'package:creta04/design_system/text_field/creta_text_field.dart';

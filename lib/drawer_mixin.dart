@@ -101,6 +101,7 @@ mixin DrawerMixin {
             onPressed: () {
               StudioVariables.selectedBookMid = '';
               CretaAccountManager.logout()
+                  // ignore: use_build_context_synchronously
                   .then((value) => Routemaster.of(context).push(AppRoutes.login));
             },
           ),

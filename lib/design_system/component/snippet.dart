@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: non_constant_identifier_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'package:creta_common/model/app_enums.dart';
 import 'package:creta_user_io/data_io/creta_manager.dart';
@@ -165,14 +165,16 @@ class Snippet {
 
     return Scaffold(
       key: isStudioEditor ? studioScaffoldKey : scaffoldKey,
-      drawer: isStudioEditor
-          ? DrawerHandle(
-              scaffoldKey: isStudioEditor ? studioScaffoldKey : scaffoldKey,
-              isStudioEditor: isStudioEditor,
-            )
-          : DrawerMain(
-              scaffoldKey: scaffoldKey, /*  key: DrawerMain.drawerMainKey */
-            ),
+      drawer:
+          // isStudioEditor
+          //     ? DrawerHandle(
+          //         scaffoldKey: isStudioEditor ? studioScaffoldKey : scaffoldKey,
+          //         isStudioEditor: isStudioEditor,
+          //       )
+          //     :
+          DrawerMain(
+        scaffoldKey: scaffoldKey, /*  key: DrawerMain.drawerMainKey */
+      ),
       // no appBar any more
       //appBar: Snippet.CretaAppBarOfStudio(context, title, additionals, invalidate: invalidate),
       //appBar: Snippet.CretaAppBarOfMyPage(context, Text('title')),

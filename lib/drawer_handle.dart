@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:creta04/design_system/component/snippet.dart';
 import 'package:creta04/drawer_mixin.dart';
 import 'package:creta_common/common/creta_color.dart';
@@ -135,25 +137,31 @@ class DrawerHandleState extends State<DrawerHandle> with DrawerMixin {
                   //   },
                   //  child:
                   InkWell(
-                onHover: (event) {
-                  DrawerMain.expandedMenuItemIndex = index;
-                  widget.isStudioEditor
-                      ? widget.scaffoldKey.currentState?.closeDrawer()
-                      : widget.scaffoldKey.currentState?.openDrawer();
-                },
+                // onHover: (event) {
+                //   DrawerMain.expandedMenuItemIndex = index;
+                //        widget.scaffoldKey.currentState?.openDrawer();
+                // },
                 onTap: topItem.onPressed,
                 hoverColor: Colors.grey[200], // Hover effect color
                 splashColor: Colors.blue,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-                  child: Icon(topItem.iconData),
-                  // child: Row(
-                  //   children: [
-                  //     Icon(topItem.iconData),
-                  //     const SizedBox(width: 16.0),
-                  //     Text(topItem.title), // Assuming topItem has a title property
-                  //   ],
-                  // ),
+                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                  //child: Icon(topItem.iconData),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(topItem.iconData),
+                      MouseRegion(
+                        onEnter: (event) {
+                          //_showSubMenu(context, event.position);
+                          DrawerMain.expandedMenuItemIndex = index;
+                          widget.scaffoldKey.currentState?.openDrawer();
+                        },
+                        child: const Icon(Icons.arrow_drop_down_outlined),
+                      ),
+                    ],
+                  ),
                   //), // Button effect color
                 ),
               );

@@ -46,4 +46,3 @@ app.*.map.json
 *.cc
 *.cmake
 *.swift
-*.lock

@@ -69,12 +69,12 @@ class _MyColorIndicatorState extends State<MyColorIndicator> {
             context: context,
             dialogPickerColor: widget.color,
             onColorChanged: widget.onColorChanged,
-            onExit: () {
-              Navigator.of(
-                MyColorPicker.colorPickerKey.currentState!.context,
-                rootNavigator: true,
-              ).pop();
-            },
+            // onExit: () {
+            //   Navigator.of(
+            //     MyColorPicker.colorPickerKey.currentState!.context,
+            //     rootNavigator: true,
+            //   ).pop();
+            // },
           );
         },
       ),
@@ -106,12 +106,12 @@ class _MyColorIndicatorState extends State<MyColorIndicator> {
                     context: context,
                     dialogPickerColor: widget.color,
                     onColorChanged: widget.onColorChanged,
-                    onExit: () {
-                      Navigator.of(
-                        MyColorPicker.colorPickerKey.currentState!.context,
-                        rootNavigator: true,
-                      ).pop();
-                    },
+                    // onExit: () {
+                    //   Navigator.of(
+                    //     MyColorPicker.colorPickerKey.currentState!.context,
+                    //     rootNavigator: true,
+                    //   ).pop();
+                    // },
                   );
                 },
                 child: RawImage(

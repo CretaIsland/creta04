@@ -263,6 +263,7 @@ flutter pub upgrade creta_user_model
 flutter pub upgrade creta_studio_model
 flutter pub upgrade creta_user_io
 flutter pub upgrade creta_studio_io
+flutter pub upgrade my_syncfusion_flutter_pdfviewer
 
 
 ############################

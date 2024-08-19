@@ -30,11 +30,11 @@ class MyColorPicker {
     required BuildContext context,
     required Color dialogPickerColor,
     required void Function(Color color) onColorChanged,
-    required void Function() onExit,
+    //required void Function() onExit,
   }) async {
     return ColorPicker(
       key: colorPickerKey,
-      onExit: onExit,
+      //onExit: onExit,
       //enableOpacity: true,
       color: dialogPickerColor,
       onColorChanged: onColorChanged, //(Color color) => setState(() => dialogPickerColor = color),

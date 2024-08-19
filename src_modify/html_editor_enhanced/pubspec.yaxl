@@ -59,6 +59,7 @@ flutter:
     - packages/html_editor_enhanced/assets/font/Nanum_Myeongjo/NanumMyeongjo-Regular.ttf
     - packages/html_editor_enhanced/assets/font/Nanum_Pen_Script/NanumPenScript-Regular.ttf
     - packages/html_editor_enhanced/assets/font/Noto_Sans_KR/NotoSansKR-Regular.otf
+    - packages/html_editor_enhanced/assets/font/Noto_Sans/NotoSans-Regular.ttf
     - packages/html_editor_enhanced/assets/font/Pretendard/Pretendard-Regular.otf
     - packages/html_editor_enhanced/assets/font/Zocial/Zocial.ttf
   # This section identifies this Flutter project as a plugin project.

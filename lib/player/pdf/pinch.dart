@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:my_syncfusion_flutter_pdfviewer/my_syncfusion_flutter_pdfviewer.dart';
 // import 'package:internet_file/internet_file.dart';
 // import 'package:pdfx/pdfx.dart';
 

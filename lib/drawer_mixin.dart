@@ -16,7 +16,8 @@ import 'pages/admin/admin_main_page.dart';
 import 'pages/device/device_main_page.dart';
 import 'pages/login/creta_account_manager.dart';
 import 'pages/login/login_dialog.dart';
-import 'pages/popup/bass_demo_popup.dart';
+
+//import 'pages/popup/bass_demo_popup.dart';
 import 'pages/popup/creta_version_popup.dart';
 import 'pages/studio/book_grid_page.dart';
 import 'pages/studio/book_main_page.dart';
@@ -34,6 +35,7 @@ class TopMenuItem {
 
 mixin DrawerMixin {
   List<TopMenuItem> topMenuItems = [];
+  void Function()? invalidate;
 
   void initMixin(BuildContext context) {
     topMenuItems = [
@@ -169,15 +171,17 @@ mixin DrawerMixin {
             },
             iconData: Icons.import_contacts_outlined,
           ),
-          CretaMenuItem(
-            caption: CretaDeviceLang['sharedCretaDevice']!,
-            onPressed: () {
-              Routemaster.of(context).pop();
-              Routemaster.of(context).push(AppRoutes.deviceSharedPage);
-              DeviceMainPage.lastGridMenu = AppRoutes.deviceSharedPage;
-            },
-            iconData: Icons.share_outlined,
-          ),
+          if ((AccountManager.currentLoginUser.isSuperUser ||
+              EnterpriseManager.isAdmin(AccountManager.currentLoginUser.email)))
+            CretaMenuItem(
+              caption: CretaDeviceLang['sharedCretaDevice']!,
+              onPressed: () {
+                Routemaster.of(context).pop();
+                Routemaster.of(context).push(AppRoutes.deviceSharedPage);
+                DeviceMainPage.lastGridMenu = AppRoutes.deviceSharedPage;
+              },
+              iconData: Icons.share_outlined,
+            ),
           CretaMenuItem(
             caption: CretaDeviceLang['teamCretaDevice']!,
             onPressed: () {
@@ -310,13 +314,13 @@ mixin DrawerMixin {
                   ? CretaLang['accountMenu']![6]
                   : CretaLang['accountMenu']![5], //개발자모드
               onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return const BassDemoPopUp();
-                    });
-                // CretaVars.instance.isDeveloper = !CretaVars.instance.isDeveloper;
-                // invalidate?.call();
+                // showDialog(
+                //     context: context,
+                //     builder: (context) {
+                //       return const BassDemoPopUp();
+                //     });
+                CretaVars.instance.isDeveloper = !CretaVars.instance.isDeveloper;
+                invalidate?.call();
               },
             ),
         ],

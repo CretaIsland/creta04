@@ -7,6 +7,7 @@ import 'package:creta04/pages/landing_page.dart';
 import 'package:creta04/pages/mypage/mypage.dart';
 import 'package:creta04/pages/privacy_policy_page.dart';
 import 'package:creta04/pages/service_terms_page.dart';
+import 'package:creta_common/common/creta_vars.dart';
 //import 'package:creta04/pages/studio/left_menu/word_pad/quill_appflowy.dart';
 // import 'package:creta04/pages/studio/left_menu/word_pad/quill_html_enhanced.daxt';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ import 'design_system/demo_page/text_field_demo_page.dart';
 import 'developer/gen_collections_page.dart';
 // import 'pages/intro_page.dart';
 import 'package:creta_studio_model/model/book_model.dart';
+import 'developer_page.dart';
 import 'pages/admin/admin_main_page.dart';
 import 'pages/device/device_main_page.dart';
 import 'pages/login/creta_account_manager.dart';
@@ -150,7 +152,9 @@ final routesLoggedOut = RouteMap(
     AppRoutes.wait: (_) => const TransitionPage(child: WaitPage()),
     AppRoutes.intro: (_) => (AccountManager.currentLoginUser.isLoginedUser)
         ? const Redirect(AppRoutes.communityHome)
-        : const TransitionPage(child: LandingPage()),
+        : CretaVars.instance.isDeveloper
+            ? const TransitionPage(child: DeveloperPage())
+            : const TransitionPage(child: LandingPage()),
     //: const TransitionPage(child: IntroPage()),
     //AppRoutes.intro: (_) => const TransitionPage(child: LandingPage()),
     AppRoutes.login: (routeData) {

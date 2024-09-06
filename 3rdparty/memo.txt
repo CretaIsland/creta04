@@ -620,6 +620,9 @@ supabase login
 docker desktop 을 설치하고, docker 를 구동시킨다음 아래의 명령을 수행하여 deploy 할 수 있 다.
 
 supabase functions deploy hello-world --project-ref jaeumzhrdayuyqhemhyk
+
+supabase functions deploy executeSQL --project-ref jaeumzhrdayuyqhemhyk
+
 중간에 Docker 를 share 하겠냐는 팝업창이 하나 뜨는데, yes  해주어야 한다.
 
 6. run  (반드시 curl.exe 라고 해야함.  curl 이라고 하면 안됨)
@@ -646,5 +649,10 @@ Invoke-WebRequest -Uri 'https://jaeumzhrdayuyqhemhyk.supabase.co/functions/v1/he
 7. secret 보기
 
 supabase secrets list
+
+*** createTable 과 같은 명령을 실행하기 위해서는 다음과 같은 권한주기 작업을 해야 한다.
+GRANT CREATE ON SCHEMA public TO PUBLIC;
+
+
 
 

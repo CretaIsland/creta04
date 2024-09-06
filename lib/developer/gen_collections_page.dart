@@ -47,6 +47,7 @@ class _GenCollectionsPageState extends State<GenCollectionsPage> {
                   saveLogToFile(jsonStr, "log.json");
                 },
               ),
+             
               IconButton(
                   onPressed: () {
                     Routemaster.of(context).push(AppRoutes.communityHome);

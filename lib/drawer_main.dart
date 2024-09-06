@@ -6,6 +6,7 @@ import 'package:creta04/pages/login/creta_account_manager.dart';
 import 'package:creta04/routes.dart';
 import 'package:creta_common/common/creta_color.dart';
 import 'package:creta_common/common/creta_font.dart';
+import 'package:creta_common/common/creta_vars.dart';
 import 'package:creta_user_model/model/user_property_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hycop/hycop/account/account_manager.dart';
@@ -54,10 +55,15 @@ class DrawerMainState extends State<DrawerMain> with DrawerMixin {
     super.initState();
     initMixin(context);
     //_expandedMenuItemIndex = widget.expandedMenuItemIndex;
+
+    invalidate = _invalidate;
   }
 
-  void invalidate() {
-    setState(() {});
+  void _invalidate() {
+    setState(() {
+      //print('invalidate()');
+    });
+    CretaAccountManager.userPropertyManagerHolder.notify();
   }
 
   @override
@@ -83,6 +89,7 @@ class DrawerMainState extends State<DrawerMain> with DrawerMixin {
   }
 
   List<Widget> _expandedWidget() {
+    //print('_expandedWidget()');
     return [
       Expanded(
         child: ListView(
@@ -149,6 +156,8 @@ class DrawerMainState extends State<DrawerMain> with DrawerMixin {
                 children: <Widget>[
                   for (var item in topItem.subMenuItems)
                     ListTile(
+                      key: GlobalObjectKey(
+                          'DrawerMenuItem$index${item.caption}${CretaVars.instance.isDeveloper}'),
                       leading: Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: Icon(item.iconData, color: CretaColor.primary),

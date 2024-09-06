@@ -47,9 +47,10 @@ class DrawerHandleState extends State<DrawerHandle> with DrawerMixin {
     //     index++;
     //   }
     // }
+    invalidate = _invalidate;
   }
 
-  void invalidate() {
+  void _invalidate() {
     setState(() {});
   }
 

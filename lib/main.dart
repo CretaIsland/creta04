@@ -24,13 +24,17 @@ import 'pages/login/creta_account_manager.dart';
 import 'routes.dart';
 
 void main() async {
+  //CretaVars.instance.isDeveloper = true;
   setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   setupLogger();
   Logger.root.level = Level.SEVERE;
   HycopFactory.serverType = ServerType.firebase;
   await HycopFactory.initAll();
-  await CretaAccountManager.initUserProperty();
+
+  if (CretaVars.instance.isDeveloper == false) {
+    await CretaAccountManager.initUserProperty();
+  }
 
   //SampleData.initSample();
   StudioConst.initLangMap();
@@ -54,12 +58,15 @@ class _MainRouteAppState extends ConsumerState<MainRouteApp> {
   Future<bool>? _langInited;
 
   Future<bool>? initLang() async {
-    UserPropertyModel? userModel = CretaAccountManager.userPropertyManagerHolder.userPropertyModel;
-    if (userModel != null) {
-      if (userModel.language == LanguageType.none) {
-        userModel.language = LanguageType.korean;
+    if (CretaVars.instance.isDeveloper == false) {
+      UserPropertyModel? userModel =
+          CretaAccountManager.userPropertyManagerHolder.userPropertyModel;
+      if (userModel != null) {
+        if (userModel.language == LanguageType.none) {
+          userModel.language = LanguageType.korean;
+        }
+        await Snippet.setLang(language: userModel.language);
       }
-      await Snippet.setLang(language: userModel.language);
     }
     return true;
   }
@@ -116,13 +123,29 @@ class _MainRouteAppState extends ConsumerState<MainRouteApp> {
       ),
     );
 
+    if (CretaVars.instance.isDeveloper == true) {
+      return GetMaterialApp.router(
+        title: 'Creta creates',
+        initialBinding: InitBinding(),
+        debugShowCheckedModeBanner: false,
+        scrollBehavior: MaterialScrollBehavior().copyWith(scrollbars: false),
+        theme: theme,
+        routerDelegate: RoutemasterDelegate(routesBuilder: (context) {
+          return routesLoggedOut;
+        }),
+        routeInformationParser: const RoutemasterParser(),
+      );
+    }
+
     return FutureBuilder<bool>(
         future: _langInited,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             //error가 발생하게 될 경우 반환하게 되는 부분
             logger.severe("data fetch error(WaitDatum)");
-            return const Center(child: Text('data fetch error(WaitDatum)'));
+            return Directionality(
+                textDirection: TextDirection.ltr,
+                child: const Center(child: Text('data fetch error(WaitDatum)')));
           }
           if (snapshot.hasData == false) {
             logger.finest("wait data ...(WaitData)");

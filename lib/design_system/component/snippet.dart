@@ -173,7 +173,8 @@ class Snippet {
           //       )
           //     :
           DrawerMain(
-        scaffoldKey: scaffoldKey, /*  key: DrawerMain.drawerMainKey */
+        scaffoldKey:
+            isStudioEditor ? studioScaffoldKey : scaffoldKey, /*  key: DrawerMain.drawerMainKey */
       ),
       // no appBar any more
       //appBar: Snippet.CretaAppBarOfStudio(context, title, additionals, invalidate: invalidate),

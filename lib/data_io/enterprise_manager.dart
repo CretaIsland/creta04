@@ -21,7 +21,8 @@ class EnterpriseManager extends CretaManager {
     return _enterpriseManagerHolder!;
   }
 
-  static bool isAdmin(String userEmail) {
+  static bool isAdmin(String? userEmail) {
+    userEmail ??= CretaAccountManager.currentLoginUser.email;
     if (CretaAccountManager.getEnterprise == null) return false;
     return CretaAccountManager.getEnterprise!.admins.contains(userEmail);
   }

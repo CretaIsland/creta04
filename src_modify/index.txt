@@ -1,119 +1,253 @@
-creta_book	bookType ASC creator ASC isRemoved ASC likeCount DESC updateTime DESC __name__ DESC
-creta_subscription	isRemoved ASC updateTime ASC __name__ ASC
-creta_book	bookType ASC creator ASC isRemoved ASC name ASC updateTime DESC __name__ DESC
-creta_book_published	mid ASC updateTime DESC __name__ DESC
-creta_comment	isRemoved ASC updateTime ASC __name__ ASC
-hycop_users	email ASC password ASC name DESC __name__ DESC
-creta_watch_history	isRemoved ASC updateTime ASC __name__ ASC
-creta_book_published	shares array isRemoved ASC lastUpdateTime DESC updateTime DESC __name__ DESC
-creta_book	bookType ASC shares array isRemoved ASC viewCount DESC updateTime DESC __name__ DESC
-creta_playlist	isRemoved ASC lastUpdateTime DESC updateTime DESC __name__ DESC
-creta_favorites	isRemoved ASC updateTime ASC __name__ ASC
-creta_book	bookType ASC shares array isRemoved ASC likeCount DESC updateTime DESC __name__ DESC
-creta_team	isRemoved ASC updateTime ASC __name__ ASC
-creta_book	shares array isRemoved ASC updateTime DESC __name__ DESC
-creta_contents	isRemoved ASC updateTime ASC __name__ ASC
-creta_book_published	shares array bookType ASC isRemoved ASC viewCount DESC updateTime DESC __name__ DESC
-creta_contents_published	isRemoved ASC parentMid ASC updateTime DESC __name__ DESC
-creta_team	teamMembers array isRemoved ASC updateTime DESC __name__ DESC
-creta_depot	isRemoved ASC parentMid ASC updateTime DESC __name__ DESC
-creta_book_published	shares array bookType ASC isRemoved ASC name ASC updateTime DESC __name__ DESC
-creta_playlist	isRemoved ASC name ASC updateTime DESC __name__ DESC
-creta_frame	isRemoved ASC updateTime ASC __name__ ASC
-creta_connected_user	isRemoved ASC updateTime ASC __name__ ASC
-creta_depot	isRemoved ASC parentMid ASC order ASC updateTime DESC __name__ DESC
-creta_playlist	isRemoved ASC userId ASC lastUpdateTime DESC updateTime DESC __name__ DESC
-hycop_frame	isRemoved ASC updateTime DESC __name__ DESC
-creta_frame	frameType ASC isRemoved ASC parentMid ASC order ASC updateTime DESC __name__ DESC
-creta_frame_published	isRemoved ASC parentMid ASC order ASC updateTime DESC __name__ DESC
-hycop_users	email ASC name DESC __name__ DESC
-creta_playlist	isRemoved ASC updateTime DESC __name__ DESC
-creta_book	creator ASC isRemoved ASC updateTime DESC __name__ DESC
-creta_book	creator ASC isRemoved ASC likeCount DESC updateTime DESC __name__ DESC
-creta_book	isRemoved ASC updateTime ASC __name__ ASC
-creta_favorites	bookId ASC isRemoved ASC updateTime DESC __name__ DESC
-creta_book_published	shares array isRemoved ASC updateTime DESC __name__ DESC
-hycop_user	email ASC password ASC name DESC __name__ DESC
-creta_frame	isRemoved ASC parentMid ASC order ASC updateTime DESC __name__ DESC
-hycop_book	creator ASC isRemoved ASC updateTime DESC __name__ DESC
-creta_channel	mid array updateTime DESC __name__ DESC
-creta_team	isRemoved ASC name ASC parentMid ASC updateTime DESC __name__ DESC
-creta_book	bookType ASC creator ASC isRemoved ASC updateTime DESC __name__ DESC
-creta_book	isRemoved ASC updateTime DESC __name__ DESC
-creta_channel	isRemoved ASC userId ASC updateTime DESC __name__ DESC
-creta_subscription	channelId ASC isRemoved ASC updateTime DESC __name__ DESC
-creta_depot	contentsType ASC isRemoved ASC parentMid ASC order ASC updateTime DESC __name__ DESC
-creta_page	isRemoved ASC updateTime ASC __name__ ASC
-creta_book_published	isRemoved ASC updateTime DESC __name__ DESC
-creta_channel	mid ASC updateTime DESC __name__ DESC
-creta_frame	isRemoved ASC parentMid ASC updateTime DESC __name__ DESC
-creta_depot	contentsType ASC isRemoved ASC parentMid ASC updateTime DESC __name__ DESC
-creta_user_property	email ASC isRemoved ASC order ASC updateTime DESC __name__ DESC
-creta_playlist	isRemoved ASC userId ASC name ASC updateTime DESC __name__ DESC
-creta_book	shares array isRemoved ASC name ASC updateTime DESC __name__ DESC
-creta_book_published	isRemoved ASC parentMid ASC updateTime DESC __name__ DESC
-creta_book	bookType ASC isRemoved ASC updateTime DESC __name__ DESC
-creta_enterprise	isRemoved ASC name ASC order ASC updateTime DESC __name__ DESC
-creta_playlist	isRemoved ASC viewCount DESC updateTime DESC __name__ DESC
-creta_favorites	isRemoved ASC userId ASC lastUpdateTime DESC updateTime DESC __name__ DESC
-creta_user_property	isRemoved ASC parentMid ASC order ASC updateTime DESC __name__ DESC
-creta_playlist	userId ASC updateTime DESC __name__ DESC
-creta_page	isRemoved ASC parentMid ASC updateTime DESC __name__ DESC
-creta_book	bookType ASC shares array isRemoved ASC updateTime DESC __name__ DESC
-creta_playlist	isRemoved ASC mid ASC updateTime DESC __name__ DESC
-creta_enterprise	isRemoved ASC updateTime ASC __name__ ASC
-creta_book_published	bookType ASC isRemoved ASC updateTime DESC __name__ DESC
-creta_playlist	isRemoved ASC likeCount DESC updateTime DESC __name__ DESC
-creta_playlist	channelId ASC isRemoved ASC updateTime DESC __name__ DESC
-creta_watch_history	isRemoved ASC userId ASC watchTime DESC updateTime DESC __name__ DESC
-creta_user_property	email ASC updateTime DESC __name__ DESC
-creta_page_published	isRemoved ASC parentMid ASC order ASC updateTime DESC __name__ DESC
-creta_link	isRemoved ASC parentMid ASC updateTime DESC __name__ DESC
-creta_comment	bookId ASC isRemoved ASC parentId ASC createTime ASC updateTime DESC __name__ DESC
-creta_book_published	channels array updateTime DESC __name__ DESC
-creta_book_published	isRemoved ASC mid ASC updateTime DESC __name__ DESC
-creta_book	bookType ASC creator ASC isRemoved ASC viewCount DESC updateTime DESC __name__ DESC
-creta_book_published	isRemoved ASC sourceMid ASC updateTime DESC __name__ DESC
-creta_book_published	isRemoved ASC updateTime ASC __name__ ASC
-creta_book	creator ASC isRemoved ASC name ASC updateTime DESC __name__ DESC
-creta_book_published	shares array isRemoved ASC viewCount DESC updateTime DESC __name__ DESC
-creta_favorites	isRemoved ASC userId ASC favoriteTime DESC updateTime DESC __name__ DESC
-creta_subscription	channelId ASC isRemoved ASC subscriptionChannelId ASC updateTime DESC __name__ DESC
-creta_playlist	shares array isRemoved ASC updateTime DESC __name__ DESC
-creta_playlist	channelId ASC isRemoved ASC lastUpdateTime DESC updateTime DESC __name__ DESC
-creta_user_property	isRemoved ASC updateTime ASC __name__ ASC
-creta_contents	isRemoved ASC parentMid ASC order ASC updateTime DESC __name__ DESC
-creta_user_property	isRemoved ASC parentMid ASC updateTime DESC __name__ DESC
-creta_depot	isRemoved ASC updateTime ASC __name__ ASC
-creta_book_published	shares array isRemoved ASC likeCount DESC updateTime DESC __name__ DESC
-creta_page_published	isRemoved ASC parentMid ASC updateTime DESC __name__ DESC
-creta_team	mid array isRemoved ASC updateTime DESC __name__ DESC
-creta_watch_history	isRemoved ASC userId ASC lastUpdateTime DESC updateTime DESC __name__ DESC
-creta_frame_published	isRemoved ASC parentMid ASC updateTime DESC __name__ DESC
-creta_depot	contentsMid ASC isRemoved ASC updateTime DESC __name__ DESC
-creta_subscription	isRemoved ASC lastPublishTime DESC updateTime DESC __name__ DESC
-creta_connected_user	isRemoved ASC parentMid ASC updateTime DESC __name__ DESC
-creta_book_published	shares array isRemoved ASC name ASC updateTime DESC __name__ DESC
-creta_page	isRemoved ASC parentMid ASC order ASC updateTime DESC __name__ DESC
-creta_comment	bookId ASC isRemoved ASC parentId ASC createTime DESC updateTime DESC __name__ DESC
-creta_user_property2	parentMid ASC isRemoved ASC __name__ ASC
-creta_filter	isRemoved ASC parentMid ASC updateTime DESC __name__ DESC
-creta_channel	isRemoved ASC mid ASC updateTime DESC __name__ DESC
-creta_frame_published	isRemoved ASC updateTime ASC __name__ ASC
-creta_user_property	email ASC isRemoved ASC updateTime DESC __name__ DESC
-creta_contents_published	isRemoved ASC parentMid ASC order ASC updateTime DESC __name__ DESC
-creta_favorites	isRemoved ASC mid ASC updateTime DESC __name__ DESC
-creta_favorites	bookId ASC isRemoved ASC userId ASC updateTime DESC __name__ DESC
-creta_channel	isRemoved ASC updateTime ASC __name__ ASC
-creta_filter	isRemoved ASC updateTime ASC __name__ ASC
-creta_book	creator ASC isRemoved ASC viewCount DESC updateTime DESC __name__ DESC
-creta_page_published	isRemoved ASC updateTime ASC __name__ ASC
-creta_team	isRemoved ASC mid ASC updateTime DESC __name__ DESC
-creta_playlist	mid ASC updateTime DESC __name__ DESC
-creta_book	shares array isRemoved ASC viewCount DESC updateTime DESC __name__ DESC
-creta_book	bookType ASC shares array isRemoved ASC name ASC updateTime DESC __name__ DESC
-creta_contents_published	isRemoved ASC updateTime ASC __name__ ASC
-creta_book	shares array isRemoved ASC likeCount DESC updateTime DESC __name__ DESC
-creta_book_published	shares array bookType ASC isRemoved ASC likeCount DESC updateTime DESC __name__ DESC
-creta_playlist	isRemoved ASC updateTime ASC __name__ ASC
+creta_book  bookType ASC creator ASC isRemoved ASC likeCount DESC updateTime DESC         
+creta_book  bookType ASC creator ASC isRemoved ASC name ASC updateTime DESC         
+creta_book  bookType ASC creator ASC isRemoved ASC updateTime DESC         
+creta_book  bookType ASC creator ASC isRemoved ASC viewCount DESC updateTime DESC         
+creta_book  bookType ASC isRemoved ASC updateTime DESC         
+creta_book  bookType ASC shares Array isRemoved ASC likeCount DESC updateTime DESC         
+creta_book  bookType ASC shares Array isRemoved ASC name ASC updateTime DESC         
+creta_book  bookType ASC shares Array isRemoved ASC updateTime DESC         
+creta_book  bookType ASC shares Array isRemoved ASC viewCount DESC updateTime DESC         
+creta_book  creator ASC isRemoved ASC likeCount DESC updateTime DESC         
+creta_book  creator ASC isRemoved ASC name ASC updateTime DESC         
+creta_book  creator ASC isRemoved ASC updateTime DESC         
+creta_book  creator ASC isRemoved ASC viewCount DESC updateTime DESC         
+creta_book  isRemoved ASC parentMid ASC createTime DESC         
+creta_book  isRemoved ASC updateTime ASC         
+creta_book  isRemoved ASC updateTime DESC         
+creta_book  shares Array isRemoved ASC likeCount DESC updateTime DESC         
+creta_book  shares Array isRemoved ASC name ASC updateTime DESC         
+creta_book  shares Array isRemoved ASC updateTime DESC         
+creta_book  shares Array isRemoved ASC viewCount DESC updateTime DESC         
+creta_book_published  bookType ASC creator ASC isRemoved ASC updateTime DESC         
+creta_book_published  bookType ASC isRemoved ASC updateTime DESC         
+creta_book_published  channels Array updateTime DESC         
+creta_book_published  isRemoved ASC mid ASC updateTime DESC         
+creta_book_published  isRemoved ASC parentMid ASC updateTime DESC         
+creta_book_published  isRemoved ASC sourceMid ASC updateTime DESC         
+creta_book_published  isRemoved ASC updateTime ASC         
+creta_book_published  isRemoved ASC updateTime DESC         
+creta_book_published  mid ASC updateTime DESC         
+creta_book_published  shares Array bookType ASC isRemoved ASC likeCount DESC updateTime DESC         
+creta_book_published  shares Array bookType ASC isRemoved ASC name ASC updateTime DESC         
+creta_book_published  shares Array bookType ASC isRemoved ASC viewCount DESC updateTime DESC         
+creta_book_published  shares Array isRemoved ASC likeCount DESC updateTime DESC         
+creta_book_published  shares Array isRemoved ASC name ASC updateTime DESC         
+creta_book_published  shares Array isRemoved ASC updateTime DESC         
+creta_book_published  shares Array isRemoved ASC viewCount DESC updateTime DESC         
+creta_channel  isRemoved ASC mid ASC updateTime DESC         
+creta_channel  isRemoved ASC updateTime ASC         
+creta_channel  isRemoved ASC userId ASC updateTime DESC         
+creta_channel  mid Array updateTime DESC         
+creta_channel  mid ASC updateTime DESC         
+creta_comment  bookId ASC isRemoved ASC parentId ASC createTime ASC updateTime DESC         
+creta_comment  bookId ASC isRemoved ASC parentId ASC createTime DESC updateTime DESC         
+creta_comment  isRemoved ASC updateTime ASC         
+creta_connected_user  isRemoved ASC parentMid ASC updateTime DESC         
+creta_connected_user  isRemoved ASC updateTime ASC         
+creta_contents  isRemoved ASC parentMid ASC   order_ ASC updateTime DESC         
+creta_contents  isRemoved ASC updateTime ASC         
+creta_contents_published  isRemoved ASC parentMid ASC   order_ ASC updateTime DESC         
+creta_contents_published  isRemoved ASC parentMid ASC updateTime DESC         
+creta_contents_published  isRemoved ASC realTimeKey ASC updateTime DESC         
+creta_contents_published  isRemoved ASC updateTime ASC         
+creta_depot  contentsMid ASC isRemoved ASC updateTime DESC         
+creta_depot  contentsType ASC isRemoved ASC parentMid ASC   order_ ASC updateTime DESC         
+creta_depot  contentsType ASC isRemoved ASC parentMid ASC updateTime DESC         
+creta_depot  isRemoved ASC parentMid ASC   order_ ASC updateTime DESC         
+creta_depot  isRemoved ASC parentMid ASC updateTime DESC         
+creta_depot  isRemoved ASC updateTime ASC         
+creta_enterprise  isRemoved ASC name ASC   order_ ASC updateTime DESC         
+creta_enterprise  isRemoved ASC updateTime ASC         
+creta_enterprise  isRemoved ASC updateTime DESC         
+creta_enterprise  name ASC updateTime DESC         
+creta_favorites  bookId ASC isRemoved ASC updateTime DESC         
+creta_favorites  bookId ASC isRemoved ASC userId ASC updateTime DESC         
+creta_favorites  isRemoved ASC mid ASC updateTime DESC         
+creta_favorites  isRemoved ASC updateTime ASC         
+creta_filter  isRemoved ASC parentMid ASC updateTime DESC         
+creta_filter  isRemoved ASC updateTime ASC         
+creta_frame  frameType ASC isRemoved ASC parentMid ASC   order_ ASC updateTime DESC         
+creta_frame  isRemoved ASC parentMid ASC   order_ ASC updateTime DESC         
+creta_frame  isRemoved ASC parentMid ASC updateTime DESC         
+creta_frame  isRemoved ASC updateTime ASC         
+creta_frame_published  isRemoved ASC parentMid ASC   order_ ASC updateTime DESC         
+creta_frame_published  isRemoved ASC parentMid ASC updateTime DESC         
+creta_frame_published  isRemoved ASC updateTime ASC         
+creta_host  creator ASC isRemoved ASC updateTime DESC         
+creta_host  enterprise ASC isRemoved ASC updateTime DESC         
+creta_host  hostName ASC isRemoved ASC updateTime DESC         
+creta_host  isRemoved ASC updateTime DESC         
+creta_link  isRemoved ASC parentMid ASC updateTime DESC         
+creta_link_published  isRemoved ASC parentMid ASC updateTime DESC         
+creta_page  isRemoved ASC parentMid ASC   order_ ASC updateTime DESC         
+creta_page  isRemoved ASC parentMid ASC updateTime DESC         
+creta_page  isRemoved ASC updateTime ASC         
+creta_page_published  isRemoved ASC parentMid ASC   order_ ASC updateTime DESC         
+creta_page_published  isRemoved ASC parentMid ASC updateTime DESC         
+creta_page_published  isRemoved ASC updateTime ASC         
+creta_playlist  channelId ASC isRemoved ASC updateTime DESC         
+creta_playlist  isRemoved ASC mid ASC updateTime DESC         
+creta_playlist  isRemoved ASC name ASC updateTime DESC         
+creta_playlist  isRemoved ASC updateTime ASC   
+creta_playlist  isRemoved ASC updateTime DESC         
+creta_playlist  mid ASC updateTime DESC         
+creta_scrshot  hostId ASC updateTime DESC         
+creta_subscription  channelId ASC isRemoved ASC subscriptionChannelId ASC updateTime DESC         
+creta_subscription  channelId ASC isRemoved ASC updateTime DESC         
+creta_subscription  isRemoved ASC updateTime ASC         
+creta_team  enterprise ASC isRemoved ASC updateTime DESC         
+creta_team  isRemoved ASC mid ASC updateTime DESC         
+creta_team  isRemoved ASC name ASC parentMid ASC updateTime DESC         
+creta_team  isRemoved ASC name ASC updateTime DESC         
+creta_team  isRemoved ASC parentMid ASC updateTime DESC         
+creta_team  isRemoved ASC updateTime ASC         
+creta_team  mid Array isRemoved ASC updateTime DESC         
+creta_team  teamMembers Array isRemoved ASC updateTime DESC         
+creta_template  height ASC isRemoved ASC parentMid ASC width ASC updateTime DESC         
+creta_template  isRemoved ASC name ASC parentMid ASC realTimeKey ASC updateTime DESC         
+creta_template  isRemoved ASC parentMid ASC updateTime DESC         
+creta_user_property  email ASC isRemoved ASC   order_ ASC updateTime DESC         
+creta_user_property  email ASC isRemoved ASC updateTime DESC         
+creta_user_property  email ASC updateTime DESC         
+creta_user_property  enterprise ASC isRemoved ASC updateTime DESC         
+creta_user_property  isRemoved ASC parentMid ASC   order_ ASC updateTime DESC         
+creta_user_property  isRemoved ASC parentMid ASC updateTime DESC         
+creta_user_property  isRemoved ASC updateTime ASC         
+creta_user_property  isRemoved ASC updateTime DESC         
+creta_watch_history  isRemoved ASC updateTime ASC         
+creta_watch_history  isRemoved ASC userId ASC updateTime DESC         
 
+create extension if not exists btree_gin;
+CREATE INDEX idx_creta_book_1 ON creta_book (bookType ASC, creator ASC, isRemoved ASC, likeCount DESC, updateTime DESC);
+CREATE INDEX idx_creta_book_2 ON creta_book (bookType ASC, creator ASC, isRemoved ASC, name ASC, updateTime DESC);
+CREATE INDEX idx_creta_book_3 ON creta_book (bookType ASC, creator ASC, isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_book_4 ON creta_book (bookType ASC, creator ASC, isRemoved ASC, viewCount DESC, updateTime DESC);
+CREATE INDEX idx_creta_book_5 ON creta_book (bookType ASC, isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_book_6_shares ON creta_book USING GIN (shares);
+CREATE INDEX idx_creta_book_6 ON creta_book (bookType ASC, isRemoved ASC, likeCount DESC, updateTime DESC);
+CREATE INDEX idx_creta_book_7_shares ON creta_book USING GIN (shares);
+CREATE INDEX idx_creta_book_7 ON creta_book (bookType ASC, isRemoved ASC, name ASC, updateTime DESC);
+CREATE INDEX idx_creta_book_8_shares ON creta_book USING GIN (shares);
+CREATE INDEX idx_creta_book_8 ON creta_book (bookType ASC, isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_book_9_shares ON creta_book USING GIN (shares);
+CREATE INDEX idx_creta_book_9 ON creta_book (bookType ASC, isRemoved ASC, viewCount DESC, updateTime DESC);
+CREATE INDEX idx_creta_book_10 ON creta_book (creator ASC, isRemoved ASC, likeCount DESC, updateTime DESC);
+CREATE INDEX idx_creta_book_11 ON creta_book (creator ASC, isRemoved ASC, name ASC, updateTime DESC);
+CREATE INDEX idx_creta_book_12 ON creta_book (creator ASC, isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_book_13 ON creta_book (creator ASC, isRemoved ASC, viewCount DESC, updateTime DESC);
+CREATE INDEX idx_creta_book_14 ON creta_book (isRemoved ASC, parentMid ASC, createTime DESC);
+CREATE INDEX idx_creta_book_15 ON creta_book (isRemoved ASC, updateTime ASC);
+CREATE INDEX idx_creta_book_16 ON creta_book (isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_book_17_shares ON creta_book USING GIN (shares);
+CREATE INDEX idx_creta_book_17 ON creta_book (isRemoved ASC, likeCount DESC, updateTime DESC);
+CREATE INDEX idx_creta_book_18_shares ON creta_book USING GIN (shares);
+CREATE INDEX idx_creta_book_18 ON creta_book (isRemoved ASC, name ASC, updateTime DESC);
+CREATE INDEX idx_creta_book_19_shares ON creta_book USING GIN (shares);
+CREATE INDEX idx_creta_book_19 ON creta_book (isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_book_20_shares ON creta_book USING GIN (shares);
+CREATE INDEX idx_creta_book_20 ON creta_book (isRemoved ASC, viewCount DESC, updateTime DESC);
+CREATE INDEX idx_creta_book_published_1 ON creta_book_published (bookType ASC, creator ASC, isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_book_published_2 ON creta_book_published (bookType ASC, isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_book_published_3_channels ON creta_book_published USING GIN (channels);
+CREATE INDEX idx_creta_book_published_4 ON creta_book_published (isRemoved ASC, mid ASC, updateTime DESC);
+CREATE INDEX idx_creta_book_published_5 ON creta_book_published (isRemoved ASC, parentMid ASC, updateTime DESC);
+CREATE INDEX idx_creta_book_published_6 ON creta_book_published (isRemoved ASC, sourceMid ASC, updateTime DESC);
+CREATE INDEX idx_creta_book_published_7 ON creta_book_published (isRemoved ASC, updateTime ASC);
+CREATE INDEX idx_creta_book_published_8 ON creta_book_published (isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_book_published_9 ON creta_book_published (mid ASC, updateTime DESC);
+CREATE INDEX idx_creta_book_published_10_shares ON creta_book_published USING GIN (shares);
+CREATE INDEX idx_creta_book_published_10 ON creta_book_published (bookType ASC, isRemoved ASC, likeCount DESC, updateTime DESC);
+CREATE INDEX idx_creta_book_published_11_shares ON creta_book_published USING GIN (shares);
+CREATE INDEX idx_creta_book_published_11 ON creta_book_published (bookType ASC, isRemoved ASC, name ASC, updateTime DESC);
+CREATE INDEX idx_creta_book_published_12_shares ON creta_book_published USING GIN (shares);
+CREATE INDEX idx_creta_book_published_12 ON creta_book_published (bookType ASC, isRemoved ASC, viewCount DESC, updateTime DESC);
+CREATE INDEX idx_creta_book_published_13_shares ON creta_book_published USING GIN (shares);
+CREATE INDEX idx_creta_book_published_13 ON creta_book_published (isRemoved ASC, likeCount DESC, updateTime DESC);
+CREATE INDEX idx_creta_book_published_14_shares ON creta_book_published USING GIN (shares);
+CREATE INDEX idx_creta_book_published_14 ON creta_book_published (isRemoved ASC, name ASC, updateTime DESC);
+CREATE INDEX idx_creta_book_published_15_shares ON creta_book_published USING GIN (shares);
+CREATE INDEX idx_creta_book_published_15 ON creta_book_published (isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_book_published_16_shares ON creta_book_published USING GIN (shares);
+CREATE INDEX idx_creta_book_published_16 ON creta_book_published (isRemoved ASC, viewCount DESC, updateTime DESC);
+CREATE INDEX idx_creta_channel_1 ON creta_channel (isRemoved ASC, mid ASC, updateTime DESC);
+CREATE INDEX idx_creta_channel_2 ON creta_channel (isRemoved ASC, updateTime ASC);
+CREATE INDEX idx_creta_channel_3 ON creta_channel (isRemoved ASC, userId ASC, updateTime DESC);
+CREATE INDEX idx_creta_channel_4_mid ON creta_channel USING GIN (mid);
+CREATE INDEX idx_creta_channel_5 ON creta_channel (mid ASC, updateTime DESC);
+CREATE INDEX idx_creta_comment_1 ON creta_comment (bookId ASC, isRemoved ASC, parentId ASC, createTime ASC, updateTime DESC);
+CREATE INDEX idx_creta_comment_2 ON creta_comment (bookId ASC, isRemoved ASC, parentId ASC, createTime DESC, updateTime DESC);
+CREATE INDEX idx_creta_comment_3 ON creta_comment (isRemoved ASC, updateTime ASC);
+CREATE INDEX idx_creta_connected_user_1 ON creta_connected_user (isRemoved ASC, parentMid ASC, updateTime DESC);
+CREATE INDEX idx_creta_connected_user_2 ON creta_connected_user (isRemoved ASC, updateTime ASC);
+CREATE INDEX idx_creta_contents_1 ON creta_contents (isRemoved ASC, parentMid ASC,   order_ ASC, updateTime DESC);
+CREATE INDEX idx_creta_contents_2 ON creta_contents (isRemoved ASC, updateTime ASC);
+CREATE INDEX idx_creta_contents_published_1 ON creta_contents_published (isRemoved ASC, parentMid ASC,   order_ ASC, updateTime DESC);
+CREATE INDEX idx_creta_contents_published_2 ON creta_contents_published (isRemoved ASC, parentMid ASC, updateTime DESC);
+CREATE INDEX idx_creta_contents_published_3 ON creta_contents_published (isRemoved ASC, realTimeKey ASC, updateTime DESC);
+CREATE INDEX idx_creta_contents_published_4 ON creta_contents_published (isRemoved ASC, updateTime ASC);
+CREATE INDEX idx_creta_depot_1 ON creta_depot (contentsMid ASC, isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_depot_2 ON creta_depot (contentsType ASC, isRemoved ASC, parentMid ASC,   order_ ASC, updateTime DESC);
+CREATE INDEX idx_creta_depot_3 ON creta_depot (contentsType ASC, isRemoved ASC, parentMid ASC, updateTime DESC);
+CREATE INDEX idx_creta_depot_4 ON creta_depot (isRemoved ASC, parentMid ASC,   order_ ASC, updateTime DESC);
+CREATE INDEX idx_creta_depot_5 ON creta_depot (isRemoved ASC, parentMid ASC, updateTime DESC);
+CREATE INDEX idx_creta_depot_6 ON creta_depot (isRemoved ASC, updateTime ASC);
+CREATE INDEX idx_creta_enterprise_1 ON creta_enterprise (isRemoved ASC, name ASC,   order_ ASC, updateTime DESC);
+CREATE INDEX idx_creta_enterprise_2 ON creta_enterprise (isRemoved ASC, updateTime ASC);
+CREATE INDEX idx_creta_enterprise_3 ON creta_enterprise (isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_enterprise_4 ON creta_enterprise (name ASC, updateTime DESC);
+CREATE INDEX idx_creta_favorites_1 ON creta_favorites (bookId ASC, isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_favorites_2 ON creta_favorites (bookId ASC, isRemoved ASC, userId ASC, updateTime DESC);
+CREATE INDEX idx_creta_favorites_3 ON creta_favorites (isRemoved ASC, mid ASC, updateTime DESC);
+CREATE INDEX idx_creta_favorites_4 ON creta_favorites (isRemoved ASC, updateTime ASC);
+CREATE INDEX idx_creta_filter_1 ON creta_filter (isRemoved ASC, parentMid ASC, updateTime DESC);
+CREATE INDEX idx_creta_filter_2 ON creta_filter (isRemoved ASC, updateTime ASC);
+CREATE INDEX idx_creta_frame_1 ON creta_frame (frameType ASC, isRemoved ASC, parentMid ASC,   order_ ASC, updateTime DESC);
+CREATE INDEX idx_creta_frame_2 ON creta_frame (isRemoved ASC, parentMid ASC,   order_ ASC, updateTime DESC);
+CREATE INDEX idx_creta_frame_3 ON creta_frame (isRemoved ASC, parentMid ASC, updateTime DESC);
+CREATE INDEX idx_creta_frame_4 ON creta_frame (isRemoved ASC, updateTime ASC);
+CREATE INDEX idx_creta_frame_published_1 ON creta_frame_published (isRemoved ASC, parentMid ASC,   order_ ASC, updateTime DESC);
+CREATE INDEX idx_creta_frame_published_2 ON creta_frame_published (isRemoved ASC, parentMid ASC, updateTime DESC);
+CREATE INDEX idx_creta_frame_published_3 ON creta_frame_published (isRemoved ASC, updateTime ASC);
+CREATE INDEX idx_creta_host_1 ON creta_host (creator ASC, isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_host_2 ON creta_host (enterprise ASC, isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_host_3 ON creta_host (hostName ASC, isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_host_4 ON creta_host (isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_link_1 ON creta_link (isRemoved ASC, parentMid ASC, updateTime DESC);
+CREATE INDEX idx_creta_link_published_1 ON creta_link_published (isRemoved ASC, parentMid ASC, updateTime DESC);
+CREATE INDEX idx_creta_page_1 ON creta_page (isRemoved ASC, parentMid ASC,   order_ ASC, updateTime DESC);
+CREATE INDEX idx_creta_page_2 ON creta_page (isRemoved ASC, parentMid ASC, updateTime DESC);
+CREATE INDEX idx_creta_page_3 ON creta_page (isRemoved ASC, updateTime ASC);
+CREATE INDEX idx_creta_page_published_1 ON creta_page_published (isRemoved ASC, parentMid ASC,   order_ ASC, updateTime DESC);
+CREATE INDEX idx_creta_page_published_2 ON creta_page_published (isRemoved ASC, parentMid ASC, updateTime DESC);
+CREATE INDEX idx_creta_page_published_3 ON creta_page_published (isRemoved ASC, updateTime ASC);
+CREATE INDEX idx_creta_playlist_2 ON creta_playlist (channelId ASC, isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_playlist_4 ON creta_playlist (isRemoved ASC, mid ASC, updateTime DESC);
+CREATE INDEX idx_creta_playlist_5 ON creta_playlist (isRemoved ASC, name ASC, updateTime DESC);
+CREATE INDEX idx_creta_playlist_6 ON creta_playlist (isRemoved ASC, updateTime ASC);
+CREATE INDEX idx_creta_playlist_7 ON creta_playlist (isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_playlist_9 ON creta_playlist (mid ASC, updateTime DESC);
+CREATE INDEX idx_creta_scrshot_1 ON creta_scrshot (hostId ASC, updateTime DESC);
+CREATE INDEX idx_creta_subscription_1 ON creta_subscription (channelId ASC, isRemoved ASC, subscriptionChannelId ASC, updateTime DESC);
+CREATE INDEX idx_creta_subscription_2 ON creta_subscription (channelId ASC, isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_subscription_3 ON creta_subscription (isRemoved ASC, updateTime ASC);
+CREATE INDEX idx_creta_team_1 ON creta_team (enterprise ASC, isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_team_2 ON creta_team (isRemoved ASC, mid ASC, updateTime DESC);
+CREATE INDEX idx_creta_team_3 ON creta_team (isRemoved ASC, name ASC, parentMid ASC, updateTime DESC);
+CREATE INDEX idx_creta_team_4 ON creta_team (isRemoved ASC, name ASC, updateTime DESC);
+CREATE INDEX idx_creta_team_5 ON creta_team (isRemoved ASC, parentMid ASC, updateTime DESC);
+CREATE INDEX idx_creta_team_6 ON creta_team (isRemoved ASC, updateTime ASC);
+CREATE INDEX idx_creta_team_7 ON creta_team USING GIN (mid);
+CREATE INDEX idx_creta_team_8 ON creta_team USING GIN (teamMembers);
+CREATE INDEX idx_creta_template_1 ON creta_template (height ASC, isRemoved ASC, parentMid ASC, width ASC, updateTime DESC);
+CREATE INDEX idx_creta_template_2 ON creta_template (isRemoved ASC, name ASC, parentMid ASC, realTimeKey ASC, updateTime DESC);
+CREATE INDEX idx_creta_template_3 ON creta_template (isRemoved ASC, parentMid ASC, updateTime DESC);
+CREATE INDEX idx_creta_user_property_2 ON creta_user_property (email ASC, isRemoved ASC,   order_ ASC, updateTime DESC);
+CREATE INDEX idx_creta_user_property_3 ON creta_user_property (email ASC, isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_user_property_4 ON creta_user_property (email ASC, updateTime DESC);
+CREATE INDEX idx_creta_user_property_5 ON creta_user_property (enterprise ASC, isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_user_property_6 ON creta_user_property (isRemoved ASC, parentMid ASC,   order_ ASC, updateTime DESC);
+CREATE INDEX idx_creta_user_property_7 ON creta_user_property (isRemoved ASC, parentMid ASC, updateTime DESC);
+CREATE INDEX idx_creta_user_property_8 ON creta_user_property (isRemoved ASC, updateTime ASC);
+CREATE INDEX idx_creta_user_property_9 ON creta_user_property (isRemoved ASC, updateTime DESC);
+CREATE INDEX idx_creta_watch_history_1 ON creta_watch_history (isRemoved ASC, updateTime ASC);
+CREATE INDEX idx_creta_watch_history_3 ON creta_watch_history (isRemoved ASC, userId ASC, updateTime DESC);

@@ -31,13 +31,13 @@ class WatchHistoryModel extends CretaModel {
         bookId,
         //lastUpdateTime,
       ];
-  WatchHistoryModel(String pmid) : super(pmid: pmid, type: ExModelType.watchHistory, parent: '');
+  WatchHistoryModel(String pmid) : super(pmid: pmid, type: ExModelType.watch_history, parent: '');
 
   WatchHistoryModel.withName({
     required this.userId,
     required this.bookId,
     //required this.lastUpdateTime,
-  }) : super(pmid: '', type: ExModelType.watchHistory, parent: '');
+  }) : super(pmid: '', type: ExModelType.watch_history, parent: '');
 
   @override
   void copyFrom(AbsExModel src, {String? newMid, String? pMid}) {

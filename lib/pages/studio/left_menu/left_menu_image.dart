@@ -115,7 +115,7 @@ class _LeftMenuImageState extends State<LeftMenuImage> {
         .post(Uri.parse("${CretaAccountManager.getEnterprise!.mediaApiUrl}/downloadAiImg"),
             headers: {"Content-type": "application/json"},
             body: jsonEncode(
-                {"userId": myConfig!.serverConfig!.storageConnInfo.bucketId, "imgUrl": urlImage}))
+                {"userId": myConfig!.serverConfig.storageConnInfo.bucketId, "imgUrl": urlImage}))
         .then((value) async {
       final res = jsonDecode(value.body);
       final imgRes = await http.get(Uri.parse(res["fileView"]));
@@ -134,7 +134,7 @@ class _LeftMenuImageState extends State<LeftMenuImage> {
       Uri.parse("${CretaAccountManager.getEnterprise!.mediaApiUrl}/downloadAiImg"),
       headers: {"Content-type": "application/json"},
       body: jsonEncode(
-          {"userId": myConfig!.serverConfig!.storageConnInfo.bucketId, "imgUrl": urlImage}),
+          {"userId": myConfig!.serverConfig.storageConnInfo.bucketId, "imgUrl": urlImage}),
     );
   }
 

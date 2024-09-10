@@ -320,7 +320,7 @@ class BookManager extends BaseBookManager {
     String encodedJson = base64Encode(utf8.encode(retval));
 
     Map<String, dynamic> body = {
-      "bucketId": '"${myConfig!.serverConfig!.storageConnInfo.bucketId}"',
+      "bucketId": '"${myConfig!.serverConfig.storageConnInfo.bucketId}"',
       "encodeJson": '"$encodedJson"',
       "cloudType": '"${HycopFactory.toServerTypeString()}"',
     };
@@ -351,7 +351,7 @@ class BookManager extends BaseBookManager {
       String url = '$apiServer/downloadZipCheck';
 
       Map<String, dynamic> body = {
-        "bucketId": '"${myConfig!.serverConfig!.storageConnInfo.bucketId}"',
+        "bucketId": '"${myConfig!.serverConfig.storageConnInfo.bucketId}"',
         "bookId": '"$bookMid"',
         "cloudType": '"${HycopFactory.toServerTypeString()}"',
       }; // 'appwrite' or 'firebase'

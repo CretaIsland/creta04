@@ -87,6 +87,8 @@ class CretaAccountManager {
 
   //
   static Future<bool> initUserProperty({bool doGuestLogin = true}) async {
+    logger.info('initUserProperty');
+
     if (_userPropertyManagerHolder == null) {
       _userPropertyManagerHolder = UserPropertyManager();
       _userPropertyManagerHolder?.configEvent();
@@ -117,8 +119,9 @@ class CretaAccountManager {
     // 현재 로그인정보로 사용자정보 가져옴
     bool isLogined = await _getUserProperty();
     if (isLogined == false) {
-      logger.warning('login failed (_getUserProperty failed)');
+      logger.warning('login failed (_getUserProperty failed $doGuestLogin)');
       await logout(doGuestLogin: doGuestLogin);
+      //print('return false');
       return false;
     }
     await _getFrameListFromDB();
@@ -158,14 +161,50 @@ class CretaAccountManager {
   static Future<bool> logout({bool doGuestLogin = true, bool doClear = true}) async {
     if (doClear) clear();
     await AccountManager.logout();
+    //print('0000000000logout()');
     if (doGuestLogin) await _guestUserLogin();
     return true;
   }
 
+  static Future<bool> _guestUserLogin() async {
+    logger.finest(
+        '_guestUserLogin() ${myConfig!.serverConfig.guestUserId}, ${myConfig!.serverConfig.guestUserPassword}');
+    await AccountManager.login(
+            myConfig!.serverConfig.guestUserId, myConfig!.serverConfig.guestUserPassword)
+        .then((value) async {
+      HycopFactory.setBucketId();
+      await CretaAccountManager.initUserProperty(doGuestLogin: false).then((value) {
+        if (value) {
+          // success !!!
+          //Navigator.of(widget.context).pop();
+          //Routemaster.of(widget.getBuildContext.call()).push(AppRoutes.intro);
+          //widget.doAfterLogin?.call();
+        } else {
+          // fail
+          throw HycopUtils.getHycopException(defaultMessage: 'Login failed !!!');
+        }
+      });
+    }).onError((error, stackTrace) {
+      String errMsg;
+      if (error is HycopException) {
+        HycopException ex = error;
+        logger.severe(ex.message);
+        errMsg = '로그인에 실패하였습니다. 가입된 정보를 확인해보세요.';
+      } else {
+        errMsg = 'Unknown DB Error to login $error, (${myConfig!.serverConfig.guestUserId})!!!';
+        logger.severe(errMsg);
+      }
+      //widget.onErrorReport?.call(errMsg);
+    });
+    return (AccountManager.currentLoginUser.isGuestUser);
+  }
+
   static Future<bool> _getUserProperty() async {
     if (currentLoginUser.isLoginedUser == false && currentLoginUser.isGuestUser == false) {
+      logger.info('_getUserProperty : not logined and guest user');
       return false;
     }
+    logger.info('_getUserProperty : logined or guest user');
     userPropertyManagerHolder.addWhereClause(
         'parentMid', QueryValue(value: currentLoginUser.userId));
     userPropertyManagerHolder.addWhereClause('isRemoved', QueryValue(value: false));
@@ -520,37 +559,6 @@ class CretaAccountManager {
   static void setChannelDescription(ChannelModel targetModel) {
     channelManagerHolder.setToDB(targetModel);
     channelManagerHolder.notify();
-  }
-
-  static Future<bool> _guestUserLogin() async {
-    logger.finest('_login pressed');
-    await AccountManager.login(myConfig!.config.guestUserId, myConfig!.config.guestUserPassword)
-        .then((value) async {
-      HycopFactory.setBucketId();
-      await CretaAccountManager.initUserProperty(doGuestLogin: false).then((value) {
-        if (value) {
-          // success !!!
-          //Navigator.of(widget.context).pop();
-          //Routemaster.of(widget.getBuildContext.call()).push(AppRoutes.intro);
-          //widget.doAfterLogin?.call();
-        } else {
-          // fail
-          throw HycopUtils.getHycopException(defaultMessage: 'Login failed !!!');
-        }
-      });
-    }).onError((error, stackTrace) {
-      String errMsg;
-      if (error is HycopException) {
-        HycopException ex = error;
-        logger.severe(ex.message);
-        errMsg = '로그인에 실패하였습니다. 가입된 정보를 확인해보세요.';
-      } else {
-        errMsg = 'Unknown DB Error !!!';
-        logger.severe(errMsg);
-      }
-      //widget.onErrorReport?.call(errMsg);
-    });
-    return (AccountManager.currentLoginUser.isGuestUser);
   }
 
   static Future<UserPropertyModel?> getUserPropertyModel(String email) async {

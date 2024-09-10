@@ -756,7 +756,7 @@ class _LoginDialogState extends State<LoginDialog> {
   Future<void> _loginByGoogle() async {
     logger.finest('_loginByGoogle');
     await CretaAccountManager.logout(doGuestLogin: false);
-    AccountManager.createAccountByGoogle(myConfig!.config.googleOAuthCliendId).then((value) {
+    AccountManager.createAccountByGoogle(myConfig!.serverConfig.googleOAuthCliendId).then((value) {
       HycopFactory.setBucketId();
       CretaAccountManager.userPropertyManagerHolder
           .addWhereClause('isRemoved', QueryValue(value: false));

@@ -147,20 +147,26 @@ class _LandingPageState extends State<LandingPage> {
 
   Future<bool>? initLang() async {
     await Snippet.setLang();
+    //print('========1');
     _initMenu();
-    oldLanguage = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.language;
+    ///print('========2');
+    if (CretaAccountManager.userPropertyManagerHolder.userPropertyModel != null) {
+      oldLanguage = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.language;
+    }
+    //print('========3');
 
     return true;
   }
 
   void _initMenu() {
     TextStyle searchFilterStyle = CretaFont.buttonLarge.copyWith(fontSize: 20);
+    //print('========1.1');
 
     languageItemList.clear();
     for (var element in CretaMyPageLang['languageList']!) {
       languageItemList.add(Text(element, style: CretaFont.bodyMedium));
     }
-
+    //print('========1.2');
     purposeItems = [
       DropdownMenuItem(
           value: BookType.presentation,
@@ -181,12 +187,14 @@ class _LandingPageState extends State<LandingPage> {
           child: Text(CretaCommuLang['likeOrder']!, //"좋아요순",
               style: searchFilterStyle))
     ];
-
+    //print('========1.3');
     //selectedLanguage = languageItems.first.value;
     selectedPurpose = purposeItems.first.value;
+    //print('========1.3.1');
     selectedSort = sortItems.first.value;
-
+    //print('========1.3.2');
     _imageLeffOffset = _calcImageLeftOffset();
+    //print('========1.4');
   }
 
   Future<void> afterBuild() async {
@@ -262,12 +270,12 @@ class _LandingPageState extends State<LandingPage> {
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             //error가 발생하게 될 경우 반환하게 되는 부분
-            logger.severe("data fetch error(WaitDatum)");
-            return const Center(child: Text('data fetch error(WaitDatum)'));
+            logger.severe("data fetch error(WaitDatum) isLangInit");
+            return const Center(child: Text('data fetch error(WaitDatum) isLangInit'));
           }
           if (snapshot.hasData == false) {
             //print('xxxxxxxxxxxxxxxxxxxxx');
-            logger.finest("wait data ...(WaitData)");
+            logger.finest("wait data ...(WaitData) isLangInit");
             return Center(
               child: CretaSnippet.showWaitSign(),
             );
@@ -340,6 +348,8 @@ class _LandingPageState extends State<LandingPage> {
         userId: 'cretacreates');
 
     await bookPublishedManagerHolder.queryByAddedContitions();
+
+    //print('searchCretaBook()');
     List<AbsExModel> queryResults = bookPublishedManagerHolder.modelList;
     for (var result in queryResults) {
       searchCretaBooks.add(result as BookModel);
@@ -766,14 +776,21 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   double _calcImageLeftOffset() {
+    if (CretaAccountManager.userPropertyManagerHolder.userPropertyModel == null) {
+      logger.severe("userPropertyModel is null");
+      return 0;
+    }
+    //print('========1.3.2.1');
     LanguageType language =
         CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.language;
+    //print('========1.3.2.2');
     switch (language) {
       case LanguageType.english:
         return 145.0;
       case LanguageType.japanese:
         return 120.0;
       default:
+        //print('========1.3.2.3');
         return 0;
     }
   }

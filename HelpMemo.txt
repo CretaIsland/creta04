@@ -3,7 +3,7 @@
 # ############################
 
 flutter run -d chrome
-
+flutter run -d chrome --dart-define=serviceType=signage --dart-define=serverType=firebase   
 # ############################
 # Build
 # ############################
@@ -19,7 +19,7 @@ flutter build web --web-renderer html --release --base-href="/creta04_v11/" --no
 # Run
 # ############################
 
-#flutter run -d chrome --web-renderer html
+#flutter run -d chrome --web-renderer html --dart-define=serviceType=signage --dart-define=serverType=firebase   
 # or
 flutter run -d chrome --web-renderer canvaskit
 
@@ -42,7 +42,7 @@ flutter run -d chrome --web-renderer html
 
 ## login_page.dart 에서 version 번호를 바꾸는 것을 잊지말자.  ver 0.01
 
-flutter build web --web-renderer html --release --base-href="/creta04_v11/" --no-tree-shake-icons    
+flutter build web --web-renderer html --release --base-href="/creta04_v11/" --no-tree-shake-icons --dart-define=serviceType=signage --dart-define=serverType=firebase   
 #flutter build web --web-renderer html --release  --no-tree-shake-icons    
 # or
 #flutter build web --web-renderer canvaskit --release --base-href="/creta04_v11/"  

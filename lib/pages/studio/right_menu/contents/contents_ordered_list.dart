@@ -810,7 +810,7 @@ class _ContentsOrderedListState extends State<ContentsOrderedList> with Property
             onEditComplete: (value) {
               model.remoteUrl = value;
               widget.contentsManager.setToDB(model);
-              //widget.contentsManager.notify();
+              widget.contentsManager.notify();
               _sendEvent!.sendEvent(model);
               _notifyToThumbnail();
             },

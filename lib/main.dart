@@ -29,7 +29,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupLogger();
   Logger.root.level = Level.SEVERE;
-  HycopFactory.serverType = ServerType.firebase;
+
+  const String serverType = String.fromEnvironment('serverType', defaultValue: 'firebase');
+  HycopFactory.serverType = ServerType.fromString(serverType);
   await HycopFactory.initAll();
 
   if (CretaVars.instance.isDeveloper == false) {

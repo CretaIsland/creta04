@@ -347,7 +347,7 @@ class _LandingPageState extends State<LandingPage> {
         searchKeyword: '',
         userId: 'cretacreates');
 
-    print('bookPublishedManagerHolder.queryByAddedContitions()');
+    //print('bookPublishedManagerHolder.queryByAddedContitions()');
     await bookPublishedManagerHolder.queryByAddedContitions();
 
     //print('searchCretaBook()');

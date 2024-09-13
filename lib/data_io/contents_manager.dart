@@ -319,7 +319,7 @@ class ContentsManager extends BaseContentsManager {
     query['parentMid'] = QueryValue(value: frameModel.mid);
     query['isRemoved'] = QueryValue(value: false);
     Map<String, OrderDirection> orderBy = {};
-    orderBy['order'] = OrderDirection.ascending;
+    orderBy[HycopUtils.order] = OrderDirection.ascending;
     await queryFromDB(query, orderBy: orderBy, limit: limit);
     logger.finest('getContents ${modelList.length}');
     return modelList.length;

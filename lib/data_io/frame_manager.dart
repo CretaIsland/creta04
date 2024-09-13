@@ -5,6 +5,7 @@ import 'package:creta_common/common/creta_const.dart';
 import 'package:creta_common/common/creta_vars.dart';
 import 'package:creta_studio_io/data_io/base_frame_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:hycop/hycop/utils/hycop_utils.dart';
 //import 'package:flutter_treeview/flutter_treeview.dart';
 import '../design_system/component/tree/flutter_treeview.dart';
 //import 'package:hycop/common/undo/save_manager.dart';
@@ -603,7 +604,7 @@ class FrameManager extends BaseFrameManager {
     query['parentMid'] = QueryValue(value: parentMid);
     query['isRemoved'] = QueryValue(value: false);
     Map<String, OrderDirection> orderBy = {};
-    orderBy['order'] = OrderDirection.ascending;
+    orderBy[HycopUtils.order] = OrderDirection.ascending;
     await queryFromDB(query, orderBy: orderBy, limit: limit);
     //print('getFrames ${modelList.length}');
     return modelList.length;

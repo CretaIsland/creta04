@@ -1373,6 +1373,7 @@ class _LoginDialogState extends State<LoginDialog> {
                     decoType: CretaButtonDeco.fill,
                     textColor: Colors.white,
                     onPressed: () {
+                      //print('------------signUp-----------------');
                       if (_isAllRequirementsChecked() == false) return;
                       String nickname = _signupNicknameTextEditingController.text;
                       String id = _signupEmailTextEditingController.text;
@@ -1389,7 +1390,8 @@ class _LoginDialogState extends State<LoginDialog> {
                         } else if (pwd.isEmpty || pwd != pwdConf) {
                           _setErrorMessage(passwordErrorMessage: CretaCommuLang["checkPassword"]!);
                         } else if (!CretaCommonUtils.checkPasswordStrength(pwd)) {
-                          _setErrorMessage(passwordErrorMessage: CretaCommuLang["invalidPasswordStrength"]!);
+                          _setErrorMessage(
+                              passwordErrorMessage: CretaCommuLang["invalidPasswordStrength"]!);
                         } else if (agreeTerms == false) {
                           _setErrorMessage(
                               requirementsErrorMessage: CretaCommuLang["agreeToTerms"]!);

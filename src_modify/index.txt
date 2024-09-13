@@ -257,4 +257,4 @@ GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA "public" TO anon;
 
 CREATE INDEX idx_hycop_users ON hycop_users ("email" ASC, "password" ASC);
 
-# hycop_users 에 notloginuserid@sqisoft.com 를 만들어야 함.
+# hycop_users 에 notloginuserid@sqisoft.com 를 만들어야 함. 

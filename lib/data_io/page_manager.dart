@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:creta_studio_io/data_io/base_page_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:hycop/hycop/utils/hycop_utils.dart';
 //import 'package:flutter_treeview/flutter_treeview.dart';
 import '../common/creta_utils.dart';
 import '../design_system/component/tree/flutter_treeview.dart';
@@ -775,7 +776,7 @@ class PageManager extends BasePageManager {
     query['parentMid'] = QueryValue(value: bookModel!.mid);
     query['isRemoved'] = QueryValue(value: false);
     Map<String, OrderDirection> orderBy = {};
-    orderBy['order'] = OrderDirection.ascending;
+    orderBy[HycopUtils.order] = OrderDirection.ascending;
     await queryFromDB(query, orderBy: orderBy, limit: limit);
     logger.finest('getPages ${modelList.length}');
     return modelList.length;

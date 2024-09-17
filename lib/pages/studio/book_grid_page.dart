@@ -119,6 +119,7 @@ class _BookGridPageState extends State<BookGridPage> with CretaBasicLayoutMixin 
       bookManagerHolder!
           .sharedData(
         AccountManager.currentLoginUser.email,
+        includeRead: false,
       )
           .then((value) {
         if (value.isNotEmpty) {
@@ -130,7 +131,7 @@ class _BookGridPageState extends State<BookGridPage> with CretaBasicLayoutMixin 
         logger.warning('CurrentTeam is null}');
       } else {
         logger.fine('CurrentTeam=${TeamManager.getCurrentTeam!.name}');
-        bookManagerHolder!.teamData().then((value) {
+        bookManagerHolder!.teamData(CretaAccountManager.getMyTeamMembers(), includeRead: false).then((value) {
           if (value.isNotEmpty) {
             bookManagerHolder!.addRealTimeListen(value.first.mid);
           }

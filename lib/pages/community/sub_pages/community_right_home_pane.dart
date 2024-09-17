@@ -121,6 +121,8 @@ class _CommunityRightHomePaneState extends State<CommunityRightHomePane> {
   void initState() {
     super.initState();
 
+    //print('CommunityRightHomePane.initState() ------------------');
+
     bookPublishedManagerHolder = BookPublishedManager();
     teamManagerHolder = TeamManager();
     userPropertyManagerHolder = UserPropertyManager();

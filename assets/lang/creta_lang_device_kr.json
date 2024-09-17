@@ -14,6 +14,8 @@
     "teamCretaDevice": "팀 디바이스",
     "sharedCretaDevice": "공유 디바이스",
     "myCretaDeviceDesc": "님의 크레타 디바이스를 관리합니다.",
+    "teamCretaDeviceDesc": "님의 팀 디바이스를 관리합니다.",
+   "sharedCretaDeviceDesc": "님의 공유된 디바이스를 관리합니다.",
     "myCretaAdminDesc": "님의 크레타 디바이스의 라이센스를 관리합니다.",
     "enterpriseDesc": "님의 크레타 고객 정보를 관리합니다.",
     "inputHostInfo": "생성할 디바이스 정보를 입력하세요",

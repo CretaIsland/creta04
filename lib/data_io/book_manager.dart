@@ -7,8 +7,7 @@ import 'package:creta_common/common/creta_common_utils.dart';
 import 'package:creta_common/common/creta_vars.dart';
 import 'package:creta_studio_io/data_io/base_book_manager.dart';
 import 'package:creta_user_io/data_io/creta_manager.dart';
-import 'package:creta_user_io/data_io/team_manager.dart';
-import 'package:creta_user_model/model/user_property_model.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:hycop/hycop.dart';
@@ -16,12 +15,12 @@ import '../common/creta_utils.dart';
 import '../design_system/component/tree/src/models/node.dart';
 import 'package:creta_common/lang/creta_lang.dart';
 import '../lang/creta_studio_lang.dart';
-import 'package:creta_common/model/app_enums.dart';
+
 import 'package:creta_studio_model/model/book_model.dart';
 import 'package:creta_studio_model/model/contents_model.dart';
 import 'package:creta_common/model/creta_model.dart';
 import 'package:creta_studio_model/model/page_model.dart';
-import 'package:creta_user_model/model/team_model.dart';
+
 //import '../pages/login_page.dart';
 import '../pages/login/creta_account_manager.dart';
 import '../pages/studio/book_main_page.dart';
@@ -94,101 +93,115 @@ class BookManager extends BaseBookManager {
     return sampleBook;
   }
 
-  Future<List<AbsExModel>> sharedData(String userId, {int? limit}) async {
-    logger.finest('sharedData');
-    Map<String, QueryValue> query = {};
-    List<String> users = [
-      '<${PermissionType.reader.name}>$userId',
-      '<${PermissionType.writer.name}>$userId',
-      '<${PermissionType.owner.name}>$userId',
-      '<${PermissionType.owner.name}>${UserPropertyModel.defaultEmail}',
-    ];
-    TeamModel? myTeam = TeamManager.getCurrentTeam;
-    if (myTeam != null) {
-      String myTeamId = myTeam.name;
-      users.add('<${PermissionType.reader.name}>$myTeamId');
-      users.add('<${PermissionType.writer.name}>$myTeamId');
-      users.add('<${PermissionType.owner.name}>$myTeamId');
-    }
+  // Future<List<AbsExModel>> sharedData(String userId, {int? limit}) async {
+  //   logger.finest('sharedData');
+  //   Map<String, QueryValue> query = {};
+  //   List<String> users = [
+  //     //'<${PermissionType.reader.name}>$userId',
+  //     '<${PermissionType.writer.name}>$userId',
+  //     '<${PermissionType.owner.name}>$userId',
+  //     '<${PermissionType.owner.name}>${UserPropertyModel.defaultEmail}',
+  //   ];
+  //   TeamModel? myTeam = TeamManager.getCurrentTeam;
+  //   if (myTeam != null) {
+  //     String myTeamId = myTeam.name;
+  //     users.add('<${PermissionType.reader.name}>$myTeamId');
+  //     users.add('<${PermissionType.writer.name}>$myTeamId');
+  //     users.add('<${PermissionType.owner.name}>$myTeamId');
+  //   }
 
-    BookType bookType = CretaVars.instance.defaultBookType();
-    if (bookType != BookType.none) {
-      query['bookType'] = QueryValue(value: bookType.index);
-    }
+  //   BookType bookType = CretaVars.instance.defaultBookType();
+  //   if (bookType != BookType.none) {
+  //     query['bookType'] = QueryValue(value: bookType.index);
+  //   }
 
-    modelList.clear();
+  //   modelList.clear();
 
-    for (var user in users) {
-      query['shares'] = QueryValue(value: user, operType: OperType.arrayContainsAny);
-      //query['creator'] = QueryValue(value: userId, operType: OperType.isNotEqualTo);
-      query['isRemoved'] = QueryValue(value: false);
-      final retval = await queryFromDB(query, limit: limit, isNew: false);
-      // 자기것은 빼고 나온다
-      for (var ele in retval) {
-        BookModel book = ele as BookModel;
-        if (book.creator == userId) {
-          remove(book);
-        }
-      }
-    }
+  //   // query['shares'] = QueryValue(value: users, operType: OperType.arrayContainsAny);
+  //   // //query['creator'] = QueryValue(value: userId, operType: OperType.isNotEqualTo);
+  //   // query['isRemoved'] = QueryValue(value: false);
+  //   // final retval = await queryFromDB(query, limit: limit, isNew: false);
+  //   // // 자기것은 빼고 나온다
+  //   // for (var ele in retval) {
+  //   //   BookModel book = ele as BookModel;
+  //   //   if (book.creator == userId) {
+  //   //     remove(book);
+  //   //   }
+  //   // }
 
-    return modelList;
-  }
+  //   for (var user in users) {
+  //     query['shares'] = QueryValue(value: user, operType: OperType.arrayContainsAny);
+  //     //query['shares'] = QueryValue(value: user, operType: OperType.arrayContainsAny);
+  //     //query['creator'] = QueryValue(value: userId, operType: OperType.isNotEqualTo);
+  //     query['isRemoved'] = QueryValue(value: false);
+  //     final retval = await queryFromDB(query, limit: limit, isNew: false);
+  //     // 자기것은 빼고 나온다
+  //     for (var ele in retval) {
+  //       BookModel book = ele as BookModel;
+  //       if (book.creator == userId) {
+  //         remove(book);
+  //       }
+  //     }
+  //   }
+  //   // 모델리스트에서 중복은 제거해야 한다.
+  //   removeDuplicatesByMid();
+  //   return modelList;
+  // }
 
-  Future<List<AbsExModel>> teamData({int? limit}) async {
-    logger.finest('teamData');
-    Map<String, QueryValue> query = {};
-    List<String> creators = [];
-    List<String> queryVal = [];
-    TeamModel? myTeam = TeamManager.getCurrentTeam;
-    if (myTeam != null) {
-      String myTeamId = myTeam.name;
-      queryVal.add('<${PermissionType.reader.name}>$myTeamId');
-      queryVal.add('<${PermissionType.writer.name}>$myTeamId');
-      queryVal.add('<${PermissionType.owner.name}>$myTeamId');
-    }
+  // Future<List<AbsExModel>> teamData({int? limit}) async {
+  //   logger.finest('teamData');
+  //   Map<String, QueryValue> query = {};
+  //   List<String> creators = [];
+  //   List<String> queryVal = [];
+  //   TeamModel? myTeam = TeamManager.getCurrentTeam;
+  //   if (myTeam != null) {
+  //     String myTeamId = myTeam.name;
+  //     queryVal.add('<${PermissionType.reader.name}>$myTeamId');
+  //     queryVal.add('<${PermissionType.writer.name}>$myTeamId');
+  //     queryVal.add('<${PermissionType.owner.name}>$myTeamId');
+  //   }
 
-    Set<UserPropertyModel>? myMembers = CretaAccountManager.getMyTeamMembers();
-    if (myMembers == null) {
-      return [];
-    }
-    for (UserPropertyModel ele in myMembers) {
-      creators.add(ele.email);
-      queryVal.add('<${PermissionType.reader.name}>${ele.email}');
-      queryVal.add('<${PermissionType.writer.name}>${ele.email}');
-      queryVal.add('<${PermissionType.owner.name}>${ele.email}');
-    }
+  //   Set<UserPropertyModel>? myMembers = CretaAccountManager.getMyTeamMembers();
+  //   if (myMembers == null) {
+  //     return [];
+  //   }
+  //   for (UserPropertyModel ele in myMembers) {
+  //     creators.add(ele.email);
+  //     queryVal.add('<${PermissionType.reader.name}>${ele.email}');
+  //     queryVal.add('<${PermissionType.writer.name}>${ele.email}');
+  //     queryVal.add('<${PermissionType.owner.name}>${ele.email}');
+  //   }
 
-    BookType bookType = CretaVars.instance.defaultBookType();
-    if (bookType != BookType.none) {
-      query['bookType'] = QueryValue(value: bookType.index);
-    }
+  //   BookType bookType = CretaVars.instance.defaultBookType();
+  //   if (bookType != BookType.none) {
+  //     query['bookType'] = QueryValue(value: bookType.index);
+  //   }
 
-    query['creator'] = QueryValue(value: creators, operType: OperType.whereIn);
-    //query['shares'] = QueryValue(value: queryVal, operType: OperType.arrayContainsAny);
-    query['isRemoved'] = QueryValue(value: false);
-    final bookList = await queryFromDB(query, limit: limit);
-    List<BookModel> retval = [];
-    for (var ele in bookList) {
-      BookModel book = ele as BookModel;
-      // books 의 shared 에서 creator 와 같은놈은 제거해야 한다.
-      // 그렇지 않으면 자신은 자기 팀원이기 때문에, 무조건 권한을 갖게된다.
-      book.shares.remove('<${PermissionType.owner.name}>${book.creator}');
-      book.shares.remove('<${PermissionType.reader.name}>${book.creator}');
-      book.shares.remove('<${PermissionType.writer.name}>${book.creator}');
-      for (String authStr in queryVal) {
-        if (book.shares.contains(authStr) == true) {
-          //print('$authStr=${book.shares.toString()}');
-          retval.add(book);
-          break;
-        }
-      }
-    }
-    modelList.clear();
-    modelList = [...retval];
-    //print('total=${modelList.length}------------------------------');
-    return modelList;
-  }
+  //   query['creator'] = QueryValue(value: creators, operType: OperType.whereIn);
+  //   //query['shares'] = QueryValue(value: queryVal, operType: OperType.arrayContainsAny);
+  //   query['isRemoved'] = QueryValue(value: false);
+  //   final bookList = await queryFromDB(query, limit: limit);
+  //   List<BookModel> retval = [];
+  //   for (var ele in bookList) {
+  //     BookModel book = ele as BookModel;
+  //     // books 의 shared 에서 creator 와 같은놈은 제거해야 한다.
+  //     // 그렇지 않으면 자신은 자기 팀원이기 때문에, 무조건 권한을 갖게된다.
+  //     book.shares.remove('<${PermissionType.owner.name}>${book.creator}');
+  //     book.shares.remove('<${PermissionType.reader.name}>${book.creator}');
+  //     book.shares.remove('<${PermissionType.writer.name}>${book.creator}');
+  //     for (String authStr in queryVal) {
+  //       if (book.shares.contains(authStr) == true) {
+  //         //print('$authStr=${book.shares.toString()}');
+  //         retval.add(book);
+  //         break;
+  //       }
+  //     }
+  //   }
+  //   modelList.clear();
+  //   modelList = [...retval];
+  //   //print('total=${modelList.length}------------------------------');
+  //   return modelList;
+  // }
 
   String prefix() => CretaManager.modelPrefix(ExModelType.book);
 

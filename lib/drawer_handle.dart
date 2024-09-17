@@ -127,45 +127,59 @@ class DrawerHandleState extends State<DrawerHandle> with DrawerMixin {
             const SizedBox(height: 8),
             ...List.generate(topMenuItems.length, (index) {
               var topItem = topMenuItems[index];
-              return
-                  // MouseRegion(
-                  //   onEnter: (event) {
-                  //     //_showSubMenu(context, event.position);
-                  //     DrawerMain.expandedMenuItemIndex = index;
-                  //     widget.isStudioEditor
-                  //         ? widget.scaffoldKey.currentState?.closeDrawer()
-                  //         : widget.scaffoldKey.currentState?.openDrawer();
-                  //   },
-                  //  child:
-                  InkWell(
-                // onHover: (event) {
-                //   DrawerMain.expandedMenuItemIndex = index;
-                //        widget.scaffoldKey.currentState?.openDrawer();
-                // },
-                onTap: topItem.onPressed,
-                hoverColor: Colors.grey[200], // Hover effect color
-                splashColor: Colors.blue,
+              return MouseRegion(
+                onEnter: (event) {
+                  //_showSubMenu(context, event.position);
+                  DrawerMain.expandedMenuItemIndex = index;
+                  widget.scaffoldKey.currentState?.openDrawer();
+                },
+                //child: const Icon(Icons.arrow_drop_down_outlined),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                  padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 16.0),
                   //child: Icon(topItem.iconData),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(topItem.iconData),
-                      MouseRegion(
-                        onEnter: (event) {
-                          //_showSubMenu(context, event.position);
-                          DrawerMain.expandedMenuItemIndex = index;
-                          widget.scaffoldKey.currentState?.openDrawer();
-                        },
-                        child: const Icon(Icons.arrow_drop_down_outlined),
-                      ),
-                    ],
-                  ),
-                  //), // Button effect color
+                  child: Icon(topItem.iconData),
                 ),
+                //), // Button effect color
               );
+              // MouseRegion(
+              //   onEnter: (event) {
+              //     //_showSubMenu(context, event.position);
+              //     DrawerMain.expandedMenuItemIndex = index;
+              //     widget.isStudioEditor
+              //         ? widget.scaffoldKey.currentState?.closeDrawer()
+              //         : widget.scaffoldKey.currentState?.openDrawer();
+              //   },
+              //  child:
+              // InkWell(
+              //   // onHover: (event) {
+              //   //   DrawerMain.expandedMenuItemIndex = index;
+              //   //   widget.scaffoldKey.currentState?.openDrawer();
+              //   // },
+              //   //onTap: topItem.onPressed,
+              //   hoverColor: Colors.grey[200], // Hover effect color
+              //   splashColor: Colors.blue,
+              //   child: Padding(
+              //     padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+              //     //child: Icon(topItem.iconData),
+              //     child: Column(
+              //       mainAxisAlignment: MainAxisAlignment.start,
+              //       mainAxisSize: MainAxisSize.min,
+              //       children: [
+              //         Icon(topItem.iconData),
+              //         MouseRegion(
+              //           onEnter: (event) {
+              //             //_showSubMenu(context, event.position);
+              //             DrawerMain.expandedMenuItemIndex = index;
+              //             widget.scaffoldKey.currentState?.openDrawer();
+              //           },
+              //           child: const Icon(Icons.arrow_drop_down_outlined),
+
+              //         ),
+              //       ],
+              //     ),
+              //     //), // Button effect color
+              //   ),
+              // );
               // return ListTile(
               //   title: Icon(topItem.iconData),
               //   onTap: topItem.onPressed,
@@ -173,7 +187,8 @@ class DrawerHandleState extends State<DrawerHandle> with DrawerMixin {
             }),
             ListTile(
               title: const Padding(
-                padding: EdgeInsets.only(left: 4.0),
+                padding: EdgeInsets.symmetric(
+                    vertical: 10.0, horizontal: 4.0), //EdgeInsets.only(left: 4.0),
                 child: Icon(Icons.exit_to_app),
               ), // 로그아웃 아이콘
               onTap: () {

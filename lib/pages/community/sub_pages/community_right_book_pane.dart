@@ -143,6 +143,8 @@ class _CommunityRightBookPaneState extends State<CommunityRightBookPane> {
   void initState() {
     super.initState();
 
+    //print('_CommunityRightBookPaneState  initState()--------------------------');
+
     StudioVariables.isAutoPlay = false;
 
     if (CommunityRightBookPane.bookId.isEmpty) {
@@ -188,6 +190,8 @@ class _CommunityRightBookPaneState extends State<CommunityRightBookPane> {
       frameModel: dummyFrame,
       tableName: 'creta_contents_published',
     );
+
+    //print('startQueries --------------------------');
 
     CretaManager.startQueries(
       joinList: [

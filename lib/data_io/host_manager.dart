@@ -16,9 +16,12 @@ import 'package:hycop/hycop.dart';
 import '../model/host_model.dart';
 import 'package:creta_common/model/creta_model.dart';
 import 'package:creta_user_io/data_io/creta_manager.dart';
+// ignore: depend_on_referenced_packages
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HostManager extends CretaManager {
-  late Stream<QuerySnapshot> _stream;
+  late Stream<QuerySnapshot> _firebaseStream;
+  late SupabaseStreamBuilder _supabaseStream;
 
   HostManager() : super('creta_host', null) {
     saveManagerHolder?.registerManager('host', this);
@@ -123,7 +126,11 @@ class HostManager extends CretaManager {
     Map<String, QueryValue> query = {};
     query['creator'] = QueryValue(value: userId);
     query['isRemoved'] = QueryValue(value: false);
-    _stream = initStream(where: query, orderBy: 'updateTime', limit: limit);
+    if (HycopFactory.serverType == ServerType.supabase) {
+      _supabaseStream = initStream(where: query, orderBy: 'updateTime', limit: limit);
+    } else {
+      _firebaseStream = initStream(where: query, orderBy: 'updateTime', limit: limit);
+    }
   }
 
   void initSharedStream(String enterprise, {int? limit}) {
@@ -132,11 +139,18 @@ class HostManager extends CretaManager {
       query['enterprise'] = QueryValue(value: enterprise);
     }
     query['isRemoved'] = QueryValue(value: false);
-    _stream = initStream(where: query, orderBy: 'updateTime', limit: limit);
+    if (HycopFactory.serverType == ServerType.supabase) {
+      _supabaseStream = initStream(where: query, orderBy: 'updateTime', limit: limit);
+    } else {
+      _firebaseStream = initStream(where: query, orderBy: 'updateTime', limit: limit);
+    }
   }
 
   Widget streamHost({required Widget Function(List<Map<String, dynamic>>) consumerFunc}) {
-    return streamData2(consumerFunc: consumerFunc, snapshot: _stream);
+    if (HycopFactory.serverType == ServerType.supabase) {
+      return streamData2(consumerFunc: consumerFunc, snapshot: _supabaseStream);
+    }
+    return streamData2(consumerFunc: consumerFunc, snapshot: _firebaseStream);
   }
 
   Widget myStreamDataOnly(String userId,

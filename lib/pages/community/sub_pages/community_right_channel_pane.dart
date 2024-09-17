@@ -143,6 +143,7 @@ class _CommunityRightChannelPaneState extends State<CommunityRightChannelPane> {
     dummyManagerHolder = WatchHistoryManager();
 
     if (widget.currentChannelModel == null) {
+      //print('currentChannelModel is null');
       CretaManager.startQueries(
         joinList: [
           QuerySet(channelManagerHolder, _getCurrentChannelFromDB, _resultCurrentChannelFromDB),
@@ -239,6 +240,7 @@ class _CommunityRightChannelPaneState extends State<CommunityRightChannelPane> {
 
   void _getBooksFromDB(List<AbsExModel> modelList) {
     if (_currentChannelModel == null) {
+      //print('4-- state idle--------------------');
       bookPublishedManagerHolder.setState(DBState.idle);
       return;
     }
@@ -253,6 +255,9 @@ class _CommunityRightChannelPaneState extends State<CommunityRightChannelPane> {
     //   sortTimeName: 'updateTime',
     // );
     List<String> channelIdList = [CommunityRightChannelPane.channelId];
+
+    //print('channelIdList=$channelIdList----------');
+
     bookPublishedManagerHolder.addWhereClause('isRemoved', QueryValue(value: false));
     bookPublishedManagerHolder.addWhereClause(
         'channels', QueryValue(value: channelIdList, operType: OperType.arrayContainsAny));

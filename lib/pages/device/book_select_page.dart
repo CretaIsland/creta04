@@ -11,6 +11,7 @@ import 'package:hycop/hycop/account/account_manager.dart';
 
 import '../../data_io/book_published_manager.dart';
 import '../../design_system/component/snippet.dart';
+import '../login/creta_account_manager.dart';
 import '../studio/book_grid_page.dart';
 
 class BookSelectPage extends StatefulWidget {
@@ -71,7 +72,7 @@ class _BookSelectPageState extends State<BookSelectPage> {
         logger.warning('CurrentTeam is null}');
       } else {
         logger.fine('CurrentTeam=${TeamManager.getCurrentTeam!.name}');
-        bookManagerHolder!.teamData().then((value) {
+        bookManagerHolder!.teamData(CretaAccountManager.getMyTeamMembers()).then((value) {
           if (value.isNotEmpty) {
             bookManagerHolder!.addRealTimeListen(value.first.mid);
           }

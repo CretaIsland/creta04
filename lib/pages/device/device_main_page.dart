@@ -281,7 +281,8 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
   }
 
   void _initData() {
-    if (HycopFactory.serverType == ServerType.firebase) {
+    if (HycopFactory.serverType == ServerType.firebase ||
+        HycopFactory.serverType == ServerType.supabase) {
       if (widget.selectedPage == DeviceSelectedPage.myPage) {
         return hostManagerHolder!.initMyStream(
           AccountManager.currentLoginUser.email,
@@ -527,9 +528,9 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
       case DeviceSelectedPage.myPage:
         return CretaDeviceLang['myCretaDevice']!;
       case DeviceSelectedPage.sharedPage:
-        return CretaStudioLang['sharedCretaBook']!;
+        return CretaDeviceLang['sharedCretaDevice']!;
       case DeviceSelectedPage.teamPage:
-        return CretaStudioLang['teamCretaBook']!;
+        return CretaDeviceLang['teamCretaDevice']!;
       default:
         return CretaDeviceLang['myCretaDevice']!;
     }
@@ -540,11 +541,11 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
       case DeviceSelectedPage.myPage:
         return CretaDeviceLang['myCretaDeviceDesc']!;
       case DeviceSelectedPage.sharedPage:
-        return CretaStudioLang['sharedCretaBookDesc']!;
+        return CretaDeviceLang['sharedCretaDeviceDesc']!;
       case DeviceSelectedPage.teamPage:
-        return CretaStudioLang['teamCretaBookDesc']!;
+        return CretaDeviceLang['teamCretaDeviceDesc']!;
       default:
-        return CretaDeviceLang['myCretaDevice']!;
+        return CretaDeviceLang['myCretaDeviceDesc']!;
     }
   }
 
@@ -552,7 +553,8 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
     // if (sizeListener.isResizing()) {
     //   return consumerFunc(context, null);
     // }
-    if (HycopFactory.serverType == ServerType.firebase) {
+    if (HycopFactory.serverType == ServerType.firebase ||
+        HycopFactory.serverType == ServerType.supabase) {
       // if (widget.selectedPage == DeviceSelectedPage.myPage) {
       //   return hostManagerHolder!.myStreamDataOnly(
       //     AccountManager.currentLoginUser.email,
@@ -576,7 +578,11 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
       //return Center(child: Text('wrong selectedPage ${widget.selectedPage}'));
       return hostManagerHolder!.streamHost(
         consumerFunc: (resultList) {
-          return _hostList(hostManagerHolder!);
+          //return _hostList(hostManagerHolder!);
+          return Consumer<HostManager>(builder: (context, hostManager, child) {
+            //print('Consumer  ${hostManager.getLength() + 1}');
+            return _hostList(hostManager);
+          });
         },
       );
     }
@@ -605,7 +611,7 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
   Widget consumerFunc(
       /*List<AbsExModel>? data*/
       ) {
-    logger.finest('consumerFunc');
+    //print('consumerFunc');
 
     _onceDBGetComplete = true;
     selectNotifierHolder.init(hostManagerHolder!);
@@ -613,7 +619,7 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
     // selectedItems = List.generate(hostManagerHolder!.getAvailLength() + 2, (index) => false);
 
     return Consumer<HostManager>(builder: (context, hostManager, child) {
-      logger.fine('Consumer  ${hostManager.getLength() + 1}');
+      //print('Consumer  ${hostManager.getLength() + 1}');
       return _hostList(hostManager);
     });
   }
@@ -714,9 +720,10 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
                 //print(
                 //    '3. selectNotifierHolder.hasSelected() = ${selectNotifierHolder.hasSelected()}');
 
-                setState(() {
-                  selectedRowKeys = keys;
-                });
+                //setState(() {
+                selectedRowKeys = keys;
+                hostManagerHolder!.notify();
+                //});
               },
               columns: columnInfoList
                   .map((columnInfo) => WebDataColumn(
@@ -1295,7 +1302,7 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
       ],
     );
     return Consumer<DeviceSelectNotifier>(builder: (context, selectedNotifier, child) {
-      //print('selectNotifierHolder.hasSelected() = ${selectNotifierHolder.hasSelected()}');
+      //print('2.selectNotifierHolder.hasSelected() = ${selectNotifierHolder.hasSelected()}');
       return Container(
         padding: EdgeInsets.symmetric(vertical: 20.0),
         //height: LayoutConst.deviceToolbarHeight,

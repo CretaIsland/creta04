@@ -14,6 +14,8 @@
    "teamCretaDevice": "Team device",
    "sharedCretaDevice": "Shared device",
    "myCretaDeviceDesc": "Manage your Creta device",
+   "teamCretaDeviceDesc": "Manage your Team device",
+   "sharedCretaDeviceDesc": "Manage your Shared device",
    "myCretaAdminDesc": "Manages your Creta device's licenses",
    "enterpriseDesc": "Manages your Creta customer information",
    "inputHostInfo": "Enter the device information to create",

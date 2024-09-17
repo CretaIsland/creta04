@@ -14,6 +14,8 @@
    "teamCretaDevice": "チームデバイス",
    "sharedCretaDevice": "共有デバイス",
    "myCretaDeviceDesc": "さんのCretaデバイスを管理します",
+   "teamCretaDeviceDesc": "チームデバイスを管理する",
+   "sharedCretaDeviceDesc": "共有デバイスを管理する",
    "myCretaAdminDesc": "クレタデバイスのライセンスを管理します。",
    "enterpriseDesc": "クレタの顧客情報を管理します。", 
    "inputHostInfo": "作成するデバイス情報を入力してください",

@@ -123,6 +123,8 @@ class _CommunityPageState extends State<CommunityPage> with CretaBasicLayoutMixi
   void initState() {
     super.initState();
 
+    //print('CommunityPage initState()------------------------------------');
+
     _filterBookType = CretaVars.instance.defaultBookType();
 
     favoritesManagerHolder = FavoritesManager();
@@ -1923,6 +1925,8 @@ class _CommunityPageState extends State<CommunityPage> with CretaBasicLayoutMixi
 
   Widget _getRightPane(BuildContext context) {
     //Size size = Size(rightPaneRect.childWidth, rightPaneRect.childHeight);
+
+    //print('_getRightPane(${widget.subPageUrl})---------------');
     switch (widget.subPageUrl) {
       case AppRoutes.channel:
         switch (_communityChannelType) {

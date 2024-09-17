@@ -703,7 +703,8 @@ class _BookPublishDialogState extends State<BookPublishDialog> with BookInfoMixi
         ChannelManager channelManagerHolder = ChannelManager();
         channelManagerHolder.updateToDB(
           CretaAccountManager.getUserProperty!.channelId,
-          {"lastPublishTime": HycopUtils.dateTimeToDB(DateTime.now())},
+          //{"lastPublishTime": HycopUtils.dateTimeToDB(DateTime.now())},
+          {"latestContentsTime": HycopUtils.dateTimeToDB(DateTime.now())},
         );
         _modifier = isNew ? CretaStudioLang['newely']! : CretaStudioLang['update']!;
         _publishResultStr = CretaStudioLang['publishComplete']!;
@@ -1060,7 +1061,7 @@ class _BookPublishDialogState extends State<BookPublishDialog> with BookInfoMixi
                   padding: const EdgeInsets.only(left: 0, bottom: 6, right: 4.0),
                   height: 30,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       CretaAccountManager.userPropertyManagerHolder.profileImageBox(
                           model: userModel,
@@ -1098,29 +1099,30 @@ class _BookPublishDialogState extends State<BookPublishDialog> with BookInfoMixi
                         ),
                       ),
                       if (isNotCreator)
-                        Container(
-                          width: 104,
-                          alignment: Alignment.centerLeft,
-                          child: CretaDropDownButton(
-                              selectedColor: CretaColor.text[700]!,
-                              textStyle: CretaFont.bodyESmall,
-                              width: 106,
-                              height: 28,
-                              itemHeight: 28,
-                              dropDownMenuItemList: StudioSnippet.getPublishPermitionListItem(
-                                  defaultValue: permitionList[index],
-                                  onChanged: (val) {
-                                    if (val == PermissionType.writer) {
-                                      _addWriters(email);
-                                    } else if (val == PermissionType.reader) {
-                                      _addReaders(email);
-                                    }
-                                    setState(() {
-                                      //widget.model!.save();
-                                      _resetList();
-                                    });
-                                  })),
-                        ),
+                        // Container(
+                        //   width: 104,
+                        //   alignment: Alignment.centerLeft,
+                        //child:
+                        CretaDropDownButton(
+                            selectedColor: CretaColor.text[700]!,
+                            textStyle: CretaFont.bodyESmall,
+                            width: 121,
+                            height: 28,
+                            itemHeight: 28,
+                            dropDownMenuItemList: StudioSnippet.getPublishPermitionListItem(
+                                defaultValue: permitionList[index],
+                                onChanged: (val) {
+                                  if (val == PermissionType.writer) {
+                                    _addWriters(email);
+                                  } else if (val == PermissionType.reader) {
+                                    _addReaders(email);
+                                  }
+                                  setState(() {
+                                    //widget.model!.save();
+                                    _resetList();
+                                  });
+                                })),
+                      //),
                       isNotCreator
                           ? BTN.fill_gray_i_s(
                               icon: Icons.close,

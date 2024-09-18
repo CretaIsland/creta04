@@ -415,7 +415,7 @@ class _BookEditorPropertyState extends State<BookEditorProperty> with PropertyMi
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(left: 16.0, right: 1.0, top: 16, bottom: 16),
+          padding: const EdgeInsets.only(left: 4.0, right: 1.0, top: 16, bottom: 16),
           child: Scrollbar(
             //thumbVisibility: true,
             controller: _scrollController1,
@@ -431,7 +431,7 @@ class _BookEditorPropertyState extends State<BookEditorProperty> with PropertyMi
                 }
                 UserPropertyModel? userModel = _findModel(email);
                 return Container(
-                  padding: const EdgeInsets.only(left: 0, bottom: 6, right: 12.0),
+                  padding: const EdgeInsets.only(left: 0, bottom: 6, right: 5.0),
                   height: 30,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -463,31 +463,32 @@ class _BookEditorPropertyState extends State<BookEditorProperty> with PropertyMi
                         ),
                       ),
                       if (isNotCreator)
-                        Container(
-                          width: 96,
-                          alignment: Alignment.centerLeft,
-                          child: CretaDropDownButton(
-                              selectedColor: CretaColor.text[700]!,
-                              textStyle: CretaFont.bodyESmall,
-                              width: 87,
-                              height: 28,
-                              itemHeight: 28,
-                              dropDownMenuItemList: StudioSnippet.getPermitionListItem(
-                                  defaultValue: permitionList[index],
-                                  onChanged: (val) {
-                                    if (val == PermissionType.owner) {
-                                      _addOwners(email);
-                                    } else if (val == PermissionType.writer) {
-                                      _addWriters(email);
-                                    } else if (val == PermissionType.reader) {
-                                      _addReaders(email);
-                                    }
-                                    setState(() {
-                                      //widget.model.save();
-                                      _resetList();
-                                    });
-                                  })),
-                        ),
+                        // Container(
+                        //   width: 96,
+                        //   alignment: Alignment.centerLeft,
+                        //   child:
+                        CretaDropDownButton(
+                            selectedColor: CretaColor.text[700]!,
+                            textStyle: CretaFont.bodyESmall,
+                            width: 102,
+                            height: 28,
+                            itemHeight: 28,
+                            dropDownMenuItemList: StudioSnippet.getPermitionListItem(
+                                defaultValue: permitionList[index],
+                                onChanged: (val) {
+                                  if (val == PermissionType.owner) {
+                                    _addOwners(email);
+                                  } else if (val == PermissionType.writer) {
+                                    _addWriters(email);
+                                  } else if (val == PermissionType.reader) {
+                                    _addReaders(email);
+                                  }
+                                  setState(() {
+                                    //widget.model.save();
+                                    _resetList();
+                                  });
+                                })),
+                      //),
                       isNotCreator
                           ? BTN.fill_gray_i_s(
                               icon: Icons.close,

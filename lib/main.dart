@@ -28,7 +28,7 @@ void main() async {
   setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   setupLogger();
-  Logger.root.level = Level.SEVERE;
+  Logger.root.level = Level.FINEST;
 
   const String serverType = String.fromEnvironment('serverType', defaultValue: 'firebase');
   HycopFactory.serverType = ServerType.fromString(serverType);

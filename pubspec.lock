@@ -1318,10 +1318,10 @@ packages:
     dependency: "direct main"
     description:
       name: hycop
-      sha256: cb9c085213b2b93c2fb043a9619e45522b0e4e6bf09a5ca612fa0198997208d5
+      sha256: "690b7e806c1d2b2d862d4c774a56f4609a41ed5eaf4afbe36a7050e6f926e4ce"
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.69"
+    version: "0.4.71"
   id3_codec:
     dependency: "direct main"
     description:

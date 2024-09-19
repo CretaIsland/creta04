@@ -24,11 +24,12 @@ import 'pages/login/creta_account_manager.dart';
 import 'routes.dart';
 
 void main() async {
-  //CretaVars.instance.isDeveloper = true;
+  const String isDeveloper = String.fromEnvironment('isDeveloper', defaultValue: 'false');
+  CretaVars.instance.isDeveloper = (isDeveloper == 'true');
   setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   setupLogger();
-  Logger.root.level = Level.FINEST;
+  Logger.root.level = Level.SEVERE;
 
   const String serverType = String.fromEnvironment('serverType', defaultValue: 'firebase');
   HycopFactory.serverType = ServerType.fromString(serverType);

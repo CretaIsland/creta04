@@ -12,7 +12,6 @@ console.log("executeSQL function loaded");
 Deno.serve(async (req) => {
   try {
     console.log("executeSQL 1");
-
     console.log("Request Method:", req.method);
     console.log("Request URL:", req.url);
 // Headers 객체를 배열로 변환하여 출력
@@ -75,7 +74,9 @@ Deno.serve(async (req) => {
 
     return new Response(
       JSON.stringify(data),
-      { status: 200, headers: { "Content-Type": "application/json" } },
+      { status: 200, headers: { 
+        'Access-Control-Allow-Origin': '*',
+        "Content-Type": "application/json" } },
     );
   } catch (err) {
     return new Response(

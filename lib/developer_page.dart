@@ -134,6 +134,12 @@ class _DeveloperPageState extends State<DeveloperPage> {
               const Text("parentMid 에, "),
               const Text("hycop_users table 의 cretacreates@gmail.com 데이터의"),
               const Text("userId 값을 넣으시오"),
+
+              TextButton(
+                  child: const Text('remove delta'),
+                  onPressed: () async {
+                    _removeDelta();
+                  }),
             ],
           ))),
     );
@@ -150,6 +156,16 @@ Future<void> _createTable(AbsExModel model, {String? tableName}) async {
         await HycopFactory.function!.execute2(functionId: "executeSQL", params: {"sql": script});
   } catch (e) {
     logger.severe('executeSQL test failed $e');
+  }
+  logger.info(result);
+}
+
+Future<void> _removeDelta() async {
+  String result = '0';
+  try {
+    result = await HycopFactory.function!.execute2(functionId: "removeDelta");
+  } catch (e) {
+    logger.severe('removeDelta test failed $e');
   }
   logger.info(result);
 }

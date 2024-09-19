@@ -621,7 +621,9 @@ docker desktop 을 설치하고, docker 를 구동시킨다음 아래의 명령�
 
 supabase functions deploy hello-world --project-ref jaeumzhrdayuyqhemhyk
 
+Scheduling Edge Functions
 supabase functions deploy executeSQL --project-ref jaeumzhrdayuyqhemhyk
+supabase functions deploy removeDelta --project-ref jaeumzhrdayuyqhemhyk
 
 중간에 Docker 를 share 하겠냐는 팝업창이 하나 뜨는데, yes  해주어야 한다.
 
@@ -652,6 +654,28 @@ supabase secrets list
 
 *** createTable 과 같은 명령을 실행하기 위해서는 다음과 같은 권한주기 작업을 해야 한다.
 GRANT CREATE ON SCHEMA public TO PUBLIC;
+
+8. function schedule  만드는 법
+
+1) supabase web console site 에서  database-extention  메뉴에서  pg_net 과  pg_cron 을 찾아서  enable 시킨다.
+2) SQL Editor 에 가서 다음과 같은 SQL 을 실행시킨다.
+select
+  cron.schedule(
+    'invoke-function-every-minute',
+    '* * * * *', -- every minute
+    $$
+    select
+      net.http_post(
+          url:='https://jaeumzhrdayuyqhemhyk.supabase.co/functions/v1/removeDelta',
+          headers:='{"Content-Type": "application/json", "Authorization": "Bearer" : "your_api_key"}'::jsonb,
+          body:=concat('{"endPoint": "https://jaeumzhrdayuyqhemhyk.supabase.co", "apiKey": "your_api_key", "roleKey": "your_role_key"}')::jsonb
+      ) as request_id;
+    $$
+  );
+
+2) Table Editor 로 가서 scheme 를 cron 으로 변경해서 job 을 선택하면, job 이 하나 생긴것을 볼 수 있다.
+3) Edge function 에 가서  removeDelta 의 log 를 보면 매 1분 마다 실행한 것을 알 수 있다.
+4) 문제는 이 문장을 어딘가에 보관해야 한다는 것이다.  그런데,  apiKey 등이 들어있어서 git 에 커밋할 수가 없다.
 
 
 

@@ -47,7 +47,7 @@ function _removeDelta()
             var key = '/hycop_delta/' + childKey +'/';
             functions.logger.log('skpark start remove =' + key);
             database.ref(key).remove((error) => {
-                if(error) {
+                if(error) {ㅊㅇ 
                     functions.logger.log('skpark removed =' + key + ' failed : ' + error);
                 } else {
                     functions.logger.log('skpark removed =' + key + ' succeed');
@@ -72,15 +72,7 @@ function _formatDate() {
     const milliseconds = String(ago.getMilliseconds()).padStart(3, '0');
 
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}`; 
-    
-    // const dateOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    // const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', fractionalSecondDigits: 3, hour12: false};
-    
-    // const formattedDate = currentDateTime.toLocaleDateString('ko-KR', dateOptions).replace('.', '-').replace(' ', '').replace('.', '-').replace(' ', '').replace(/.$/, '');  //제일끝에 한글자 제거
-    // const formattedTime = currentDateTime.toLocaleTimeString('ko-KR', timeOptions);
-    
-    // //console.log(formattedCurrentDateTime); // 예: "2023-07-09 14:30:45.123"
-    // return `${formattedDate} ${formattedTime}`;
+  
 }
 
 exports.cleanBin_schedule = functions.runWith({ timeoutSeconds: 300 }).pubsub.schedule('every 24 hours').onRun((context) => {

@@ -13,21 +13,21 @@ import 'package:hycop/hycop/account/account_manager.dart';
 import 'package:routemaster/routemaster.dart';
 
 import 'design_system/buttons/creta_button_wrapper.dart';
-import 'design_system/menu/creta_popup_menu.dart';
+//import 'design_system/menu/creta_popup_menu.dart';
 import 'drawer_mixin.dart';
 import 'pages/studio/studio_variables.dart';
 
-class TopMenuItem {
-  final String caption;
-  final List<CretaMenuItem> subMenuItems;
-  final IconData iconData;
+// class TopMenuItem {
+//   final String caption;
+//   final List<CretaMenuItem> subMenuItems;
+//   final IconData iconData;
 
-  TopMenuItem({
-    required this.caption,
-    required this.subMenuItems,
-    required this.iconData,
-  });
-}
+//   TopMenuItem({
+//     required this.caption,
+//     required this.subMenuItems,
+//     required this.iconData,
+//   });
+// }
 
 class DrawerMain extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;

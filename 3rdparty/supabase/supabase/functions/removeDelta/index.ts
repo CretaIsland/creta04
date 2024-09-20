@@ -6,20 +6,24 @@
 
 ////////////////////////////////////////////////////////
 // scheduling SQL query execution every minute
-////////////////////////////////////////////////////////  
-// select
-//   cron.schedule(
-//     'invoke-function-every-minute',
-//     '* * * * *', -- every minute
-//     $$
-//     select
-//       net.http_post(
-//           url:='https://jaeumzhrdayuyqhemhyk.supabase.co/functions/v1/removeDelta',
-//           headers:='{"Content-Type": "application/json", "Authorization": "Bearer" : "your_api_key"}'::jsonb,
-//           body:=concat('{"endPoint": "https://jaeumzhrdayuyqhemhyk.supabase.co", "apiKey": "your_api_key", "roleKey": "your_role_key"}')::jsonb
-//       ) as request_id;
-//     $$
-//   );
+// SQL Editor 에서 작업할것   memo.txt 8번항 참고할것.
+// 
+//////////////////////////////////////////////////////// 
+/* 
+select
+  cron.schedule(
+    'invoke-removeDelta-every-minute',
+    '* * * * *', -- every minute
+    $$
+    select
+      net.http_post(
+          url:='https://jaeumzhrdayuyqhemhyk.supabase.co/functions/v1/cleanBin',
+          headers:='{"Content-Type": "application/json", "Authorization": "Bearer" : "your_api_key"}'::jsonb,
+          body:=concat('{"endPoint": "https://jaeumzhrdayuyqhemhyk.supabase.co", "apiKey": "your_api_key", "roleKey": "your_role_key"}')::jsonb
+      ) as request_id;
+    $$
+  );
+*/
 ////////////////////////////////////////////////////////
 
 
@@ -41,15 +45,15 @@ Deno.serve(async (req) => {
   // )
 
   try {
-  console.log("Request Method:", req.method);
-  console.log("Request URL:", req.url);
+  //console.log("Request Method:", req.method);
+  //console.log("Request URL:", req.url);
 
   // Headers 객체를 배열로 변환하여 출력
   const headersArray = [];
   for (const [key, value] of req.headers.entries()) {
     headersArray.push({ key, value });
   }
-  console.log("Request Headers:", JSON.stringify(headersArray));
+  //console.log("Request Headers:", JSON.stringify(headersArray));
 
   // CORS 처리
   if (req.method === "OPTIONS") {
@@ -65,10 +69,9 @@ Deno.serve(async (req) => {
     });
   }
 
-  console.log("executeSQL 1.1");
 
   const { endPoint, apiKey, roleKey} = await req.json();
-  console.log("executeSQL 2");
+  console.log("removeDelta ");
 
   // Ensure the SQL query, endPoint, and apiKey are provided
   if (!endPoint || !apiKey || !roleKey) {
@@ -85,9 +88,9 @@ Deno.serve(async (req) => {
   }
 
   // Execute the SQL query using Supabase client
-  console.log("endPoint: ", endPoint);
-  console.log("apiKey: ", apiKey);
-  console.log("roleKey: ", roleKey);
+  //console.log("endPoint: ", endPoint);
+  //console.log("apiKey: ", apiKey);
+  //console.log("roleKey: ", roleKey);
   const supabase: SupabaseClient = createClient(endPoint, roleKey || apiKey);
   
   let oneMinuteAgoStr: string = _formatDate();

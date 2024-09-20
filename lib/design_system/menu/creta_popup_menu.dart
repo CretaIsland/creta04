@@ -12,7 +12,7 @@ class CretaMenuItem {
   final String caption;
   final IconData? iconData;
   final double? iconSize;
-  Function? onPressed;
+  Function()? onPressed;
   Function(bool)? onHover;
   List<CretaMenuItem>? subMenu;
   String? referencedAttr;

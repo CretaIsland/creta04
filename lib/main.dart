@@ -23,13 +23,41 @@ import 'pages/studio/studio_getx_controller.dart';
 import 'pages/login/creta_account_manager.dart';
 import 'routes.dart';
 
+Level logLevelFromString(String level) {
+  switch (level) {
+    case 'all':
+      return Level.ALL;
+    case 'finest':
+      return Level.FINEST;
+    case 'finer':
+      return Level.FINER;
+    case 'fine':
+      return Level.FINE;
+    case 'config':
+      return Level.CONFIG;
+    case 'info':
+      return Level.INFO;
+    case 'warning':
+      return Level.WARNING;
+    case 'severe':
+      return Level.SEVERE;
+    case 'shout':
+      return Level.SHOUT;
+    case 'off':
+      return Level.OFF;
+    default:
+      return Level.SEVERE;
+  }
+}
+
 void main() async {
   const String isDeveloper = String.fromEnvironment('isDeveloper', defaultValue: 'false');
   CretaVars.instance.isDeveloper = (isDeveloper == 'true');
   setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   setupLogger();
-  Logger.root.level = Level.SEVERE;
+  const String level = String.fromEnvironment('logLevel', defaultValue: 'severe');
+  Logger.root.level = logLevelFromString(level);
 
   const String serverType = String.fromEnvironment('serverType', defaultValue: 'firebase');
   HycopFactory.serverType = ServerType.fromString(serverType);
@@ -70,6 +98,8 @@ class _MainRouteAppState extends ConsumerState<MainRouteApp> {
         }
         await Snippet.setLang(language: userModel.language);
       }
+    } else {
+      await Snippet.setLang(language: LanguageType.korean);
     }
     return true;
   }

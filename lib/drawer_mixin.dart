@@ -118,7 +118,7 @@ mixin DrawerMixin {
         },
         subMenuItems: [
           CretaMenuItem(
-            caption: CretaStudioLang['myCretaBook']!,
+            caption: CretaStudioLang['myCretaBook'] ?? 'myCretaBook',
             onPressed: () {
               Routemaster.of(context).push(AppRoutes.studioBookGridPage);
               BookGridPage.lastGridMenu = AppRoutes.studioBookSharedPage;
@@ -126,7 +126,7 @@ mixin DrawerMixin {
             iconData: Icons.import_contacts_outlined,
           ),
           CretaMenuItem(
-            caption: CretaStudioLang['sharedCretaBook']!,
+            caption: CretaStudioLang['sharedCretaBook'] ?? 'sharedCretaBook',
             onPressed: () {
               Routemaster.of(context).pop();
               Routemaster.of(context).push(AppRoutes.studioBookSharedPage);
@@ -135,7 +135,7 @@ mixin DrawerMixin {
             iconData: Icons.share_outlined,
           ),
           CretaMenuItem(
-            caption: CretaStudioLang['teamCretaBook']!,
+            caption: CretaStudioLang['teamCretaBook'] ?? 'teamCretaBook',
             onPressed: () {
               Routemaster.of(context).push(AppRoutes.studioBookTeamPage);
               BookGridPage.lastGridMenu = AppRoutes.studioBookSharedPage;
@@ -143,7 +143,7 @@ mixin DrawerMixin {
             iconData: Icons.group_outlined,
           ),
           CretaMenuItem(
-            caption: CretaStudioLang['trashCan']!,
+            caption: CretaStudioLang['trashCan'] ?? 'trashCan',
             onPressed: () {
               //Routemaster.of(context).push(AppRoutes.studioBookTrashCanPage);
               //BookGridPage.lastGridMenu = AppRoutes.studioBookTrashCanPage;
@@ -163,7 +163,7 @@ mixin DrawerMixin {
         },
         subMenuItems: [
           CretaMenuItem(
-            caption: CretaDeviceLang['myCretaDevice']!,
+            caption: CretaDeviceLang['myCretaDevice'] ?? 'myCretaBook',
             onPressed: () {
               Routemaster.of(context).pop();
               Routemaster.of(context).push(AppRoutes.deviceMainPage);
@@ -174,7 +174,7 @@ mixin DrawerMixin {
           if ((AccountManager.currentLoginUser.isSuperUser ||
               EnterpriseManager.isAdmin(AccountManager.currentLoginUser.email)))
             CretaMenuItem(
-              caption: CretaDeviceLang['sharedCretaDevice']!,
+              caption: CretaDeviceLang['sharedCretaDevice'] ?? 'sharedCretaDevice',
               onPressed: () {
                 Routemaster.of(context).pop();
                 Routemaster.of(context).push(AppRoutes.deviceSharedPage);
@@ -183,7 +183,7 @@ mixin DrawerMixin {
               iconData: Icons.share_outlined,
             ),
           CretaMenuItem(
-            caption: CretaDeviceLang['teamCretaDevice']!,
+            caption: CretaDeviceLang['teamCretaDevice'] ?? 'teamCretaDevice',
             onPressed: () {
               // Routemaster.of(context).push(AppRoutes.studioBookTeamPage);
               // DeviceMainPage.lastGridMenu = AppRoutes.studioBookSharedPage;
@@ -191,7 +191,7 @@ mixin DrawerMixin {
             iconData: Icons.group_outlined,
           ),
           CretaMenuItem(
-            caption: CretaStudioLang['trashCan']!,
+            caption: CretaStudioLang['trashCan'] ?? 'trashCan',
             onPressed: () {
               //Routemaster.of(context).push(AppRoutes.studioBookTrashCanPage);
               //DeviceMainPage.lastGridMenu = AppRoutes.studioBookTrashCanPage;
@@ -208,31 +208,31 @@ mixin DrawerMixin {
         },
         subMenuItems: [
           CretaMenuItem(
-              caption: CretaMyPageLang['dashboard']!,
+              caption: CretaMyPageLang['dashboard'] ?? 'dashboard',
               iconData: Icons.account_circle_outlined,
               onPressed: () {
                 Routemaster.of(context).push(AppRoutes.myPageDashBoard);
               }),
           CretaMenuItem(
-              caption: CretaMyPageLang['info']!,
+              caption: CretaMyPageLang['info'] ?? 'info',
               iconData: Icons.lock_person_outlined,
               onPressed: () {
                 Routemaster.of(context).push(AppRoutes.myPageInfo);
               }),
           CretaMenuItem(
-              caption: CretaMyPageLang['accountManage']!,
+              caption: CretaMyPageLang['accountManage'] ?? 'accountManage',
               iconData: Icons.manage_accounts_outlined,
               onPressed: () {
                 Routemaster.of(context).push(AppRoutes.myPageAccountManage);
               }),
           CretaMenuItem(
-              caption: CretaMyPageLang['settings']!,
+              caption: CretaMyPageLang['settings'] ?? 'settings',
               iconData: Icons.notifications_outlined,
               onPressed: () {
                 Routemaster.of(context).push(AppRoutes.myPageSettings);
               }),
           CretaMenuItem(
-              caption: CretaMyPageLang['teamManage']!,
+              caption: CretaMyPageLang['teamManage'] ?? 'teamManage',
               iconData: Icons.group_outlined,
               onPressed: () {
                 Routemaster.of(context).push(AppRoutes.myPageTeamManage);
@@ -250,7 +250,7 @@ mixin DrawerMixin {
           },
           subMenuItems: [
             CretaMenuItem(
-              caption: CretaDeviceLang['enterprise']!,
+              caption: CretaDeviceLang['enterprise'] ?? 'enterprise',
               onPressed: () {
                 AdminMainPage.showSelectEnterpriseWarnning(context);
                 Routemaster.of(context).push(AppRoutes.adminMainPage);
@@ -288,7 +288,7 @@ mixin DrawerMixin {
         subMenuItems: [
           CretaMenuItem(
             iconData: Icons.group,
-            caption: CretaLang['accountMenu']![1], // 팀전환
+            caption: CretaLang['accountMenu'] != null ? CretaLang['accountMenu']![1] : '팀전환',
             onPressed: () {
               if (AccountManager.currentLoginUser.isLoginedUser == false) {
                 BookMainPage.warningNeedToLogin(context);
@@ -298,7 +298,7 @@ mixin DrawerMixin {
           ),
           CretaMenuItem(
             iconData: Icons.info_outline,
-            caption: CretaLang['accountMenu']![4], // 버전 정보
+            caption: CretaLang['accountMenu'] != null ? CretaLang['accountMenu']![4] : '버전 정보',
             onPressed: () {
               showDialog(
                   context: context,
@@ -311,8 +311,12 @@ mixin DrawerMixin {
             CretaMenuItem(
               iconData: Icons.developer_mode_outlined,
               caption: CretaVars.instance.isDeveloper
-                  ? CretaLang['accountMenu']![6]
-                  : CretaLang['accountMenu']![5], //개발자모드
+                  ? CretaLang['accountMenu'] != null
+                      ? CretaLang['accountMenu']![6]
+                      : '개발자모드 해제'
+                  : CretaLang['accountMenu'] != null
+                      ? CretaLang['accountMenu']![5]
+                      : '개발자모드 활성화',
               onPressed: () {
                 // showDialog(
                 //     context: context,
@@ -324,7 +328,6 @@ mixin DrawerMixin {
               },
             ),
         ],
-        
       ),
       // TopMenuItem(
       //   caption: 'Logout',

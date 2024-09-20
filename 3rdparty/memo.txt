@@ -526,7 +526,7 @@ firebase emulators:start
 
 firebase deploy --only functions
 firebase deploy --only functions:removeDelta
-firebase deploy --only functions:removeDelta_schedule
+firebase deploy --only functions:cleanBin_schedule
 
 Error: Failed to fetch Run service undefined
 위와 같은 에러가 난다면
@@ -624,6 +624,7 @@ supabase functions deploy hello-world --project-ref jaeumzhrdayuyqhemhyk
 Scheduling Edge Functions
 supabase functions deploy executeSQL --project-ref jaeumzhrdayuyqhemhyk
 supabase functions deploy removeDelta --project-ref jaeumzhrdayuyqhemhyk
+supabase functions deploy cleanBin --project-ref jaeumzhrdayuyqhemhyk
 
 중간에 Docker 를 share 하겠냐는 팝업창이 하나 뜨는데, yes  해주어야 한다.
 
@@ -661,7 +662,7 @@ GRANT CREATE ON SCHEMA public TO PUBLIC;
 2) SQL Editor 에 가서 다음과 같은 SQL 을 실행시킨다.
 select
   cron.schedule(
-    'invoke-function-every-minute',
+    'invoke-removeDelta-every-minute',
     '* * * * *', -- every minute
     $$
     select

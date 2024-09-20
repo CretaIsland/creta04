@@ -88,11 +88,16 @@ exports.cleanBin_schedule = functions.runWith({ timeoutSeconds: 300 }).pubsub.sc
     _cleanBin('creta_filter');
     _cleanBin('creta_frame');
     _cleanBin('creta_frame_published');
+    _cleanBin('creta_host');
+    _cleanBin('creta_link');
+    _cleanBin('creta_link_published');
     _cleanBin('creta_page');
     _cleanBin('creta_page_published');
     _cleanBin('creta_playlist');
+    _cleanBin('creta_scrshot');
     _cleanBin('creta_subscription');
     _cleanBin('creta_team');
+    _cleanBin('creta_template');
     _cleanBin('creta_user_property');
     return _cleanBin('creta_watch_history');
    
@@ -177,3 +182,78 @@ async function  _cleanBin(collectionId) {
     functions.logger.info('{result: '+ collectionId + ' (' + totalDeleted + ') deleted');
     return '{result: '+ collectionId + ' (' + totalDeleted + ') deleted';
 }
+
+const https = require('https');
+
+exports.sendSms = functions.https.onRequest(async (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
+    if (req.method === 'OPTIONS') {
+        // Send response to OPTIONS requests
+        res.set('Access-Control-Allow-Methods', 'GET');
+        res.set('Access-Control-Allow-Headers', 'Content-Type');
+        res.set('Access-Control-Max-Age', '3600');
+        res.status(204).send('');
+        return;
+      }
+
+  const recipient = req.body.recipient;
+  const message = req.body.message;
+
+  if (recipient == "default" ){
+    recipient = "01099777067";
+  }
+
+  const smsApi = "https://api-sms.cloud.toast.com/sms/v2.3/appKeys/YlPCoRliW0hEYpOr/sender/sms";
+  const headers = {
+    'Content-Type': 'application/json;charset=UTF-8',
+    //'X-Secret-Key': 'YOUR_SECRET_KEY', // Replace with your actual secret key
+  };
+  const body = JSON.stringify({
+    'recipientList': [
+      {'recipientNo': recipient}
+    ],
+    'body': message,
+    'sendNo': '0222843333', // Replace with your actual sender number
+  });
+
+  const url = new URL(smsApi);
+
+  const options = {
+    hostname: url.hostname,
+    path: url.pathname + url.search,
+    method: 'POST',
+    headers: headers
+  };
+
+  const request = https.request(options, (response) => {
+    let data = '';
+
+    response.on('data', (chunk) => {
+      data += chunk;
+    });
+
+    response.on('end', () => {
+      if (response.statusCode === 200) {
+        console.log('SMS sent successfully');
+        res.set('Access-Control-Allow-Origin', '*'); // CORS Setting
+        res.status(200).send('SMS sent successfully');
+      } else {
+        res.set('Access-Control-Allow-Origin', '*'); // CORS Setting
+        console.error('Failed to send SMS:', response.statusCode);
+        console.error('Response:', data);
+        res.status(response.statusCode).send('Failed to send SMS');
+      }
+    });
+  });
+
+  request.on('error', (error) => {
+    console.error('ERROR Failed to send SMS:', error);
+    res.status(500).send('ERROR Failed to send SMS');
+  });
+
+  request.write(body);
+
+  res.set('Access-Control-Allow-Origin', '*');
+
+  request.end();
+});

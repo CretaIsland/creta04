@@ -190,6 +190,7 @@ class ContentsManager extends BaseContentsManager {
 
   String keyMangler(ContentsModel contents) {
     return 'contents-${pageModel.mid}-${frameModel.mid}-${contents.mid}';
+    //return 'contents-${pageModel.mid}-${frameModel.mid}';
   }
 
   bool hasContents() {

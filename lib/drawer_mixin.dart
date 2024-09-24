@@ -98,13 +98,15 @@ mixin DrawerMixin {
             },
           ),
           CretaMenuItem(
-            caption: CretaMyPageLang['logoutBTN'] ?? '로그아웃',
-            iconData: Icons.exit_to_app,
+            caption: CretaCommuLang['myChannel'] ?? '나의 채널',
+            iconData: Icons.video_collection_outlined,
             onPressed: () {
               StudioVariables.selectedBookMid = '';
-              CretaAccountManager.logout()
-                  // ignore: use_build_context_synchronously
-                  .then((value) => Routemaster.of(context).push(AppRoutes.login));
+              String channelId = CretaAccountManager.getUserProperty?.channelId ?? '';
+              if (channelId.isNotEmpty) {
+                String channelLinkUrl = '${AppRoutes.channel}?$channelId';
+                Routemaster.of(context).push(channelLinkUrl);
+              }
             },
           ),
         ],

@@ -1,6 +1,8 @@
 // ignore: implementation_imports
 // ignore_for_file: prefer_final_fields, depend_on_referenced_packages
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hycop/common/util/logger.dart';
 import 'package:video_player/video_player.dart';
@@ -26,11 +28,15 @@ class CretaVideoPlayer extends CretaAbsPlayer {
   Size? _outSize;
   Size? getSize() => _outSize;
   //bool _isMute = false;
-  bool _isInitAlreadyDone = false;
-  bool get isInitAlreadyDone => _isInitAlreadyDone;
+  bool _isInitComplete = false;
+  //Future<bool>? isInitialized() => isInitComplete;
 
   @override
-  Future<void> init() async {
+  Future<bool> init() async {
+    if (_isInitComplete) {
+      return true;
+    }
+
     String uri = model!.getURI();
     String errMsg = '${model!.name} uri is null';
     if (uri.isEmpty) {
@@ -39,44 +45,71 @@ class CretaVideoPlayer extends CretaAbsPlayer {
     logger.info('initVideo(${model!.name},$uri)');
 
     //wcontroller = VideoPlayerController.network(uri,
-    wcontroller = VideoPlayerController.networkUrl(Uri.parse(uri),
-        videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true))
-      ..initialize().then((_) {
-        logger.info('initialize complete(${model!.name}, ${acc.getAvailLength()})');
-        if (StudioVariables.isMute == false && model!.mute.value == false) {
-          wcontroller!.setVolume(model!.volume.value);
-        } else {
-          wcontroller!.setVolume(0.0);
-        }
-        model!.aspectRatio.set(wcontroller!.value.aspectRatio, noUndo: true, save: false);
-        model!.videoPlayTime
-            .set(wcontroller!.value.duration.inMilliseconds.toDouble(), noUndo: true, save: false);
-        wcontroller!.setLooping(false);
-        wcontroller!.seekTo(Duration.zero); //skpark 2023.11.24 제일앞으로 보낸다.
+    wcontroller = VideoPlayerController.networkUrl(
+      Uri.parse(uri),
+      formatHint: VideoFormat.hls,
+      videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
+    );
+    await wcontroller!.initialize();
 
-        wcontroller!.onAfterVideoEvent = (event, position, duration) {
-          if (event.eventType == VideoEventType.completed) {
-            // bufferingEnd and completed 가 시간이 다 되서 종료한 것임.
-            logger
-                .info('video play completed(${model!.name},postion=$position, duration=$duration)');
-            model!.setPlayState(PlayState.end);
-            //skpark 2023.11.24 제일앞으로 보낸다.
-            // 아래 문장을 하지 않으면, complete 가 계속오게 되는데,  이게 전에는 안그랬는데,
-            // 갑자기 계속 오기 시작한다.
-            wcontroller!.seekTo(Duration.zero);
-            onAfterEvent?.call(position, duration);
-          }
-          prevEvent = event.eventType;
-        };
-        logger.info('initialize complete(${wcontroller!.value.duration.inMilliseconds})');
+    //.then((_) {
+    logger.info('initialize complete(${model!.name}, ${acc.getAvailLength()})');
+    if (StudioVariables.isMute == false && model!.mute.value == false) {
+      await wcontroller!.setVolume(model!.volume.value);
+    } else {
+      await wcontroller!.setVolume(0.0);
+    }
+    model!.aspectRatio.set(wcontroller!.value.aspectRatio, noUndo: true, save: false);
+    model!.videoPlayTime
+        .set(wcontroller!.value.duration.inMilliseconds.toDouble(), noUndo: true, save: false);
+    await wcontroller!.setLooping(false);
+    await wcontroller!.seekTo(Duration.zero); //skpark 2023.11.24 제일앞으로 보낸다.
 
-        //wcontroller!.play();
-      });
+    wcontroller!.onAfterVideoEvent = (event, position, duration) async {
+      if (event.eventType == VideoEventType.completed) {
+        model!.setPlayState(PlayState.end);
+        //   //skpark 2023.11.24 제일앞으로 보낸다.
+        //   // 아래 문장을 하지 않으면, complete 가 계속오게 되는데,  이게 전에는 안그랬는데,
+        //   // 갑자기 계속 오기 시작한다
+        //   // // 화면이 제일 처음으로 자꾸 돌아가고, 그 다음 다음 동영상으로 넘어가는 문제가 있어서 다시 뺌..
+        //   //wcontroller!.seekTo(Duration.zero);
+        logger.info(
+            'onAfterVideoEvent : video play completed(${model!.name},postion=$position, duration=$duration)');
+
+        onAfterEvent?.call(position, duration);
+      }
+      prevEvent = event.eventType;
+    };
+
+    if (_outSize == null) {
+      _outSize = getOuterSize(wcontroller!.value.aspectRatio);
+      await acc.resizeFrame(wcontroller!.value.aspectRatio, _outSize!, true);
+    }
+    logger.info('initialize complete(${wcontroller!.value.duration.inMilliseconds})');
+    _isInitComplete = true;
+    play(); // 처음 플레이를 해준다.
+    return _isInitComplete;
+  }
+
+  @override
+  int getPosition() {
+    if (isInit() == false) {
+      return -1;
+    }
+    return wcontroller!.value.position.inMilliseconds;
+  }
+
+  @override
+  int getDuration() {
+    if (isInit() == false) {
+      return -1;
+    }
+    return wcontroller!.value.duration.inMilliseconds;
   }
 
   @override
   bool isInit() {
-    return wcontroller!.value.isInitialized;
+    return wcontroller != null && wcontroller!.value.isInitialized;
   }
 
   @override
@@ -96,7 +129,11 @@ class CretaVideoPlayer extends CretaAbsPlayer {
     // }
     logger.info('play  ${model!.name}');
     model!.setPlayState(PlayState.start);
-    await wcontroller!.play();
+    try {
+      await wcontroller!.play();
+    } catch (e) {
+      logger.severe('play error ${model!.name} : $e');
+    }
   }
 
   @override
@@ -104,6 +141,7 @@ class CretaVideoPlayer extends CretaAbsPlayer {
     // while (model!.state == PlayState.disposed) {
     //   await Future.delayed(const Duration(milliseconds: 100));
     // }
+    logger.info("video player pause,${model!.name}-------------------------------------------");
     logger.info('pause ${model!.name}');
     model!.setPlayState(PlayState.pause);
     await wcontroller!.pause();
@@ -200,36 +238,15 @@ class CretaVideoPlayer extends CretaAbsPlayer {
   //   });
   // }
 
-  Future<bool> waitInitVideo() async {
-    if (_isInitAlreadyDone) {
-      if (wcontroller!.value.isInitialized == false) {
-        logger.severe('!!!!!!!! Already initialize but, initialize is false !!!!!!!!');
-        await wcontroller!.dispose();
-        logger.severe('!!!!!!!! init again start, name=${model!.name}');
-        await init();
-        logger.severe('!!!!!!!! init again end, state = ${model!.playState}');
-      } else {
-        await playVideo();
-        return true;
-      }
+  Future<void> playVideoSafe() async {
+    if (wcontroller!.value.isInitialized == false) {
+      logger.severe('!!!!!!!! Already initialize but, initialize is false !!!!!!!!');
+      await wcontroller!.dispose();
+      logger.severe('!!!!!!!! init again start, name=${model!.name}');
+      _isInitComplete = false;
+      await init();
+      logger.severe('!!!!!!!! init again end, state = ${model!.playState}');
     }
-    logger.info('waitInit........ ${model!.name}');
-    //int waitCount = 0;
-    while (!wcontroller!.value.isInitialized) {
-      await Future.delayed(const Duration(milliseconds: 100));
-    }
-    _isInitAlreadyDone = true;
-    logger.info('waitInit end .........  ${model!.name}');
-    //await wcontroller!.setLooping(acc.getShowLength() == 1 && model!.isShow.value == true);
-    if (_outSize == null) {
-      _outSize = getOuterSize(wcontroller!.value.aspectRatio);
-      await acc.resizeFrame(wcontroller!.value.aspectRatio, _outSize!, true);
-    }
-    await playVideo();
-    return true;
-  }
-
-  Future<void> playVideo() async {
     if (StudioVariables.isAutoPlay &&
         model!.isState(PlayState.start) == false &&
         acc.playTimer!.isCurrentModel(model!.mid) &&
@@ -238,5 +255,6 @@ class CretaVideoPlayer extends CretaAbsPlayer {
       await play(); //awat를 못한다....이거 문제임...
     }
     buttonIdle();
+    return;
   }
 }

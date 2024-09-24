@@ -37,11 +37,14 @@ abstract class CretaAbsPlayer extends ChangeNotifier {
     //this.videoProgress,
   });
 
-  void Function(Duration, Duration)? onAfterEvent;
+  Future<void> Function(Duration, Duration)? onAfterEvent;
 
   void notify() => notifyListeners();
 
-  Future<void> init() async {}
+  Future<bool> init() async {
+    return true;
+  } // video player only
+
   Future<void> play({bool byManual = false}) async {}
   Future<void> pause({bool byManual = false}) async {}
   Future<void> resume({bool byManual = false}) async {}
@@ -123,6 +126,16 @@ abstract class CretaAbsPlayer extends ChangeNotifier {
         minGrowth: 4,
         styles: BlobStyles(color: Colors.green, fillType: BlobFillType.stroke, strokeWidth: 2),
         child: child);
+  }
+
+  int getPosition() {
+    // for video player only
+    return -1;
+  }
+
+  int getDuration() {
+    // for video player only
+    return -1;
   }
 }
 

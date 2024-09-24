@@ -159,7 +159,7 @@ class DrawerMainState extends State<DrawerMain> with DrawerMixin {
                       key: GlobalObjectKey(
                           'DrawerMenuItem$index${item.caption}${CretaVars.instance.isDeveloper}'),
                       leading: Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
+                        padding: const EdgeInsets.only(left: 16.0),
                         child: Icon(item.iconData, color: CretaColor.primary),
                       ),
                       title: Text(item.caption,

@@ -3,8 +3,9 @@
 
 import 'dart:math';
 
-import 'package:creta_common/model/app_enums.dart';
+//import 'package:creta_common/model/app_enums.dart';
 import 'package:flutter/material.dart';
+import 'package:hycop/common/util/logger.dart';
 import 'package:video_player/video_player.dart';
 import 'package:creta_common/common/creta_common_utils.dart';
 import 'package:creta_common/common/creta_snippet.dart';
@@ -26,7 +27,7 @@ class CretaVideoWidget extends CretaAbsPlayerWidget {
 
 class CretaVideoPlayerWidgetState extends CretaState<CretaVideoWidget> {
   bool isMute = false;
-  Future<bool>? _isInitialized;
+  //Future<bool>? _isInitialized;
 
   @override
   void setState(VoidCallback fn) {
@@ -35,11 +36,8 @@ class CretaVideoPlayerWidgetState extends CretaState<CretaVideoWidget> {
 
   @override
   void initState() {
+    logger.info('CretaVideoWidget initState ************************************');
     super.initState();
-    //widget.player.afterBuild();
-    final CretaVideoPlayer player = widget.player as CretaVideoPlayer;
-    _isInitialized = player.waitInitVideo();
-
     afterBuild();
   }
 
@@ -47,15 +45,13 @@ class CretaVideoPlayerWidgetState extends CretaState<CretaVideoWidget> {
   Future<void> afterBuild() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final CretaVideoPlayer player = widget.player as CretaVideoPlayer;
-      if (player.isInitAlreadyDone) {
-        if (player.getPlayState() == PlayState.start) {
-          //print('player isInitAlreadyDonw start !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-          // 두번째 바퀴에서 플레이할때, 강제로 플레이를 해주지 않으면 플레이가 되지를 않고 있다.
-          //player.pause();
-          // delay 0.2초 후에 play
-          await Future.delayed(const Duration(milliseconds: 200));
-          player.play();
-        }
+      if (player.isInit()) {
+        //if (player.getPlayState() == PlayState.start) {
+        logger.info('afterBuild player start !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+        // 딜레이할 필요가 있다.
+        await Future.delayed(const Duration(milliseconds: 200));
+        player.playVideoSafe();
+        //}
       }
     });
   }
@@ -63,20 +59,20 @@ class CretaVideoPlayerWidgetState extends CretaState<CretaVideoWidget> {
   @override
   void dispose() {
     super.dispose();
-    // print(
-    //     'CretaVideoWidget dispose ------------------------------VideoPlayer${widget.player.keyString}');
+    logger.info(
+        '********************* CretaVideoWidget dispose VideoPlayer${widget.player.model!.name}');
     //widget.player.stop();
   }
 
   @override
   Widget build(BuildContext context) {
     final CretaVideoPlayer player = widget.player as CretaVideoPlayer;
-    if (player.isInitAlreadyDone) {
+    if (player.isInit()) {
+      logger.info('!!!!!! CretaVideoWidget build  : already initialized !!!!!');
       return IgnorePointer(
         child: getClipRect(
           player.getSize()!,
           player.acc.frameModel,
-          //VideoPlayer(player.wcontroller!, key: GlobalObjectKey('widget-${player.keyString}')),
           player.model,
           // Container(
           //   color: Colors.amberAccent,
@@ -87,28 +83,26 @@ class CretaVideoPlayerWidgetState extends CretaState<CretaVideoWidget> {
         ),
       );
     }
-    //print('000000000000000000000000000000000000000000000000000${player.keyString}');
+    logger.info('!!!!!! CretaVideoWidget build  : first time initialized !!!!!');
     return FutureBuilder(
         //future: player.waitInitVideo(),
-        future: _isInitialized,
+        future: player.init(),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.hasData == false) {
             //해당 부분은 data를 아직 받아 오지 못했을때 실행되는 부분을 의미한다.
             if (player.isInit() == false) {
               return CretaSnippet.showWaitSign();
             }
-            return SizedBox.shrink(key: GlobalObjectKey('shrink-${player.keyString}'));
+            return const SizedBox.shrink();
           }
           if (snapshot.hasError) {
             //error가 발생하게 될 경우 반환하게 되는 부분
             return Snippet.errMsgWidget(snapshot);
           }
-
           return IgnorePointer(
             child: getClipRect(
               player.getSize()!,
               player.acc.frameModel,
-              //VideoPlayer(player.wcontroller!, key: GlobalObjectKey('widget-${player.keyString}')),
               player.model,
               VideoPlayer(
                   key: GlobalObjectKey('VideoPlayer${player.keyString}'), player.wcontroller!),

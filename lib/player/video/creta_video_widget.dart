@@ -45,11 +45,12 @@ class CretaVideoPlayerWidgetState extends CretaState<CretaVideoWidget> {
   Future<void> afterBuild() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final CretaVideoPlayer player = widget.player as CretaVideoPlayer;
+
       if (player.isInit()) {
         //if (player.getPlayState() == PlayState.start) {
         logger.info('afterBuild player start !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
         // 딜레이할 필요가 있다.
-        await Future.delayed(const Duration(milliseconds: 200));
+        await Future.delayed(const Duration(milliseconds: 149));
         player.playVideoSafe();
         //}
       }

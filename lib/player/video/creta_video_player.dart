@@ -85,9 +85,9 @@ class CretaVideoPlayer extends CretaAbsPlayer {
       _outSize = getOuterSize(wcontroller!.value.aspectRatio);
       await acc.resizeFrame(wcontroller!.value.aspectRatio, _outSize!, true);
     }
-    logger.info('initialize complete(${wcontroller!.value.duration.inMilliseconds})');
+    logger.info('initialize complete(${_outSize!.width},${_outSize!.height})');
     _isInitComplete = true;
-    play(); // 처음 플레이를 해준다.
+    await play(); // 처음 플레이를 해준다.
     return _isInitComplete;
   }
 
@@ -247,6 +247,8 @@ class CretaVideoPlayer extends CretaAbsPlayer {
       await init();
       logger.severe('!!!!!!!! init again end, state = ${model!.playState}');
     }
+    logger.info(
+        'playVideoSafe ${model!.name} state = ${model!.playState} ${model!.isPauseTimer}, ${acc.playTimer!.isCurrentModel(model!.mid)}');
     if (StudioVariables.isAutoPlay &&
         model!.isState(PlayState.start) == false &&
         acc.playTimer!.isCurrentModel(model!.mid) &&

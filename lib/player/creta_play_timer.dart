@@ -337,6 +337,8 @@ class CretaPlayTimer extends ChangeNotifier {
 
   CretaAbsPlayer createPlayer(ContentsModel model) {
     final String key = contentsManager.keyMangler(model);
+    // final String frameKey = contentsManager.keyMangler(model);
+    // final String key =  '$frameKey-${model.mid}';
     CretaAbsPlayer? player = contentsManager.getPlayer(key);
     if (player != null) {
       player.model!.updateFrom(model); // 모델이 달라졌을수 있다.

@@ -189,8 +189,8 @@ class ContentsManager extends BaseContentsManager {
   }
 
   String keyMangler(ContentsModel contents) {
-    return 'contents-${pageModel.mid}-${frameModel.mid}-${contents.mid}';
-    //return 'contents-${pageModel.mid}-${frameModel.mid}';
+    //return 'contents-${pageModel.mid}-${frameModel.mid}-${contents.mid}';
+    return 'contents-${pageModel.mid}-${frameModel.mid}-${contents.contentsType}'; // 콘텐츠타입별로 play widdet 이 만들어 진다.
   }
 
   bool hasContents() {
@@ -1549,7 +1549,7 @@ class ContentsManager extends BaseContentsManager {
 
   String toJson() {
     //print('xxxxxxxxxxxxxxxxxx toJson XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
-    printIt();
+    //printLog();
     if (getAvailLength() == 0) {
       return ',\n\t\t\t"contents" : []\n';
     }
@@ -1617,12 +1617,12 @@ class ContentsManager extends BaseContentsManager {
     }
   }
 
-  void printIt() {
-    //print('contentsManager.printIt()========================================');
+  @override
+  void printLog() {
+    logger.info('ContentsManager(${frameModel.mid})##############################');
     for (var ele in modelList) {
       ContentsModel model = ele as ContentsModel;
-      logger.info(
-          '*** contents = ${model.mid}, ${model.parentMid.value}, ${model.remoteUrl}, ${model.isRemoved.value}, ${model.updateTime}');
+      logger.info('*** contents = ${model.name}, ${model.order.value},  ${model.isRemoved.value}');
     }
   }
 }

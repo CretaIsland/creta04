@@ -15,6 +15,7 @@ import '../creta_abs_player.dart';
 // ignore: must_be_immutable
 class CretaVideoPlayer extends CretaAbsPlayer {
   CretaVideoPlayer({
+    required super.frameKey,
     required super.keyString,
     required super.onAfterEvent,
     required super.model,
@@ -34,6 +35,8 @@ class CretaVideoPlayer extends CretaAbsPlayer {
   @override
   Future<bool> init() async {
     if (_isInitComplete) {
+      playVideoSafe(); // init 가 이미 되어 있으면 play 해주어야 한다. await 를 하면 안된다. build 가 될 틈을 주어야 하기 때문이다.
+      logger.info('!!!!!! CretaVideoWidget build  : already initialized !!!!!');
       return true;
     }
 
@@ -53,7 +56,7 @@ class CretaVideoPlayer extends CretaAbsPlayer {
     await wcontroller!.initialize();
 
     //.then((_) {
-    logger.info('initialize complete(${model!.name}, ${acc.getAvailLength()})');
+    logger.info('initialize complete(${model?.name}, ${acc.getAvailLength()})');
     if (StudioVariables.isMute == false && model!.mute.value == false) {
       await wcontroller!.setVolume(model!.volume.value);
     } else {
@@ -67,14 +70,14 @@ class CretaVideoPlayer extends CretaAbsPlayer {
 
     wcontroller!.onAfterVideoEvent = (event, position, duration) async {
       if (event.eventType == VideoEventType.completed) {
-        model!.setPlayState(PlayState.end);
+        model?.setPlayState(PlayState.end);
         //   //skpark 2023.11.24 제일앞으로 보낸다.
         //   // 아래 문장을 하지 않으면, complete 가 계속오게 되는데,  이게 전에는 안그랬는데,
         //   // 갑자기 계속 오기 시작한다
         //   // // 화면이 제일 처음으로 자꾸 돌아가고, 그 다음 다음 동영상으로 넘어가는 문제가 있어서 다시 뺌..
         //   //wcontroller!.seekTo(Duration.zero);
         logger.info(
-            'onAfterVideoEvent : video play completed(${model!.name},postion=$position, duration=$duration)');
+            'onAfterVideoEvent : video play completed(${model?.name},postion=$position, duration=$duration)');
 
         onAfterEvent?.call(position, duration);
       }
@@ -85,9 +88,9 @@ class CretaVideoPlayer extends CretaAbsPlayer {
       _outSize = getOuterSize(wcontroller!.value.aspectRatio);
       await acc.resizeFrame(wcontroller!.value.aspectRatio, _outSize!, true);
     }
-    logger.info('initialize complete(${_outSize!.width},${_outSize!.height})');
+    logger.info('initialize complete(${_outSize?.width},${_outSize?.height})');
     _isInitComplete = true;
-    await play(); // 처음 플레이를 해준다.
+    await playVideoSafe(); //한번 플레이해주어야 한다.
     return _isInitComplete;
   }
 
@@ -250,10 +253,12 @@ class CretaVideoPlayer extends CretaAbsPlayer {
     logger.info(
         'playVideoSafe ${model!.name} state = ${model!.playState} ${model!.isPauseTimer}, ${acc.playTimer!.isCurrentModel(model!.mid)}');
     if (StudioVariables.isAutoPlay &&
-        model!.isState(PlayState.start) == false &&
-        acc.playTimer!.isCurrentModel(model!.mid) &&
+        //model!.isState(PlayState.start) == false &&
+        //acc.playTimer!.isCurrentModel(model!.mid) &&
         model!.isPauseTimer == false) {
       logger.info('playVideo video ${model!.name} state = ${model!.playState}');
+      // 딜레이할 필요가 있다.
+      await Future.delayed(const Duration(milliseconds: 149)); // build 할 시간적 여유를 주기 위함이다.
       await play(); //awat를 못한다....이거 문제임...
     }
     buttonIdle();

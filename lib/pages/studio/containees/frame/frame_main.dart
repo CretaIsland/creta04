@@ -434,6 +434,9 @@ class FrameMainState extends State<FrameMain> with FramePlayMixin {
     manager.reOrdering();
     _mainFrameCandiator = manager.getMainFrameCandidator();
 
+    print('*&*&*&*&*&*&*&*&*&*&*&*&*');
+    manager.frameEachKeyHandler.clear(); // 깨끗이 지운다....
+
     return manager.orderMapIterator((e) {
       //_randomIndex += 10;
       FrameModel model = e as FrameModel;

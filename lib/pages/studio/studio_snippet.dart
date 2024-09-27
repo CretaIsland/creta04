@@ -225,7 +225,7 @@ class StudioSnippet {
     logger.info('uploaded thumbnailUrl = ${model.thumbnailUrl}');
     UploadingPopup.uploadEnd(model.name);
     //print('uploading end -----------------------------------------------------------------');
-    contentsManager.printIt();
+    //contentsManager.printLog();
 
     // skpark 이상한 버그가 있다.  modelist 에 같은놈이 있다.
     // 이는 CretaBook 을 신규로 만들고, 콘텐츠를 업로드하는 경우에만 발생한다.
@@ -239,7 +239,7 @@ class StudioSnippet {
         contentsManager.sendEvent?.sendEvent(founded);
       }
     }
-    contentsManager.printIt();
+    //contentsManager.printLog();
   }
 
   static List<CretaMenuItem> getCopyRightListItem(

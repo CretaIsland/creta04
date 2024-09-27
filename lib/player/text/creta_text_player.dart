@@ -20,6 +20,7 @@ import 'tts.dart';
 
 class CretaTextPlayer extends CretaAbsPlayer {
   CretaTextPlayer({
+    required super.frameKey,
     required super.keyString,
     required super.model,
     required super.acc,

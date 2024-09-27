@@ -1249,7 +1249,7 @@ class LeftMenuPageState extends State<LeftMenuPage> {
         HycopFactory.storage!.deleteFileFromUrl(bookModel.thumbnailUrl.value).then((_) {
           bookModel.thumbnailUrl.set(value, noUndo: true, save: false);
           bookModel.thumbnailType.set(ContentsType.image, noUndo: true, save: false);
-          logger.info('book Thumbnail saved !!! ${bookModel.mid}, $value');
+          logger.fine('book Thumbnail saved !!! ${bookModel.mid}, $value');
           // 재귀적으로 계속 변경이 일어난 것으로 보고 계속 호출되는 것을 막기 위해, DB 에 직접 쓴다.
           BookMainPage.bookManagerHolder?.setToDB(bookModel);
           //print('save thumbnailUrl complete.......');

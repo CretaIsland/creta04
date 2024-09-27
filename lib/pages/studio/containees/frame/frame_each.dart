@@ -83,6 +83,9 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
   void dispose() {
     super.dispose();
     _playTimer?.stop();
+    print('======================================================');
+    print('playTimer is to be stoped');
+    print('======================================================');
     //logger.fine('==========================FrameEach dispose================');
   }
 
@@ -117,17 +120,22 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
     }
     _contentsManager = frameManager!.findOrCreateContentsManager(widget.model);
 
-    if (_playTimer == null) {
-      _playTimer = CretaPlayTimer(_contentsManager!, frameManager!);
-      _contentsManager!.setPlayerHandler(_playTimer!);
-    }
     if (_contentsManager!.onceDBGetComplete == false) {
-      //print('contentsManager getContents');
+      print('contentsManager getContents *(*(*()*)(***()*(**())))');
       await _contentsManager!.getContents();
       _contentsManager!.addRealTimeListen(widget.model.mid);
       _contentsManager!.reOrdering();
     }
     //print('frame initChildren(${_contentsManager!.getAvailLength()})');
+    if (_playTimer == null) {
+      print('======================================================');
+      _playTimer = CretaPlayTimer.getTimer(
+          _contentsManager!.frameModel.mid, _contentsManager!, frameManager!);
+      _contentsManager!.setPlayerHandler(_playTimer!);
+      print('playTimer is to be creaded');
+      print('======================================================');
+    }
+
     return true;
   }
 
@@ -148,12 +156,12 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
     if (StudioVariables.isPreview) {
       if (widget.pageModel.mid == BookMainPage.pageManagerHolder!.getSelectedMid()) {
         // 현재 선택된 페이지만 start 한다.
-        _playTimer?.start();
+        //_playTimer?.start();
       } else {
         _playTimer?.stop();
       }
     } else {
-      _playTimer?.start();
+      //_playTimer?.start();
     }
     return MultiProvider(
       providers: [

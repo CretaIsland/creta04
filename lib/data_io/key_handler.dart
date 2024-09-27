@@ -14,6 +14,10 @@ abstract class CretaState<T extends StatefulWidget> extends State<T> {
 class KeyHandler {
   final Map<String, GlobalObjectKey<CretaState<StatefulWidget>>> _widgetMap = {};
 
+  void clear() {
+    _widgetMap.clear();
+  }
+
   GlobalObjectKey<CretaState<StatefulWidget>> registerKey(String keyString) {
     GlobalObjectKey<CretaState<StatefulWidget>>? retval = _widgetMap[keyString];
     if (retval != null) {
@@ -110,7 +114,7 @@ class KeyHandler {
     return false;
   }
 
-   bool doSomething(String keyString, dynamic params) {
+  bool doSomething(String keyString, dynamic params) {
     GlobalObjectKey<CretaState<StatefulWidget>>? key = findKey(keyString);
     if (key != null) {
       if (key.currentState != null) {

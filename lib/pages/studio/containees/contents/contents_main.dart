@@ -73,7 +73,7 @@ class ContentsMainState extends CretaState<ContentsMain> {
 
   @override
   Widget build(BuildContext context) {
-    //print('ContentsMain build');
+    print('ContentsMain build');
     if (_onceDBGetComplete) {
       logger.finest('already _onceDBGetComplete contentsMain');
       return _consumerFunc();
@@ -99,7 +99,7 @@ class ContentsMainState extends CretaState<ContentsMain> {
       int contentsCount = contentsManager.getShowLength();
       //print('Consumer<ContentsManager> ContentsMain = $contentsCount');
       return Consumer<CretaPlayTimer>(builder: (context, playTimer, child) {
-        logger.fine('Consumer<CretaPlayTimer>');
+        logger.info('Consumer<CretaPlayTimer>');
         return StreamBuilder<AbsExModel>(
             stream: _receiveEvent!.eventStream.stream,
             builder: (context, snapshot) {
@@ -182,7 +182,7 @@ class ContentsMainState extends CretaState<ContentsMain> {
   }
 
   Widget _mainBuild(ContentsModel model, CretaPlayTimer playTimer) {
-    //print('_mainBuild(${model.remoteUrl}, ${model.contentsType})-------------------------');
+    print('_mainBuild(${model.remoteUrl}, ${model.contentsType})-------------------------');
     if (model.opacity.value < 1) {
       return Opacity(
         opacity: model.opacity.value,

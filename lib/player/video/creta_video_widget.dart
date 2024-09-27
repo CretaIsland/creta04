@@ -4,6 +4,7 @@
 import 'dart:math';
 
 //import 'package:creta_common/model/app_enums.dart';
+import 'package:creta_common/model/app_enums.dart';
 import 'package:flutter/material.dart';
 import 'package:hycop/common/util/logger.dart';
 import 'package:video_player/video_player.dart';
@@ -41,18 +42,16 @@ class CretaVideoPlayerWidgetState extends CretaState<CretaVideoWidget> {
     afterBuild();
   }
 
-  // build 후 호출되는 함수
+  //build 후 호출되는 함수
   Future<void> afterBuild() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final CretaVideoPlayer player = widget.player as CretaVideoPlayer;
 
       if (player.isInit()) {
-        //if (player.getPlayState() == PlayState.start) {
-        logger.info('afterBuild player start !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-        // 딜레이할 필요가 있다.
-        await Future.delayed(const Duration(milliseconds: 149));
-        player.playVideoSafe();
-        //}
+        if (player.getPlayState() != PlayState.start) {
+          logger.info('afterBuild player start !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+          player.playVideoSafe();
+        }
       }
     });
   }
@@ -62,28 +61,28 @@ class CretaVideoPlayerWidgetState extends CretaState<CretaVideoWidget> {
     super.dispose();
     logger.info(
         '********************* CretaVideoWidget dispose VideoPlayer${widget.player.model!.name}');
-    //widget.player.stop();
+    widget.player.stop();
   }
 
   @override
   Widget build(BuildContext context) {
     final CretaVideoPlayer player = widget.player as CretaVideoPlayer;
-    if (player.isInit()) {
-      logger.info('!!!!!! CretaVideoWidget build  : already initialized !!!!!');
-      return IgnorePointer(
-        child: getClipRect(
-          player.getSize()!,
-          player.acc.frameModel,
-          player.model,
-          // Container(
-          //   color: Colors.amberAccent,
-          // )
+    // if (player.isInit()) {
+    //   logger.info('!!!!!! CretaVideoWidget build  : already initialized !!!!!');
+    //   return IgnorePointer(
+    //     child: getClipRect(
+    //       player.getSize()!,
+    //       player.acc.frameModel,
+    //       player.model,
+    //       // Container(
+    //       //   color: Colors.amberAccent,
+    //       // )
 
-          VideoPlayer(key: GlobalObjectKey('VideoPlayer${player.keyString}'), player.wcontroller!),
-          //VideoPlayer(key: GlobalKey(), player.wcontroller!),
-        ),
-      );
-    }
+    //       VideoPlayer(key: GlobalObjectKey('VideoPlayer${player.keyString}'), player.wcontroller!),
+    //       //VideoPlayer(key: GlobalKey(), player.wcontroller!),
+    //     ),
+    //   );
+    // }
     logger.info('!!!!!! CretaVideoWidget build  : first time initialized !!!!!');
     return FutureBuilder(
         //future: player.waitInitVideo(),
@@ -100,9 +99,13 @@ class CretaVideoPlayerWidgetState extends CretaState<CretaVideoWidget> {
             //error가 발생하게 될 경우 반환하게 되는 부분
             return Snippet.errMsgWidget(snapshot);
           }
+          Size? outSize = player.getSize();
+          if (outSize == null) {
+            return const SizedBox.shrink();
+          }
           return IgnorePointer(
             child: getClipRect(
-              player.getSize()!,
+              outSize,
               player.acc.frameModel,
               player.model,
               VideoPlayer(

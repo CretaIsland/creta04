@@ -5,6 +5,8 @@ import '../creta_abs_player.dart';
 
 class CretaDocPlayer extends CretaAbsPlayer {
   CretaDocPlayer({
+        required super.frameKey,
+
     required super.keyString,
     required super.model,
     required super.acc,

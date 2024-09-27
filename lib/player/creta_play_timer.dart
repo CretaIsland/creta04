@@ -38,15 +38,31 @@ class CretaPlayTimer extends ChangeNotifier {
   final ContentsManager contentsManager;
   final FrameManager frameManager;
 
+  static final Map<String, CretaPlayTimer> _timerCache = <String, CretaPlayTimer>{};
+  static CretaPlayTimer? getTimer(
+      String key, ContentsManager contentsManager, FrameManager frameManager) {
+    CretaPlayTimer? retval = _timerCache[key];
+    if (retval == null) {
+      logger.warning('timer is newly created');
+      retval = CretaPlayTimer(contentsManager, frameManager);
+      _timerCache[key] = retval;
+    }
+    retval.start();
+    return retval;
+  }
+
   CretaPlayTimer(this.contentsManager, this.frameManager) {
     //final BoolEventController lineDrawSendEvent = Get.find(tag: 'draw-link');
     //_lineDrawSendEvent = lineDrawSendEvent;
+    print('---------------------------NEW CretaPlayTimer---------------------------------');
+    clear();
   }
+
   Timer? _timer;
   final int _timeGap = 500; //
   final Lock _lock = Lock();
   double _currentOrder = -1;
-  double _prevOrder = -1;
+  //double _prevOrder = -1;
   double _currentPlaySec = 0.0;
   //Duration _completeWaitTime = Duration.zero;
 
@@ -77,6 +93,27 @@ class CretaPlayTimer extends ChangeNotifier {
   CretaAbsPlayer? _currentPlayer;
 
   //BoolEventController? _lineDrawSendEvent;
+  void clear() {
+    _timer = null;
+    _currentOrder = -1;
+    //_prevOrder = -1;
+    _currentPlaySec = 0.0;
+
+    _currentModel = null;
+
+    _prevModel;
+
+    _isPauseTimer = false;
+    _isPrevPauseTimer = false;
+
+    _isNextButtonBusy = false;
+    _isPrevButtonBusy = false;
+    _forceToChange = false;
+
+    // from Handler
+    _initComplete = false;
+    _currentPlayer = null;
+  }
 
   Future<void> togglePause() async {
     _isPrevPauseTimer = _isPauseTimer;
@@ -119,8 +156,7 @@ class CretaPlayTimer extends ChangeNotifier {
 
   void stop() {
     _timer?.cancel();
-    _initComplete = false;
-    _timer = null;
+    clear();
   }
 
   // Future<void> toggleIsPause() async {
@@ -190,6 +226,7 @@ class CretaPlayTimer extends ChangeNotifier {
       if (isRewind) {
         _currentPlaySec = 0.0;
         _currentOrder = contentsManager.lastOrder();
+        print('reOrdering ++++++++++++++++ ($_currentOrder) +++++++++++++++++++++++++++++++++++');
       }
     });
   }
@@ -215,34 +252,53 @@ class CretaPlayTimer extends ChangeNotifier {
 
   Future<void> setCurrentOrder(double order) async {
     await _lock.synchronized(() async {
+      print('setCurrentOrder ++++++++++++++++ ($order) +++++++++++++++++++++++++++++++++++');
       _currentOrder = order;
     });
   }
 
-  void _setCurrentModel() {
+  bool _updateCurrentModel({bool debug = false}) {
+    if (_currentOrder < 0) {
+      _currentOrder = contentsManager.lastOrder(); //가장 마지막이 가장 먼저 돌아야 하므로.
+      print('updateCurrentModel lastOrder=$_currentOrder ------------------------------------');
+      if (_currentOrder < 0) {
+        return false; // 돌릴게 없다.
+      }
+    }
     _currentModel = contentsManager.getNthOrder(_currentOrder) as ContentsModel?;
+
+    contentsManager.printLog();
+
     while (true) {
       if (_currentModel != null) {
         break;
       }
       _next();
+      if (debug) {
+        logger.info(
+            '_updateCurrentModel ++++++++++++++++ ($_currentOrder) +++++++++++++++++++++++++++++++++++');
+      }
       if (_currentOrder < 0) {
-        return; // 돌릴게 없다.
+        return false; // 돌릴게 없다.
       }
       _currentModel = contentsManager.getNthOrder(_currentOrder) as ContentsModel?;
     }
     _prevModel ??= ContentsModel('', '');
 
+    if (debug) logger.info('_updateCurrentModel($_currentOrder, ${_currentModel!.name})');
+
     if (_currentModel != null &&
         (_currentModel!.mid != _prevModel!.mid || _forceToChange == true)) {
-      logger.fine('CurrentModel changed from ${_prevModel!.name}');
+      if (debug) logger.info('CurrentModel changed from ${_prevModel!.name}');
       if (_forceToChange == true || //skpark 2023.11.24 1개 밖에 없을때, 반복이 안되서리...
           contentsManager.getAvailLength() > 1 ||
           _currentModel!.mid != _prevModel!.mid) {
+        if (debug) logger.info('notify()');
         notify();
       }
       _forceToChange = false;
       if (_currentModel!.mid != _prevModel!.mid) {
+        if (debug) logger.info('notifyToProperty');
         notifyToProperty();
 
         // prev 모델의 frame를 inVisible 하게 만들어야 한다.
@@ -255,15 +311,15 @@ class CretaPlayTimer extends ChangeNotifier {
               frame.isShow.set(false);
               frameManager.notify();
             }
-            return null;
+            return false;
           });
         }
       }
       _currentModel!.copyTo(_prevModel!);
-      logger.fine('CurrentModel changed to ${_currentModel!.name}');
+      if (debug) logger.info('CurrentModel changed to ${_currentModel!.name}');
     }
 
-    return;
+    return true;
   }
 
   Future<void> prev() async {
@@ -277,6 +333,8 @@ class CretaPlayTimer extends ChangeNotifier {
         //}
         double oldOrder = _currentOrder;
         _currentOrder = contentsManager.prevOrder(oldOrder);
+        print(
+            'prev---------------------------------------------------------------------------------------------------------------');
         if (oldOrder == _currentOrder) {
           _forceToChange = true;
         }
@@ -293,6 +351,8 @@ class CretaPlayTimer extends ChangeNotifier {
         await rewind();
         //logger.fine('${_currentModel!.name} is paused');
         //}
+        print(
+            'next---------------------------------------------------------------------------------------------------------------');
         _next();
       }
     });
@@ -315,6 +375,8 @@ class CretaPlayTimer extends ChangeNotifier {
       // 이경우 한바퀴 돌았다는 뜻이다.
       frameManager.nextPageListener(contentsManager.frameModel);
     }
+    print(
+        'next---oldorder=$oldOrder, _currentOrder=$_currentOrder------------------------------------------------------------------------------------------------------------');
   }
 
   void notifyToProperty() {
@@ -336,9 +398,10 @@ class CretaPlayTimer extends ChangeNotifier {
   }
 
   CretaAbsPlayer createPlayer(ContentsModel model) {
-    final String key = contentsManager.keyMangler(model);
-    // final String frameKey = contentsManager.keyMangler(model);
-    // final String key =  '$frameKey-${model.mid}';
+    logger.info('createPlayer(${model.name})');
+    //final String key = contentsManager.keyMangler(model);
+    final String frameKey = contentsManager.keyMangler(model);
+    final String key = '$frameKey-${model.mid}';
     CretaAbsPlayer? player = contentsManager.getPlayer(key);
     if (player != null) {
       player.model!.updateFrom(model); // 모델이 달라졌을수 있다.
@@ -346,7 +409,7 @@ class CretaPlayTimer extends ChangeNotifier {
       logger.info('player is already created : ${model.name}');
       return player;
     }
-    player = _createPlayer(key, model);
+    player = _createPlayer(frameKey, key, model);
     _currentPlayer = player;
     contentsManager.setPlayer(key, player);
     //player.init();
@@ -354,22 +417,22 @@ class CretaPlayTimer extends ChangeNotifier {
     return player;
   }
 
-  CretaAbsPlayer _createPlayer(String key, ContentsModel model) {
+  CretaAbsPlayer _createPlayer(String frameKey, String key, ContentsModel model) {
+    logger.info('_createPlayer(${model.name})');
     switch (model.contentsType) {
       case ContentsType.video:
         return CretaVideoPlayer(
+          frameKey: frameKey,
           keyString: key,
           model: model,
           acc: contentsManager,
           onAfterEvent: (postion, duration) async {
-            //_completeWaitTime = duration - postion;
-            //print('----- video play completed(${model.name},_completeWaitTime=$_completeWaitTime)');
-            //print('----- video play completed(${model.name}, ${duration - postion}})');
-            await _processVideo();
+            await _onAfterEventVideo();
           },
         );
       case ContentsType.image:
         return CretaImagePlayer(
+          frameKey: frameKey,
           keyString: key,
           model: model,
           acc: contentsManager,
@@ -377,6 +440,7 @@ class CretaPlayTimer extends ChangeNotifier {
         );
       case ContentsType.text:
         return CretaTextPlayer(
+          frameKey: frameKey,
           keyString: key,
           model: model,
           acc: contentsManager,
@@ -384,6 +448,7 @@ class CretaPlayTimer extends ChangeNotifier {
         );
       case ContentsType.document:
         return CretaDocPlayer(
+          frameKey: frameKey,
           keyString: key,
           model: model,
           acc: contentsManager,
@@ -391,6 +456,7 @@ class CretaPlayTimer extends ChangeNotifier {
         );
       case ContentsType.music:
         return CretaMusicPlayer(
+          frameKey: frameKey,
           keyString: key,
           model: model,
           acc: contentsManager,
@@ -398,6 +464,7 @@ class CretaPlayTimer extends ChangeNotifier {
         );
       case ContentsType.pdf:
         return CretaPdfPlayer(
+          frameKey: frameKey,
           keyString: key,
           model: model,
           acc: contentsManager,
@@ -405,6 +472,7 @@ class CretaPlayTimer extends ChangeNotifier {
         );
       default:
         return CretaEmptyPlayer(
+          frameKey: frameKey,
           keyString: key,
           acc: contentsManager,
           onAfterEvent: (postion, duration) async {},
@@ -418,18 +486,18 @@ class CretaPlayTimer extends ChangeNotifier {
     switch (model.contentsType) {
       case ContentsType.video:
         return CretaVideoWidget(
-          key: contentsManager.registerPlayerWidgetKey(player.keyString, model.contentsType),
+          key: contentsManager.registerPlayerWidgetKey(player.frameKey, model.contentsType),
           player: player,
         );
       case ContentsType.image:
         //print('createWidget image, ${model.name} ,${player.frameKeyString}');
         return CretaImagerWidget(
-          key: contentsManager.registerPlayerWidgetKey(player.keyString, model.contentsType),
+          key: contentsManager.registerPlayerWidgetKey(player.frameKey, model.contentsType),
           player: player,
         );
       case ContentsType.text:
         return CretaTextWidget(
-          key: contentsManager.registerPlayerWidgetKey(player.keyString, model.contentsType),
+          key: contentsManager.registerPlayerWidgetKey(player.frameKey, model.contentsType),
           player: player,
         );
       case ContentsType.document:
@@ -439,24 +507,24 @@ class CretaPlayTimer extends ChangeNotifier {
         // );
         //print('-------------createWidget${model.name}, ${model.contentsType})------------');
         return CretaDocWidget(
-          key: contentsManager.registerPlayerWidgetKey(player.keyString, model.contentsType),
+          key: contentsManager.registerPlayerWidgetKey(player.frameKey, model.contentsType),
           player: player,
           frameManager: frameManager,
         );
       case ContentsType.music:
         // print('-------------createMusicWidget${model.name}, ${model.contentsType})------------');
         return CretaMusicWidget(
-          key: contentsManager.registerPlayerWidgetKey(player.keyString, model.contentsType),
+          key: contentsManager.registerPlayerWidgetKey(player.frameKey, model.contentsType),
           player: player,
         );
       case ContentsType.pdf:
         return CretaPdfWidget(
-          key: contentsManager.registerPlayerWidgetKey(player.keyString, model.contentsType),
+          key: contentsManager.registerPlayerWidgetKey(player.frameKey, model.contentsType),
           player: player,
         );
       default:
         return CretaEmptyPlayerWidget(
-          key: contentsManager.registerPlayerWidgetKey(player.keyString, model.contentsType),
+          key: contentsManager.registerPlayerWidgetKey(player.frameKey, model.contentsType),
           player: player,
         );
     }
@@ -508,20 +576,29 @@ class CretaPlayTimer extends ChangeNotifier {
             _currentModel?.resumeState();
           }
         }
+
+        if (_currentModel != null && _currentModel!.contentsType == ContentsType.video) {
+          //  Video 는 timer 를 사용하지 않는다.
+          return;
+        }
         //BookMainPage.pageManagerHolder!.printSelectedMid(1);
 
         // 아무것도 돌고 있지 않다면,
-        if (_currentOrder < 0) {
-          _currentOrder = contentsManager.lastOrder(); //가장 마지막이 가장 먼저 돌아야 하므로.
-          //logger.fine('currentOrder=$_currentOrder');
-          if (_currentOrder < 0) {
-            return; // 돌릴게 없다.
-          }
+        // 비디오의 경우, 처음에  _currentModel 이  null 이기 때문에, 처음 한번은 여기에 도달한다.
+        if (_updateCurrentModel() == false) {
+          return;
         }
-        //BookMainPage.pageManagerHolder!.printSelectedMid(2);
-        _setCurrentModel();
+
         if (_currentModel == null) {
           logger.warning('_curentModel is null');
+          return;
+        }
+
+        // 비디오의 경우, 처음에  _currentModel 이  null 이기 때문에, 처음 한번은 여기에 도달한다.
+        if (_currentModel!.isVideo()) {
+          // 이때, play 가 되게 하기 위해 한번은  notify 를 해야 한다.
+          notify();
+          notifyToProperty();
           return;
         }
         //BookMainPage.pageManagerHolder!.printSelectedMid(3);
@@ -544,7 +621,7 @@ class CretaPlayTimer extends ChangeNotifier {
           return;
         }
 
-        if (_currentModel != null && _currentModel!.isImage() || _currentModel!.isText()) {
+        if (_currentModel != null && (_currentModel!.isImage() || _currentModel!.isText())) {
           double playTime = _currentModel!.playTime.value;
           if (0 > playTime) {
             // 영구히 케이스
@@ -563,7 +640,7 @@ class CretaPlayTimer extends ChangeNotifier {
             return;
           }
 
-          //print('교체시간이 되었다.');
+          print('교체시간이 되었다.');
           _next();
           // await playHandler.setProgressBar(
           //   playTime <= 0 ? 0 : _currentPlaySec / playTime,
@@ -571,41 +648,49 @@ class CretaPlayTimer extends ChangeNotifier {
           // );
           return;
         }
-        //await _processVideo();
+        //await _onAfterEventVideo();
       },
     );
   }
 
-  Future<void> _processVideo() async {
-    if (_currentModel == null) return;
-    if (_currentModel!.isVideo() == false) return;
-    if (_currentModel!.playState != PlayState.end) return;
+  Future<void> _onAfterEventVideo() async {
+    // 이 함수는 비디오가 끝날때  호출된다.
 
-    int duration = _currentPlayer!.getDuration();
-    int position = _currentPlayer!.getPosition();
-    logger.info("_processVideo ${_currentModel!.name} complete : duration=$duration, positon=$position");
+    //if (_currentModel == null) return;
+    print('_onAfterEventVideo(${_currentModel?.playState})');
+    //if (_currentModel!.playState != PlayState.end) return;
 
-    _currentModel!.setPlayState(PlayState.none);
-    logger.fine('before next, currentOrder=$_currentOrder');
+    // if (_currentModel != null) {
+    //   int duration = _currentPlayer!.getDuration();
+    //   int position = _currentPlayer!.getPosition();
+    //   logger.info(
+    //       "_onAfterEventVideo ${_currentModel?.name} complete : duration=$duration, positon=$position");
+    // }
+    _currentModel?.setPlayState(PlayState.none);
+    logger.info('before next, currentOrder=$_currentOrder');
     // 비디오가 마무리 작업을 할 시간을 준다.  --> 이제 안줘도 된다. pause 함수에서 then 을 제거하고 await 로 바꾸었다.
     // if (_completeWaitTime != Duration.zero) {
     //   await Future.delayed(_completeWaitTime);
     //   _completeWaitTime = Duration.zero;
     // }
 
-    _prevOrder = _currentOrder;
+    //_prevOrder = _currentOrder;
     _next();
+    _updateCurrentModel(debug: true);
 
-    logger.fine('after next, currentOrder=$_currentOrder');
+    if (_currentModel != null && _currentModel!.isVideo() == false) return;
+
+    logger.info('after next, currentOrder=$_currentOrder');
 
     // // 다시 play 를 해야 한다. 동일한 놈은 afterBuild 가 호출되지 않기 때문이다.
-    if (StudioVariables.isAutoPlay &&
-        _prevModel != null &&
-        _currentModel!.mid == _prevModel!.mid &&
-        _currentOrder == _prevOrder) {
-      logger.info('only one video exist case');
-      await play();
-    }
+    // 근데,,2개 였다가 하나로 줄었다면,,,,이전것과 같다고 해서 꼭 하나인것이 아니다.
+    // if (StudioVariables.isAutoPlay && contentsManager.getAvailLength() == 1 ||
+    //     (_prevModel != null &&
+    //         _currentModel!.mid == _prevModel!.mid &&
+    //         _currentOrder == _prevOrder)) {
+    //   logger.info('only one video exist case');
+    //   await play();
+    // }
 
     return;
   }

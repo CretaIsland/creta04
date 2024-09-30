@@ -682,7 +682,7 @@ class InstantEditorState extends CretaState<InstantEditor> {
       // }
     }
     model.save();
-    _contentsManager?.playTimer?.setCurrentModel(model);
+    _contentsManager?.playManager?.setCurrentModel(model);
     _contentsManager?.notify();
     //_contentsManager?.invalidatePlayerWidget(model);
 

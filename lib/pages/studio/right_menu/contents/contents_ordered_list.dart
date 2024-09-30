@@ -304,7 +304,7 @@ class _ContentsOrderedListState extends State<ContentsOrderedList> with Property
                 onLongPressDown: (detail) {
                   if (_selectedIndex != index && model.isShow.value == true) {
                     logger.fine('ContentsOrderedList $_selectedIndex $index');
-                    widget.contentsManager.playTimer?.releasePause(); // 내부에서 비디오일때만 동작하도록 되어있음.
+                    widget.contentsManager.playManager?.releasePause(); // 내부에서 비디오일때만 동작하도록 되어있음.
                     widget.contentsManager.goto(model.order.value).then((v) {
                       widget.contentsManager.setSelectedMid(model.mid, doNotify: false);
                       _notifyToMain(model);
@@ -889,7 +889,7 @@ class _ContentsOrderedListState extends State<ContentsOrderedList> with Property
         //model.updateByAutoSize(null); // autoSize 를 초기화하거나 재설정한다.
         //mychangeStack.endTrans();
         _sendEvent!.sendEvent(_frameModel);
-        //widget.contentsManager.playTimer?.setCurrentModel(model); // 처음만든 Text 의 경우 이 모델이 바뀌지 않는다.
+        //widget.contentsManager.playManager?.setCurrentModel(model); // 처음만든 Text 의 경우 이 모델이 바뀌지 않는다.
         //widget.contentsManager.notify();
         //CretaManager.frameSelectNotifier!.notify();
         //   widget.frameManager?.notify();

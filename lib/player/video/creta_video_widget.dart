@@ -19,8 +19,9 @@ import '../../pages/studio/studio_variables.dart';
 import '../creta_abs_media_widget.dart';
 import 'creta_video_player.dart';
 
-class CretaVideoWidget extends CretaAbsPlayerWidget {
-  const CretaVideoWidget({super.key, required super.player});
+// ignore: must_be_immutable
+class CretaVideoWidget extends CretaAbsMediaWidget {
+  CretaVideoWidget({super.key, required super.player, super.timeExpired});
 
   @override
   State<CretaVideoWidget> createState() => CretaVideoPlayerWidgetState();

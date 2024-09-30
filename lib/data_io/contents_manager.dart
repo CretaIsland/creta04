@@ -27,7 +27,7 @@ import '../pages/studio/studio_getx_controller.dart';
 import '../pages/studio/studio_snippet.dart';
 import '../pages/studio/studio_variables.dart';
 import '../player/creta_abs_player.dart';
-import '../player/creta_play_timer.dart';
+import '../player/creta_play_manager.dart';
 import '../player/video/creta_video_player.dart';
 import 'package:creta_user_io/data_io/creta_manager.dart';
 //import 'depot_manager.dart';
@@ -183,14 +183,14 @@ class ContentsManager extends BaseContentsManager {
   bool _isVideoResize = false;
   void setIsVideoResize(bool value) => _isVideoResize = value;
 
-  CretaPlayTimer? playTimer;
-  void setPlayerHandler(CretaPlayTimer p) {
-    playTimer = p;
+  CretaPlayManager? playManager;
+  void setPlayManager(CretaPlayManager p) {
+    playManager = p;
   }
 
   String keyMangler(ContentsModel contents) {
-    //return 'contents-${pageModel.mid}-${frameModel.mid}-${contents.mid}';
-    return 'contents-${pageModel.mid}-${frameModel.mid}-${contents.contentsType}'; // 콘텐츠타입별로 play widdet 이 만들어 진다.
+    return 'contents-${pageModel.mid}-${frameModel.mid}-${contents.mid}';
+    //return 'contents-${pageModel.mid}-${frameModel.mid}-${contents.contentsType}'; // 콘텐츠타입별로 play widdet 이 만들어 진다.
   }
 
   bool hasContents() {
@@ -207,15 +207,15 @@ class ContentsManager extends BaseContentsManager {
   }
 
   ContentsModel? getCurrentModel() {
-    if (playTimer == null) {
+    if (playManager == null) {
       return null;
     }
-    return playTimer?.getCurrentModel();
+    return playManager?.getCurrentModel();
   }
 
   void clearCurrentModel() {
     selectedMid = '';
-    playTimer?.clearCurrentModel();
+    playManager?.clearCurrentModel();
   }
 
   Future<ContentsModel> createNextContents(ContentsModel model, {bool doNotify = true}) async {
@@ -243,13 +243,13 @@ class ContentsManager extends BaseContentsManager {
     await createToDB(model);
     insert(model, postion: getLength(), doNotify: doNotify);
 
-    if (playTimer != null) {
-      if (playTimer!.isInit()) {
+    if (playManager != null) {
+      if (playManager!.isInit()) {
         //logger.fine('prev exist =============================================');
-        await playTimer?.rewind();
-        await playTimer?.pause();
+        await playManager?.rewind();
+        await playManager?.pause();
       }
-      await playTimer?.reOrdering(isRewind: true);
+      await playManager?.reOrdering(isRewind: true);
     } else {
       reOrdering();
     }
@@ -262,13 +262,13 @@ class ContentsManager extends BaseContentsManager {
     await setToDB(model);
     insert(model, postion: getLength(), doNotify: doNotify);
 
-    if (playTimer != null) {
-      if (playTimer!.isInit()) {
+    if (playManager != null) {
+      if (playManager!.isInit()) {
         //logger.fine('prev exist =============================================');
-        await playTimer?.rewind();
-        await playTimer?.pause();
+        await playManager?.rewind();
+        await playManager?.pause();
       }
-      await playTimer?.reOrdering(isRewind: true);
+      await playManager?.reOrdering(isRewind: true);
     } else {
       reOrdering();
     }
@@ -283,13 +283,13 @@ class ContentsManager extends BaseContentsManager {
       notify();
     }
 
-    if (playTimer != null) {
-      if (playTimer!.isInit()) {
+    if (playManager != null) {
+      if (playManager!.isInit()) {
         //logger.fine('prev exist =============================================');
-        await playTimer?.rewind();
-        await playTimer?.pause();
+        await playManager?.rewind();
+        await playManager?.pause();
       }
-      await playTimer?.reOrdering(isRewind: true);
+      await playManager?.reOrdering(isRewind: true);
     } else {
       reOrdering();
     }
@@ -514,7 +514,7 @@ class ContentsManager extends BaseContentsManager {
       return false;
     }
 
-    if (playTimer != null && playTimer!.isInit()) {
+    if (playManager != null && playManager!.isInit()) {
       await _removeContents(context, model);
       iamBusy = false;
       return true;
@@ -541,17 +541,17 @@ class ContentsManager extends BaseContentsManager {
       save: true,
       doComplete: (val) {
         remove(model);
-        playTimer?.reOrdering();
+        playManager?.reOrdering();
       },
       undoComplete: (val) {
         insert(model);
-        playTimer?.reOrdering();
+        playManager?.reOrdering();
       },
     );
     //await setToDB(model);
     //remove(model);
     //print('remove contents ${model.name}, ${model.mid}');
-    await playTimer?.reOrdering();
+    await playManager?.reOrdering();
 
     if (getAvailLength() == 0) {
       //print('getVisibleLength is 0');
@@ -581,7 +581,7 @@ class ContentsManager extends BaseContentsManager {
 
   @override
   Future<void> removeAll() async {
-    playTimer?.stop();
+    //playManager?.stop();
     if (BookMainPage.backGroundMusic != null) {
       FrameManager.stopBackgroundMusic(BookMainPage.backGroundMusic!);
     }
@@ -663,8 +663,8 @@ class ContentsManager extends BaseContentsManager {
         CretaVideoPlayer video = player as CretaVideoPlayer;
         if (video.wcontroller != null &&
             video.isInit() &&
-            playTimer != null &&
-            playTimer!.isCurrentModel(player.model!.mid)) {
+            playManager != null &&
+            playManager!.isCurrentModel(player.model!.mid)) {
           await video.wcontroller!.pause();
           logger.fine('contents.pause end');
         }
@@ -695,8 +695,8 @@ class ContentsManager extends BaseContentsManager {
         CretaVideoPlayer video = player as CretaVideoPlayer;
         if (video.wcontroller != null &&
             video.isInit() &&
-            playTimer != null &&
-            playTimer!.isCurrentModel(player.model!.mid)) {
+            playManager != null &&
+            playManager!.isCurrentModel(player.model!.mid)) {
           logger.fine('contents.resume');
           await video.wcontroller!.play();
         }
@@ -720,15 +720,15 @@ class ContentsManager extends BaseContentsManager {
 
   Future<void> goto(double order) async {
     pause();
-    await playTimer?.setCurrentOrder(order);
+    await playManager?.setCurrentOrder(order);
   }
 
   Future<void> gotoNext() async {
-    await playTimer?.next();
+    await playManager?.next();
   }
 
   Future<void> gotoPrev() async {
-    await playTimer?.prev();
+    await playManager?.prev();
   }
 
   List<CretaModel> valueList() {
@@ -903,19 +903,19 @@ class ContentsManager extends BaseContentsManager {
   }
 
   // Future<void> pause() async {
-  //   await playTimer?.pause();
+  //   await playManager?.pause();
   // }
 
   // Future<void> globalPause() async {
-  //   await playTimer?.globalPause();
+  //   await playManager?.globalPause();
   // }
 
   // Future<void> globalResume() async {
-  //   await playTimer?.globalResume();
+  //   await playManager?.globalResume();
   // }
 
   void setLooping(bool loop) {
-    playTimer?.setLooping(loop);
+    playManager?.setLooping(loop);
   }
 
   void setLoopingAll(bool loop) {

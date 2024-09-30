@@ -15,14 +15,14 @@ import '../../pages/studio/studio_variables.dart';
 import '../creta_abs_media_widget.dart';
 import 'creta_image_player.dart';
 
-class CretaImagerWidget extends CretaAbsPlayerWidget {
-  const CretaImagerWidget({super.key, required super.player});
+class CretaImageWidget extends CretaAbsMediaWidget {
+  CretaImageWidget({super.key, required super.player, super.timeExpired});
 
   @override
   CretaImagePlayerWidgetState createState() => CretaImagePlayerWidgetState();
 }
 
-class CretaImagePlayerWidgetState extends CretaState<CretaImagerWidget>
+class CretaImagePlayerWidgetState extends CretaState<CretaImageWidget>
     with SingleTickerProviderStateMixin {
   Timer? _aniTimer;
   bool _animateFlag = false;
@@ -42,11 +42,13 @@ class CretaImagePlayerWidgetState extends CretaState<CretaImagerWidget>
         });
       });
     }
+    widget.afterBuild(); // timer will be started
   }
 
   @override
   void dispose() {
     super.dispose();
+    widget.stopTimer();
     widget.player.stop();
     _aniTimer?.cancel();
   }

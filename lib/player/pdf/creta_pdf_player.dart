@@ -8,8 +8,6 @@ import '../creta_abs_player.dart';
 
 class CretaPdfPlayer extends CretaAbsPlayer {
   CretaPdfPlayer({
-        required super.frameKey,
-
     required super.keyString,
     required super.model,
     required super.acc,

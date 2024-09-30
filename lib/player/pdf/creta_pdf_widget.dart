@@ -11,8 +11,8 @@ import '../creta_abs_media_widget.dart';
 import 'creta_pdf_player.dart';
 import 'pinch.dart';
 
-class CretaPdfWidget extends CretaAbsPlayerWidget {
-  const CretaPdfWidget({super.key, required super.player});
+class CretaPdfWidget extends CretaAbsMediaWidget {
+  CretaPdfWidget({super.key, required super.player, super.timeExpired});
 
   @override
   CretaPdfPlayerWidgetState createState() => CretaPdfPlayerWidgetState();

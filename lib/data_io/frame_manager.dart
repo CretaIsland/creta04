@@ -32,7 +32,7 @@ import '../pages/studio/left_menu/music/music_player_frame.dart';
 import '../pages/studio/studio_constant.dart';
 import '../pages/studio/studio_getx_controller.dart';
 import '../pages/studio/studio_variables.dart';
-import '../player/creta_play_timer.dart';
+import '../player/creta_play_manager.dart';
 import 'book_manager.dart';
 import 'contents_manager.dart';
 import 'package:creta_user_io/data_io/creta_manager.dart';
@@ -63,19 +63,19 @@ class FrameManager extends BaseFrameManager {
     ContentsManager contentsManager = frameManager.findOrCreateContentsManager(frameModel);
     ContentsModel? model = contentsManager.getFirstModel();
     if (model != null) {
-      if (contentsManager.playTimer != null) {
+      if (contentsManager.playManager != null) {
         //print('bg music played !!!!');
         return Opacity(
           opacity: 0.5,
-          child: contentsManager.playTimer!.createWidget(model),
+          child: contentsManager.playManager!.createWidget(model),
         );
       }
       //print('bg music created and played !!!!');
-      CretaPlayTimer playTimer = CretaPlayTimer(contentsManager, frameManager);
-      contentsManager.setPlayerHandler(playTimer);
+      CretaPlayManager playManager = CretaPlayManager(contentsManager, frameManager);
+      contentsManager.setPlayManager(playManager);
       return Opacity(
         opacity: 0.5,
-        child: contentsManager.playTimer!.createWidget(model),
+        child: contentsManager.playManager!.createWidget(model),
       );
     }
     return const SizedBox.shrink();
@@ -97,11 +97,11 @@ class FrameManager extends BaseFrameManager {
     // if (model == null) {
     //   return;
     // }
-    // if (contentsManager.playTimer == null) {
+    // if (contentsManager.playManager == null) {
     //   return;
     // }
     // print('background music stop');
-    // contentsManager.playTimer?.stop();
+    // contentsManager.playManager?.stop();
     // return;
   }
 

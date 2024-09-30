@@ -5,18 +5,18 @@ import 'package:hycop/common/util/logger.dart';
 
 import '../../../../design_system/buttons/creta_button_wrapper.dart';
 import 'package:creta_studio_model/model/frame_model.dart';
-import '../../../../player/creta_play_timer.dart';
+import '../../../../player/creta_play_manager.dart';
 import '../../book_main_page.dart';
 
 class PlayButton extends StatefulWidget {
   final double applyScale;
-  final CretaPlayTimer playTimer;
+  final CretaPlayManager playManager;
   final FrameModel frameModel;
   final bool canMove;
   const PlayButton({
     super.key,
     required this.applyScale,
-    required this.playTimer,
+    required this.playManager,
     required this.frameModel,
     this.canMove = true,
   });
@@ -101,10 +101,10 @@ class _PlayButtonState extends State<PlayButton> {
               icon: Icons.skip_previous,
               onPressed: () async {
                 BookMainPage.containeeNotifier!.setFrameClick(true);
-                if (widget.playTimer.isPrevButtonBusy == false) {
+                if (widget.playManager.isPrevButtonBusy == false) {
                   logger.fine('prev Button pressed');
-                  await widget.playTimer.releasePause();
-                  await widget.playTimer.prev();
+                  await widget.playManager.releasePause();
+                  await widget.playManager.prev();
                   setState(() {
                     StudioVariables.stopNextContents = false;
                   });
@@ -112,13 +112,13 @@ class _PlayButtonState extends State<PlayButton> {
               }),
           BTN.fill_i_s(
               useTapUp: true,
-              icon: widget.playTimer.isPause() ? Icons.play_arrow : Icons.pause_outlined,
+              icon: widget.playManager.isPause() ? Icons.play_arrow : Icons.pause_outlined,
               onPressed: () {
                 BookMainPage.containeeNotifier!.setFrameClick(true);
                 logger.fine('play Button pressed');
                 setState(() {
                   StudioVariables.stopNextContents = false;
-                  widget.playTimer.togglePause();
+                  widget.playManager.togglePause();
                 });
               }),
           BTN.fill_i_s(
@@ -126,10 +126,10 @@ class _PlayButtonState extends State<PlayButton> {
               icon: Icons.skip_next,
               onPressed: () async {
                 BookMainPage.containeeNotifier!.setFrameClick(true);
-                if (widget.playTimer.isNextButtonBusy == false) {
+                if (widget.playManager.isNextButtonBusy == false) {
                   logger.fine('next Button pressed');
-                  await widget.playTimer.releasePause();
-                  await widget.playTimer.next();
+                  await widget.playManager.releasePause();
+                  await widget.playManager.next();
                   setState(() {
                     StudioVariables.stopNextContents = false;
                   });

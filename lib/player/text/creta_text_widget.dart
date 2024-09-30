@@ -14,8 +14,8 @@ import '../creta_abs_media_widget.dart';
 import 'creta_text_mixin.dart';
 import 'creta_text_player.dart';
 
-class CretaTextWidget extends CretaAbsPlayerWidget {
-  const CretaTextWidget({super.key, required super.player});
+class CretaTextWidget extends CretaAbsMediaWidget {
+  CretaTextWidget({super.key, required super.player, super.timeExpired});
 
   @override
   CretaTextPlayerWidgetState createState() => CretaTextPlayerWidgetState();

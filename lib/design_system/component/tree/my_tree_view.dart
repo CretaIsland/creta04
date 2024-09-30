@@ -460,10 +460,10 @@ class MyTreeViewState extends State<MyTreeView> {
     _sendEvent!.sendEvent(frameModel); // frame_main 이 reBuild 되게 하기 위해
 
     if (contentsModel.isShow.value == true) {
-      ContentsModel? currentModel = contentsManager.playTimer?.getCurrentModel();
+      ContentsModel? currentModel = contentsManager.playManager?.getCurrentModel();
       if (currentModel != null && currentModel.mid != contentsModel.mid) {
         //print('currentModel = ${currentModel.name}, contents=${contentsModel.name}');
-        contentsManager.playTimer?.releasePause();
+        contentsManager.playManager?.releasePause();
         //print('----------------------------------------');
         contentsManager.goto(contentsModel.order.value).then((v) {
           contentsManager.setSelectedMid(contentsModel.mid, doNotify: true); // 현재 선택된 것이 무엇인지 확실시,

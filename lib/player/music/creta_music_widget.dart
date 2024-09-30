@@ -13,8 +13,8 @@ import '../creta_abs_media_widget.dart';
 import 'creta_music_mixin.dart';
 import 'creta_music_player.dart';
 
-class CretaMusicWidget extends CretaAbsPlayerWidget {
-  const CretaMusicWidget({super.key, required super.player});
+class CretaMusicWidget extends CretaAbsMediaWidget {
+  CretaMusicWidget({super.key, required super.player, super.timeExpired});
 
   @override
   CretaMusicPlayerWidgetState createState() => CretaMusicPlayerWidgetState();

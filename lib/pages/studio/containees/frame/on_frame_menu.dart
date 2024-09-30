@@ -5,17 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:creta_common/common/creta_font.dart';
 //import 'package:creta_common/model/app_enums.dart';
 import 'package:creta_studio_model/model/frame_model.dart';
-import '../../../../player/creta_play_timer.dart';
+//import '../../../../player/creta_play_manager.dart';
 import '../../studio_variables.dart';
 import 'sticker/draggable_stickers.dart';
 
 class OnFrameMenu extends StatefulWidget {
-  final CretaPlayTimer? playTimer;
+  //final CretaPlayManager? playTimer;
   final FrameModel model;
   final int orderIndex;
 
   const OnFrameMenu(
-      {super.key, required this.playTimer, required this.orderIndex, required this.model});
+      {super.key, /*required this.playTimer,*/ required this.orderIndex, required this.model});
 
   @override
   State<OnFrameMenu> createState() => _OnFrameMenuState();

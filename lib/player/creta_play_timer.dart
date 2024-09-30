@@ -20,6 +20,7 @@ import '../pages/studio/book_main_page.dart';
 import '../pages/studio/containees/containee_nofifier.dart';
 import 'package:creta_user_io/data_io/creta_manager.dart';
 import '../pages/studio/left_menu/left_menu_page.dart';
+import '../pages/studio/studio_constant.dart';
 import '../pages/studio/studio_variables.dart';
 import 'creta_abs_player.dart';
 import 'creta_abs_media_widget.dart';
@@ -34,32 +35,44 @@ import 'text/creta_text_widget.dart';
 import 'video/creta_video_player.dart';
 import 'video/creta_video_widget.dart';
 
-class CretaPlayTimer extends ChangeNotifier {
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+// _CretaPlayTimer 는 더이상 사용되지 않는 클래스이다.
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+// ignore: unused_element
+class _CretaPlayTimer extends ChangeNotifier {
   final ContentsManager contentsManager;
   final FrameManager frameManager;
 
-  static final Map<String, CretaPlayTimer> _timerCache = <String, CretaPlayTimer>{};
-  static CretaPlayTimer? getTimer(
-      String key, ContentsManager contentsManager, FrameManager frameManager) {
-    CretaPlayTimer? retval = _timerCache[key];
-    if (retval == null) {
-      logger.warning('timer is newly created');
-      retval = CretaPlayTimer(contentsManager, frameManager);
-      _timerCache[key] = retval;
-    }
-    retval.start();
-    return retval;
-  }
+  // static final Map<String, _CretaPlayTimer> _timerCache = <String, _CretaPlayTimer>{};
+  // static _CretaPlayTimer? getTimer(
+  //     String key, ContentsManager contentsManager, FrameManager frameManager) {
+  //   _CretaPlayTimer? retval = _timerCache[key];
+  //   if (retval == null) {
+  //     logger.warning('timer is newly created');
+  //     retval = _CretaPlayTimer(contentsManager, frameManager);
+  //     _timerCache[key] = retval;
+  //   }
+  //   retval.start();
+  //   return retval;
+  // }
 
-  CretaPlayTimer(this.contentsManager, this.frameManager) {
+  _CretaPlayTimer(this.contentsManager, this.frameManager) {
     //final BoolEventController lineDrawSendEvent = Get.find(tag: 'draw-link');
     //_lineDrawSendEvent = lineDrawSendEvent;
-    print('---------------------------NEW CretaPlayTimer---------------------------------');
+    print('---------------------------NEW _CretaPlayTimer---------------------------------');
     clear();
   }
 
   Timer? _timer;
-  final int _timeGap = 500; //
   final Lock _lock = Lock();
   double _currentOrder = -1;
   //double _prevOrder = -1;
@@ -149,7 +162,8 @@ class CretaPlayTimer extends ChangeNotifier {
 
   void start() {
     if (_timer == null) {
-      _timer = Timer.periodic(Duration(milliseconds: _timeGap), _timerExpired);
+      _timer = Timer.periodic(
+          const Duration(milliseconds: StudioConst.playTimerInterval), _timerExpired);
       _initComplete = true;
     }
   }
@@ -422,7 +436,6 @@ class CretaPlayTimer extends ChangeNotifier {
     switch (model.contentsType) {
       case ContentsType.video:
         return CretaVideoPlayer(
-          frameKey: frameKey,
           keyString: key,
           model: model,
           acc: contentsManager,
@@ -432,7 +445,6 @@ class CretaPlayTimer extends ChangeNotifier {
         );
       case ContentsType.image:
         return CretaImagePlayer(
-          frameKey: frameKey,
           keyString: key,
           model: model,
           acc: contentsManager,
@@ -440,7 +452,6 @@ class CretaPlayTimer extends ChangeNotifier {
         );
       case ContentsType.text:
         return CretaTextPlayer(
-          frameKey: frameKey,
           keyString: key,
           model: model,
           acc: contentsManager,
@@ -448,7 +459,6 @@ class CretaPlayTimer extends ChangeNotifier {
         );
       case ContentsType.document:
         return CretaDocPlayer(
-          frameKey: frameKey,
           keyString: key,
           model: model,
           acc: contentsManager,
@@ -456,7 +466,6 @@ class CretaPlayTimer extends ChangeNotifier {
         );
       case ContentsType.music:
         return CretaMusicPlayer(
-          frameKey: frameKey,
           keyString: key,
           model: model,
           acc: contentsManager,
@@ -464,7 +473,6 @@ class CretaPlayTimer extends ChangeNotifier {
         );
       case ContentsType.pdf:
         return CretaPdfPlayer(
-          frameKey: frameKey,
           keyString: key,
           model: model,
           acc: contentsManager,
@@ -472,7 +480,6 @@ class CretaPlayTimer extends ChangeNotifier {
         );
       default:
         return CretaEmptyPlayer(
-          frameKey: frameKey,
           keyString: key,
           acc: contentsManager,
           onAfterEvent: (postion, duration) async {},
@@ -480,24 +487,24 @@ class CretaPlayTimer extends ChangeNotifier {
     }
   }
 
-  CretaAbsPlayerWidget createWidget(ContentsModel model) {
+  CretaAbsMediaWidget createWidget(ContentsModel model) {
     CretaAbsPlayer player = createPlayer(model);
 
     switch (model.contentsType) {
       case ContentsType.video:
         return CretaVideoWidget(
-          key: contentsManager.registerPlayerWidgetKey(player.frameKey, model.contentsType),
+          key: contentsManager.registerPlayerWidgetKey(player.keyString, model.contentsType),
           player: player,
         );
       case ContentsType.image:
         //print('createWidget image, ${model.name} ,${player.frameKeyString}');
-        return CretaImagerWidget(
-          key: contentsManager.registerPlayerWidgetKey(player.frameKey, model.contentsType),
+        return CretaImageWidget(
+          key: contentsManager.registerPlayerWidgetKey(player.keyString, model.contentsType),
           player: player,
         );
       case ContentsType.text:
         return CretaTextWidget(
-          key: contentsManager.registerPlayerWidgetKey(player.frameKey, model.contentsType),
+          key: contentsManager.registerPlayerWidgetKey(player.keyString, model.contentsType),
           player: player,
         );
       case ContentsType.document:
@@ -507,24 +514,24 @@ class CretaPlayTimer extends ChangeNotifier {
         // );
         //print('-------------createWidget${model.name}, ${model.contentsType})------------');
         return CretaDocWidget(
-          key: contentsManager.registerPlayerWidgetKey(player.frameKey, model.contentsType),
+          key: contentsManager.registerPlayerWidgetKey(player.keyString, model.contentsType),
           player: player,
           frameManager: frameManager,
         );
       case ContentsType.music:
         // print('-------------createMusicWidget${model.name}, ${model.contentsType})------------');
         return CretaMusicWidget(
-          key: contentsManager.registerPlayerWidgetKey(player.frameKey, model.contentsType),
+          key: contentsManager.registerPlayerWidgetKey(player.keyString, model.contentsType),
           player: player,
         );
       case ContentsType.pdf:
         return CretaPdfWidget(
-          key: contentsManager.registerPlayerWidgetKey(player.frameKey, model.contentsType),
+          key: contentsManager.registerPlayerWidgetKey(player.keyString, model.contentsType),
           player: player,
         );
       default:
         return CretaEmptyPlayerWidget(
-          key: contentsManager.registerPlayerWidgetKey(player.frameKey, model.contentsType),
+          key: contentsManager.registerPlayerWidgetKey(player.keyString, model.contentsType),
           player: player,
         );
     }
@@ -631,7 +638,7 @@ class CretaPlayTimer extends ChangeNotifier {
           if (_currentModel != null && _currentPlaySec < playTime) {
             if ((StudioVariables.isAutoPlay && _currentModel!.playState != PlayState.pause) ||
                 _currentModel!.manualState == PlayState.start) {
-              _currentPlaySec += _timeGap;
+              _currentPlaySec += StudioConst.playTimerInterval;
               // await playHandler.setProgressBar(
               //   playTime <= 0 ? 0 : _currentPlaySec / playTime,
               //   _currentModel!,

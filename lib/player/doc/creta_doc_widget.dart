@@ -24,9 +24,9 @@ import 'creta_doc_mixin.dart';
 import 'creta_doc_player.dart';
 import 'editor_dialog.dart';
 
-class CretaDocWidget extends CretaAbsPlayerWidget {
+class CretaDocWidget extends CretaAbsMediaWidget {
   final FrameManager frameManager;
-  const CretaDocWidget({super.key, required super.player, required this.frameManager});
+  CretaDocWidget({super.key, required super.player, required this.frameManager, super.timeExpired});
 
   @override
   CretaDocPlayerWidgetState createState() => CretaDocPlayerWidgetState();

@@ -15,7 +15,6 @@ import '../creta_abs_player.dart';
 // ignore: must_be_immutable
 class CretaVideoPlayer extends CretaAbsPlayer {
   CretaVideoPlayer({
-    required super.frameKey,
     required super.keyString,
     required super.onAfterEvent,
     required super.model,
@@ -251,10 +250,10 @@ class CretaVideoPlayer extends CretaAbsPlayer {
       logger.severe('!!!!!!!! init again end, state = ${model!.playState}');
     }
     logger.info(
-        'playVideoSafe ${model!.name} state = ${model!.playState} ${model!.isPauseTimer}, ${acc.playTimer!.isCurrentModel(model!.mid)}');
+        'playVideoSafe ${model!.name} state = ${model!.playState} ${model!.isPauseTimer}, ${acc.playManager!.isCurrentModel(model!.mid)}');
     if (StudioVariables.isAutoPlay &&
         //model!.isState(PlayState.start) == false &&
-        //acc.playTimer!.isCurrentModel(model!.mid) &&
+        //acc.playManager!.isCurrentModel(model!.mid) &&
         model!.isPauseTimer == false) {
       logger.info('playVideo video ${model!.name} state = ${model!.playState}');
       // 딜레이할 필요가 있다.

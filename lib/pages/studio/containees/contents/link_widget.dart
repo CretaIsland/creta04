@@ -21,7 +21,7 @@ import 'package:creta_studio_model/model/contents_model.dart';
 import 'package:creta_studio_model/model/frame_model.dart';
 import 'package:creta_studio_model/model/link_model.dart';
 import 'package:creta_studio_model/model/page_model.dart';
-import '../../../../player/creta_play_timer.dart';
+import '../../../../player/creta_play_manager.dart';
 import '../../book_main_page.dart';
 import '../../book_preview_menu.dart';
 import '../../left_menu/left_menu_page.dart';
@@ -36,7 +36,7 @@ class LinkWidget extends StatefulWidget {
   final double applyScale;
   final FrameManager frameManager;
   final ContentsManager contentsManager;
-  final CretaPlayTimer playTimer;
+  final CretaPlayManager playManager;
   final ContentsModel contentsModel;
   final FrameModel frameModel;
   final Offset frameOffset;
@@ -46,7 +46,7 @@ class LinkWidget extends StatefulWidget {
     required this.applyScale,
     required this.frameManager,
     required this.contentsManager,
-    required this.playTimer,
+    required this.playManager,
     required this.contentsModel,
     required this.frameModel,
     required this.frameOffset,
@@ -148,7 +148,7 @@ class _LinkWidgetState extends State<LinkWidget> {
                               'PlayButton${widget.frameModel.mid}${widget.applyScale}'),
                           applyScale: widget.applyScale,
                           frameModel: widget.frameModel,
-                          playTimer: widget.playTimer,
+                          playManager: widget.playManager,
                           canMove: (_linkCount > 0),
                         ),
                       // if (DraggableStickers.isFrontBackHover &&

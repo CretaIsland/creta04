@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_final_fields
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:blobs/blobs.dart';
@@ -23,7 +24,6 @@ class ProgressNotifier extends ChangeNotifier {
 
 // ignore: must_be_immutable
 abstract class CretaAbsPlayer extends ChangeNotifier {
-  final String frameKey;
   final String keyString;
   final ContentsModel? model;
   final ContentsManager acc;
@@ -31,7 +31,6 @@ abstract class CretaAbsPlayer extends ChangeNotifier {
   //BasicOverayWidget? videoProgress;
 
   CretaAbsPlayer({
-    required this.frameKey,
     required this.keyString,
     required this.onAfterEvent,
     required this.acc,
@@ -68,8 +67,8 @@ abstract class CretaAbsPlayer extends ChangeNotifier {
   }
 
   void buttonIdle() {
-    acc.playTimer?.setIsNextButtonBusy(false);
-    acc.playTimer?.setIsPrevButtonBusy(false);
+    acc.playManager?.setIsNextButtonBusy(false);
+    acc.playManager?.setIsPrevButtonBusy(false);
   }
 
   PlayState getPlayState() => model!.playState;
@@ -143,7 +142,6 @@ abstract class CretaAbsPlayer extends ChangeNotifier {
 
 class CretaEmptyPlayer extends CretaAbsPlayer {
   CretaEmptyPlayer({
-    required super.frameKey,
     required super.keyString,
     required super.onAfterEvent,
     required super.acc,

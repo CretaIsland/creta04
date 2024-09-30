@@ -58,7 +58,7 @@ class ContentsThumbnail extends StatefulWidget {
 class ContentsThumbnailState extends CretaState<ContentsThumbnail>
     with CretaTextMixin, CretaDocMixin, CretaMusicMixin {
   //ContentsManager? _contentsManager;
-  //CretaPlayTimer? _playerHandler;
+  //CretaPlayManager? _playerHandler;
   ContentsEventController? _receiveEvent;
   ContentsEventController? _receiveTextEvent;
   //ContentsEventController? _sendEvent;
@@ -95,9 +95,9 @@ class ContentsThumbnailState extends CretaState<ContentsThumbnail>
     return retval;
   }
 
-  bool isURINotNull(ContentsModel model) {
-    return model.url.isNotEmpty || (model.remoteUrl != null && model.remoteUrl!.isNotEmpty);
-  }
+  // bool _isURINotNull(ContentsModel model) {
+  //   return model.url.isNotEmpty || (model.remoteUrl != null && model.remoteUrl!.isNotEmpty);
+  // }
 
   Widget _consumerFunc() {
     return Consumer<ContentsManager>(builder: (context, contentsManager, child) {

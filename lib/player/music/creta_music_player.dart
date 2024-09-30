@@ -5,8 +5,6 @@ import '../creta_abs_player.dart';
 
 class CretaMusicPlayer extends CretaAbsPlayer {
   CretaMusicPlayer({
-        required super.frameKey,
-
     required super.keyString,
     required super.model,
     required super.acc,

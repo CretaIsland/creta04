@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import 'package:hycop/hycop.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
+//import 'package:hycop/common/util/logger.dart';
 import 'package:creta_common/common/creta_common_utils.dart';
 import 'package:creta_common/common/creta_snippet.dart';
 
@@ -18,6 +18,8 @@ import '../../../../data_io/key_handler.dart';
 import '../../../../data_io/contents_manager.dart';
 import '../../../../data_io/depot_manager.dart';
 import '../../../../data_io/frame_manager.dart';
+import '../../../../data_io/link_manager.dart';
+import '../../../../design_system/component/autoSizeText/creta_auto_size_text.dart';
 import '../../../../design_system/component/snippet.dart';
 import 'package:creta_common/common/creta_color.dart';
 import '../../../../design_system/drag_and_drop/drop_zone_widget.dart';
@@ -27,7 +29,7 @@ import 'package:creta_studio_model/model/depot_model.dart';
 import 'package:creta_studio_model/model/frame_model.dart';
 import '../../../../model/frame_model_util.dart';
 import 'package:creta_studio_model/model/page_model.dart';
-import '../../../../player/creta_play_timer.dart';
+import '../../../../player/creta_play_manager.dart';
 import '../../book_main_page.dart';
 import '../../left_menu/depot/depot_display.dart';
 import '../../left_menu/music/music_player_frame.dart';
@@ -35,7 +37,8 @@ import '../../studio_getx_controller.dart';
 import '../../studio_snippet.dart';
 import '../../studio_variables.dart';
 import '../containee_mixin.dart';
-import '../contents/contents_main.dart';
+//import '../contents/contents_main.dart';
+import '../contents/link_widget.dart';
 import 'frame_play_mixin.dart';
 import 'on_frame_menu.dart';
 
@@ -64,7 +67,7 @@ class FrameEach extends StatefulWidget {
 
 class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePlayMixin {
   ContentsManager? _contentsManager;
-  CretaPlayTimer? _playTimer;
+  CretaPlayManager? _playManager;
   late double _width;
   // ignore: unused_field
   bool _onceInited = false;
@@ -76,15 +79,17 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
 
   //OffsetEventController? _linkSendEvent;
   FrameEachEventController? _linkReceiveEvent;
+  ContentsEventController? _contentsReceiveEvent;
+
   //late GlobalObjectKey<ContentsMainState> contentsMainKey;
   //bool _isLinkEnter = false;
 
   @override
   void dispose() {
     super.dispose();
-    _playTimer?.stop();
+    //_playManager = null;  // playManager 를  dispose 해서는 안됨.
     print('======================================================');
-    print('playTimer is to be stoped');
+    print('FrameEach is disposed');
     print('======================================================');
     //logger.fine('==========================FrameEach dispose================');
   }
@@ -109,6 +114,11 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
     // contentsMainKey = GlobalObjectKey<ContentsMainState>(
     //     'ContentsMain${widget.pageModel.mid}/${widget.model.mid}');
 
+    final ContentsEventController contentsReceiveEvent = Get.find(tag: 'contents-property-to-main');
+    //final ContentsEventController sendEvent = Get.find(tag: 'contents-main-to-property');
+    _contentsReceiveEvent = contentsReceiveEvent;
+    //_sendEvent = sendEvent;
+
     _width = widget.width;
   }
 
@@ -127,14 +137,13 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
       _contentsManager!.reOrdering();
     }
     //print('frame initChildren(${_contentsManager!.getAvailLength()})');
-    if (_playTimer == null) {
-      print('======================================================');
-      _playTimer = CretaPlayTimer.getTimer(
-          _contentsManager!.frameModel.mid, _contentsManager!, frameManager!);
-      _contentsManager!.setPlayerHandler(_playTimer!);
-      print('playTimer is to be creaded');
-      print('======================================================');
-    }
+
+    print('======================================================');
+    _playManager =
+        CretaPlayManager.getManager(_contentsManager!.parentMid!, _contentsManager!, frameManager!);
+    _contentsManager!.setPlayManager(_playManager!);
+    print('playManager is created : ${_contentsManager!.parentMid!}');
+    print('======================================================');
 
     return true;
   }
@@ -150,26 +159,26 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
 
     _width = widget.width;
 
-    if (_playTimer == null) {
-      logger.severe('_playTimer is null');
-    }
-    if (StudioVariables.isPreview) {
-      if (widget.pageModel.mid == BookMainPage.pageManagerHolder!.getSelectedMid()) {
-        // 현재 선택된 페이지만 start 한다.
-        //_playTimer?.start();
-      } else {
-        _playTimer?.stop();
-      }
-    } else {
-      //_playTimer?.start();
-    }
+    // if (_playManager == null) {
+    //   logger.severe('_playManager is null');
+    // }
+    // if (StudioVariables.isPreview) {
+    //   if (widget.pageModel.mid == BookMainPage.pageManagerHolder!.getSelectedMid()) {
+    //     // 현재 선택된 페이지만 start 한다.
+    //     //_playManager?.start();
+    //   } else {
+    //     //_playManager?.stop();
+    //   }
+    // } else {
+    //   //_playManager?.start();
+    // }
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<ContentsManager>.value(
           value: _contentsManager!,
         ),
-        ChangeNotifierProvider<CretaPlayTimer>.value(
-          value: _playTimer!,
+        ChangeNotifierProvider<CretaPlayManager>.value(
+          value: _playManager!,
         ),
       ],
       //child: _isInitialized ? _frameDropZone() : _futureBuider(),
@@ -221,7 +230,7 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
     //     _applyAnimate(widget.model),
     //     OnFrameMenu(
     //       key: GlobalObjectKey('OnFrameMenu${widget.model.mid}'),
-    //       playTimer: _playTimer,
+    //       playTimer: _playManager,
     //       model: widget.model,
     //     ),
     //   ],
@@ -364,7 +373,7 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
                         // key: GlobalObjectKey(
                         //     //'OnFrameMenu${widget.pageModel.mid}/${widget.model.mid}/${DraggableStickers.isFrontBackHover}'),
                         //     'OnFrameMenu${widget.pageModel.mid}/${widget.model.mid}'),
-                        playTimer: _playTimer,
+                        //playTimer: playManager,
                         orderIndex: orderIndex,
                         model: widget.model,
                       ),
@@ -522,7 +531,7 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
 
   Widget _frameBox(FrameModel model, bool useColor) {
     return Container(
-      key: ValueKey('Container${model.mid}'),
+      //key: ValueKey('Container${model.mid}'),
       decoration: useColor ? _frameDeco(model) : null,
       //color: Colors.transparent,
       width: double.infinity,
@@ -649,19 +658,127 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
     // ),
   }
 
-  Widget _childContents(FrameModel model) {
+  // Widget _childContents(FrameModel model) {
+  //   return ClipRect(
+  //     clipBehavior: Clip.hardEdge,
+  //     child: ContentsMain(
+  //       key: frameManager!.registerContentMainKeyHandlerKey(widget.pageModel.mid, widget.model.mid),
+  //       frameModel: model,
+  //       frameOffset: widget.frameOffset,
+  //       pageModel: widget.pageModel,
+  //       frameManager: frameManager!,
+  //       contentsManager: _contentsManager!,
+  //       applyScale: StudioVariables.applyScale,
+  //     ),
+  //   );
+  // }
+
+  bool _isURINotNull(ContentsModel model) {
+    //print('_isURINotNull(${model.mid}, ${model.remoteUrl})');
+    return model.url.isNotEmpty || (model.remoteUrl != null && model.remoteUrl!.isNotEmpty);
+  }
+
+  Widget _childContents(FrameModel frameModel) {
     return ClipRect(
       clipBehavior: Clip.hardEdge,
-      child: ContentsMain(
-        key: frameManager!.registerContentMainKeyHandlerKey(widget.pageModel.mid, widget.model.mid),
-        frameModel: model,
-        frameOffset: widget.frameOffset,
-        pageModel: widget.pageModel,
-        frameManager: frameManager!,
-        contentsManager: _contentsManager!,
-        applyScale: StudioVariables.applyScale,
-      ),
+      child: Consumer<ContentsManager>(builder: (context, contentsManager, child) {
+        //int contentsCount = contentsManager.getShowLength();
+        int contentsCount = contentsManager.getShowLength();
+        //print('Consumer<ContentsManager> ContentsMain = $contentsCount');
+        return Consumer<CretaPlayManager>(builder: (context, playManager, child) {
+          logger.info('Consumer<CretaPlayManager>');
+          return StreamBuilder<AbsExModel>(
+              stream: _contentsReceiveEvent!.eventStream.stream,
+              builder: (context, snapshot) {
+                //print('snapshot.data=${snapshot.data}');
+                //print('snapshot.data is ContentsModel=${snapshot.data is ContentsModel}');
+                if (snapshot.data != null && snapshot.data is ContentsModel) {
+                  ContentsModel model = snapshot.data! as ContentsModel;
+                  contentsManager.updateModel(model);
+                  logger.fine('model updated ${model.name}, ${model.url}');
+                }
+                logger.fine('StreamBuilder<AbsExModel> $contentsCount');
+                if (contentsCount == 0) {
+                  logger.fine('current model is null');
+                  return const SizedBox.shrink();
+                }
+                //skpark 2024.01.19 현재 돌고 있는 것을 가져오면 안되고, contentsManager 에서 가져와야 한다.
+                //ContentsModel? model = playManager.getCurrentModel();
+                ContentsModel? model = contentsManager.getSelected() as ContentsModel?;
+                model ??= playManager.getCurrentModel(); // null 인경우는 playManager 에서 가져온다.
+                if (model != null && _isURINotNull(model)) {
+                  //print('event received (1)=======================${model.autoSizeType.value}=');
+                  LinkManager? linkManager = contentsManager.findLinkManager(model.mid);
+                  if (linkManager != null) {
+                    //if (linkManager != null && linkManager.getAvailLength() > 0) {
+                    return Stack(
+                      children: [
+                        _createPlayerWidget(model, playManager),
+                        if (model.contentsType != ContentsType.document &&
+                            model.contentsType != ContentsType.pdf &&
+                            model.contentsType != ContentsType.music)
+                          LinkWidget(
+                            key: GlobalObjectKey('LinkWidget${widget.pageModel.mid}/${model.mid}'),
+                            applyScale: StudioVariables.applyScale,
+                            frameManager: frameManager!,
+                            frameOffset: widget.frameOffset,
+                            contentsManager: contentsManager,
+                            playManager: playManager,
+                            contentsModel: model,
+                            frameModel: frameModel,
+                            onFrameShowUnshow: () {
+                              logger.fine('onFrameShowUnshow');
+                              widget.frameManager.notify();
+                            },
+                          ),
+                        if (frameModel.dragOnMove == true)
+                          Container(
+                            width: double.infinity,
+                            height: double.infinity,
+                            color: Colors.black.withOpacity(0.25),
+                          ),
+                      ],
+                    );
+                  }
+                  return _createPlayerWidget(model, playManager);
+                }
+
+                // ignore: sized_box_for_whitespace
+                if (model != null && model.isText() == true) {
+                  //print('event received (2) =======================${model.autoSizeType.value}=');
+                  if (model.isAutoFontSize()) {
+                    logger.info('ContentsMain fontSizeNotifier');
+                    CretaAutoSizeText.fontSizeNotifier?.stop(); // rightMenu 에 전달
+                  }
+                }
+                return const SizedBox.shrink();
+                // return Container(
+                //   width: double.infinity,
+                //   height: double.infinity,
+                //   color: Colors.transparent,
+                //   child: Center(
+                //     child: Text(
+                //       '${widget.frameModel.order.value} : $contentsCount',
+                //       style: CretaFont.titleLarge,
+                //     ),
+                //   ),
+                // );
+              });
+        });
+      }),
     );
+  }
+
+  Widget _createPlayerWidget(ContentsModel model, CretaPlayManager playManager) {
+    print(
+        '_createPlayerWidget(${model.remoteUrl}, ${model.contentsType})-------------------------');
+    if (model.opacity.value < 1) {
+      return Opacity(
+        opacity: model.opacity.value,
+        child: playManager.createWidget(model),
+      );
+    }
+    return playManager.createWidget(model);
   }
 
   BoxDecoration _frameDeco(FrameModel model) {

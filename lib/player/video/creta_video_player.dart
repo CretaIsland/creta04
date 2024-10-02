@@ -34,8 +34,13 @@ class CretaVideoPlayer extends CretaAbsPlayer {
   @override
   Future<bool> init() async {
     if (_isInitComplete) {
-      playVideoSafe(); // init 가 이미 되어 있으면 play 해주어야 한다. await 를 하면 안된다. build 가 될 틈을 주어야 하기 때문이다.
-      logger.info('!!!!!! CretaVideoWidget build  : already initialized !!!!!');
+      //print("[[[[[[[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]]]]]]]]");
+      // 이 controller 는 init 되었지만, widget 의 afterBuild 가 호출되지 않는 경우에 해당한다.
+      // logger.info('!!!!!! CretaVideoWidget build  : already initialized 2!!!!!');
+      // if (model!.isState(PlayState.start) == false) {
+      //   playVideoSafe();
+      // } // init 가 이미 되어 있으면 play 해주어야 한다.  await 하면 안된다.
+      //print("[[[[[[[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]]]]]]]]");
       return true;
     }
 

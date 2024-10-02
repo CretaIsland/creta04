@@ -2,7 +2,6 @@
 # C:\Users\seon\AppData\Local\Pub\Cache\hosted\pub.dev\
 #
 
-copy src_modify\video_player_2.8.6.daxt "$env:LOCALAPPDATA\Pub\Cache\hosted\pub.dev\video_player-2.8.6\lib\video_player.dart" 
 
 REM skpark modify 3\6
 copy src_modify\r_dotted_line_border.daxt "$env:LOCALAPPDATA\Pub\Cache\hosted\pub.dev\r_dotted_line_border-0.1.1\lib\r_dotted_line_border.dart"
@@ -99,3 +98,7 @@ copy src_modify\extension_navigation.daxt "$env:LOCALAPPDATA/Pub/Cache/hosted/pu
 
 REM skpark modify 24/08/19
 copy src_modify\carousel_slider.daxt "$env:LOCALAPPDATA/Pub/Cache/hosted/pub.dev/carousel_slider-4.2.1\lib\carousel_slider.dart"
+
+
+REM skpark modify 24/10/02
+copy src_modify\video_player_2.8.6.daxt "$env:LOCALAPPDATA\Pub\Cache\hosted\pub.dev\video_player-2.8.6\lib\video_player.dart" 

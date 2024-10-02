@@ -308,7 +308,7 @@ class ContentsManager extends BaseContentsManager {
       await _getAllLinks();
       _onceDBGetComplete = true;
     } catch (e) {
-      logger.finest('something wrong $e');
+      logger.severe('something wrong $e');
     }
     endTransaction();
     return contentsCount;

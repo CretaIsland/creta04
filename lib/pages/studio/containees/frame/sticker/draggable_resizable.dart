@@ -234,7 +234,7 @@ class DraggableResizableState extends CretaState<DraggableResizable> {
         (LayoutConst.selectBoxBorder + LayoutConst.stikerOffset - LayoutConst.cornerDiameter) / 2;
 
     final stickerContainer = Container(
-      key: Key('stickerContainer-$widget.mid}'),
+      key: Key('stickerContainer-${widget.frameModel!.mid}'),
       alignment: Alignment.center,
       height: normalizedHeight + LayoutConst.stikerOffset,
       width: normalizedWidth + LayoutConst.stikerOffset,

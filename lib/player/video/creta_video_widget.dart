@@ -29,8 +29,6 @@ class CretaVideoWidget extends CretaAbsMediaWidget {
 
 class CretaVideoPlayerWidgetState extends CretaState<CretaVideoWidget> {
   bool isMute = false;
-  //Future<bool>? _isInitialized;
-
   @override
   void setState(VoidCallback fn) {
     if (mounted) super.setState(fn);
@@ -40,7 +38,31 @@ class CretaVideoPlayerWidgetState extends CretaState<CretaVideoWidget> {
   void initState() {
     logger.info('CretaVideoWidget initState ************************************');
     super.initState();
-    afterBuild();
+    // afterBuild();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // every build가 완료된 후에 실행할 콜백
+      logger.fine('==============================================');
+      logger.fine('Build completed in didChangeDependencies');
+      logger.fine('==============================================');
+      afterBuild();
+    });
+  }
+
+  @override
+  void didUpdateWidget(CretaVideoWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // build가 완료된 후에 실행할 콜백
+      logger.fine('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
+      logger.fine('Build completed in didUpdateWidget');
+      logger.fine('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
+      afterBuild();
+    });
   }
 
   //build 후 호출되는 함수
@@ -60,6 +82,7 @@ class CretaVideoPlayerWidgetState extends CretaState<CretaVideoWidget> {
   @override
   void dispose() {
     super.dispose();
+
     logger.info(
         '********************* CretaVideoWidget dispose VideoPlayer${widget.player.model!.name}');
     widget.player.stop();
@@ -84,6 +107,14 @@ class CretaVideoPlayerWidgetState extends CretaState<CretaVideoWidget> {
     //     ),
     //   );
     // }
+
+    if (player.isInit()) {
+      // initState 가 호출되었고, controller 가 이니트 되었다면,
+      // video controller initialized
+      logger.info(
+          '!!!!!! CretaVideoWidget build  : already initialized !!!!!1 playerState=${player.getPlayState()}');
+      return _videoPlayerWidget(player);
+    }
     logger.info('!!!!!! CretaVideoWidget build  : first time initialized !!!!!');
     return FutureBuilder(
         //future: player.waitInitVideo(),
@@ -100,20 +131,24 @@ class CretaVideoPlayerWidgetState extends CretaState<CretaVideoWidget> {
             //error가 발생하게 될 경우 반환하게 되는 부분
             return Snippet.errMsgWidget(snapshot);
           }
-          Size? outSize = player.getSize();
-          if (outSize == null) {
-            return const SizedBox.shrink();
-          }
-          return IgnorePointer(
-            child: getClipRect(
-              outSize,
-              player.acc.frameModel,
-              player.model,
-              VideoPlayer(
-                  key: GlobalObjectKey('VideoPlayer${player.keyString}'), player.wcontroller!),
-            ),
-          );
+
+          return _videoPlayerWidget(player);
         });
+  }
+
+  Widget _videoPlayerWidget(CretaVideoPlayer player) {
+    Size? outSize = player.getSize();
+    if (outSize == null) {
+      return const SizedBox.shrink();
+    }
+    return IgnorePointer(
+      child: getClipRect(
+        outSize,
+        player.acc.frameModel,
+        player.model,
+        VideoPlayer(key: GlobalObjectKey('VideoPlayer${player.keyString}'), player.wcontroller!),
+      ),
+    );
   }
 
   Widget getClipRect(Size outSize, FrameModel frameModel, ContentsModel? model, Widget child) {

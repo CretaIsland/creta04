@@ -88,9 +88,9 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
   void dispose() {
     super.dispose();
     //_playManager = null;  // playManager 를  dispose 해서는 안됨.
-    print('======================================================');
-    print('FrameEach is disposed');
-    print('======================================================');
+    logger.fine('======================================================');
+    logger.fine('FrameEach is disposed');
+    logger.fine('======================================================');
     //logger.fine('==========================FrameEach dispose================');
   }
 
@@ -129,21 +129,25 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
       return false;
     }
     _contentsManager = frameManager!.findOrCreateContentsManager(widget.model);
+    // playManager 는 반드시 데이터를 가져오기 전에 해야 한다.
+    _playManager =
+        CretaPlayManager.getManager(_contentsManager!.parentMid!, _contentsManager!, frameManager!);
+    _contentsManager!.setPlayManager(_playManager!);
+    logger.fine('======================================================');
+    logger.fine('playManager is created : ${_contentsManager!.parentMid!}');
+    logger.fine('======================================================');
 
     if (_contentsManager!.onceDBGetComplete == false) {
-      print('contentsManager getContents *(*(*()*)(***()*(**())))');
+      try {
+        await _contentsManager!.getContents();
+      } catch (e) {
+        logger.severe('contentsManager getContents *(*(*()*)(***()*(**()))) error $e');
+      }
       await _contentsManager!.getContents();
       _contentsManager!.addRealTimeListen(widget.model.mid);
       _contentsManager!.reOrdering();
     }
     //print('frame initChildren(${_contentsManager!.getAvailLength()})');
-
-    print('======================================================');
-    _playManager =
-        CretaPlayManager.getManager(_contentsManager!.parentMid!, _contentsManager!, frameManager!);
-    _contentsManager!.setPlayManager(_playManager!);
-    print('playManager is created : ${_contentsManager!.parentMid!}');
-    print('======================================================');
 
     return true;
   }
@@ -770,8 +774,6 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
   }
 
   Widget _createPlayerWidget(ContentsModel model, CretaPlayManager playManager) {
-    print(
-        '_createPlayerWidget(${model.remoteUrl}, ${model.contentsType})-------------------------');
     if (model.opacity.value < 1) {
       return Opacity(
         opacity: model.opacity.value,

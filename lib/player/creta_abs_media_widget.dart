@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:hycop/hycop.dart';
 
 import '../pages/studio/studio_constant.dart';
 import 'creta_abs_player.dart';
@@ -18,7 +19,7 @@ abstract class CretaAbsMediaWidget extends StatefulWidget {
   void startTimer() {
     if (timeExpired == null) return;
 
-    print("타임머가 시작되었다 =============");
+    logger.fine("타임머가 시작되었다 =============");
     _timer ??=
         Timer.periodic(const Duration(milliseconds: StudioConst.playTimerInterval), (timer) async {
       isTimerAvailable = true;
@@ -27,7 +28,7 @@ abstract class CretaAbsMediaWidget extends StatefulWidget {
   }
 
   void stopTimer() {
-    print("타임머가 종료되었다 =============");
+    logger.fine("타임머가 종료되었다 =============");
     isTimerAvailable = false;
     _timer?.cancel();
     _timer = null;

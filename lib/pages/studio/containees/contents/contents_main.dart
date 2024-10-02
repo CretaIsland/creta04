@@ -195,9 +195,7 @@ class ContentsMainState extends CretaState<_ContentsMain> {
   }
 
   Widget _createPlayerWidget(ContentsModel model, CretaPlayManager playManager) {
-    print(
-        '_createPlayerWidget(${model.remoteUrl}, ${model.contentsType})-------------------------');
-    if (model.opacity.value < 1) {
+      if (model.opacity.value < 1) {
       return Opacity(
         opacity: model.opacity.value,
         child: playManager.createWidget(model),

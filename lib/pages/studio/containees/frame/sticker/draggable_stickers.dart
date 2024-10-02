@@ -192,7 +192,6 @@ class _DraggableStickersState extends State<DraggableStickers> {
   Widget build(BuildContext context) {
     stickers = widget.stickerList;
     bool useColor = (widget.page.textureType.value != TextureType.glass);
-    //print('_DraggableStickersState build-----------------------------------');
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<FrameSelectNotifier>.value(
@@ -335,7 +334,11 @@ class _DraggableStickersState extends State<DraggableStickers> {
             //   );
           }
         }
+      } else {
+        logger.severe('contentsModel is null');
       }
+    } else if (frameModel == null) {
+      logger.severe('frameModel is null');
     }
     return _dragableResizable(sticker, frameModel!, isVerticalResiable, isHorizontalResiable);
   }
@@ -345,62 +348,30 @@ class _DraggableStickersState extends State<DraggableStickers> {
     double posX = FrameModelUtil.getRealPosX(frameModel);
     double posY = FrameModelUtil.getRealPosY(frameModel);
 
-    // GlobalObjectKey<DraggableResizableState> draggableResizableKey =
-    //     GlobalObjectKey<DraggableResizableState>(
-    //         'DraggableResizable${sticker.pageMid}/${frameModel.mid}');
-
-    // sticker.dragableResiableKey = draggableResizableKey;
-
-    //
     return DraggableResizable(
       key: widget.frameManager!.registerDragableResiableKey(sticker.pageMid, frameModel.mid),
       isVerticalResiable: isVerticalResiable,
       isHorizontalResiable: isHorizontalResiable,
       sticker: sticker,
-      // mid: sticker.id,
-      // pageMid: sticker.pageMid,
-      // angle: sticker.angle,
-      // borderWidth: sticker.borderWidth,
-      // isSelected: sticker.isSelected,
-      // frameSize: sticker.isText == true
-      //     ? Size(64 * _initialStickerScale / 3, 64 * _initialStickerScale / 3)
-      //     : sticker.frameSize,
-      //position: sticker.position + BookMainPage.pageOffset,
       realPosition: Offset(posX, posY),
-      //realPosition: const Offset(0, 0),
       frameModel: frameModel,
       pageWidth: widget.pageWidth,
       pageHeight: widget.pageHeight, // - LayoutConst.miniMenuArea,
-      // Size of the sticker
-
-      //canTransform: DraggableStickers.selectedAssetId == sticker.id ? true : false,
       onResizeButtonTap: widget.onResizeButtonTap,
-      //  true
-      /*sticker.id == state.selectedAssetId*/
       onUpdate: (update, mid) {
         logger.finest(
             "oldposition=${sticker.position.toString()}, new=${update.position.toString()}");
-
         sticker.angle = update.angle;
         sticker.frameSize = update.size;
         sticker.position = update.position;
         widget.onUpdate?.call(update, mid);
         logger.finest("saved");
       },
-      // draggable_point 로 이사갔음.
-      // onTap: () {
-      //   logger.fine('onTap : from Gest2');
-      //   BookMainPage.containeeNotifier!.setFrameClick(true);
-      // },
       onComplete: () {
         logger.fine('onComplete : from DraggableResizable...');
-        //setState(() {
         widget.onComplete?.call(sticker.id);
-        //});
       },
       onScaleStart: () {
-        //print('DraggableResizable onScaleStart --------------------------');
-
         widget.onScaleStart?.call(sticker.id);
 
         FrameModel? frameModel = widget.frameManager!.getModel(sticker.id) as FrameModel?;
@@ -445,28 +416,6 @@ class _DraggableStickersState extends State<DraggableStickers> {
       child: (StudioVariables.isHandToolMode == false) //&& StudioVariables.isNotLinkState
           ? InkWell(
               splashColor: Colors.transparent,
-              // onDoubleTap: () {
-              //   ContentsManager? contentsManager =
-              //       widget.frameManager!.getContentsManager(frameModel.mid);
-              //   if (contentsManager == null) {
-              //     return;
-              //   }
-              //   ContentsModel? selected = contentsManager.getSelected() as ContentsModel?;
-
-              //   if (selected == null) {
-              //     // 클릭되어 있지 않으면 싱글클릭과 동일하게 동작한다.
-              //     BookMainPage.containeeNotifier!.setFrameClick(true);
-              //     CretaManager.frameSelectNotifier?.set(sticker.id);
-              //     widget.onTap?.call(sticker.id);
-              //     selected = contentsManager.getSelected() as ContentsModel?;
-              //     if (selected == null) {
-              //       return;
-              //     }
-              //   }
-
-              //   // double click action !!!
-              //   _gotoEditMode(contentsManager, selected, frameModel, sticker);
-              // },
               onSecondaryTapDown: (details) {
                 // 오른쪽 마우스 버튼 --> 메뉴
                 if (CretaManager.frameSelectNotifier != null) {

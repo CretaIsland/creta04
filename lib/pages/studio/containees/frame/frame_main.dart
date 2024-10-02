@@ -161,7 +161,6 @@ class FrameMainState extends State<FrameMain> with FramePlayMixin {
   Widget showFrame() {
     //FrameModel? model = frameManager!.getSelected() as FrameModel?;
     //logger.fine('showFrame $applyScale  ${StudioVariables.applyScale}');
-    //print('showFrame----------------------------------');
     return StickerView(
       // key: (StudioVariables.isPreview)
       //     ? BookMainPage.pageManagerHolder?.registerStickerView()
@@ -434,7 +433,6 @@ class FrameMainState extends State<FrameMain> with FramePlayMixin {
     manager.reOrdering();
     _mainFrameCandiator = manager.getMainFrameCandidator();
 
-    print('*&*&*&*&*&*&*&*&*&*&*&*&*');
     manager.frameEachKeyHandler.clear(); // 깨끗이 지운다....
 
     return manager.orderMapIterator((e) {

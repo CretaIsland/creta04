@@ -450,8 +450,6 @@ class StickerState extends CretaState<Sticker> with CretaMusicMixin {
       //print('showBGM');
       return showBGM(StudioVariables.applyScale);
     }
-
-    //print('build sticker ($isVisible)');
     return Visibility(visible: isVisible, child: widget.child ?? Container());
   }
 

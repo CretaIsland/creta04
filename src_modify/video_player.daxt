@@ -396,7 +396,7 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
 
   /// Attempts to open the given [dataSource] and load metadata about the video.
   Future<void> initialize() async {
-    ////print('initialize VideoPlayerController @@@@@@@@@@@@@@@@@@@@@@@@@@@');
+    //print('initialize VideoPlayerController @@@@@@@@@@@@@@@@@@@@@@@@@@@');
     final bool allowBackgroundPlayback = videoPlayerOptions?.allowBackgroundPlayback ?? false;
     if (!allowBackgroundPlayback) {
       _lifeCycleObserver = _VideoAppLifeCycleObserver(this);
@@ -498,32 +498,34 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
           Duration gap = value.duration - value.position;
           //print(' VideoEventType.completed --------$gap-------------------------');
 
-          await pause();
-          await seekTo(value.duration); // skpark 반드시 await 를 해야함.!!!!!
+          await pause(); //skpark .
+          if (gap.inMilliseconds > 0) {
+            await seekTo(value.duration); // skpark 반드시 await 를 해야함.!!!!!
+          }
           value = value.copyWith(isCompleted: true);
-          // skpark gap 만큼 delay 를 준다.
+          //skpark gap 만큼 delay 를 준다.
           // if (gap.inMilliseconds > 0) {
           //   await Future.delayed(gap);
           // }
           await onAfterVideoEvent?.call(event, value.position, value.duration);
           break;
         case VideoEventType.bufferingUpdate:
-          ////print(' VideoEventType.bufferingUpdate ---------------------------------');
+          //print(' VideoEventType.bufferingUpdate ---------------------------------');
 
           value = value.copyWith(buffered: event.buffered);
           break;
         case VideoEventType.bufferingStart:
-          ////print(' VideoEventType.bufferingStart ---------------------------------');
+          //print(' VideoEventType.bufferingStart ---------------------------------');
 
           value = value.copyWith(isBuffering: true);
           break;
         case VideoEventType.bufferingEnd:
-          ////print(' VideoEventType.bufferingEnd ---------------------------------');
+          //print(' VideoEventType.bufferingEnd ---------------------------------');
 
           value = value.copyWith(isBuffering: false);
           break;
         case VideoEventType.isPlayingStateUpdate:
-          ////print(' VideoEventType.isPlayingStateUpdate ---------------------------------');
+          //print(' VideoEventType.isPlayingStateUpdate ---------------------------------');
 
           if (event.isPlaying ?? false) {
             value = value.copyWith(isPlaying: event.isPlaying, isCompleted: false);
@@ -542,7 +544,7 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
 
     void errorListener(Object obj) {
       final PlatformException e = obj as PlatformException;
-      //print('errorListener VideoPlayerController $e @@@@@@@@@@@@@@@@@@@@@@@@@@@');
+      print('errorListener VideoPlayerController $e @@@@@@@@@@@@@@@@@@@@@@@@@@@');
       value = VideoPlayerValue.erroneous(e.message!);
       _timer?.cancel();
       if (!initializingCompleter.isCompleted) {
@@ -588,7 +590,7 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
     //skpark add lock
     //_isPlayComplete = false;
     // await _playLock.synchronized(() async {
-    ////print('play VideoPlayerController -------');
+    //print('play VideoPlayerController -------');
     if (value.position == value.duration) {
       await seekTo(Duration.zero);
     }

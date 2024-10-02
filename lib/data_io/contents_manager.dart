@@ -189,6 +189,9 @@ class ContentsManager extends BaseContentsManager {
   }
 
   String keyMangler(ContentsModel contents) {
+    if (contents.isVideo()) {
+      return 'contents-${pageModel.mid}-${frameModel.mid}-${contents.contentsType}'; // 콘텐츠타입별로 play widdet 이 만들어 진다. // 콘텐츠타입별로 play widdet 이 만들어 진다.
+    }
     return 'contents-${pageModel.mid}-${frameModel.mid}-${contents.mid}';
     //return 'contents-${pageModel.mid}-${frameModel.mid}-${contents.contentsType}'; // 콘텐츠타입별로 play widdet 이 만들어 진다.
   }

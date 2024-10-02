@@ -362,9 +362,9 @@ class CretaPlayManager extends ChangeNotifier {
   }
 
   CretaAbsPlayer createPlayer(ContentsModel model) {
-    logger.info('createPlayer(${model.name})');
     final String key = contentsManager.keyMangler(model);
-    CretaAbsPlayer? player = contentsManager.getPlayer(key);
+    logger.info('createPlayer(${model.name}, $key)');
+    CretaAbsPlayer? player = contentsManager.getPlayer(model.mid);
     if (player != null) {
       player.model!.updateFrom(model); // 모델이 달라졌을수 있다.
       _currentPlayer = player;
@@ -373,7 +373,7 @@ class CretaPlayManager extends ChangeNotifier {
     }
     player = _createPlayer(key, model);
     _currentPlayer = player;
-    contentsManager.setPlayer(key, player);
+    contentsManager.setPlayer(model.mid, player);
     //player.init();
     logger.fine('player is newly created');
     return player;
@@ -440,6 +440,7 @@ class CretaPlayManager extends ChangeNotifier {
 
     switch (model.contentsType) {
       case ContentsType.video:
+        logger.info('createWidget video, ${model.name} ,${player.keyString}');
         return CretaVideoWidget(
           // Video 는 timer 를 사용하지 않는다.  따라서 Frame 단위로 initalize 된다.
           key: contentsManager.registerPlayerWidgetKey(player.keyString, model.contentsType),

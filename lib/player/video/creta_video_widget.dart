@@ -4,7 +4,7 @@
 import 'dart:math';
 
 //import 'package:creta_common/model/app_enums.dart';
-import 'package:creta_common/model/app_enums.dart';
+//import 'package:creta_common/model/app_enums.dart';
 import 'package:flutter/material.dart';
 import 'package:hycop/common/util/logger.dart';
 import 'package:video_player/video_player.dart';
@@ -29,6 +29,7 @@ class CretaVideoWidget extends CretaAbsMediaWidget {
 
 class CretaVideoPlayerWidgetState extends CretaState<CretaVideoWidget> {
   bool isMute = false;
+  late CretaVideoPlayer player;
   @override
   void setState(VoidCallback fn) {
     if (mounted) super.setState(fn);
@@ -38,6 +39,7 @@ class CretaVideoPlayerWidgetState extends CretaState<CretaVideoWidget> {
   void initState() {
     logger.info('CretaVideoWidget initState ************************************');
     super.initState();
+    player = widget.player as CretaVideoPlayer;
     // afterBuild();
   }
 
@@ -46,9 +48,9 @@ class CretaVideoPlayerWidgetState extends CretaState<CretaVideoWidget> {
     super.didChangeDependencies();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // every build가 완료된 후에 실행할 콜백
-      logger.fine('==============================================');
-      logger.fine('Build completed in didChangeDependencies');
-      logger.fine('==============================================');
+      logger.info('==============================================');
+      logger.info('Build completed in didChangeDependencies');
+      logger.info('==============================================');
       afterBuild();
     });
   }
@@ -58,23 +60,27 @@ class CretaVideoPlayerWidgetState extends CretaState<CretaVideoWidget> {
     super.didUpdateWidget(oldWidget);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // build가 완료된 후에 실행할 콜백
-      logger.fine('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
-      logger.fine('Build completed in didUpdateWidget');
-      logger.fine('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
+      logger.info('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
+      logger.info('Build completed in didUpdateWidget');
+      logger.info('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
       afterBuild();
     });
+    if (oldWidget.player.model!.mid != widget.player.model!.mid) {
+      player = widget.player as CretaVideoPlayer;
+    }
   }
 
   //build 후 호출되는 함수
   Future<void> afterBuild() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final CretaVideoPlayer player = widget.player as CretaVideoPlayer;
+      //final CretaVideoPlayer player = widget.player as CretaVideoPlayer;
 
       if (player.isInit()) {
-        if (player.getPlayState() != PlayState.start) {
-          logger.info('afterBuild player start !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-          player.playVideoSafe();
-        }
+        //if (player.getPlayState() != PlayState.start) {
+        logger.info(
+            '*(*(*(*(*(*(*( afterBuild player start !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+        player.playVideoSafe();
+        //}
       }
     });
   }
@@ -90,7 +96,7 @@ class CretaVideoPlayerWidgetState extends CretaState<CretaVideoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final CretaVideoPlayer player = widget.player as CretaVideoPlayer;
+    //final CretaVideoPlayer player = widget.player as CretaVideoPlayer;
     // if (player.isInit()) {
     //   logger.info('!!!!!! CretaVideoWidget build  : already initialized !!!!!');
     //   return IgnorePointer(

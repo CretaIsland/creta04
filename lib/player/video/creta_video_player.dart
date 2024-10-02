@@ -258,7 +258,7 @@ class CretaVideoPlayer extends CretaAbsPlayer {
         'playVideoSafe ${model!.name} state = ${model!.playState} ${model!.isPauseTimer}, ${acc.playManager!.isCurrentModel(model!.mid)}');
     if (StudioVariables.isAutoPlay &&
         //model!.isState(PlayState.start) == false &&
-        //acc.playManager!.isCurrentModel(model!.mid) &&
+        acc.playManager!.isCurrentModel(model!.mid) && // preview 모드에서 백그라운드 페이지가 실행되지 않도록 막기위해
         model!.isPauseTimer == false) {
       logger.info('playVideo video ${model!.name} state = ${model!.playState}');
       // 딜레이할 필요가 있다.

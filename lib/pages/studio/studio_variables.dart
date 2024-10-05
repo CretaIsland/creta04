@@ -203,6 +203,20 @@ class StudioVariables {
     //   frameManager.pause();
     // }
   }
+
+  static Future<void> pauseAll() async {
+    for (var frameManager in BookMainPage.pageManagerHolder!.frameManagerMap.values) {
+      logger.info('frameManager.pause(all)--------');
+      await frameManager!.pause(all: true);
+    }
+  }
+
+  static Future<void> disposeVideo() async {
+    for (var frameManager in BookMainPage.pageManagerHolder!.frameManagerMap.values) {
+      logger.info('frameManager.disposeVideo()--------');
+      await frameManager!.disposeVideo();
+    }
+  }
 }
 
 class LinkParams {

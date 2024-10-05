@@ -292,6 +292,19 @@ class FrameManager extends BaseFrameManager {
     return contentMainKeyHandler.invalidate(contentMainKeyHandlerKeyMangler(pageMid, frameMid));
   }
 
+  void clearKey() {
+    frameThumbnailKeyHandler.clear();
+    stickerKeyHandler.clear();
+    instantEditorKeyHandler.clear();
+    dragableResiableKeyHandler.clear();
+    frameEachKeyHandler.clear();
+    contentMainKeyHandler.clear();
+
+    for (var manager in contentsManagerMap.values) {
+      logger.info('contentsManager.clearKey()********');
+      manager.clearKey();
+    }
+  }
   //
   //
   //
@@ -802,10 +815,17 @@ class FrameManager extends BaseFrameManager {
     }
   }
 
-  Future<void> pause() async {
+  Future<void> pause({bool all = false}) async {
     for (var manager in contentsManagerMap.values) {
       logger.fine('frameManager.pause()********');
-      await manager.pause();
+      await manager.pause(all: all);
+    }
+  }
+
+  Future<void> disposeVideo() async {
+    for (var manager in contentsManagerMap.values) {
+      logger.info('frameManager.disposeVideo()********');
+      await manager.disposeVideo();
     }
   }
 

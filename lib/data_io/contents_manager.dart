@@ -52,6 +52,16 @@ class ContentsManager extends BaseContentsManager {
   KeyHandler pdfKeyHandler = KeyHandler();
   KeyHandler defaultKeyHandler = KeyHandler();
 
+  void clearKey() {
+    textKeyHandler.clear();
+    imageKeyHandler.clear();
+    videoKeyHandler.clear();
+    docKeyHandler.clear();
+    musicKeyHandler.clear();
+    pdfKeyHandler.clear();
+    defaultKeyHandler.clear();
+  }
+
   GlobalObjectKey<CretaState<StatefulWidget>> registerPlayerWidgetKey(
       String keyString, ContentsType cType) {
     switch (cType) {
@@ -656,7 +666,7 @@ class ContentsManager extends BaseContentsManager {
     }
   }
 
-  Future<void> pause() async {
+  Future<void> pause({bool all = false}) async {
     String frameId = frameModel.mid;
     for (var player in _playerMap.values) {
       if (player.model == null) {
@@ -664,18 +674,46 @@ class ContentsManager extends BaseContentsManager {
       }
       if (player.model!.isVideo()) {
         CretaVideoPlayer video = player as CretaVideoPlayer;
-        if (video.wcontroller != null &&
-            video.isInit() &&
-            playManager != null &&
-            playManager!.isCurrentModel(player.model!.mid)) {
-          await video.wcontroller!.pause();
-          logger.fine('contents.pause end');
+        if (video.wcontroller != null && video.isInit()) {
+          if (all == true) {
+            await video.wcontroller!.pause();
+          } else if (playManager != null && playManager!.isCurrentModel(player.model!.mid)) {
+            await video.wcontroller!.pause();
+          }
+          logger.info('contents.pause ${player.model!.name}');
         }
       }
       if (player.model!.isImage() || player.model!.aniType.value != TextAniType.none) {
         //notify();  notify 는 전체에 이벤트가 가므로 지정된 놈만 이벤트가 가기 위해, invalidate 로 바꿈
         invalidatePlayerWidget(player.model!);
       }
+      if (player.model!.isMusic()) {
+        logger.info('--------------pauseMusic ${player.model!.name}');
+        GlobalObjectKey<MusicPlayerFrameState>? musicKey = BookMainPage.musicKeyMap[frameId];
+        if (musicKey != null) {
+          musicKey.currentState?.pausedMusic(player.model!);
+        } else {
+          logger.severe('musicKey is null');
+        }
+      }
+    }
+  }
+
+  Future<void> disposeVideo() async {
+    String frameId = frameModel.mid;
+    for (var player in _playerMap.values) {
+      if (player.model == null) {
+        continue;
+      }
+      if (player.model!.isVideo()) {
+        CretaVideoPlayer video = player as CretaVideoPlayer;
+        if (video.wcontroller != null && video.isInit()) {
+          await video.wcontroller!.dispose();
+          video.wcontroller = null;
+          logger.info('================ video.wcontroller!.dispose() =================');
+        }
+      }
+
       if (player.model!.isMusic()) {
         logger.info('--------------pauseMusic ${player.model!.name}');
         GlobalObjectKey<MusicPlayerFrameState>? musicKey = BookMainPage.musicKeyMap[frameId];

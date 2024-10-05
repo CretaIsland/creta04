@@ -191,6 +191,18 @@ class PageManager extends BasePageManager {
   //   return pageKeyMap['PageRealMainKey$mid'];
   // }
 
+  void clearKey() {
+    thumnKeyHandler.clear();
+    thumbImageKeyHandler.clear();
+    draggableStickerKeyHandler.clear();
+    stickerViewKeyHandler.clear();
+
+    for (var frameManager in BookMainPage.pageManagerHolder!.frameManagerMap.values) {
+      logger.info('frameManager.clearKey()--------');
+      frameManager!.clearKey();
+    }
+  }
+
   PageModel? _prevModel;
   PageModel? get prevModel => _prevModel;
   bool _transitForward = true;
@@ -453,17 +465,24 @@ class PageManager extends BasePageManager {
     return false;
   }
 
-  bool gotoNext({bool loop = true}) {
+  Future<bool> gotoNext({bool loop = true}) async {
+    // 문제는 여기서, 다른 페이지의 모든 콘텐츠를 pause 해야한다는 것임.
+    await StudioVariables.pauseAll();
+
     _prevModel = getSelected() as PageModel?;
     //print('gotoNext');
     _transitForward = !_transitForward;
     String? mid = getNextMid(loop: loop);
     bool retval = _movePage(mid);
     //if (StudioVariables.isPreview && mid != null) gotoNextStickers(mid);
+
     return retval;
   }
 
-  bool gotoPrev({bool loop = true}) {
+  Future<bool> gotoPrev({bool loop = true}) async {
+    // 문제는 여기서, 다른 페이지의 모든 콘텐츠를 pause 해야한다는 것임.
+    await StudioVariables.pauseAll();
+
     _prevModel = getSelected() as PageModel?;
     //print('gotoPrev');
     _transitForward = !_transitForward;
@@ -1030,10 +1049,10 @@ class PageManager extends BasePageManager {
     return jsonStr;
   }
 
-  void removePage(PageModel model) {
+  void removePage(PageModel model) async {
     model.isRemoved.set(true);
     if (isSelected(model.mid)) {
-      if (gotoNext(loop: false) == false) {
+      if (await gotoNext(loop: false) == false) {
         gotoPrev();
       }
     } else {

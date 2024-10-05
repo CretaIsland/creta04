@@ -14,8 +14,8 @@ class BookPreviewMenu extends StatefulWidget {
   final void Function() goBackProcess;
   final void Function() muteFunction;
   final void Function() playFunction;
-  final void Function() gotoNext;
-  final void Function() gotoPrev;
+  final Future<void> Function() gotoNext;
+  final Future<void> Function() gotoPrev;
   final bool? isPublishedMode;
   final Function? toggleFullscreen;
   const BookPreviewMenu({
@@ -37,6 +37,7 @@ class BookPreviewMenu extends StatefulWidget {
 
 class _BookPreviewMenuState extends State<BookPreviewMenu> {
   bool _isHover = false;
+  bool _buttonIsBusy = false;
 
   void _toggleFullscreen() {
     widget.toggleFullscreen?.call();
@@ -88,31 +89,51 @@ class _BookPreviewMenuState extends State<BookPreviewMenu> {
                     ),
                     Row(
                       children: [
-                        CretaTrasparentButton(
-                          onPressed: () {
-                            setState(() {});
-                            widget.gotoPrev();
-                          },
-                          icon1: Icons.arrow_back_ios_new_outlined,
-                          icon2: Icons.arrow_back_ios_new_outlined,
-                          toggleValue: true,
-                          iconSize: 20,
-                          doToggle: false,
+                        Visibility(
+                          visible: !_buttonIsBusy,
+                          child: CretaTrasparentButton(
+                            tooltip: CretaStudioLang['gotoBackward'] ?? 'backward',
+                            onPressed: () async {
+                              setState(() {
+                                _buttonIsBusy = true;
+                              });
+                              await widget.gotoPrev();
+                              await Future.delayed(const Duration(milliseconds: 500)); // 연타를 막는다.
+                              setState(() {
+                                _buttonIsBusy = false;
+                              });
+                            },
+                            icon1: Icons.arrow_back_ios_new_outlined,
+                            icon2: Icons.arrow_back_ios_new_outlined,
+                            toggleValue: true,
+                            iconSize: 20,
+                            doToggle: false,
+                          ),
                         ),
                         Text(
                           _pageNoString(),
                           style: CretaFont.buttonLarge.copyWith(color: Colors.white),
                         ),
-                        CretaTrasparentButton(
-                          onPressed: () {
-                            setState(() {});
-                            widget.gotoNext();
-                          },
-                          icon1: Icons.arrow_forward_ios_outlined,
-                          icon2: Icons.arrow_forward_ios_outlined,
-                          toggleValue: true,
-                          iconSize: 20,
-                          doToggle: false,
+                        Visibility(
+                          visible: !_buttonIsBusy,
+                          child: CretaTrasparentButton(
+                            tooltip: CretaStudioLang['gotoForward'] ?? 'forward',
+                            onPressed: () async {
+                              setState(() {
+                                _buttonIsBusy = true;
+                              });
+                              await widget.gotoNext();
+                              await Future.delayed(const Duration(milliseconds: 500)); // 연타를 막는다.
+                              setState(() {
+                                _buttonIsBusy = false;
+                              });
+                            },
+                            icon1: Icons.arrow_forward_ios_outlined,
+                            icon2: Icons.arrow_forward_ios_outlined,
+                            toggleValue: true,
+                            iconSize: 20,
+                            doToggle: false,
+                          ),
                         ),
                       ],
                     ),

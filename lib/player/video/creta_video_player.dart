@@ -5,10 +5,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:hycop/common/util/logger.dart';
+import 'package:hycop/hycop/absModel/abs_ex_model.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_player_platform_interface/video_player_platform_interface.dart';
 
 import 'package:creta_common/model/app_enums.dart';
+import '../../pages/studio/book_main_page.dart';
 import '../../pages/studio/studio_variables.dart';
 import '../creta_abs_player.dart';
 
@@ -71,7 +73,7 @@ class CretaVideoPlayer extends CretaAbsPlayer {
         .set(wcontroller!.value.duration.inMilliseconds.toDouble(), noUndo: true, save: false);
     await wcontroller!.setLooping(false);
     await wcontroller!.seekTo(Duration.zero); //skpark 2023.11.24 제일앞으로 보낸다.
-
+    wcontroller!.timerInterval = 150;
     wcontroller!.onAfterVideoEvent = (event, position, duration) async {
       if (event.eventType == VideoEventType.completed) {
         model?.setPlayState(PlayState.end);
@@ -86,6 +88,15 @@ class CretaVideoPlayer extends CretaAbsPlayer {
         onAfterEvent?.call(position, duration);
       }
       prevEvent = event.eventType;
+    };
+    wcontroller!.onErrorVideoEvent = (error, timer) async {
+      logger.severe("======================================================");
+      logger.severe(
+          'onErrorVideoEvent : video play error(${model?.name},${error.message}, ${error.code})');
+      logger.severe("======================================================");
+      // timer?.cancel();
+      // await wcontroller!.initialize();
+      // await wcontroller!.play();
     };
 
     if (_outSize == null) {
@@ -254,13 +265,19 @@ class CretaVideoPlayer extends CretaAbsPlayer {
       await init();
       logger.severe('!!!!!!!! init again end, state = ${model!.playState}');
     }
+
+    AbsExModel? selectedPage = BookMainPage.pageManagerHolder!.getSelected();
+    logger.info('selectedPage = ${(selectedPage == null ? ' null' : selectedPage.mid)}');
+
     logger.info(
         'playVideoSafe ${model!.name} state = ${model!.playState} ${model!.isPauseTimer}, ${acc.playManager!.isCurrentModel(model!.mid)}');
     if (StudioVariables.isAutoPlay &&
         //model!.isState(PlayState.start) == false &&
-        acc.playManager!.isCurrentModel(model!.mid) && // preview 모드에서 백그라운드 페이지가 실행되지 않도록 막기위해
+        selectedPage != null &&
+        selectedPage.mid == acc.pageModel.mid && // preview 모드에서 백그라운드 페이지가 실행되지 않도록 막기위해
+        //acc.playManager!.isCurrentModel(model!.mid) &&
         model!.isPauseTimer == false) {
-      logger.info('playVideo video ${model!.name} state = ${model!.playState}');
+      logger.info('*** playVideoSafe ${model!.name} state = ${model!.playState}');
       // 딜레이할 필요가 있다.
       await Future.delayed(const Duration(milliseconds: 149)); // build 할 시간적 여유를 주기 위함이다.
       await play(); //awat를 못한다....이거 문제임...

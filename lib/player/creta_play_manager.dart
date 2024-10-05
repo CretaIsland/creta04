@@ -43,6 +43,14 @@ class CretaPlayManager extends ChangeNotifier {
     clear();
   }
 
+  static void clearPlayerAll() {
+    _playManagerMap.forEach((key, value) {
+    
+      value.clear();
+    });
+    _playManagerMap.clear();
+  }
+
   static final Map<String, CretaPlayManager> _playManagerMap = <String, CretaPlayManager>{};
   static CretaPlayManager? getManager(
       String key, ContentsManager contentsManager, FrameManager frameManager) {

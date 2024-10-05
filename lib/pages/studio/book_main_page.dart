@@ -57,6 +57,7 @@ import 'package:creta_studio_model/model/book_model.dart';
 import '../../design_system/component/cross_scrollbar.dart';
 import 'package:creta_studio_model/model/frame_model.dart';
 import 'package:creta_studio_model/model/page_model.dart';
+import '../../player/creta_play_manager.dart';
 import '../../routes.dart';
 import '../login/creta_account_manager.dart';
 import 'book_preview_menu.dart';
@@ -652,8 +653,14 @@ class _BookMainPageState extends State<BookMainPage> {
       webRTCClient!.close();
     }
     super.dispose();
-
+    logger.info('++++++++++++++++++++++++ ======================');
+    logger.info('BookMainPage.dispose end ======================');
+    logger.info('++++++++++++++++++++++++ ======================');
+    StudioVariables.disposeVideo();
+    CretaPlayManager.clearPlayerAll();
+    BookMainPage.pageManagerHolder?.clearKey();
     //CretaTextField.mainFocusNode?.dispose();
+
     logger.info('BookMainPage.dispose end');
   }
 
@@ -1680,7 +1687,9 @@ class _BookMainPageState extends State<BookMainPage> {
           BTN.floating_l(
             icon: Icons.smart_display_outlined,
             onPressed: () async {
+              // 미리보기
               // 가기전에 모든것을 save 한다.
+
               saveManagerHolder?.stopTimer();
               await saveManagerHolder?.saveForce(notify: false);
 
@@ -1697,6 +1706,7 @@ class _BookMainPageState extends State<BookMainPage> {
               //StudioVariables.isLinkEditMode = false;
               //StudioVariables.globalToggleAutoPlay(_linkSendEvent, _autoPlaySendEvent,
               StudioVariables.globalToggleAutoPlay(forceValue: true, save: true);
+              await StudioVariables.pauseAll(); // 일단 모두 pause 하고 시작한다.  다른 페이지가 플레이된느 것을 막기위해
               // 미리보기
               _fromPriviewToMain = true;
 
@@ -1711,7 +1721,7 @@ class _BookMainPageState extends State<BookMainPage> {
               }
             },
             hasShadow: false,
-            tooltip: CretaStudioLang['tooltipPlay']!,
+            tooltip: CretaStudioLang['tooltipPlay']!, // 미리보기
           ),
           SizedBox(width: padding),
           BTN.floating_l(
@@ -1930,8 +1940,9 @@ class _BookMainPageState extends State<BookMainPage> {
               ),
               if (StudioVariables.hideMouse == false)
                 BookPreviewMenu(
-                  goBackProcess: () {
+                  goBackProcess: () async {
                     //setState(() {
+                    await StudioVariables.pauseAll();
                     StudioVariables.isPreview = false;
                     //});
                     // 돌아기기
@@ -1964,19 +1975,19 @@ class _BookMainPageState extends State<BookMainPage> {
                     //   _startConnectedUserTimer();
                     // }
                   },
-                  gotoNext: () {
+                  gotoNext: () async {
                     MouseHider.lastMouseMoveTime = DateTime.now();
                     BookPreviewMenu.previewMenuPressed = true;
                     StudioVariables.stopPaging = false;
                     StudioVariables.stopNextContents = false;
-                    pageManager.gotoNext();
+                    await pageManager.gotoNext();
                   },
-                  gotoPrev: () {
+                  gotoPrev: () async {
                     MouseHider.lastMouseMoveTime = DateTime.now();
                     BookPreviewMenu.previewMenuPressed = true;
                     StudioVariables.stopPaging = false;
                     StudioVariables.stopNextContents = false;
-                    pageManager.gotoPrev();
+                    await pageManager.gotoPrev();
                   },
                   pageNo: pageNo,
                   totalPage: totalPage,

@@ -100,5 +100,5 @@ REM skpark modify 24/08/19
 copy src_modify\carousel_slider.daxt "$env:LOCALAPPDATA/Pub/Cache/hosted/pub.dev/carousel_slider-4.2.1\lib\carousel_slider.dart"
 
 
-REM skpark modify 24/10/02
-copy src_modify\video_player_2.8.6.daxt "$env:LOCALAPPDATA\Pub\Cache\hosted\pub.dev\video_player-2.8.6\lib\video_player.dart" 
+REM skpark modify 24/10/05
+copy src_modify\video_player.daxt "$env:LOCALAPPDATA\Pub\Cache\hosted\pub.dev\video_player-2.8.6\lib\video_player.dart" 

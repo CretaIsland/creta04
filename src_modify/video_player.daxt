@@ -393,6 +393,8 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
 
   //skpark add
   Future<void> Function(VideoEvent event, Duration postion, Duration duration)? onAfterVideoEvent;
+  Future<void> Function(PlatformException error, Timer? timer)? onErrorVideoEvent;
+  int timerInterval = 500;
 
   /// Attempts to open the given [dataSource] and load metadata about the video.
   Future<void> initialize() async {
@@ -546,7 +548,11 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
       final PlatformException e = obj as PlatformException;
       print('errorListener VideoPlayerController $e @@@@@@@@@@@@@@@@@@@@@@@@@@@');
       value = VideoPlayerValue.erroneous(e.message!);
-      _timer?.cancel();
+      if (onErrorVideoEvent != null) {
+        onErrorVideoEvent!(e, _timer);
+      } else {
+        _timer?.cancel();
+      }
       if (!initializingCompleter.isCompleted) {
         initializingCompleter.completeError(obj);
       }
@@ -634,7 +640,7 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
       // Cancel previous timer.
       _timer?.cancel();
       _timer = Timer.periodic(
-        const Duration(milliseconds: 500),
+        Duration(milliseconds: timerInterval), //skpark default was 500
         (Timer timer) async {
           if (_isDisposed) {
             return;

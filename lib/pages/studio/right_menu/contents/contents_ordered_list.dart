@@ -224,19 +224,22 @@ class _ContentsOrderedListState extends State<ContentsOrderedList> with Property
                     //scrollController: scrollController,
                     itemCount: itemCount,
                     buildDefaultDragHandles: false,
-                    onReorder: (int oldIndex, int newIndex) {
-                      setState(() {
-                        if (newIndex > oldIndex) {
-                          newIndex -= 1;
-                        }
+                    onReorder: (int oldIndex, int newIndex) async {
+                      if (newIndex > oldIndex) {
+                        newIndex -= 1;
+                      }
 
-                        final ContentsModel pushedOne = items[newIndex] as ContentsModel;
-                        ContentsModel movedOne = items[oldIndex] as ContentsModel;
+                      final ContentsModel pushedOne = items[newIndex] as ContentsModel;
+                      ContentsModel movedOne = items[oldIndex] as ContentsModel;
 
-                        logger.fine(
-                            '${pushedOne.name}, ${pushedOne.order.value} ,<=> ${movedOne.name}, ${movedOne.order.value} ');
-                        widget.contentsManager.pushReverseOrder(
-                            movedOne.mid, pushedOne.mid, "playList", onComplete: () {
+                      logger.fine(
+                          '${pushedOne.name}, ${pushedOne.order.value} ,<=> ${movedOne.name}, ${movedOne.order.value} ');
+                      await widget.contentsManager.pushReverseOrder(
+                        movedOne.mid,
+                        pushedOne.mid,
+                        "playList",
+                        onComplete: () async {
+                          // order 의 변경을 _currentOrder 에도 적용한다.
                           widget.contentsManager.reOrdering();
                           if (model != null && model.isMusic()) {
                             String frameId = _frameModel.mid;
@@ -250,12 +253,13 @@ class _ContentsOrderedListState extends State<ContentsOrderedList> with Property
                           }
                           LeftMenuPage.treeInvalidate();
                           LeftMenuPage.initTreeNodes();
-                        });
+                        },
+                      );
 
-                        // widget.contentsManager.reOrdering().then((value) {
-                        //   return null;
-                        // });
-                      });
+                      // widget.contentsManager.reOrdering().then((value) {
+                      //   return null;
+                      // });
+                      setState(() {});
                     },
                     itemBuilder: (BuildContext context, int index) {
                       return _itemWidget(index, items);

@@ -245,6 +245,15 @@ class CretaPlayManager extends ChangeNotifier {
     });
   }
 
+  Future<void> resetCurrentOrder() async {
+    // _currentModel의 mid를 이용하여, 현재 _currentOrder를 역으로 찾아서 설정한다.
+    // 이는 전체 order 체계가 모두 바뀌어, _currentOrder가 현재의 _currentModel 과 일치하지 않을때  사용된다.
+    if (_currentModel == null) return;
+    await _lock.synchronized(() async {
+      _currentOrder = _currentModel!.order.value;
+    });
+  }
+
   bool _updateCurrentModel({bool debug = false}) {
     if (_currentOrder < 0) {
       _currentOrder = contentsManager.lastOrder(); //가장 마지막이 가장 먼저 돌아야 하므로.
@@ -626,11 +635,12 @@ class CretaPlayManager extends ChangeNotifier {
     // 이 함수는 비디오가 끝날때  호출된다.
 
     logger.fine('_onAfterEventVideo(${_currentModel?.playState})');
-    _currentModel?.setPlayState(PlayState.none);
-    logger.info('before next, currentOrder=$_currentOrder');
-    _next();
-    _updateCurrentModel(debug: true);
-
+    await _lock.synchronized(() async {
+      _currentModel?.setPlayState(PlayState.none);
+      logger.info('before next, currentOrder=$_currentOrder');
+      _next();
+      _updateCurrentModel(debug: true);
+    });
     if (_currentModel != null && _currentModel!.isVideo() == false) return;
 
     logger.info('after next, currentOrder=$_currentOrder');

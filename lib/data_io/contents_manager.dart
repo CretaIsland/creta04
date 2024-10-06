@@ -974,12 +974,12 @@ class ContentsManager extends BaseContentsManager {
     }
   }
 
-  void pushReverseOrder(
+  Future<void> pushReverseOrder(
     String aMovedMid,
     String aPushedMid,
     String hint, {
     required Function? onComplete,
-  }) {
+  }) async {
     CretaModel? aMoved = getModel(aMovedMid) as CretaModel?;
     CretaModel? aPushed = getModel(aPushedMid) as CretaModel?;
     if (aMoved == null) {
@@ -1048,6 +1048,9 @@ class ContentsManager extends BaseContentsManager {
       },
     );
     mychangeStack.endTrans();
+    if (StudioVariables.isAutoPlay == true) {
+      await playManager?.resetCurrentOrder();
+    }
     onComplete?.call();
   }
 

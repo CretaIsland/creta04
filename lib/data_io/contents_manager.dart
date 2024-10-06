@@ -256,17 +256,21 @@ class ContentsManager extends BaseContentsManager {
     await createToDB(model);
     insert(model, postion: getLength(), doNotify: doNotify);
 
-    if (playManager != null) {
-      if (playManager!.isInit()) {
-        //logger.fine('prev exist =============================================');
-        await playManager?.rewind();
-        await playManager?.pause();
-      }
+    // 아래 코드는 신규로 밀어넣은 동영상이 바로 샐행되게 하기 위함이나
+    // 현재 진행되고 잇는 비디오가 있는 경우, 이 비디오가 방해가 되므로
+    // 플레이중에는 하지 않는다.
+    if (playManager != null && StudioVariables.isAutoPlay == false) {
+      // if (playManager!.isInit()) {
+      //   print(
+      //       '_createNextContents : prev exist , rewind+pause =============================================');
+      //   await playManager?.rewind();
+      //   await playManager?.pause();
+      // }
       await playManager?.reOrdering(isRewind: true);
     } else {
       reOrdering();
     }
-    logger.fine('_createNextContents complete ${model.name},${model.order.value},${model.url}');
+    logger.info('_createNextContents complete ${model.name},${model.order.value},${model.url}');
     return model;
   }
 

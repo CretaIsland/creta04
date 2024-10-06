@@ -656,8 +656,8 @@ class _BookMainPageState extends State<BookMainPage> {
     logger.info('++++++++++++++++++++++++ ======================');
     logger.info('BookMainPage.dispose end ======================');
     logger.info('++++++++++++++++++++++++ ======================');
-    StudioVariables.disposeVideo();
     CretaPlayManager.clearPlayerAll();
+    StudioVariables.disposeVideo();
     BookMainPage.pageManagerHolder?.clearKey();
     //CretaTextField.mainFocusNode?.dispose();
 

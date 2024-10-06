@@ -45,7 +45,6 @@ class CretaPlayManager extends ChangeNotifier {
 
   static void clearPlayerAll() {
     _playManagerMap.forEach((key, value) {
-    
       value.clear();
     });
     _playManagerMap.clear();
@@ -342,6 +341,7 @@ class CretaPlayManager extends ChangeNotifier {
     _currentPlaySec = 0.0;
     double oldOrder = _currentOrder;
     _currentOrder = contentsManager.nextOrder(oldOrder, alwaysOneExist: true);
+    logger.info('oldOrder=$oldOrder, _currentOrder=$_currentOrder');
     if (oldOrder == _currentOrder) {
       _forceToChange = true;
     }

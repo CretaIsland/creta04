@@ -94,6 +94,11 @@ class CretaVideoPlayer extends CretaAbsPlayer {
       logger.severe(
           'onErrorVideoEvent : video play error(${model?.name},${error.message}, ${error.code})');
       logger.severe("======================================================");
+      if (error.code == "AbortError") {
+        logger.warning('${error.code}, recoved by play() again');
+        await wcontroller!.play();
+      }
+
       // timer?.cancel();
       // await wcontroller!.initialize();
       // await wcontroller!.play();

@@ -498,7 +498,7 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
           // });
 
           Duration gap = value.duration - value.position;
-          //print(' VideoEventType.completed --------$gap-------------------------');
+          print(' VideoEventType.completed --------$gap-------------------------');
 
           await pause(); //skpark .
           if (gap.inMilliseconds > 0) {
@@ -849,13 +849,13 @@ class _VideoAppLifeCycleObserver extends Object with WidgetsBindingObserver {
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.paused) {
       _wasPlayingBeforePause = _controller.value.isPlaying;
-      _controller.pause();
+      await _controller.pause(); //skpark add await
     } else if (state == AppLifecycleState.resumed) {
       if (_wasPlayingBeforePause) {
-        _controller.play();
+        await _controller.play(); //skpark add await
       }
     }
   }
@@ -1022,13 +1022,13 @@ class _VideoScrubberState extends State<VideoScrubber> {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       child: widget.child,
-      onHorizontalDragStart: (DragStartDetails details) {
+      onHorizontalDragStart: (DragStartDetails details) async {
         if (!controller.value.isInitialized) {
           return;
         }
         _controllerWasPlaying = controller.value.isPlaying;
         if (_controllerWasPlaying) {
-          controller.pause();
+          await controller.pause(); //skpark add await
         }
       },
       onHorizontalDragUpdate: (DragUpdateDetails details) {
@@ -1037,9 +1037,9 @@ class _VideoScrubberState extends State<VideoScrubber> {
         }
         seekToRelativePosition(details.globalPosition);
       },
-      onHorizontalDragEnd: (DragEndDetails details) {
+      onHorizontalDragEnd: (DragEndDetails details) async {
         if (_controllerWasPlaying && controller.value.position != controller.value.duration) {
-          controller.play();
+          await controller.play(); //skpark add await
         }
       },
       onTapDown: (TapDownDetails details) {

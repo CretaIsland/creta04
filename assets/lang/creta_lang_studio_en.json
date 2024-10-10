@@ -664,6 +664,7 @@
     "isSendEmail" : "You are not yet signed up. Do you want to send an invitation email?",
     "mainFrameExTooltip" : "This is the main frame. When the content of this frame ends, you will automatically go to the next page.",
     "deleteLink" : "Delete link",
+    "followLink" : "Follow link",
 
     "textOverflow1" : "Text length limit has been reached",
     "textOverflow2" : "Please try to stay within characters",

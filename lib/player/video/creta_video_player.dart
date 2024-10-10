@@ -5,12 +5,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:hycop/common/util/logger.dart';
-import 'package:hycop/hycop/absModel/abs_ex_model.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_player_platform_interface/video_player_platform_interface.dart';
 
 import 'package:creta_common/model/app_enums.dart';
-import '../../pages/studio/book_main_page.dart';
 import '../../pages/studio/studio_variables.dart';
 import '../creta_abs_player.dart';
 
@@ -95,10 +93,15 @@ class CretaVideoPlayer extends CretaAbsPlayer {
           'onErrorVideoEvent : video play error(${model?.name},${error.message}, ${error.code})');
       logger.severe("======================================================");
       if (error.code == "AbortError") {
-        logger.warning('${error.code}, recoved by play() again');
+        logger.severe('${error.code}, recovered by play() again');
         await wcontroller!.play();
       }
-
+/*
+video play error(The Chargers Display
+You Need to See - Shargeek Retro 67 #shorts #cooltech.mp4,The ()play   
+request was interrupted by a call to pause(). https://goo.gl/LdLk22,   
+AbortError)
+*/
       // timer?.cancel();
       // await wcontroller!.initialize();
       // await wcontroller!.play();
@@ -271,21 +274,9 @@ class CretaVideoPlayer extends CretaAbsPlayer {
       logger.severe('!!!!!!!! init again end, state = ${model!.playState}');
     }
 
-    AbsExModel? selectedPage = BookMainPage.pageManagerHolder!.getSelected();
-    logger.info('selectedPage = ${(selectedPage == null ? ' null' : selectedPage.mid)}');
-
-    logger.info(
-        'playVideoSafe ${model!.name} state = ${model!.playState} ${model!.isPauseTimer}, ${acc.playManager!.isCurrentModel(model!.mid)}');
-    if (StudioVariables.isAutoPlay &&
-        //model!.isState(PlayState.start) == false &&
-        selectedPage != null &&
-        selectedPage.mid == acc.pageModel.mid && // preview 모드에서 백그라운드 페이지가 실행되지 않도록 막기위해
-        //acc.playManager!.isCurrentModel(model!.mid) &&
-        model!.isPauseTimer == false) {
-      logger.info('*** playVideoSafe ${model!.name} state = ${model!.playState}');
-      // 딜레이할 필요가 있다.
+    if (shouldBePlay()) {
       await Future.delayed(const Duration(milliseconds: 149)); // build 할 시간적 여유를 주기 위함이다.
-      await play(); //awat를 못한다....이거 문제임...
+      await play();
     }
     buttonIdle();
     return;

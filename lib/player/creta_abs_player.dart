@@ -4,10 +4,14 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:blobs/blobs.dart';
 import 'package:hycop/common/util/logger.dart';
+import 'package:hycop/hycop/absModel/abs_ex_model.dart';
 
 import '../data_io/contents_manager.dart';
 import 'package:creta_common/model/app_enums.dart';
 import 'package:creta_studio_model/model/contents_model.dart';
+
+import '../pages/studio/book_main_page.dart';
+import '../pages/studio/studio_variables.dart';
 
 // Image 의 progress bar 전진을 위한 도구
 ProgressNotifier? progressHolder;
@@ -137,6 +141,19 @@ abstract class CretaAbsPlayer extends ChangeNotifier {
   int getDuration() {
     // for video player only
     return -1;
+  }
+
+  bool shouldBePlay() {
+    AbsExModel? selectedPage = BookMainPage.pageManagerHolder!.getSelected();
+    logger.info('selectedPage = ${(selectedPage == null ? ' null' : selectedPage.mid)}');
+    logger.info(
+        'shouldBePlay ${model!.name} ${model!.isPauseTimer}, ${acc.playManager!.isCurrentModel(model!.mid)}');
+    return (StudioVariables.isAutoPlay &&
+        //model!.isState(PlayState.start) == false &&
+        selectedPage != null &&
+        selectedPage.mid == acc.pageModel.mid && // preview 모드에서 백그라운드 페이지가 실행되지 않도록 막기위해
+        //acc.playManager!.isCurrentModel(model!.mid) &&
+        model!.isPauseTimer == false);
   }
 }
 

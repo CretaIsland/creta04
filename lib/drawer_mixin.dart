@@ -1,3 +1,6 @@
+import 'package:hycop/hycop.dart';
+// ignore: depend_on_referenced_packages
+import 'package:logging/logging.dart';
 import 'package:creta04/lang/creta_commu_lang.dart';
 import 'package:creta04/routes.dart';
 import 'package:creta_common/common/creta_Vars.dart';
@@ -318,7 +321,7 @@ mixin DrawerMixin {
                       : '개발자모드 해제'
                   : CretaLang['accountMenu'] != null
                       ? CretaLang['accountMenu']![5]
-                      : '개발자모드 활성화',
+                      : '개발자모드',
               onPressed: () {
                 // showDialog(
                 //     context: context,
@@ -327,6 +330,19 @@ mixin DrawerMixin {
                 //     });
                 CretaVars.instance.isDeveloper = !CretaVars.instance.isDeveloper;
                 invalidate?.call();
+              },
+            ),
+          if (!kReleaseMode)
+            CretaMenuItem(
+              iconData: Icons.developer_mode_outlined,
+              caption: Logger.root.level == Level.SEVERE ? 'Show Log' : 'Hide Log',
+              onPressed: () {
+                if (Logger.root.level == Level.SEVERE) {
+                  Logger.root.level = Level.INFO;
+                } else {
+                  Logger.root.level = Level.SEVERE;
+                }
+                //invalidate?.call();
               },
             ),
         ],

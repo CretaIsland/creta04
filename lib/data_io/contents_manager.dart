@@ -1667,7 +1667,7 @@ class ContentsManager extends BaseContentsManager {
 
   @override
   void printLog() {
-    logger.info('ContentsManager(${frameModel.mid})##############################');
+    logger.finest('ContentsManager(${frameModel.mid})##############################');
     for (var ele in modelList) {
       ContentsModel model = ele as ContentsModel;
       logger.info('*** contents = ${model.name}, ${model.order.value},  ${model.isRemoved.value}');

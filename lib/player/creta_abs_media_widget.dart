@@ -2,44 +2,21 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop/common/util/logger.dart';
 
-import '../pages/studio/studio_constant.dart';
 import 'creta_abs_player.dart';
 
 // ignore: must_be_immutable
 abstract class CretaAbsMediaWidget extends StatefulWidget {
   final Future<bool> Function(CretaAbsMediaWidget widget)? timeExpired;
   final CretaAbsPlayer player;
-  CretaAbsMediaWidget({super.key, required this.player, this.timeExpired});
-
-  Timer? _timer;
-  bool isTimerAvailable = false;
-
-  void startTimer() {
-    if (timeExpired == null) return;
-
-    logger.fine("타임머가 시작되었다 =============");
-    _timer ??=
-        Timer.periodic(const Duration(milliseconds: StudioConst.playTimerInterval), (timer) async {
-      isTimerAvailable = true;
-      isTimerAvailable = await timeExpired!.call(this);
-    });
+  CretaAbsMediaWidget({super.key, required this.player, this.timeExpired}) {
+    logger.info("new CretaAbsMediaWidget(${player.keyString}, ${player.model!.name})");
   }
 
-  void stopTimer() {
-    logger.fine("타임머가 종료되었다 =============");
-    isTimerAvailable = false;
-    _timer?.cancel();
-    _timer = null;
-  }
+  //bool isTimerAvailable = false;
 
-  //build 후 호출되는 함수
-  Future<void> afterBuild() async {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      startTimer();
-    });
-  }
+  //Timer? _timer;
 }
 
 // ignore: must_be_immutable

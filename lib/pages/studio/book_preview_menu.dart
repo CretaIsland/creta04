@@ -98,7 +98,7 @@ class _BookPreviewMenuState extends State<BookPreviewMenu> {
                                 _buttonIsBusy = true;
                               });
                               await widget.gotoPrev();
-                              await Future.delayed(const Duration(milliseconds: 500)); // 연타를 막는다.
+                              await Future.delayed(const Duration(milliseconds: 300)); // 연타를 막는다.
                               setState(() {
                                 _buttonIsBusy = false;
                               });
@@ -123,7 +123,7 @@ class _BookPreviewMenuState extends State<BookPreviewMenu> {
                                 _buttonIsBusy = true;
                               });
                               await widget.gotoNext();
-                              await Future.delayed(const Duration(milliseconds: 500)); // 연타를 막는다.
+                              await Future.delayed(const Duration(milliseconds: 300)); // 연타를 막는다.
                               setState(() {
                                 _buttonIsBusy = false;
                               });

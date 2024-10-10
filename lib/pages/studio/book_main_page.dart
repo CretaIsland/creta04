@@ -437,7 +437,9 @@ class _BookMainPageState extends State<BookMainPage> {
 
       if (StudioVariables.isPreview) {
         //_takeAScreenShot();
-        if (StudioVariables.isAutoPlay) {}
+        if (StudioVariables.isAutoPlay) {
+          BookMainPage.pageManagerHolder?.startTimeBaseScheduleTimer();
+        }
       } else {}
       _fromPriviewToMain = false;
     });
@@ -652,6 +654,9 @@ class _BookMainPageState extends State<BookMainPage> {
     if (webRTCClient != null) {
       webRTCClient!.close();
     }
+
+    BookMainPage.pageManagerHolder?.stopTimeBaseScheduleTimer();
+
     super.dispose();
     logger.info('++++++++++++++++++++++++ ======================');
     logger.info('BookMainPage.dispose end ======================');

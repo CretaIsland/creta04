@@ -965,7 +965,7 @@ class FrameManager extends BaseFrameManager {
     return null;
   }
 
-  void nextPageListener(FrameModel frameModel) {
+  void nextPageListener(FrameModel? frameModel) {
     // isAutoPlay = false 이면 자동으로 넘어가지 않는다.
     if (StudioVariables.isAutoPlay == false) {
       return;
@@ -989,7 +989,7 @@ class FrameManager extends BaseFrameManager {
     if (main == null) {
       return;
     }
-    if (main.mid != frameModel.mid) {
+    if (frameModel != null && main.mid != frameModel.mid) {
       return;
     }
     BookPreviewMenu.previewMenuPressed = true;

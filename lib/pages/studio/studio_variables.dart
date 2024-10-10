@@ -266,4 +266,28 @@ class LinkParams {
     }
     return false;
   }
+
+  static void linkClear() {
+    LinkParams.linkPostion = null;
+    LinkParams.orgPostion = null;
+    LinkParams.connectedMid = '';
+    LinkParams.connectedClass = '';
+    LinkParams.connectedName = '';
+  }
+
+  static void linkSet(
+    Offset linkPosition,
+    Offset orgPosition,
+    String connectedMid,
+    String connectedClass,
+    String connectedName,
+    String invokerMid,
+  ) {
+    LinkParams.linkPostion = linkPosition;
+    LinkParams.orgPostion = orgPosition;
+    LinkParams.connectedMid = connectedMid;
+    LinkParams.connectedClass = connectedClass;
+    LinkParams.connectedName = connectedName;
+    LinkParams.invokerMid = invokerMid;
+  }
 }

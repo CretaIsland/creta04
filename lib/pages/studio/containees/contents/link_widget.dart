@@ -1,3 +1,5 @@
+//import 'dart:math';
+
 import 'package:creta04/pages/studio/studio_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -69,6 +71,9 @@ class _LinkWidgetState extends State<LinkWidget> {
   bool _isHover = false;
   BookModel? _bookModel;
   int _linkCount = 0;
+  bool _isLinkEditMode = false;
+
+  Size _frameSize = Size.zero;
 
   @override
   void initState() {
@@ -88,6 +93,8 @@ class _LinkWidgetState extends State<LinkWidget> {
   @override
   Widget build(BuildContext context) {
     bool hasContents = widget.contentsManager.length() > 0;
+    _frameSize = Size(widget.frameModel.width.value, widget.frameModel.height.value);
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<LinkManager>.value(
@@ -110,7 +117,11 @@ class _LinkWidgetState extends State<LinkWidget> {
 
               bool showLinkCursor = _showLinkCursor(hasContents);
 
-              return SizedBox(
+              return
+                  //StudioVariables.isPreview == true
+                  //    ? _drawAll(linkManager, showLinkCursor)
+                  //:
+                  SizedBox(
                 width: double.infinity,
                 height: double.infinity,
                 child: MouseRegion(
@@ -138,42 +149,45 @@ class _LinkWidgetState extends State<LinkWidget> {
                       _linkSendEvent?.sendEvent(event.localPosition);
                     }
                   },
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      ..._drawLinkCursor(linkManager),
-                      if (_showPlayButton())
-                        PlayButton(
-                          key: GlobalObjectKey(
-                              'PlayButton${widget.frameModel.mid}${widget.applyScale}'),
-                          applyScale: widget.applyScale,
-                          frameModel: widget.frameModel,
-                          playManager: widget.playManager,
-                          canMove: (_linkCount > 0),
-                        ),
-                      // if (DraggableStickers.isFrontBackHover &&
-                      //     LinkParams.isLinkNewMode == false &&
-                      //     widget.contentsModel.isLinkEditMode == false)
-                      //   _drawOrder(hasContents),
-                      if (showLinkCursor) // 생성시 그려지는 것을 말한다.
-                        OnLinkCursor(
-                          key: GlobalObjectKey('OnLinkCursor${widget.frameModel.mid}'),
-                          //pageOffset: widget.frameManager.pageOffset,
-                          frameOffset: widget.frameOffset,
-                          frameManager: widget.frameManager,
-                          frameModel: widget.frameModel,
-                          contentsManager: widget.contentsManager,
-                          applyScale: widget.applyScale,
-                        ),
-                      if (_showVisibleButton()) _drawVisibleButton(),
-                      if (_showVisibleButton()) _drawMaximizeButton(),
-                      if (_showVisibleButton()) _drawStopNextContents(),
-                    ],
-                  ),
+                  child: _drawAll(linkManager, showLinkCursor),
                 ),
               );
             });
           }),
+    );
+  }
+
+  Widget _drawAll(LinkManager linkManager, bool showLinkCursor) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        ..._drawLinkCursor(linkManager),
+        if (_showPlayButton())
+          PlayButton(
+            key: GlobalObjectKey('PlayButton${widget.frameModel.mid}${widget.applyScale}'),
+            applyScale: widget.applyScale,
+            frameModel: widget.frameModel,
+            playManager: widget.playManager,
+            canMove: (_linkCount > 0),
+          ),
+        // if (DraggableStickers.isFrontBackHover &&
+        //     LinkParams.isLinkNewMode == false &&
+        //     widget.contentsModel.isLinkEditMode == false)
+        //   _drawOrder(hasContents),
+        if (showLinkCursor) // 생성시 그려지는 것을 말한다.
+          OnLinkCursor(
+            key: GlobalObjectKey('OnLinkCursor${widget.frameModel.mid}'),
+            //pageOffset: widget.frameManager.pageOffset,
+            frameOffset: widget.frameOffset,
+            frameManager: widget.frameManager,
+            frameModel: widget.frameModel,
+            contentsManager: widget.contentsManager,
+            applyScale: widget.applyScale,
+          ),
+        if (_showVisibleButton()) _drawVisibleButton(),
+        if (_showVisibleButton()) _drawMaximizeButton(),
+        if (_showVisibleButton()) _drawStopNextContents(),
+      ],
     );
   }
 
@@ -287,7 +301,7 @@ class _LinkWidgetState extends State<LinkWidget> {
     if (!_isHover) return false;
     if (!_isPlayAble()) return false;
     if (LinkParams.isLinkNewMode) return false;
-    if (widget.contentsModel.isLinkEditMode) return false;
+    if (_isLinkEditMode) return false;
     if (StudioVariables.hideMouse) return false;
     if (widget.frameModel.width.value * StudioVariables.applyScale < 96) return false;
 
@@ -307,7 +321,7 @@ class _LinkWidgetState extends State<LinkWidget> {
     if (!_isHover) return false;
     //if (!_isPlayAble()) return false;
     if (LinkParams.isLinkNewMode) return false;
-    if (widget.contentsModel.isLinkEditMode) return false;
+    if (_isLinkEditMode) return false;
     if (StudioVariables.isPreview == false) return false;
     if (StudioVariables.hideMouse) return false;
     //if (widget.contentsModel.contentsType == ContentsType.document) return false;
@@ -340,58 +354,96 @@ class _LinkWidgetState extends State<LinkWidget> {
     return Positioned(
       left: _position.dx,
       top: _position.dy,
-      child: StudioVariables.isPreview ||
-              (LinkParams.isLinkNewMode == false && widget.contentsModel.isLinkEditMode == false)
-          ? GestureDetector(
-              onSecondaryTapDown: (details) {
-                if (StudioVariables.isPreview == true) return;
-                linkManager.setSelectedMid(model.mid);
-                _showRightMouseMenu(
-                    model, linkManager, details.globalPosition.dx, details.globalPosition.dy);
-              },
-              child: _mainButton(model))
-          : GestureDetector(
-              onSecondaryTapDown: (details) {
-                if (StudioVariables.isPreview == true) return;
-                linkManager.setSelectedMid(model.mid);
-                _showRightMouseMenu(
-                    model, linkManager, details.globalPosition.dx, details.globalPosition.dy);
-              },
-              onScaleStart: (details) {
-                //print('linkWidget onScaleStart ----------------------------------------');
-                _prev = details.localFocalPoint;
-                setState(() {
-                  _isMove = true;
-                });
-              },
-              onScaleUpdate: (details) {
-                if (_isMove == false) return;
+      child:
+          //StudioVariables.isPreview // || LinkParams.isLinkNewMode == false
+          // ? _mainButton(model)
+          // || (LinkParams.isLinkNewMode == false && widget.contentsModel.isLinkEditMode == false)
+          //     ? GestureDetector(
+          //         onSecondaryTapDown: (details) {
+          //           if (StudioVariables.isPreview == true) return;
+          //           linkManager.setSelectedMid(model.mid);
+          //           _showRightMouseMenu(
+          //               model, linkManager, details.globalPosition.dx, details.globalPosition.dy);
+          //         },
+          //         child: _mainButton(model))
+          // :
+          GestureDetector(
+        // onSecondaryTapDown: (details) {
+        //   if (StudioVariables.isPreview == true) return;
+        //   linkManager.setSelectedMid(model.mid);
+        //   _showRightMouseMenu(
+        //       model, linkManager, details.globalPosition.dx, details.globalPosition.dy);
+        // },
+        onTapUp: (details) {
+          if (StudioVariables.isPreview == false) {
+            if (_linkManager != null) {
+              _showRightMouseMenu(
+                model,
+                _linkManager!,
+                details.globalPosition.dx,
+                details.globalPosition.dy,
+              );
+            }
+          } else {
+            _goto(model);
+          }
+        },
+        onScaleStart: (details) {
+          if (StudioVariables.isPreview == true) return;
+          //print('linkWidget onScaleStart ----------------------------------------');
+          _prev = details.localFocalPoint;
+          setState(() {
+            _isLinkEditMode = true;
+            _isMove = true;
+          });
+        },
+        onScaleUpdate: (details) {
+          if (StudioVariables.isPreview == true) return;
+          if (_isMove == false) return;
 
-                double dx = (details.localFocalPoint.dx - _prev.dx) / widget.applyScale;
-                double dy = (details.localFocalPoint.dy - _prev.dy) / widget.applyScale;
-                _prev = details.localFocalPoint;
+          double dx = (details.localFocalPoint.dx - _prev.dx) / widget.applyScale;
+          double dy = (details.localFocalPoint.dy - _prev.dy) / widget.applyScale;
+          _prev = details.localFocalPoint;
 
-                setState(() {
-                  model.posX.set(model.posX.value + dx);
-                  model.posY.set(model.posY.value + dy);
-                });
-              },
-              onScaleEnd: (details) {
-                _linkManager?.update(link: model).then((value) {
-                  setState(() {
-                    _isMove = false;
-                  });
-                  return value;
-                });
-              },
-              child: Stack(
-                //alignment: Alignment.bottomRight,
-                children: [
-                  _mainButton(model),
-                  if (widget.contentsModel.isLinkEditMode == true) _delButton(model, linkManager),
-                ],
-              ),
-            ),
+          double newPosx = model.posX.value + dx;
+          double newPosy = model.posY.value + dy;
+
+          double offset = (model.iconSize.value + widget.frameModel.borderWidth.value);
+
+          if (newPosx < offset / 2) newPosx = offset / 2;
+          if (newPosy < offset / 2) newPosy = offset / 2;
+          if (newPosx > _frameSize.width - offset) newPosx = _frameSize.width - offset;
+          if (newPosy > _frameSize.height - offset) newPosy = _frameSize.height - offset;
+
+          // print('point=${details.localFocalPoint}, applyScale=${widget.applyScale}');
+          // print('offset=$offset');
+          // print('newPosx=$newPosx, newPosy=$newPosy');
+
+          setState(() {
+            _isLinkEditMode = false;
+
+            model.posX.set(newPosx);
+            model.posY.set(newPosy);
+          });
+        },
+        onScaleEnd: (details) {
+          if (StudioVariables.isPreview == true) return;
+          _linkManager?.update(link: model).then((value) {
+            setState(() {
+              _isLinkEditMode = false;
+              _isMove = false;
+            });
+            return value;
+          });
+        },
+        child: Stack(
+          //alignment: Alignment.bottomRight,
+          children: [
+            _mainButton(model),
+            //if (widget.contentsModel.isLinkEditMode == true) _delButton(model, linkManager),
+          ],
+        ),
+      ),
     );
   }
 
@@ -403,157 +455,83 @@ class _LinkWidgetState extends State<LinkWidget> {
     //   index = BookMainPage.pageManagerHolder!.getIndex(model.connectedMid);
     // }
 
-    return GestureDetector(
-      onTapUp: (d) {
-        logger.fine('link button pressed ${model.connectedMid},${model.connectedClass}');
-        logger
-            .info('link button pressed ${widget.frameModel.mid},${widget.frameModel.isShow.value}');
-        BookMainPage.containeeNotifier!.setFrameClick(true);
+    return
+        // GestureDetector(
+        //   onTapUp: (details) {
+        //     if (StudioVariables.isPreview == false) {
+        //       if (_linkManager != null) {
+        //         _showRightMouseMenu(
+        //           model,
+        //           _linkManager!,
+        //           details.globalPosition.dx,
+        //           details.globalPosition.dy,
+        //         );
+        //       }
+        //     } else {
+        //       _goto(model);
+        //     }
+        //   },
+        //   child:
 
-        if (widget.contentsModel.isLinkEditMode == true) return;
-        if (LinkParams.isLinkNewMode == true) return;
+        Consumer<ContaineeNotifier>(builder: (context, manager, child) {
+      return Container(
+        width: iconSize + 4,
+        height: iconSize + 4,
+        decoration: model.mid == _linkManager!.getSelectedMid() &&
+                widget.frameManager.isSelected(widget.frameModel.mid) // 선택된 것.
+            ? BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                border: Border.all(width: 1, color: CretaColor.text[700]!),
+              )
+            : null,
+        //color: Colors.amber.withOpacity(0.5),
+        alignment: Alignment.center,
+        child: Icon(
+          key: model.iconKey,
+          LinkIconType.toIcon(model.iconData.value), //Icons.radio_button_checked_outlined,
+          size: iconSize,
+          color: _isMove ? CretaColor.primary : model.bgColor.value,
+        ),
+      );
+    });
 
-        const double stickerOffset = LayoutConst.stikerOffset / 2;
-        double posX = (model.posX.value - stickerOffset) * widget.applyScale;
-        double posY = (model.posY.value - stickerOffset) * widget.applyScale;
-
-        if (model.connectedClass == 'page') {
-          // show Page
-          PageModel? pageModel =
-              BookMainPage.pageManagerHolder!.getModel(model.connectedMid) as PageModel?;
-          if (pageModel != null) {
-            //print('connected = ${model.connectedMid} founded');
-
-            bool isShow = true;
-            pageModel.isTempVisible = isShow;
-            if (isShow == true) {
-              LinkParams.linkPostion = Offset(posX, posY);
-              LinkParams.orgPostion = widget.frameOffset;
-              LinkParams.connectedMid = model.connectedMid;
-              LinkParams.connectedClass = 'page';
-              LinkParams.connectedName = model.name;
-              LinkParams.invokerMid = widget.frameManager.pageModel.mid;
-            } else {
-              LinkParams.linkPostion = null;
-              LinkParams.orgPostion = null;
-              LinkParams.connectedMid = '';
-              LinkParams.connectedClass = '';
-              LinkParams.connectedName = '';
-            }
-            //_lineDrawSendEvent?.sendEvent(isShow);
-            //_linkManager?.notify();
-
-            BookPreviewMenu.previewMenuPressed = true;
-            BookMainPage.pageManagerHolder?.setSelectedMid(model.connectedMid);
-          } else {
-            logger.severe('connected = ${model.connectedMid} not founded');
-          }
-        } else if (model.connectedClass == 'frame') {
-          // show frame
-          FrameModel? childModel = widget.frameManager.getModel(model.connectedMid) as FrameModel?;
-          if (childModel != null) {
-            // print('linkMid=${model.mid}');
-            // print('connected=${model.connectedMid}');
-            // print('childMid=${childModel.mid}');
-            // print('frameMid=${widget.frameModel.mid}');
-            // print('PageMid=${widget.frameModel.parentMid.value}');
-            //print('connected = ${model.connectedMid} founded');
-
-            childModel.isShow.set(!childModel.isShow.value, save: false, noUndo: true);
-            if (childModel.isShow.value == true) {
-              double order = widget.frameManager.getMaxOrder();
-              if (childModel.order.value < order) {
-                widget.frameManager.changeOrderByIsShow(childModel);
-                widget.frameManager.reOrdering();
-              }
-              // 여기서 연결선을 연결한다....
-              LinkParams.linkPostion = Offset(posX, posY);
-              LinkParams.orgPostion = widget.frameOffset;
-              LinkParams.connectedMid = model.connectedMid;
-              LinkParams.connectedClass = 'frame';
-              LinkParams.connectedName = model.name;
-            } else {
-              //print('##################################################');
-              LinkParams.linkPostion = null;
-              LinkParams.orgPostion = null;
-              LinkParams.connectedMid = '';
-              LinkParams.connectedClass = '';
-              LinkParams.connectedName = '';
-              widget.frameManager.changeOrderByIsShow(childModel);
-              widget.frameManager.reOrdering();
-            }
-            model.showLinkLine = childModel.isShow.value;
-            childModel.save();
-            //_lineDrawSendEvent?.sendEvent(isShow);
-            logger.fine(
-                'link button pressed ${widget.frameModel.mid},${widget.frameModel.isShow.value}');
-            widget.frameManager.notify();
-            //_linkManager?.notify();
-          } else {
-            logger.severe('connected = ${model.connectedMid} not founded');
-          }
-        }
-        return;
-      },
-      child: Consumer<ContaineeNotifier>(builder: (context, manager, child) {
-        return Container(
-          width: iconSize + 4,
-          height: iconSize + 4,
-          decoration: model.mid == _linkManager!.getSelectedMid() &&
-                  widget.frameManager.isSelected(widget.frameModel.mid) // 선택된 것.
-              ? BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                  border: Border.all(width: 1, color: CretaColor.text[700]!),
-                )
-              : null,
-          //color: Colors.amber.withOpacity(0.5),
-          alignment: Alignment.center,
-          child: Icon(
-            key: model.iconKey,
-            LinkIconType.toIcon(model.iconData.value), //Icons.radio_button_checked_outlined,
-            size: iconSize,
-            color: _isMove ? CretaColor.primary : model.bgColor.value,
-          ),
-        );
-      }),
-
-      // child: index < 0 || StudioVariables.isPreview == true
-      //     ? Container(
-      //         width: iconSize + 4,
-      //         height: iconSize + 4,
-      //         //color: Colors.amber.withOpacity(0.5),
-      //         alignment: Alignment.topLeft,
-      //         child: Icon(
-      //           key: model.iconKey,
-      //           LinkIconType.toIcon(model.iconData.value), //Icons.radio_button_checked_outlined,
-      //           size: iconSize,
-      //           color: _isMove ? CretaColor.primary : model.bgColor.value,
-      //         ),
-      //       )
-      //     : Stack(
-      //         alignment: Alignment.centerLeft,
-      //         children: [
-      //           Container(
-      //             width: iconSize + 6,
-      //             height: iconSize,
-      //             //color: Colors.amber.withOpacity(0.5),
-      //             alignment: Alignment.topLeft,
-      //             child: Icon(
-      //               key: model.iconKey,
-      //               LinkIconType.toIcon(
-      //                   model.iconData.value), //Icons.radio_button_checked_outlined,
-      //               size: iconSize,
-      //               color: _isMove ? CretaColor.primary : model.bgColor.value,
-      //             ),
-      //           ),
-      //           Padding(
-      //             padding: const EdgeInsets.only(left: 6.0),
-      //             child: Text(index > 9 ? '$index' : '0$index',
-      //                 style: CretaFont.bodyESmall.copyWith(fontSize: 6, color: Colors.white)),
-      //           ),
-      //         ],
-      //       ),
-    );
+    // child: index < 0 || StudioVariables.isPreview == true
+    //     ? Container(
+    //         width: iconSize + 4,
+    //         height: iconSize + 4,
+    //         //color: Colors.amber.withOpacity(0.5),
+    //         alignment: Alignment.topLeft,
+    //         child: Icon(
+    //           key: model.iconKey,
+    //           LinkIconType.toIcon(model.iconData.value), //Icons.radio_button_checked_outlined,
+    //           size: iconSize,
+    //           color: _isMove ? CretaColor.primary : model.bgColor.value,
+    //         ),
+    //       )
+    //     : Stack(
+    //         alignment: Alignment.centerLeft,
+    //         children: [
+    //           Container(
+    //             width: iconSize + 6,
+    //             height: iconSize,
+    //             //color: Colors.amber.withOpacity(0.5),
+    //             alignment: Alignment.topLeft,
+    //             child: Icon(
+    //               key: model.iconKey,
+    //               LinkIconType.toIcon(
+    //                   model.iconData.value), //Icons.radio_button_checked_outlined,
+    //               size: iconSize,
+    //               color: _isMove ? CretaColor.primary : model.bgColor.value,
+    //             ),
+    //           ),
+    //           Padding(
+    //             padding: const EdgeInsets.only(left: 6.0),
+    //             child: Text(index > 9 ? '$index' : '0$index',
+    //                 style: CretaFont.bodyESmall.copyWith(fontSize: 6, color: Colors.white)),
+    //           ),
+    //         ],
+    //       ),
+    //);
     // return IconButton(
     //   icon: Icon(
     //     Icons.radio_button_checked_outlined,
@@ -566,6 +544,100 @@ class _LinkWidgetState extends State<LinkWidget> {
     // );
   }
 
+  void _goto(LinkModel model) {
+    logger.fine('link button pressed ${model.connectedMid},${model.connectedClass}');
+    logger.info('link button pressed ${widget.frameModel.mid},${widget.frameModel.isShow.value}');
+    BookMainPage.containeeNotifier!.setFrameClick(true);
+
+    //if (widget.contentsModel.isLinkEditMode == true) return;
+    if (LinkParams.isLinkNewMode == true) return;
+
+    const double stickerOffset = LayoutConst.stikerOffset / 2;
+    double posX = (model.posX.value - stickerOffset) * widget.applyScale;
+    double posY = (model.posY.value - stickerOffset) * widget.applyScale;
+
+    if (model.connectedClass == 'page') {
+      // show Page
+      PageModel? pageModel =
+          BookMainPage.pageManagerHolder!.getModel(model.connectedMid) as PageModel?;
+      if (pageModel == null) {
+        logger.severe('connected = ${model.connectedMid} not founded');
+        return;
+      }
+      //print('connected = ${model.connectedMid} founded');
+
+      pageModel.isTempVisible = true;
+      LinkParams.linkSet(
+        Offset(posX, posY),
+        widget.frameOffset,
+        model.connectedMid,
+        'page',
+        model.name,
+        widget.frameManager.pageModel.mid,
+      );
+      //_lineDrawSendEvent?.sendEvent(isShow);
+      //_linkManager?.notify();
+
+      BookPreviewMenu.previewMenuPressed = true;
+      BookMainPage.pageManagerHolder?.setSelectedMid(model.connectedMid);
+      return;
+    }
+
+    if (model.connectedClass == 'frame') {
+      //print('connectedClass is frame ----------------------');
+      FrameModel? childModel = widget.frameManager.getModel(model.connectedMid) as FrameModel?;
+      if (childModel == null) {
+        logger.severe('connected = ${model.connectedMid} not founded');
+        return;
+      }
+      // print('linkMid=${model.mid}');
+      // print('connected=${model.connectedMid}');
+      // print('childMid=${childModel.mid}');
+      // print('frameMid=${widget.frameModel.mid}');
+      // print('PageMid=${widget.frameModel.parentMid.value}');
+      //print('connected = ${model.connectedMid} founded');
+
+      childModel.isShow.set(!childModel.isShow.value, save: false, noUndo: true);
+      if (childModel.isShow.value == true) {
+        // child 모델이 안보이는 상태라면 나타나게 한다.
+        print('child model invisible case ----------------------');
+        double order = widget.frameManager.getMaxOrder();
+        if (childModel.order.value < order) {
+          widget.frameManager.changeOrderByIsShow(childModel);
+          widget.frameManager.reOrdering();
+        }
+        // 여기서 연결선을 연결한다....
+        LinkParams.linkSet(
+          Offset(posX, posY),
+          widget.frameOffset,
+          model.connectedMid,
+          'page',
+          model.name,
+          widget.frameManager.pageModel.mid,
+        );
+        // LinkParams.linkPostion = Offset(posX, posY);
+        // LinkParams.orgPostion = widget.frameOffset;
+        // LinkParams.connectedMid = model.connectedMid;
+        // LinkParams.connectedClass = 'frame';
+        // LinkParams.connectedName = model.name;
+      } else {
+        print('child model visible case ----------------------');
+        // child 모델이 보이는 상태라면 사라지게 한다.
+        LinkParams.linkClear();
+        widget.frameManager.changeOrderByIsShow(childModel);
+        widget.frameManager.reOrdering();
+      }
+      model.showLinkLine = childModel.isShow.value;
+      childModel.save();
+      //_lineDrawSendEvent?.sendEvent(isShow);
+      print('link button pressed ${widget.frameModel.mid},${widget.frameModel.isShow.value}');
+      widget.frameManager.notify();
+      //_linkManager?.notify();
+      return;
+    }
+    return;
+  }
+
   // 오른쪽 마우스 버튼 액션
   void _showRightMouseMenu(LinkModel model, LinkManager linkManager, double dx, double dy) {
     CretaRightMouseMenu.showMenu(
@@ -573,24 +645,29 @@ class _LinkWidgetState extends State<LinkWidget> {
       context: context,
       popupMenu: [
         CretaMenuItem(
+            caption: CretaStudioLang['followLink'] ?? 'followLink',
+            onPressed: () {
+              _goto(model);
+            }),
+        CretaMenuItem(
             caption: CretaStudioLang['deleteLink']!,
             onPressed: () {
               linkManager.delete(link: model);
               LeftMenuPage.initTreeNodes();
               LeftMenuPage.treeInvalidate();
             }),
-        CretaMenuItem(
-            caption: widget.contentsModel.isLinkEditMode
-                ? CretaStudioLang['linkControlOff']!
-                : CretaStudioLang['linkControlOn']!,
-            onPressed: () {
-              widget.contentsModel.isLinkEditMode = !widget.contentsModel.isLinkEditMode;
-              if (widget.contentsModel.isLinkEditMode == true) {
-                StudioVariables.isAutoPlay = true;
-              }
-              _linkSendEvent!.sendEvent(const Offset(1, 1));
-              setState(() {});
-            }),
+        // CretaMenuItem(
+        //     caption: widget.contentsModel.isLinkEditMode
+        //         ? CretaStudioLang['linkControlOff']!
+        //         : CretaStudioLang['linkControlOn']!,
+        //     onPressed: () {
+        //       widget.contentsModel.isLinkEditMode = !widget.contentsModel.isLinkEditMode;
+        //       if (widget.contentsModel.isLinkEditMode == true) {
+        //         StudioVariables.isAutoPlay = true;
+        //       }
+        //       _linkSendEvent!.sendEvent(const Offset(1, 1));
+        //       setState(() {});
+        //     }),
         CretaMenuItem(
             caption: CretaLang['properties']!,
             onPressed: () {
@@ -607,7 +684,7 @@ class _LinkWidgetState extends State<LinkWidget> {
       itemHeight: 24,
       x: dx,
       y: dy,
-      width: 160,
+      width: 180,
       //height: menuHeight,
       //textStyle: CretaFont.bodySmall,
       iconSize: 12,
@@ -616,20 +693,20 @@ class _LinkWidgetState extends State<LinkWidget> {
     );
   }
 
-  Widget _delButton(LinkModel model, LinkManager linkManager) {
-    const double iconSize = 10;
-    return Positioned(
-      right: 0,
-      bottom: 0,
-      child: GestureDetector(
-        child: const Icon(Icons.close, size: iconSize, color: Colors.white),
-        onLongPressDown: (detail) {
-          logger.fine('delete button pressed ${model.mid}');
-          linkManager.delete(link: model);
-        },
-      ),
-    );
-  }
+  // Widget _delButton(LinkModel model, LinkManager linkManager) {
+  //   const double iconSize = 10;
+  //   return Positioned(
+  //     right: 0,
+  //     bottom: 0,
+  //     child: GestureDetector(
+  //       child: const Icon(Icons.close, size: iconSize, color: Colors.white),
+  //       onLongPressDown: (detail) {
+  //         logger.fine('delete button pressed ${model.mid}');
+  //         linkManager.delete(link: model);
+  //       },
+  //     ),
+  //   );
+  // }
 
   bool _isPlayAble() {
     if (widget.contentsModel.contentsType == ContentsType.text) {

@@ -27,6 +27,7 @@ import '../pages/studio/left_menu/left_menu_page.dart';
 import '../pages/studio/studio_constant.dart';
 import '../pages/studio/studio_variables.dart';
 //import 'package:creta_user_io/data_io/creta_manager.dart';
+//import '../player/creta_play_manager.dart';
 import 'book_manager.dart';
 import 'frame_manager.dart';
 import 'key_handler.dart';
@@ -52,6 +53,57 @@ class PageManager extends BasePageManager {
       retval += frameManager.updateContents(model);
     }
     return retval;
+  }
+
+  Timer? _timeBaseScheduleTimer;
+
+  void startTimeBaseScheduleTimer() {
+    logger.info("timeSchedule 타임머가 시작되었다 =============");
+    bool timeBaseStarted = false;
+    _timeBaseScheduleTimer ??= Timer.periodic(const Duration(milliseconds: 1000), (timer) async {
+      if (StudioVariables.isPreview == true) {
+        // 현재 유효한 TimeBase Page 가 있다면, 거기까지  Page 를 넘겨서, 해당 TimeBase page 가 나오도록 하기 위한 부분이다.
+        if (timeBaseStarted == false) {
+          //  한번  timebase 로
+          PageModel? pageModel = hasTimeBaseNow();
+          if (pageModel != null) {
+            timeBaseStarted = true;
+            FrameManager? frameManager = findFrameManager(pageModel.mid);
+            if (frameManager == null) {
+              return;
+            }
+            frameManager.nextPageListener(null);
+            //frameManager.refreshFrame(pageModel.mid);
+            return;
+          } else {
+            timeBaseStarted = false;
+          }
+        }
+
+        //반면에 현재 page 가 timeBase 스케쥴이지만, 현재 시간에 해당하지 않는다면 다음페이지로 넘겨야 한다.
+        if (timeBaseStarted == true) {
+          PageModel? pageModel = isTimeBasePage();
+          if (pageModel != null) {
+            if (isTimeBasePageTime() == false) {
+              timeBaseStarted = false;
+              BookMainPage.pageManagerHolder!.gotoNext();
+              frameManagerMap[pageModel.mid]?.nextPageListener(null);
+              return;
+            } else {
+              timeBaseStarted = true;
+            }
+          } else {
+            timeBaseStarted = false;
+          }
+        }
+      }
+    });
+  }
+
+  void stopTimeBaseScheduleTimer() {
+    logger.info("timeSchedule 타임머가 종료되었다 =============");
+    _timeBaseScheduleTimer?.cancel();
+    _timeBaseScheduleTimer = null;
   }
 
 /////////////////////////////////////////////////////////
@@ -1168,6 +1220,7 @@ class PageManager extends BasePageManager {
       // 현재 시간에 걸린 타임베이스 페이지 중 가장 order  가 높은 timebase page 를 리턴한다.
       PageModel page = val as PageModel;
       if (page.isTimeBase()) {
+        //print('page=${page.name.value} isTimeBase...');
         if (page.isCurrentDateTimeBetween()) {
           retval = page;
         }
@@ -1177,7 +1230,7 @@ class PageManager extends BasePageManager {
     return retval;
   }
 
-  bool checkTimeBasePage() {
+  PageModel? checkTimeBasePage() {
     PageModel? pageModel = hasTimeBaseNow();
     if (pageModel != null) {
       if (selectedMid != pageModel.mid) {
@@ -1189,18 +1242,18 @@ class PageManager extends BasePageManager {
         // if (StudioVariables.isPreview == true) {
         //   print('after selectedMid=$selectedMid pageModel.mid=${pageModel.mid}');
         // }
-        return true;
+        return pageModel;
       }
     }
-    return false;
+    return null;
   }
 
-  bool isTimeBasePage() {
+  PageModel? isTimeBasePage() {
     PageModel? currentModel = getSelected() as PageModel?;
     if (currentModel != null && currentModel.isTimeBase()) {
-      return true;
+      return currentModel;
     }
-    return false;
+    return null;
   }
 
   bool isTimeBasePageTime() {
@@ -1208,7 +1261,7 @@ class PageManager extends BasePageManager {
     if (currentModel != null && currentModel.isTimeBase()) {
       return currentModel.isCurrentDateTimeBetween();
     }
-    return true;
+    return false;
   }
 
   // void printSelectedMid(int index) {

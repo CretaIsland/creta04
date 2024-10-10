@@ -20,7 +20,6 @@ import '../pages/studio/book_main_page.dart';
 import '../pages/studio/containees/containee_nofifier.dart';
 import 'package:creta_user_io/data_io/creta_manager.dart';
 import '../pages/studio/left_menu/left_menu_page.dart';
-import '../pages/studio/studio_constant.dart';
 import '../pages/studio/studio_variables.dart';
 import 'creta_abs_player.dart';
 import 'creta_abs_media_widget.dart';
@@ -65,10 +64,14 @@ class CretaPlayManager extends ChangeNotifier {
     return retval;
   }
 
+  static CretaPlayManager? findManager(String key) {
+    return _playManagerMap[key];
+  }
+
   final Lock _lock = Lock();
 
   double _currentOrder = -1;
-  double _currentPlaySec = 0.0;
+  //double _currentPlaySec = 0.0;
 
   ContentsModel? _currentModel;
   ContentsModel? get currentModel => _currentModel;
@@ -97,7 +100,7 @@ class CretaPlayManager extends ChangeNotifier {
   //BoolEventController? _lineDrawSendEvent;
   void clear() {
     _currentOrder = -1;
-    _currentPlaySec = 0.0;
+    //_currentPlaySec = 0.0;
     _currentModel = null;
     _prevModel = null;
     _isPauseTimer = false;
@@ -190,7 +193,7 @@ class CretaPlayManager extends ChangeNotifier {
 
   Future<void> reset() async {
     await _lock.synchronized(() {
-      _currentPlaySec = 0.0;
+      //_currentPlaySec = 0.0;
     });
   }
 
@@ -202,7 +205,7 @@ class CretaPlayManager extends ChangeNotifier {
     await _lock.synchronized(() {
       contentsManager.reOrdering();
       if (isRewind) {
-        _currentPlaySec = 0.0;
+        //_currentPlaySec = 0.0;
         _currentOrder = contentsManager.lastOrder();
       }
     });
@@ -346,8 +349,8 @@ class CretaPlayManager extends ChangeNotifier {
     });
   }
 
-  void _next() {
-    _currentPlaySec = 0.0;
+  bool _next() {
+    //_currentPlaySec = 0.0;
     double oldOrder = _currentOrder;
     _currentOrder = contentsManager.nextOrder(oldOrder, alwaysOneExist: true);
     logger.info('oldOrder=$oldOrder, _currentOrder=$_currentOrder');
@@ -357,7 +360,9 @@ class CretaPlayManager extends ChangeNotifier {
     if (oldOrder <= _currentOrder) {
       // 이경우 한바퀴 돌았다는 뜻이다.
       frameManager.nextPageListener(contentsManager.frameModel);
+      return true;
     }
+    return false;
   }
 
   void notifyToProperty() {
@@ -374,7 +379,7 @@ class CretaPlayManager extends ChangeNotifier {
         }
       }
     }
-    //print('6666666666666666666666666');
+    //logger.info('6666666666666666666666666');
     //_lineDrawSendEvent?.sendEvent(false);
   }
 
@@ -464,7 +469,7 @@ class CretaPlayManager extends ChangeNotifier {
           player: player,
         );
       case ContentsType.image:
-        //print('createWidget image, ${model.name} ,${player.frameKeyString}');
+        logger.info('createWidget image, ${model.name} ,${player.keyString}');
         return CretaImageWidget(
           // image는 timer 를 사용한다. 따라서, Contents 단위로 initalize 된다.
           key: contentsManager.registerPlayerWidgetKey(player.keyString, model.contentsType),
@@ -483,14 +488,14 @@ class CretaPlayManager extends ChangeNotifier {
         //   key: GlobalObjectKey(player.frameKeyString),
         //   player: player,
         // );
-        //print('-------------createWidget${model.name}, ${model.contentsType})------------');
+        //logger.info('-------------createWidget${model.name}, ${model.contentsType})------------');
         return CretaDocWidget(
           key: contentsManager.registerPlayerWidgetKey(player.keyString, model.contentsType),
           player: player,
           frameManager: frameManager,
         );
       case ContentsType.music:
-        // print('-------------createMusicWidget${model.name}, ${model.contentsType})------------');
+        // logger.info('-------------createMusicWidget${model.name}, ${model.contentsType})------------');
         return CretaMusicWidget(
           key: contentsManager.registerPlayerWidgetKey(player.keyString, model.contentsType),
           player: player,
@@ -511,25 +516,9 @@ class CretaPlayManager extends ChangeNotifier {
   Future<bool> _timerExpired(CretaAbsMediaWidget widget) async {
     return await _lock.synchronized<bool>(
       () async {
-        if (widget.isTimerAvailable == false) {
-          return false;
-        }
-        if (StudioVariables.isPreview == true) {
-          // 현재 유효한 TimeBase Page 가 있다면, 거기까지  Page 를 넘겨서, 해당 TimeBase page 가 나오도록 하기 위한 부분이다.
-          if (BookMainPage.pageManagerHolder!.checkTimeBasePage()) {
-            frameManager.nextPageListener(contentsManager.frameModel);
-            return true;
-          }
-
-          //반면에 현재 page 가 timeBase 스케쥴이지만, 현재 시간에 해당하지 않는다면 다음페이지로 넘겨야 한다.
-          if (BookMainPage.pageManagerHolder!.isTimeBasePage() == true) {
-            if (BookMainPage.pageManagerHolder!.isTimeBasePageTime() == false) {
-              BookMainPage.pageManagerHolder!.gotoNext();
-              frameManager.nextPageListener(contentsManager.frameModel);
-              return true;
-            }
-          }
-        }
+        // if (widget.isTimerAvailable == false) {
+        //   return false;
+        // }
 
         if (contentsManager.isEmpty()) {
           //logger.info('contentsManager is empty');
@@ -606,20 +595,30 @@ class CretaPlayManager extends ChangeNotifier {
           return true;
         }
 
-        if (_currentPlaySec < playTime) {
-          if ((StudioVariables.isAutoPlay && _currentModel!.playState != PlayState.pause) ||
-              _currentModel!.manualState == PlayState.start) {
-            _currentPlaySec += StudioConst.playTimerInterval;
-            // await playHandler.setProgressBar(
-            //   playTime <= 0 ? 0 : _currentPlaySec / playTime,
-            //   _currentModel!,
-            // );
-          }
+        if (StudioVariables.isAutoPlay == false) {
           return true;
         }
 
-        logger.fine('교체시간이 되었다.');
+        if (_currentModel!.playState == PlayState.pause &&
+            _currentModel!.manualState != PlayState.start) {
+          return true;
+        }
+
+        // if (_currentPlaySec < playTime) {
+        //   if ((StudioVariables.isAutoPlay && _currentModel!.playState != PlayState.pause) ||
+        //       _currentModel!.manualState == PlayState.start) {
+        //     _currentPlaySec += StudioConst.playTimerInterval;
+        //     // await playHandler.setProgressBar(
+        //     //   playTime <= 0 ? 0 : _currentPlaySec / playTime,
+        //     //   _currentModel!,
+        //     // );
+        //   }
+        //   return true;
+        // }
+
+        logger.info('교체시간이 되었다.');
         _next();
+        _updateCurrentModel(debug: true);
         // await playHandler.setProgressBar(
         //   playTime <= 0 ? 0 : _currentPlaySec / playTime,
         //   _currentModel!,

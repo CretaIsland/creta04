@@ -119,8 +119,7 @@ class _OnLinkCursorState extends State<OnLinkCursor> {
 
           LinkParams.isLinkNewMode = false;
           //StudioVariables.isLinkEditMode = true;
-          logger.fine(
-              'OnLinkCursor linkNew=${LinkParams.isLinkNewMode}, linkEdit=${contentsModel.isLinkEditMode}');
+          logger.fine('OnLinkCursor linkNew=${LinkParams.isLinkNewMode}');
           BookMainPage.bookManagerHolder!.notify();
 
           // widget.contentsManager
@@ -183,7 +182,7 @@ class _OnLinkCursorState extends State<OnLinkCursor> {
     }
     //contentsModel.isLinkEditMode = true;
     //contentsModel.isLinkEditMode = false;
-    _linkSendEvent2!.sendEvent(contentsModel.isLinkEditMode);
+    _linkSendEvent2!.sendEvent(false);
     _linkSendEvent!.sendEvent(offset);
     LinkParams.connectedClass = '';
     LinkParams.connectedMid = '';

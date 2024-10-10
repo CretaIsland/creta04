@@ -662,6 +662,7 @@
         "isSendEmail" : "まだ登録されていないメールです。招待メールを送りますか?",
         "mainFrameExTooltip" : "メインフレームです。このフレームのコンテンツが終了すると,自動的に次のページに移動します",
         "deleteLink" : "リンクを削除",
+        "followLink" : "リンクに従う",
         
         "textOverflow1" : "テキストの長さ制限にかかりました",
         "textOverflow2" : "文字数以内で入力してください",

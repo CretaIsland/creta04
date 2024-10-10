@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:hycop/common/util/logger.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:creta_common/common/creta_common_utils.dart';
+import 'package:hycop/hycop.dart';
 
 import '../../data_io/key_handler.dart';
 import 'package:creta_common/model/app_enums.dart';
@@ -19,13 +20,98 @@ class CretaImageWidget extends CretaAbsMediaWidget {
   CretaImageWidget({super.key, required super.player, super.timeExpired});
 
   @override
-  CretaImagePlayerWidgetState createState() => CretaImagePlayerWidgetState();
+  CretaImageWidgetState createState() => CretaImageWidgetState();
 }
 
-class CretaImagePlayerWidgetState extends CretaState<CretaImageWidget>
+class CretaImageWidgetState extends CretaState<CretaImageWidget>
     with SingleTickerProviderStateMixin {
-  Timer? _aniTimer;
-  bool _animateFlag = false;
+  //bool _showChild = true;
+
+  Future<bool> _removeChild() async {
+    if (widget.timeExpired == null) return Future.value(false);
+    bool retval = await widget.timeExpired!.call(widget);
+    // setState(() {
+    //   // expired 되면 다시 그리도록 하기 위해서이다.
+    // });
+    return retval;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return RealImageWidget(
+      key: GlobalKey(), // 계속 새로 그리도록 하기 위해  GlobalKey 를 사용한다.  새로 그리지 않으면, timer 가 동작하지 않는다.
+      // 그래는 고정 key 를 가지기 때문에 CretaImageWidget 으로 한번 감싸준것임.
+      player: widget.player as CretaImagePlayer,
+      timeExpired: _removeChild,
+    );
+  }
+}
+
+class RealImageWidget extends StatefulWidget {
+  final Future<bool> Function()? timeExpired;
+  final CretaImagePlayer player;
+
+  const RealImageWidget({super.key, required this.player, this.timeExpired});
+
+  @override
+  RealImageWidgetState createState() => RealImageWidgetState();
+}
+
+class RealImageWidgetState extends CretaState<RealImageWidget> with SingleTickerProviderStateMixin {
+  Timer? aniTimer;
+  bool animateFlag = false;
+
+  DateTime? startTime;
+  DateTime? endTime;
+
+  void startTimer() {
+    if (widget.timeExpired == null) return;
+
+    startTime = DateTime.now();
+
+    logger.info(
+        "타임머가 시작되었다 =============${widget.player.model?.name}, ${widget.player.model?.playTime.value}, $startTime");
+    // _timer ??=
+    //Timer.periodic(const Duration(milliseconds: StudioConst.playTimerInterval), (timer) async {
+    //     Timer.periodic(Duration(milliseconds: widget.player.model!.playTime.value.ceil()), (timer) async {
+    //   endTime = DateTime.now();
+    //   logger.info(
+    //       "타임머가 Expired 되었다. =============${widget.player.model!.name}, ${endTime!.difference(startTime!).inMilliseconds}");
+    //   isTimerAvailable = true;
+    //   isTimerAvailable = await widget.timeExpired!.call(this);
+    // });
+    // widget.timeExpired!.call(widget).then((onValue) {
+    //   widget.isTimerAvailable = onValue;
+    // });
+    Future.delayed(Duration(milliseconds: widget.player.model!.playTime.value.ceil())).then((t) {
+      if (!mounted) {
+        // delay 중인데, widget 이 dispose 에 들어간다면,  startTime 이 null 이 될 수 있다.
+        logger.info('마운트가 해제되었다......................................');
+        return;
+      }
+      if (startTime == null) {
+        // delay 중인데, widget 이 dispose 에 들어간다면,  startTime 이 null 이 될 수 있다.
+        logger.info('startTime 이 null 이다.   도대체 왜 이게 널일까???');
+        return;
+      }
+      endTime = DateTime.now();
+
+      logger.info(
+          "타임머가 Expired 되었다. =============${widget.player.model?.name}, ${endTime?.difference(startTime!).inMilliseconds}");
+      //widget.isTimerAvailable = true;
+
+      widget.timeExpired?.call();
+    });
+  }
+
+  void stopTimer() {
+    logger.info("타임머가 종료되었다 =============${widget.player.model?.name}");
+    //widget.isTimerAvailable = false;
+    //_timer?.cancel();
+    //_timer = null;
+    startTime = null;
+    endTime = null;
+  }
 
   @override
   void setState(VoidCallback fn) {
@@ -36,26 +122,37 @@ class CretaImagePlayerWidgetState extends CretaState<CretaImageWidget>
   void initState() {
     super.initState();
     if (widget.player.model!.imageAniType.value == ImageAniType.move) {
-      _aniTimer ??= Timer.periodic(const Duration(seconds: 4), (t) {
+      aniTimer ??= Timer.periodic(const Duration(seconds: 4), (t) {
         setState(() {
-          _animateFlag = !_animateFlag;
+          animateFlag = !animateFlag;
         });
       });
     }
-    widget.afterBuild(); // timer will be started
+    afterBuild(); // timer will be started
+  }
+
+  Future<void> afterBuild() async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        logger.info('afterBuild=====================================');
+        if (widget.player.shouldBePlay()) {
+          startTimer();
+        }
+      }
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
-    widget.stopTimer();
+    stopTimer();
     widget.player.stop();
-    _aniTimer?.cancel();
+    aniTimer?.cancel();
   }
 
   @override
   Widget build(BuildContext context) {
-    final CretaImagePlayer player = widget.player as CretaImagePlayer;
+    final CretaImagePlayer player = widget.player;
 
     if (StudioVariables.isAutoPlay) {
       player.model!.setPlayState(PlayState.start);
@@ -154,8 +251,8 @@ class CretaImagePlayerWidgetState extends CretaState<CretaImageWidget>
         child: AnimatedContainer(
           duration: const Duration(seconds: 2),
           curve: Curves.easeInOutCubic,
-          width: _animateFlag ? size.width : size.width * 1.5,
-          height: _animateFlag ? size.height : size.height * 1.5,
+          width: animateFlag ? size.width : size.width * 1.5,
+          height: animateFlag ? size.height : size.height * 1.5,
           child: flipImage,
 
           // child: Stack(

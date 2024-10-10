@@ -663,6 +663,7 @@
     "isSendEmail" : "아직 가입되지 않은 이메일입니다. 초대 이메일을 보내시겠습니까?",
     "mainFrameExTooltip" : "메인 프레임 입니다. 이 프레임의 콘텐츠가 끝나면 자동으로 다음페이지로 넘어갑니다.",
     "deleteLink" : "링크 삭제",
+    "followLink" : "링크로 이동",
     
     "textOverflow1" : "텍스트 길이 제한에 걸렸습니다",
     "textOverflow2" : "글자 이내로 입력하세요요.",

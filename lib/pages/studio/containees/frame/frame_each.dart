@@ -96,6 +96,7 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
 
   @override
   void didUpdateWidget(FrameEach oldWidget) {
+    //print('didUpdateWidget FrameEach');
     super.didUpdateWidget(oldWidget);
     if (_width != oldWidget.width) {
       _width = _width;

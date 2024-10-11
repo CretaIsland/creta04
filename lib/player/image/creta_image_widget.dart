@@ -66,6 +66,8 @@ class RealImageWidgetState extends CretaState<RealImageWidget> with SingleTicker
 
   void startTimer() {
     if (widget.timeExpired == null) return;
+    if (widget.player.model == null) return;
+    if (widget.player.model!.playTime.value < 0) return;
 
     startTime = DateTime.now();
 

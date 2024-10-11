@@ -32,6 +32,7 @@ import '../../studio_getx_controller.dart';
 import '../containee_nofifier.dart';
 import '../frame/on_link_cursor.dart';
 import '../frame/sticker/draggable_stickers.dart';
+import '../frame/sticker/stickerview.dart';
 import 'play_buttons.dart';
 
 class LinkWidget extends StatefulWidget {
@@ -488,7 +489,7 @@ class _LinkWidgetState extends State<LinkWidget> {
         alignment: Alignment.center,
         child: Icon(
           key: model.iconKey,
-          LinkIconType.toIcon(model.iconData.value), //Icons.radio_button_checked_outlined,
+          LinkIconType.toIcon(model.iconData.value), //Icons.link_outlined,
           size: iconSize,
           color: _isMove ? CretaColor.primary : model.bgColor.value,
         ),
@@ -503,7 +504,7 @@ class _LinkWidgetState extends State<LinkWidget> {
     //         alignment: Alignment.topLeft,
     //         child: Icon(
     //           key: model.iconKey,
-    //           LinkIconType.toIcon(model.iconData.value), //Icons.radio_button_checked_outlined,
+    //           LinkIconType.toIcon(model.iconData.value), //Icons.link_outlined,
     //           size: iconSize,
     //           color: _isMove ? CretaColor.primary : model.bgColor.value,
     //         ),
@@ -519,7 +520,7 @@ class _LinkWidgetState extends State<LinkWidget> {
     //             child: Icon(
     //               key: model.iconKey,
     //               LinkIconType.toIcon(
-    //                   model.iconData.value), //Icons.radio_button_checked_outlined,
+    //                   model.iconData.value), //Icons.link_outlined,
     //               size: iconSize,
     //               color: _isMove ? CretaColor.primary : model.bgColor.value,
     //             ),
@@ -534,7 +535,7 @@ class _LinkWidgetState extends State<LinkWidget> {
     //);
     // return IconButton(
     //   icon: Icon(
-    //     Icons.radio_button_checked_outlined,
+    //     Icons.link_outlined,
     //     size: iconSize,
     //     color: _isMove ? CretaColor.primary : CretaColor.secondary,
     //   ),
@@ -600,7 +601,7 @@ class _LinkWidgetState extends State<LinkWidget> {
       childModel.isShow.set(!childModel.isShow.value, save: false, noUndo: true);
       if (childModel.isShow.value == true) {
         // child 모델이 안보이는 상태라면 나타나게 한다.
-        print('child model invisible case ----------------------');
+        //print('child model invisible case ----------------------');
         double order = widget.frameManager.getMaxOrder();
         if (childModel.order.value < order) {
           widget.frameManager.changeOrderByIsShow(childModel);
@@ -621,7 +622,7 @@ class _LinkWidgetState extends State<LinkWidget> {
         // LinkParams.connectedClass = 'frame';
         // LinkParams.connectedName = model.name;
       } else {
-        print('child model visible case ----------------------');
+        //print('child model visible case ----------------------');
         // child 모델이 보이는 상태라면 사라지게 한다.
         LinkParams.linkClear();
         widget.frameManager.changeOrderByIsShow(childModel);
@@ -630,8 +631,21 @@ class _LinkWidgetState extends State<LinkWidget> {
       model.showLinkLine = childModel.isShow.value;
       childModel.save();
       //_lineDrawSendEvent?.sendEvent(isShow);
-      print('link button pressed ${widget.frameModel.mid},${widget.frameModel.isShow.value}');
+      //print('link button pressed ${widget.frameModel.mid},${widget.frameModel.isShow.value}');
       widget.frameManager.notify();
+      if (StudioVariables.isPreview == true) {
+        //if (childModel.isShow.value == false) {
+        //  // 보이는 상태라면 사라지게 한다.
+        StickerViewState.clearOffStage(widget.frameManager.pageModel.mid);
+        StickerViewState.offStageChanged = true;
+        //} else {
+        // // widget.frameManager.invalidateFrameEach(
+        // //   childModel.parentMid.value,
+        // //   childModel.mid,
+        // // );
+        //}
+      }
+
       //_linkManager?.notify();
       return;
     }

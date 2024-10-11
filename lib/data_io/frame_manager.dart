@@ -174,15 +174,15 @@ class FrameManager extends BaseFrameManager {
   //   return _stickerKeyMap[keyStr];
   // }
 
-  bool refreshFrame(String mid, {bool deep = false}) {
-    invalidateFrameEach(pageModel.mid, mid);
+  bool refreshFrame(String mid, bool visible, {bool deep = false}) {
+    invalidateFrameEach(pageModel.mid, mid, visible);
     if (deep) {
       invalidateContentsMain(pageModel.mid, mid);
       invalidateDragableResiable(pageModel.mid, mid);
       invalidateInstantEditor(pageModel.mid, mid);
     }
     invalidateFrameThumbnail(pageModel.mid, mid);
-    invalidateSticker(pageModel.mid, mid);
+    invalidateSticker(pageModel.mid, mid, visible);
     return true;
   }
   //
@@ -208,16 +208,21 @@ class FrameManager extends BaseFrameManager {
   //
 
   KeyHandler stickerKeyHandler = KeyHandler();
-  String stickerKeyMangler(String pageMid, String frameMid) {
-    return 'Sticker$pageMid/$frameMid';
+  String stickerKeyMangler(
+    String pageMid,
+    String frameMid,
+    bool visible,
+  ) {
+    return 'Sticker$pageMid/$frameMid/$visible';
   }
 
-  GlobalObjectKey<CretaState<StatefulWidget>> registerStickerKey(String pageMid, String frameMid) {
-    return stickerKeyHandler.registerKey(stickerKeyMangler(pageMid, frameMid));
+  GlobalObjectKey<CretaState<StatefulWidget>> registerStickerKey(
+      String pageMid, String frameMid, bool visible) {
+    return stickerKeyHandler.registerKey(stickerKeyMangler(pageMid, frameMid, visible));
   }
 
-  bool invalidateSticker(String pageMid, String frameMid) {
-    return stickerKeyHandler.invalidate(stickerKeyMangler(pageMid, frameMid));
+  bool invalidateSticker(String pageMid, String frameMid, bool visible) {
+    return stickerKeyHandler.invalidate(stickerKeyMangler(pageMid, frameMid, visible));
   }
 
   //
@@ -262,17 +267,17 @@ class FrameManager extends BaseFrameManager {
   //
   //
   KeyHandler frameEachKeyHandler = KeyHandler();
-  String frameEachKeyMangler(String pageMid, String frameMid) {
-    return 'FrameEach$pageMid/$frameMid';
+  String frameEachKeyMangler(String pageMid, String frameMid, bool visible) {
+    return 'FrameEach$pageMid/$frameMid/$visible';
   }
 
   GlobalObjectKey<CretaState<StatefulWidget>> registerFrameEachKey(
-      String pageMid, String frameMid) {
-    return frameEachKeyHandler.registerKey(frameEachKeyMangler(pageMid, frameMid));
+      String pageMid, String frameMid, bool visible) {
+    return frameEachKeyHandler.registerKey(frameEachKeyMangler(pageMid, frameMid, visible));
   }
 
-  bool invalidateFrameEach(String pageMid, String frameMid) {
-    return frameEachKeyHandler.invalidate(frameEachKeyMangler(pageMid, frameMid));
+  bool invalidateFrameEach(String pageMid, String frameMid, bool visible) {
+    return frameEachKeyHandler.invalidate(frameEachKeyMangler(pageMid, frameMid, visible));
   }
   //
   //
@@ -915,7 +920,7 @@ class FrameManager extends BaseFrameManager {
       //   return null;
       // }
       // bool founded = CretaCommonUtils.isMousePointerOnWidget(stickerKey, pos);
-      String keyString = stickerKeyMangler(pageModel.mid, frame.mid);
+      String keyString = stickerKeyMangler(pageModel.mid, frame.mid, frame.isShow.value);
       bool founded = stickerKeyHandler.isMousePointerOnWidget(keyString, pos);
       if (founded) {
         logger.fine('pointer is on widget order ${frame.order.value}');
@@ -1042,8 +1047,12 @@ class FrameManager extends BaseFrameManager {
     //   return false;
     // }
     //return CretaCommonUtils.isMousePointerOnWidget(key, position);
-    String keyString =
-        stickerKeyMangler(pageModel.mid, CretaManager.frameSelectNotifier!.selectedAssetId!);
+    String frameMid = CretaManager.frameSelectNotifier!.selectedAssetId!;
+    FrameModel? frameModel = getModel(frameMid) as FrameModel?;
+    if (frameModel == null) {
+      return false;
+    }
+    String keyString = stickerKeyMangler(pageModel.mid, frameMid, frameModel.isShow.value);
     return stickerKeyHandler.isMousePointerOnWidget(keyString, position);
   }
 

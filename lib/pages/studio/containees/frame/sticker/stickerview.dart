@@ -1,6 +1,5 @@
 // ignore_for_file: library_private_types_in_public_api
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
 import '../../../../../data_io/frame_manager.dart';
 import '../../../../../data_io/key_handler.dart';
 import '../../../../../data_io/page_manager.dart';
@@ -41,7 +40,7 @@ class StickerView extends StatefulWidget {
   final void Function(String, String) onFrameBack;
   final void Function(String, String) onFrameFront;
   final void Function(String) onFrameMain;
-  final void Function(String) onFrameShowUnshow;
+  final void Function(String, bool) onFrameShowUnshow;
   //final void Function(String, double) onFrameRotate;
   //final void Function(String) onFrameLink;
   final void Function(String) onFrameCopy;
@@ -122,6 +121,17 @@ class StickerView extends StatefulWidget {
 
 class StickerViewState extends CretaState<StickerView> with SingleTickerProviderStateMixin {
   static final Map<String, DraggableStickers> _pageWidgetMap = {};
+  static void clearOffStage(String? pageMid) {
+    if (pageMid != null) {
+      //print('clearOffStage $pageMid');
+      _pageWidgetMap.remove(pageMid);
+      return;
+    }
+    _pageWidgetMap.clear();
+    offStageChanged = true;
+  }
+
+  static bool offStageChanged = false;
 
   // You have to pass the List of Sticker
   AnimationController? _controller;
@@ -141,6 +151,12 @@ class StickerViewState extends CretaState<StickerView> with SingleTickerProvider
   //   return true;
   // }
 
+// @override
+//   void didUpdateWidget(StickerView oldWidget) {
+//     super.didUpdateWidget(oldWidget);
+
+//   }
+
   @override
   void dispose() {
     _controller?.dispose();
@@ -151,6 +167,8 @@ class StickerViewState extends CretaState<StickerView> with SingleTickerProvider
   @override
   void initState() {
     super.initState();
+
+    //print('StickerViewState initState**********');
 
     //if (widget.page.hasTransitionEffect()) {
     _controller = AnimationController(
@@ -165,6 +183,12 @@ class StickerViewState extends CretaState<StickerView> with SingleTickerProvider
       //_pageController = PageController();
       _pageWidgetMap.clear();
     }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (StudioVariables.isPreview) {
+        StickerViewState.offStageChanged = false;
+      }
+    });
   }
 
   void _initTransitionEffect() {
@@ -222,7 +246,7 @@ class StickerViewState extends CretaState<StickerView> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
-    logger.fine('StickerViewState build');
+    //print('StickerViewState build +++++++++++++++++++++++++++++++++++++++++');
 
     if (widget.page.hasTransitionEffect()) {
       _initTransitionEffect();
@@ -274,11 +298,13 @@ class StickerViewState extends CretaState<StickerView> with SingleTickerProvider
 
     String selectedMid = widget.page.mid;
 
+    //print('before _pageWidgetMap build');
+
     for (var pageInfo in widget.allPageInfos!) {
       if (_pageWidgetMap[pageInfo.pageModel.mid] == null) {
         //print('input mid= ${pageInfo.pageModel.mid} ${pageInfo.pageModel.name.value}');
         DraggableStickers eachPage = DraggableStickers(
-          key: BookMainPage.pageManagerHolder!.registerDraggableSticker(pageInfo.pageModel.mid),
+          //key: BookMainPage.pageManagerHolder!.registerDraggableSticker(pageInfo.pageModel.mid),
           isSelected: selectedMid == pageInfo.pageModel.mid,
           book: widget.book,
           pageWidth: pageWidth,
@@ -314,7 +340,7 @@ class StickerViewState extends CretaState<StickerView> with SingleTickerProvider
     //   }
     // }
 
-    //("select ${widget.page.name.value}");
+    //print("select ${widget.page.name.value}");
     return Stack(
       children: [
         for (DraggableStickers dsticker in _pageWidgetMap.values)
@@ -331,6 +357,7 @@ class StickerViewState extends CretaState<StickerView> with SingleTickerProvider
   }
 
   Widget _applyTransitionEffect(Widget selected) {
+    //print('=================================================');
     if (widget.page.hasTransitionEffect()) {
       //print('widget.page.transitionEffect.value=${widget.page.transitionEffect.value}');
       // return AnimatedSwitcher(
@@ -443,6 +470,9 @@ class StickerState extends CretaState<Sticker> with CretaMusicMixin {
   @override
   Widget build(BuildContext context) {
     bool isVisible = FrameModelUtil.isVisible(widget.pageMid, widget.model);
+
+    //print(
+    //    "StickerState build ${widget.model.name.value} isVisible=$isVisible ---------------${(widget.child == null) ? 'sticker is null' : 'Visiblilty'}");
 
     if (FrameModelUtil.isBackgroundMusic(widget.model) &&
         isVisible == false &&

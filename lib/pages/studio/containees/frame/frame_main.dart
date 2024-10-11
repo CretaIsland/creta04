@@ -159,12 +159,14 @@ class FrameMainState extends State<FrameMain> with FramePlayMixin {
   }
 
   Widget showFrame() {
+    //print('showFrame()------------------------------------');
     //FrameModel? model = frameManager!.getSelected() as FrameModel?;
     //logger.fine('showFrame $applyScale  ${StudioVariables.applyScale}');
     return StickerView(
-      // key: (StudioVariables.isPreview)
-      //     ? BookMainPage.pageManagerHolder?.registerStickerView()
-      //     : null,
+      //key: GlobalKey(),
+      key: (StudioVariables.isPreview && StickerViewState.offStageChanged == true)
+          ? GlobalKey()
+          : null,
       book: widget.bookModel,
       page: widget.pageModel,
       allPageInfos: (StudioVariables.isPreview && StudioVariables.isSizeChanging == false)
@@ -244,8 +246,8 @@ class FrameMainState extends State<FrameMain> with FramePlayMixin {
       //   BookMainPage.bookManagerHolder!.notify();
       //   //setState(() {});
       // },
-      onFrameShowUnshow: (mid) {
-        frameManager!.refreshFrame(mid);
+      onFrameShowUnshow: (mid, show) {
+        frameManager!.refreshFrame(mid, show);
         setState(() {});
       },
       onFrameMain: (mid) {
@@ -521,8 +523,10 @@ class FrameMainState extends State<FrameMain> with FramePlayMixin {
     //     frameManager!.frameKeyMangler(widget.pageModel.mid, model.mid);
     // GlobalKey<FrameEachState> frameKey = GlobalObjectKey<FrameEachState>(frameKeyStr);
 
+    //print('eachFrame : ${model.name.value}, ${model.isShow.value}');
+
     Widget eachFrame = FrameEach(
-      key: manager.registerFrameEachKey(pageModel.mid, model.mid),
+      key: manager.registerFrameEachKey(pageModel.mid, model.mid, model.isShow.value),
       model: model,
       pageModel: pageModel,
       frameManager: manager,
@@ -535,7 +539,7 @@ class FrameMainState extends State<FrameMain> with FramePlayMixin {
     bool isMain = (model.isMain.value || _mainFrameCandiator == model.mid);
 
     return Sticker(
-      key: manager.registerStickerKey(pageModel.mid, model.mid),
+      key: manager.registerStickerKey(pageModel.mid, model.mid, model.isShow.value),
       //frameKey: frameKey,
       frameManager: manager,
       isOverlay: model.isOverlay.value,
@@ -679,7 +683,7 @@ class FrameMainState extends State<FrameMain> with FramePlayMixin {
   //           left: posX,
   //           top: posY,
   //           child: const Icon(
-  //             Icons.radio_button_checked_outlined,
+  //             Icons.link_outlined,
   //             size: iconSize,
   //             color: CretaColor.primary,
   //           ),

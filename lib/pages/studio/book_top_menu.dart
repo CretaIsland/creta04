@@ -150,7 +150,7 @@ class BookTopMenuState extends State<BookTopMenu> {
               // SizedBox(width: widget.padding / 2),
               // if (StudioVariables.isHandToolMode == false && StudioVariables.isLinkMode == false)
               //   BTN.floating_lc(
-              //     icon: Icon(Icons.radio_button_checked_outlined,
+              //     icon: Icon(Icons.link_outlined,
               //         size: 20, color: CretaColor.primary),
               //     onPressed: () {
               //       setState(() {

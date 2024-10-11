@@ -124,7 +124,7 @@ class _FramePropertyState extends State<FrameProperty> with PropertyMixin {
   }
 
   void _invalidateFrame() {
-    if (!_frameManager!.refreshFrame(widget.model.mid)) {
+    if (!_frameManager!.refreshFrame(widget.model.mid, widget.model.isShow.value)) {
       // key 를 찾지못한 경우만, sendEvent 를 한다.
       _sendEvent!.sendEvent(widget.model);
     }

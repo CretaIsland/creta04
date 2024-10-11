@@ -69,7 +69,7 @@ class DraggableStickers extends StatefulWidget {
   final void Function(String, String)? onFrameFront;
   final void Function(String)? onFrameCopy;
   final void Function(String)? onFrameMain;
-  final void Function(String)? onFrameShowUnshow;
+  final void Function(String, bool)? onFrameShowUnshow;
   final void Function(String)? onTap;
   final void Function()? onResizeButtonTap;
   final void Function(String)? onComplete;
@@ -191,6 +191,8 @@ class _DraggableStickersState extends State<DraggableStickers> {
   @override
   Widget build(BuildContext context) {
     stickers = widget.stickerList;
+
+    //print('stickerList=${stickers?.length}');
     bool useColor = (widget.page.textureType.value != TextureType.glass);
     return MultiProvider(
       providers: [
@@ -269,6 +271,7 @@ class _DraggableStickersState extends State<DraggableStickers> {
   }
 
   Widget _drawEachStiker(Sticker sticker) {
+    //print('_drawEachStiker(${sticker.model.name.value}, ${sticker.model.isShow.value})');
     //if (sticker.isEditMode && _isEditorAlreadyExist == false) {
     bool isVerticalResiable = true;
     bool isHorizontalResiable = true;
@@ -306,14 +309,16 @@ class _DraggableStickersState extends State<DraggableStickers> {
                       );
                       //widget.frameManager?.notify();
                       //sticker.frameSize = newSize;
-                      widget.frameManager?.refreshFrame(frameModel.mid, deep: true);
+                      widget.frameManager
+                          ?.refreshFrame(frameModel.mid, frameModel.isShow.value, deep: true);
                       LeftMenuPage.initTreeNodes();
                       LeftMenuPage.treeInvalidate();
                     },
                     onChanged: (newSize) {
                       // AutoSizeText 로 인한 size변경을 전파하기 위해
                       sticker.frameSize = newSize;
-                      widget.frameManager?.refreshFrame(frameModel.mid, deep: true);
+                      widget.frameManager
+                          ?.refreshFrame(frameModel.mid, frameModel.isShow.value, deep: true);
                     }),
               ],
             );
@@ -347,6 +352,8 @@ class _DraggableStickersState extends State<DraggableStickers> {
       Sticker sticker, FrameModel frameModel, bool isVerticalResiable, bool isHorizontalResiable) {
     double posX = FrameModelUtil.getRealPosX(frameModel);
     double posY = FrameModelUtil.getRealPosY(frameModel);
+
+    //print('_dragableResizable(${sticker.model.name.value}, ${sticker.model.isShow.value})');
 
     return DraggableResizable(
       key: widget.frameManager!.registerDragableResiableKey(sticker.pageMid, frameModel.mid),
@@ -614,7 +621,7 @@ class _DraggableStickersState extends State<DraggableStickers> {
                 frameModel.isShow.set(!frameModel.isShow.value);
                 widget.frameManager?.changeOrderByIsShow(frameModel);
                 mychangeStack.endTrans();
-                widget.onFrameShowUnshow?.call(frameModel.mid);
+                widget.onFrameShowUnshow?.call(frameModel.mid, frameModel.isShow.value);
                 if (frameModel.isOverlay.value == true) {
                   BookMainPage.pageManagerHolder!.notify();
                 }
@@ -634,7 +641,7 @@ class _DraggableStickersState extends State<DraggableStickers> {
               onPressed: () {
                 frameModel.isRemoved.set(true);
                 StudioVariables.cropFrame(frameModel, widget.frameManager!);
-                widget.onFrameShowUnshow?.call(frameModel.mid);
+                widget.onFrameShowUnshow?.call(frameModel.mid, frameModel.isShow.value);
               }),
         if (StudioVariables.isPreview == false &&
             frameModel.isTextType() &&
@@ -935,7 +942,7 @@ class _DraggableStickersState extends State<DraggableStickers> {
         onFrameShowUnshow: () {
           logger.fine('onFrameShowUnshow');
           //selectedSticker.isSelected = true;
-          widget.onFrameShowUnshow?.call(selectedSticker.id);
+          widget.onFrameShowUnshow?.call(selectedSticker.id, frameModel.isShow.value);
           //setState(() {});
         },
         onFrameCopy: () {

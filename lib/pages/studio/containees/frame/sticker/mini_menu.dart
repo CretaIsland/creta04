@@ -334,7 +334,7 @@ class MiniMenuState extends State<MiniMenu> {
       BTN.fill_blue_i_menu(
           tooltip: CretaStudioLang['linkFrameTooltip']!,
           tooltipFg: CretaColor.text,
-          icon: LinkParams.isLinkNewMode ? Icons.close : Icons.radio_button_checked_outlined,
+          icon: LinkParams.isLinkNewMode ? Icons.close : Icons.link_outlined,
           decoType: CretaButtonDeco.opacity,
           iconColor: CretaColor.primary,
           buttonColor: CretaButtonColor.primary,

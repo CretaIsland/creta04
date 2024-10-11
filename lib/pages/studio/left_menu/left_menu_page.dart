@@ -458,7 +458,7 @@ class LeftMenuPageState extends State<LeftMenuPage> {
                       tooltipFg: CretaColor.text,
                       icon: LinkParams.isLinkNewMode
                           ? Icons.close
-                          : Icons.radio_button_checked_outlined,
+                          : Icons.link_outlined,
                       decoType: CretaButtonDeco.opacity,
                       iconColor: CretaColor.primary,
                       buttonColor: CretaButtonColor.primary,

@@ -189,6 +189,7 @@ class PageRealMainState extends CretaState<PageRealMain> with ContaineeMixin {
 
   Widget _drawFrames() {
     return Consumer<FrameManager>(builder: (context, manager, child) {
+      //print('_drawFrames()----------------');
       //print('_drawFrames'); // if (StudioVariables.isPreview) {
       //   return Stack(
       //     children: [

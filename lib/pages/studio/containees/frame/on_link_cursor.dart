@@ -163,7 +163,7 @@ class _OnLinkCursorState extends State<OnLinkCursor> {
           );
         },
         child: const Icon(
-          Icons.radio_button_checked_outlined,
+          Icons.link_outlined,
           size: iconSize,
           color: CretaColor.primary,
         ),

@@ -1336,10 +1336,12 @@ class FrameManager extends BaseFrameManager {
     (style, extraStyle) = ExtraTextStyle.getLastTextStyle(context);
 
     if (size == null) {
-      double height = (style.fontSize! / StudioVariables.applyScale) +
+      //print('applyScale=${StudioVariables.applyScale}');
+      double height = ((style.fontSize! * 2) / StudioVariables.applyScale) +
           (StudioConst.defaultTextPadding * 2); // 모델상의 크기다. 실제 크기가 아니다.
       double width = height * 7;
       size = Size(width, height);
+      //print('Size=$size');
     }
     //Offset pos = CretaCommonUtils.positionInPage(details /*.localPosition*/, null);
     // 커서의 크기가 있어서, 조금 빼주어야 텍스트 박스가 커서 위치에 맞게 나온다.

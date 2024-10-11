@@ -291,6 +291,13 @@ class _DraggableStickersState extends State<DraggableStickers> {
             //     'InstantEditor${sticker.pageMid}/${frameModel.mid}');
             // sticker.instantEditorKey = editorKey;
             //print('editor selected');
+            // editor 상태에서는 "자동 크기 조절 사용안함"  상타에서만 사용하는 것으로 한다.
+            // 그렇지 않으면 너무 복잡하고 많은 문제가 발생하기 때문이다.
+            AutoSizeType orgAutoSizeType = contentsModel.autoSizeType.value;
+            if (orgAutoSizeType != AutoSizeType.noAutoSize) {
+              contentsModel.autoSizeType.set(AutoSizeType.noAutoSize, save: false, noUndo: true);
+            }
+
             return Stack(
               children: [
                 _dragableResizable(sticker, frameModel, isVerticalResiable, isHorizontalResiable),
@@ -299,8 +306,24 @@ class _DraggableStickersState extends State<DraggableStickers> {
                         .registerInstantEditorrKey(sticker.pageMid, frameModel.mid),
                     frameModel: frameModel,
                     frameManager: widget.frameManager,
-                    onTap: widget.onTap,
+                    onTap: (id) {
+                      //print('onTap--------------------------');
+                      if (orgAutoSizeType != AutoSizeType.noAutoSize) {
+                        contentsModel.autoSizeType.set(orgAutoSizeType, save: false, noUndo: true);
+                      }
+                      setState(
+                        () {
+                          //_isEditorAlreadyExist = false;
+                          frameModel.setIsEditMode(false);
+                        },
+                      );
+                      widget.onTap?.call(id);
+                    },
                     onEditComplete: () {
+                      //print('onEditComplete--------------------------');
+                      if (orgAutoSizeType != AutoSizeType.noAutoSize) {
+                        contentsModel.autoSizeType.set(orgAutoSizeType, save: false, noUndo: true);
+                      }
                       setState(
                         () {
                           //_isEditorAlreadyExist = false;

@@ -131,15 +131,20 @@ class _TopMenuTracerState extends State<TopMenuTracer> with FramePlayMixin {
     }
     _isBusy = true;
 
-    Offset center = Offset(
-      (CretaVars.instance.defaultFrameSize().width / 2) * StudioVariables.applyScale,
-      (CretaVars.instance.defaultFrameSize().height / 2) * StudioVariables.applyScale,
-    );
+    //print('pageClicked ${details.localPosition}');
+
+    // Offset center = Offset(
+    //   (CretaVars.instance.defaultFrameSize().width / 2) * StudioVariables.applyScale,
+    //   (CretaVars.instance.defaultFrameSize().height / 2) * StudioVariables.applyScale,
+    // );
+
     Offset pos = BookMainPage.bookManagerHolder!.positionInPage(
-      details.localPosition - center,
+      details.localPosition, //- center,
       null,
       applyStickerOffset: false,
     );
+
+    //print('pos $pos');
 
     if (BookMainPage.topMenuNotifier!.isTextCreate()) {
       StudioVariables.isHandToolMode = false;

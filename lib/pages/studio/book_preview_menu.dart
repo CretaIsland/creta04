@@ -43,6 +43,14 @@ class _BookPreviewMenuState extends State<BookPreviewMenu> {
     widget.toggleFullscreen?.call();
   }
 
+  //mounted 가 되어있는 경우만  setStaTe를 호출하도록 setState를 오버라이드한다.
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Positioned(

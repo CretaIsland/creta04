@@ -298,24 +298,62 @@ class StickerViewState extends CretaState<StickerView> with SingleTickerProvider
 
     String selectedMid = widget.page.mid;
 
-    //print('before _pageWidgetMap build');
+    // sdlectedMid 에서 앞뒤로 두 페이지 씩만, 메모리에 가지고 있도록 하기 위해,
+    // widget.allPageInfos 에서 selectedMid 의 앞뒤로 두페이지의 mid 를 구한다.
+    List<String> cache = [];
 
+    int maxIndex = widget.allPageInfos!.length - 1;
     for (var pageInfo in widget.allPageInfos!) {
-      if (_pageWidgetMap[pageInfo.pageModel.mid] == null) {
-        //print('input mid= ${pageInfo.pageModel.mid} ${pageInfo.pageModel.name.value}');
-        DraggableStickers eachPage = DraggableStickers(
-          //key: BookMainPage.pageManagerHolder!.registerDraggableSticker(pageInfo.pageModel.mid),
-          isSelected: selectedMid == pageInfo.pageModel.mid,
-          book: widget.book,
-          pageWidth: pageWidth,
-          pageHeight: pageHeight,
-          page: pageInfo.pageModel,
-          frameManager: pageInfo.frameManager,
-          stickerList: pageInfo.stickerList,
-        );
-        _pageWidgetMap[pageInfo.pageModel.mid] = eachPage;
+      if (selectedMid == pageInfo.pageModel.mid) {
+        int index = widget.allPageInfos!.indexOf(pageInfo);
+        // backward 2 page
+        for (int i = 0; i < 2; i++) {
+          int backword = index - i - 1;
+          if (backword < 0) {
+            backword = maxIndex + backword + 1;
+          }
+          cache.add(widget.allPageInfos!.elementAt(backword).pageModel.mid);
+        }
+        cache.add(selectedMid);
+        // forwawd 2 page
+        for (int i = 0; i < 2; i++) {
+          int forward = index + i + 1;
+          if (maxIndex - forward < 0) {
+            forward = forward - maxIndex - 1;
+          }
+          cache.add(widget.allPageInfos!.elementAt(forward).pageModel.mid);
+        }
+        break;
       }
     }
+
+    for (var pageInfo in widget.allPageInfos!) {
+      //print('pageInfo.pageModel.name=${pageInfo.pageModel.name.value}');
+      if (cache.contains(pageInfo.pageModel.mid)) {
+        print('chched ${pageInfo.pageModel.name.value}');
+
+        if (_pageWidgetMap[pageInfo.pageModel.mid] == null) {
+          //print('input mid= ${pageInfo.pageModel.mid} ${pageInfo.pageModel.name.value}');
+          DraggableStickers eachPage = DraggableStickers(
+            //key: BookMainPage.pageManagerHolder!.registerDraggableSticker(pageInfo.pageModel.mid),
+            isSelected: selectedMid == pageInfo.pageModel.mid,
+            book: widget.book,
+            pageWidth: pageWidth,
+            pageHeight: pageHeight,
+            page: pageInfo.pageModel,
+            frameManager: pageInfo.frameManager,
+            stickerList: pageInfo.stickerList,
+          );
+          _pageWidgetMap[pageInfo.pageModel.mid] = eachPage;
+        }
+      } else {
+        print('not chched ${pageInfo.pageModel.name.value}');
+        _pageWidgetMap.remove(pageInfo.pageModel.mid);
+      }
+    }
+
+    print(
+        'after _pageWidgetMap build ,cached pages=${_pageWidgetMap.length} , maxMemoryPage=${StudioVariables.maxMemoryPage}');
 
     // while (_pageWidgetMap.length > StudioVariables.maxMemoryPage) {
     //   print('over max memory page ${_pageWidgetMap.length}');

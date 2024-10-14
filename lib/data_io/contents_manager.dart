@@ -533,6 +533,14 @@ class ContentsManager extends BaseContentsManager {
 
     if (playManager != null && playManager!.isInit()) {
       await _removeContents(context, model);
+
+      // Text type 과 같이, 하나의  frame 에 하나의 콘텐츠 밖에 없는 경우,  frame 까지 지워야 한다.
+
+      if (model.isImage() == false && model.isVideo() == false && getAvailLength() == 0) {
+        // frame 을 지운다.
+        await _frameManager?.removeSelected(context);
+      }
+
       iamBusy = false;
       return true;
     }

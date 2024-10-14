@@ -111,10 +111,7 @@ mixin CretaTextMixin {
 
     // print(
     //     '-----applyScale=$applyScale, padding=$padding, realSize=$realSize, isThumbnail=$isThumbnail');
-
-    //print('playText ${model.autoSizeType.value}');
-
-    if (model.isAutoFrameOrSide() && isThumbnail == false) {
+    if (model.isAutoFrameHeight() || model.isAutoFrameOrSide() && isThumbnail == false) {
       // 자동 프레임사이즈를 결정해 주어야 한다.
       //print('AutoSizeType.autoFrameSize before ${realSize.height}');
       //late double frameWidth;
@@ -141,7 +138,6 @@ mixin CretaTextMixin {
       } else {
         if (realSize.height.round() != frameHeight.round()) {
           realSize = Size(realSize.width, frameHeight);
-          //print('frame size changed ${realSize.height.round()} --> ${frameHeight.round()}');
         }
       }
     }
@@ -227,9 +223,11 @@ mixin CretaTextMixin {
 
   Widget _outLineAndShadowText(ContentsModel? model, String text, TextStyle style, bool isThumbnail,
       {Key? key, bool sendEvent = true}) {
-    //print('_outLineAndShadowText');
+    if (model == null) {
+      return const SizedBox.shrink();
+    }
 
-    Widget realText = model!.isAutoFontSize()
+    Widget realText = model.isAutoFontSize()
         ? CretaAutoSizeText(
             key: key,
             text,

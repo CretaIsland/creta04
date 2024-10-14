@@ -1,5 +1,6 @@
 import 'dart:ui' as ui;
 import 'dart:math' as math;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -599,6 +600,7 @@ class AutoSizeTextFieldState extends State<AutoSizeTextField> {
       emptyFlag = true;
       fontSize = widget.initialHeight;
     }
+
     return SizedBox(
       width: widget.fullwidth ? double.infinity : math.max(fontSize, _textSpanWidth),
       child: TextField(
@@ -617,6 +619,7 @@ class AutoSizeTextFieldState extends State<AutoSizeTextField> {
         decoration: widget.decoration,
         dragStartBehavior: widget.dragStartBehavior,
         enabled: widget.enabled,
+        //enabled: true,
         enableInteractiveSelection: widget.enableInteractiveSelection,
         enableSuggestions: widget.enableSuggestions,
         expands: emptyFlag == true ? false : widget.expands,
@@ -627,6 +630,7 @@ class AutoSizeTextFieldState extends State<AutoSizeTextField> {
         maxLength: widget.maxLength,
         maxLengthEnforcement: widget.maxLengthEnforcement,
         maxLines: emptyFlag == true ? 1 : widget.maxLines,
+        //maxLines: null,
         minLines: emptyFlag == true ? 1 : widget.minLines,
         obscureText: widget.obscureText,
         onChanged: widget.onChanged,
@@ -642,7 +646,11 @@ class AutoSizeTextFieldState extends State<AutoSizeTextField> {
         showCursor: widget.showCursor,
         smartDashesType: widget.smartDashesType,
         smartQuotesType: widget.smartQuotesType,
-        strutStyle: widget.strutStyle,
+        //strutStyle: widget.strutStyle,
+        strutStyle: StrutStyle(
+          fontSize: fontSize,
+          height: style.height,
+        ),
         style: style.copyWith(fontSize: fontSize),
         textAlign: widget.textAlign,
         textAlignVertical: widget.textAlignVertical,
@@ -731,13 +739,11 @@ class AutoSizeTextFieldState extends State<AutoSizeTextField> {
   }
 
   bool _checkTextFits(TextSpan text, double scale, int? maxLines, BoxConstraints constraints) {
-    
     double? newFontSize;
     if (text.style != null && text.style!.fontSize != null) {
       newFontSize = text.style!.fontSize! * scale;
     }
 
-    
     double constraintWidth = constraints.maxWidth;
     double constraintHeight = constraints.maxHeight;
     if (widget.decoration.contentPadding != null) {
@@ -753,7 +759,7 @@ class AutoSizeTextFieldState extends State<AutoSizeTextField> {
       if (widget.decoration.suffixText != null) words.add(widget.decoration.suffixText);
 
       var wordWrapTp = TextPainter(
-         text: TextSpan(
+        text: TextSpan(
           style: newFontSize != null ? text.style?.copyWith(fontSize: newFontSize) : text.style,
           text: words.join('\n'),
         ),
@@ -799,7 +805,7 @@ class AutoSizeTextFieldState extends State<AutoSizeTextField> {
         recognizer: text.recognizer,
         children: text.children,
         semanticsLabel: text.semanticsLabel,
-        style : newFontSize != null ? text.style?.copyWith(fontSize: newFontSize) : text.style,
+        style: newFontSize != null ? text.style?.copyWith(fontSize: newFontSize) : text.style,
       ),
       textAlign: widget.textAlign,
       textDirection: widget.textDirection ?? TextDirection.ltr,

@@ -471,9 +471,6 @@ class StickerState extends CretaState<Sticker> with CretaMusicMixin {
   Widget build(BuildContext context) {
     bool isVisible = FrameModelUtil.isVisible(widget.pageMid, widget.model);
 
-    //print(
-    //    "StickerState build ${widget.model.name.value} isVisible=$isVisible ---------------${(widget.child == null) ? 'sticker is null' : 'Visiblilty'}");
-
     if (FrameModelUtil.isBackgroundMusic(widget.model) &&
         isVisible == false &&
         StudioVariables.isPreview == false) {

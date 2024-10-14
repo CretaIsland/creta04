@@ -317,6 +317,7 @@ class _DraggableStickersState extends State<DraggableStickers> {
                           frameModel.setIsEditMode(false);
                         },
                       );
+                      _sendEvent?.sendEvent(frameModel);
                       widget.onTap?.call(id);
                     },
                     onEditComplete: () {

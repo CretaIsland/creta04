@@ -256,8 +256,6 @@ class FrameMainState extends State<FrameMain> with FramePlayMixin {
         setState(() {});
       },
       onTap: (mid) {
-        //print('FrameMain.onTap : from InkWell , frame_main.dart, no setState $mid');
-
         if (MiniMenu.showFrame == false) {
           ContentsManager? contentsManager = frameManager?.getContentsManager(mid);
           if (contentsManager != null) {
@@ -503,7 +501,6 @@ class FrameMainState extends State<FrameMain> with FramePlayMixin {
           StudioConst.defaultTextPadding * StudioVariables.applyScale,
           contentsModel.outLineWidth.value,
         );
-        //print('AutoSizeType.autoFrameSize after  $frameHeight --> $newFrameHeight ($uri)');
         //model.width.set(frameWidth / StudioVariables.applyScale, noUndo: true);
         model.height.set((newFrameHeight / StudioVariables.applyScale).roundToDouble(),
             noUndo: true, dontRealTime: true);

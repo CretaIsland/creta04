@@ -137,7 +137,7 @@ class FrameThumbnailState extends CretaState<FrameThumbnail> with ContaineeMixin
     //         value: _contentsManager!,
     //       ),
     //     ],
-    //     //child: _isInitialized ? _frameDropZone() : _futureBuider(),
+    //     //child: _isInitialized ? _frameTransform() : _futureBuider(),
     //     child: _futureBuider(),
     //   );
     // }
@@ -174,15 +174,14 @@ class FrameThumbnailState extends CretaState<FrameThumbnail> with ContaineeMixin
                     value: _contentsManager!,
                   ),
                 ],
-                //child: _isInitialized ? _frameDropZone() : _futureBuider(),
-                child: _frameDropZone());
+                //child: _isInitialized ? _frameTransform() : _futureBuider(),
+                child: _frameTransform());
           }
           return const SizedBox.shrink();
         });
   }
 
-  Widget _frameDropZone() {
-    //print('_frameDropZone...');
+  Widget _frameTransform() {
     _isShowBorder = showBorder(widget.model, widget.pageModel, _contentsManager!, false);
     if (widget.model.shouldInsideRotate()) {
       // isOrverlay case 가 있기 때문에  page mid 도 key 에 넣어주어야 한다.

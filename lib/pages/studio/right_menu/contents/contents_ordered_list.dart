@@ -12,7 +12,6 @@ import '../../../../data_io/contents_manager.dart';
 import '../../../../data_io/frame_manager.dart';
 import '../../../../design_system/buttons/creta_button.dart';
 import '../../../../design_system/buttons/creta_button_wrapper.dart';
-import '../../../../design_system/buttons/creta_checkbox.dart';
 import '../../../../design_system/buttons/creta_ex_slider.dart';
 import '../../../../design_system/buttons/creta_toggle_button.dart';
 import '../../../../design_system/component/autoSizeText/font_size_changing_notifier.dart';
@@ -878,29 +877,45 @@ class _ContentsOrderedListState extends State<ContentsOrderedList> with Property
   }
 
   Widget _aboutMode(ContentsModel model) {
-    Widget autoSizeTypeWidget = CretaCheckbox(
-      // 창 크기에 맞춤
-      valueMap: {
-        CretaLang['autoFontSize']!: model.isAutoFontSize(),
-        CretaLang['autoFrameHeight']!: model.isAutoFrameOrSide(),
-        CretaStudioLang['noAutoSize']!: model.isNoAutoSize(),
-      },
-      onSelected: (title, value, nvMap) {
-        //('onSelected !!!!!!! $title');
-        //mychangeStack.startTrans();
-        AutoSizeType type = AutoSizeType.fromString(title);
-        model.autoSizeType.set(type);
-        //model.updateByAutoSize(null); // autoSize 를 초기화하거나 재설정한다.
-        //mychangeStack.endTrans();
-        _sendEvent!.sendEvent(_frameModel);
-        //widget.contentsManager.playManager?.setCurrentModel(model); // 처음만든 Text 의 경우 이 모델이 바뀌지 않는다.
-        //widget.contentsManager.notify();
-        //CretaManager.frameSelectNotifier!.notify();
-        //   widget.frameManager?.notify();
-
-        setState(() {});
-      },
+    Widget autoSizeTypeWidget = propertyLine(
+      // useThisThumbnail
+      topPadding: 10,
+      name: CretaLang['autoFontSize']!,
+      widget: CretaToggleButton(
+          width: 54 * 0.75,
+          height: 28 * 0.75,
+          onSelected: (value) {
+            AutoSizeType type = value ? AutoSizeType.autoFontSize : AutoSizeType.noAutoSize;
+            model.autoSizeType.set(type);
+            _sendEvent!.sendEvent(_frameModel);
+            setState(() {});
+          },
+          defaultValue: model.isAutoFontSize()),
     );
+
+    // Widget autoSizeTypeWidget = CretaCheckbox(
+    //   // 창 크기에 맞춤
+    //   valueMap: {
+    //     CretaLang['autoFontSize']!: model.isAutoFontSize(),
+    //     CretaLang['autoFrameHeight']!: model.isAutoFrameOrSide(),
+    //     CretaStudioLang['noAutoSize']!: model.isNoAutoSize(),
+    //   },
+    //   onSelected: (title, value, nvMap) {
+    //     //('onSelected !!!!!!! $title');
+    //     //mychangeStack.startTrans();
+    //     AutoSizeType type = AutoSizeType.fromString(title);
+    //     model.autoSizeType.set(type);
+    //     //model.updateByAutoSize(null); // autoSize 를 초기화하거나 재설정한다.
+    //     //mychangeStack.endTrans();
+    //     _sendEvent!.sendEvent(_frameModel);
+    //     //widget.contentsManager.playManager?.setCurrentModel(model); // 처음만든 Text 의 경우 이 모델이 바뀌지 않는다.
+    //     //widget.contentsManager.notify();
+    //     //CretaManager.frameSelectNotifier!.notify();
+    //     //   widget.frameManager?.notify();
+
+    //     setState(() {});
+    //   },
+    // );
 
     return Consumer<FontSizeChangingNotifier>(builder: (context, fontSizeNotifier, child) {
       //print('fontSize changing ${_frameModel.isEditMode}, ${fontSizeNotifier.isChanging}');

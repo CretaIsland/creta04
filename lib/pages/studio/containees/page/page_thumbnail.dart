@@ -2,6 +2,8 @@
 
 import 'package:creta04/pages/studio/containees/frame/frame_thumbnail.dart';
 import 'package:flutter/material.dart';
+//import 'package:get/get.dart';
+
 // import 'package:get/get.dart';
 // import 'package:hycop/hycop/absModel/abs_ex_model.dart';
 //import 'package:glass/glass.dart';
@@ -61,12 +63,18 @@ class PageThumbnailState extends CretaState<PageThumbnail> with ContaineeMixin {
   GradationType gradationType = GradationType.none;
   TextureType textureType = TextureType.none;
 
+  //FrameEventController? _receiveEvent;
+
   //bool _buildComplete = false;
 
   @override
   void initState() {
     super.initState();
     initChildren();
+
+    //final FrameEventController receiveEvent = Get.find(tag: 'frame-property-to-main');
+    //_receiveEvent = receiveEvent;
+
     //final FrameEventController receiveEventFromMain = Get.find(tag: 'frame-main-to-property');
     //final FrameEventController receiveEventFromProperty = Get.find(tag: 'frame-property-to-main');
 
@@ -321,42 +329,8 @@ class PageThumbnailState extends CretaState<PageThumbnail> with ContaineeMixin {
           //print('${frameModel.mid}, ${frameModel.parentMid.value}');
 
           //logger.fine('frameManager.orderMapIterator-------${frameModel.name.value}');
-          double frameWidth =
-              (frameModel.width.value /* + model.shadowSpread.value */) * applyScale;
-          double frameHeight =
-              (frameModel.height.value /* + model.shadowSpread.value */) * applyScale;
-          // isOverlay   가 있기 때문에, page mid 도 키로 쓰지 않으면 중복된다.
-
-          Widget frameBox = SizedBox(
-            width: frameWidth,
-            height: frameHeight,
-            child: FrameThumbnail(
-              key: _frameManager!.registerFrameThumbnailKey(widget.pageModel.mid, frameModel.mid),
-              model: frameModel,
-              pageModel: widget.pageModel,
-              //frameManager: _frameManager!,
-              applyScale: applyScale,
-              width: frameWidth,
-              height: frameHeight,
-              chageEventReceived: widget.changeEventReceived,
-            ),
-          );
-
-          return Positioned(
-            left: frameModel.posX.value * applyScale,
-            top: frameModel.posY.value * applyScale,
-            child:
-                // frameModel.shouldOutsideRotate()
-                //     ? Transform(
-                //         alignment: Alignment.center,
-                //         transform: Matrix4.identity()
-                //           ..scale(1.0)
-                //           ..rotateZ(CretaCommonUtils.degreeToRadian(frameModel.angle.value)),
-                //         child: frameBox,
-                //       )
-                //     :
-                frameBox,
-          );
+          //return _streamBuilder(frameModel, applyScale);
+          return _drawEachFrame(frameModel, applyScale);
         }).toList(),
 
         //children: getStickerList(),
@@ -364,6 +338,61 @@ class PageThumbnailState extends CretaState<PageThumbnail> with ContaineeMixin {
       //});
       //});
     });
+  }
+
+  // Widget _streamBuilder(FrameModel frameModel, double applyScale) {
+  //   return StreamBuilder<AbsExModel>(
+  //       stream: _receiveEvent!.eventStream.stream,
+  //       builder: (context, snapshot) {
+  //         if (snapshot.data != null && snapshot.data is FrameModel) {
+  //           FrameModel model = snapshot.data! as FrameModel;
+  //           //findFrameManager(model);
+  //           print(
+  //               "_receiveEvent 'frame-property-to-main'  model.height.value=${model.height.value}");
+  //           if (!_frameManager!.updateModel(model)) {
+  //             //print('updateModel failed(${model.name.value})');
+  //           }
+  //         }
+  //         //return CretaManager.waitReorder(manager: frameManager!, child: showFrame());
+  //         return _drawEachFrame(frameModel, applyScale);
+  //       });
+  // }
+
+  Widget _drawEachFrame(FrameModel frameModel, double applyScale) {
+    double frameWidth = (frameModel.width.value /* + model.shadowSpread.value */) * applyScale;
+    double frameHeight = (frameModel.height.value /* + model.shadowSpread.value */) * applyScale;
+    // isOverlay   가 있기 때문에, page mid 도 키로 쓰지 않으면 중복된다.
+
+    Widget frameBox = SizedBox(
+      width: frameWidth,
+      height: frameHeight,
+      child: FrameThumbnail(
+        key: _frameManager!.registerFrameThumbnailKey(widget.pageModel.mid, frameModel.mid),
+        model: frameModel,
+        pageModel: widget.pageModel,
+        //frameManager: _frameManager!,
+        applyScale: applyScale,
+        width: frameWidth,
+        height: frameHeight,
+        chageEventReceived: widget.changeEventReceived,
+      ),
+    );
+
+    return Positioned(
+      left: frameModel.posX.value * applyScale,
+      top: frameModel.posY.value * applyScale,
+      child:
+          // frameModel.shouldOutsideRotate()
+          //     ? Transform(
+          //         alignment: Alignment.center,
+          //         transform: Matrix4.identity()
+          //           ..scale(1.0)
+          //           ..rotateZ(CretaCommonUtils.degreeToRadian(frameModel.angle.value)),
+          //         child: frameBox,
+          //       )
+          //     :
+          frameBox,
+    );
   }
 
   // List<Sticker> getStickerList() {

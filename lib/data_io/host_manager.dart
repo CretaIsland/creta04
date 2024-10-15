@@ -77,6 +77,22 @@ class HostManager extends CretaManager {
     return retval;
   }
 
+  Future<List<AbsExModel>> teamData(List<String> teams, {int? limit}) async {
+    // 여기 쿼리를 수정해야 함.
+    logger.finest('teamData');
+    Map<String, QueryValue> query = {};
+    if (teams.isEmpty) {
+      return [];
+    }
+    query['team'] = QueryValue(value: teams, operType: OperType.whereIn);
+
+    query['isRemoved'] = QueryValue(value: false);
+    //print('myDataOnly start');
+    final retval = await queryFromDB(query, limit: limit);
+    //print('myDataOnly end ${retval.length}');
+    return retval;
+  }
+
   @override
   Future<bool> isNameExist(String value, {String name = 'name'}) async {
     logger.finest('myDataOnly');
@@ -138,6 +154,21 @@ class HostManager extends CretaManager {
     if (enterprise.isNotEmpty) {
       query['enterprise'] = QueryValue(value: enterprise);
     }
+    query['isRemoved'] = QueryValue(value: false);
+    if (HycopFactory.serverType == ServerType.supabase) {
+      _supabaseStream = initStream(where: query, orderBy: 'updateTime', limit: limit);
+    } else {
+      _firebaseStream = initStream(where: query, orderBy: 'updateTime', limit: limit);
+    }
+  }
+
+  void initTeamStream(List<String> teams, {int? limit}) {
+    // skpark 여기 코딩을 다시 해야함. !!!
+    Map<String, QueryValue> query = {};
+    // if (teams.isEmpty) {
+    //   return;
+    // }
+    query['team'] = QueryValue(value: teams, operType: OperType.whereIn);
     query['isRemoved'] = QueryValue(value: false);
     if (HycopFactory.serverType == ServerType.supabase) {
       _supabaseStream = initStream(where: query, orderBy: 'updateTime', limit: limit);

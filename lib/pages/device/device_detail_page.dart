@@ -17,6 +17,7 @@ import '../../design_system/buttons/creta_button_wrapper.dart';
 import '../../design_system/buttons/creta_ex_slider.dart';
 import '../../design_system/buttons/creta_toggle_button.dart';
 import '../../design_system/component/creta_proprty_slider.dart';
+import '../../design_system/component/creta_single_select.dart';
 import '../../design_system/component/snippet.dart';
 import '../../lang/creta_device_lang.dart';
 import '../../model/enterprise_model.dart';
@@ -25,6 +26,7 @@ import '../../common/creta_utils.dart';
 import '../../model/scrshot_model.dart';
 import '../login/creta_account_manager.dart';
 import 'book_select_filter.dart';
+import 'device_main_page.dart';
 
 class DeviceDetailPage extends StatefulWidget {
   final HostModel hostModel;
@@ -535,6 +537,38 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                                   },
                                 )
                               : _nvRow('Owner', widget.hostModel.creator),
+                          _hasAuth()
+                              ? SizedBox(
+                                  height: 200,
+                                  child: CretaSingleSelect(
+                                    title:
+                                        Text(CretaDeviceLang["team"] ?? 'team', style: titleStyle),
+                                    items: DeviceMainPage.teamMap.keys.toList(),
+                                    initValue: widget.hostModel.teamName,
+                                    onSelect: (value) {
+                                      if (value != null) {
+                                        if (DeviceMainPage.teamMap[value] != null) {
+                                          widget.hostModel.team =
+                                              DeviceMainPage.teamMap[value]!.mid;
+                                          widget.hostModel.teamName = value;
+                                        }
+                                      } else {
+                                        widget.hostModel.team = '';
+                                        widget.hostModel.teamName = '';
+                                      }
+                                    },
+                                  ),
+                                )
+                              // TextFormField(
+                              //     initialValue: widget.hostModel.team,
+                              //     decoration:
+                              //         InputDecoration(labelText: 'Team', labelStyle: titleStyle),
+                              //     onSaved: (value) {
+                              //       widget.hostModel.team = value ?? '';
+                              //       //print('Saved : ${widget.hostModel.creator}');
+                              //     },
+                              //   )
+                              : _nvRow('Team', widget.hostModel.team),
                           if (widget.isMultiSelected == false)
                             TextFormField(
                               initialValue: widget.hostModel.hostName,

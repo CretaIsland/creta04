@@ -12,7 +12,9 @@ import 'package:creta_user_io/data_io/creta_manager.dart';
 import 'package:creta_common/common/creta_const.dart';
 import 'package:creta_common/lang/creta_lang.dart';
 import 'package:creta_common/model/app_enums.dart';
+import 'package:creta_user_io/data_io/team_manager.dart';
 import 'package:creta_user_io/data_io/user_property_manager.dart';
+import 'package:creta_user_model/model/team_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hycop/hycop.dart';
 import 'package:provider/provider.dart';
@@ -111,6 +113,7 @@ enum DeviceSelectedPage {
 // ignore: must_be_immutable
 class DeviceMainPage extends StatefulWidget {
   static String? lastGridMenu;
+  static Map<String, TeamModel> teamMap = {};
 
   final VoidCallback? openDrawer;
   final DeviceSelectedPage selectedPage;
@@ -281,14 +284,40 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
   }
 
   void _initData() {
+    if (AccountManager.currentLoginUser.isSuperUser == false) {
+      if (CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.teams.isNotEmpty) {
+        TeamManager.teamManagerHolder
+            ?.getTeamModelByMid(
+                CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.teams)
+            .then((modelList) {
+          print('=============My Team list fetched = ${modelList.length}');
+
+          for (var ele in modelList) {
+            TeamModel model = ele as TeamModel;
+            DeviceMainPage.teamMap[model.name] = model;
+          }
+        });
+      }
+    } else {
+      // team목록을 미리 모두 가져온다.
+      TeamManager.teamManagerHolder
+          ?.myDataOnly(CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.enterprise)
+          .then((modelList) {
+        print('=============Enterprise Team list fetched = ${modelList.length}');
+        for (var ele in modelList) {
+          TeamModel model = ele as TeamModel;
+          DeviceMainPage.teamMap[model.name] = model;
+        }
+      });
+    }
+
     if (HycopFactory.serverType == ServerType.firebase ||
         HycopFactory.serverType == ServerType.supabase) {
       if (widget.selectedPage == DeviceSelectedPage.myPage) {
         return hostManagerHolder!.initMyStream(
           AccountManager.currentLoginUser.email,
         );
-      }
-      if (widget.selectedPage == DeviceSelectedPage.sharedPage) {
+      } else if (widget.selectedPage == DeviceSelectedPage.sharedPage) {
         String enterprise = '';
         if (AccountManager.currentLoginUser.isSuperUser == false) {
           enterprise = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.enterprise;
@@ -296,6 +325,12 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
         return hostManagerHolder!.initSharedStream(
           enterprise,
         );
+      } else if (widget.selectedPage == DeviceSelectedPage.teamPage) {
+        List<String> teams = [];
+        if (AccountManager.currentLoginUser.isSuperUser == false) {
+          teams = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.teams;
+        }
+        return hostManagerHolder!.initTeamStream(teams);
       }
     } else {
       if (widget.selectedPage == DeviceSelectedPage.myPage) {
@@ -308,8 +343,7 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
             hostManagerHolder!.addRealTimeListen(value.first.mid);
           }
         });
-      }
-      if (widget.selectedPage == DeviceSelectedPage.sharedPage) {
+      } else if (widget.selectedPage == DeviceSelectedPage.sharedPage) {
         String enterprise = '';
         if (AccountManager.currentLoginUser.isSuperUser == false) {
           enterprise = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.enterprise;
@@ -319,6 +353,16 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
           enterprise,
         )
             .then((value) {
+          if (value.isNotEmpty) {
+            hostManagerHolder!.addRealTimeListen(value.first.mid);
+          }
+        });
+      } else if (widget.selectedPage == DeviceSelectedPage.teamPage) {
+        List<String> teams = [];
+        if (AccountManager.currentLoginUser.isSuperUser == false) {
+          teams = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.teams;
+        }
+        hostManagerHolder!.teamData(teams).then((value) {
           if (value.isNotEmpty) {
             hostManagerHolder!.addRealTimeListen(value.first.mid);
           }
@@ -366,8 +410,9 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
       CretaMenuItem(
         caption: CretaDeviceLang['teamCretaDevice']!,
         onPressed: () {
-          // Routemaster.of(context).push(AppRoutes.studioBookTeamPage);
-          // DeviceMainPage.lastGridMenu = AppRoutes.studioBookSharedPage;
+          Routemaster.of(context).pop();
+          Routemaster.of(context).push(AppRoutes.deviceTeamPage);
+          DeviceMainPage.lastGridMenu = AppRoutes.deviceTeamPage;
         },
         selected: widget.selectedPage == DeviceSelectedPage.teamPage,
         iconData: Icons.group_outlined,

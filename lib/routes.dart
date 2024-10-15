@@ -38,7 +38,6 @@ import 'pages/community/sub_pages/community_right_playlist_detail_pane.dart';
 import 'pages/reset_password_confirm_page.dart';
 import 'pages/verify_email_page.dart';
 import 'pages/studio/studio_variables.dart';
-import 'under_construction_page.dart';
 import 'wait_page.dart';
 //import 'pages/login/creta_account_manager.dart';
 
@@ -108,6 +107,7 @@ abstract class AppRoutes {
   static const String studioBookMainPage = '/studio/bookMainPage';
   static const String deviceMainPage = '/device/deviceMainPage';
   static const String deviceSharedPage = '/device/deviceSharedPage';
+  static const String deviceTeamPage = '/device/deviceTeamPage';
   //static const String deviceDetailPage = '/device/deviceDetailPage';
   static const String studioBookPreviewPage = '/studio/studioBookMainPreviewPage';
   static const String studioBookGridPage = '/studio/bookGridPage';
@@ -140,7 +140,6 @@ abstract class AppRoutes {
   static const String adminMainPage = '/admin/adminMainPage';
   static const String adminTeamPage = '/admin/adminTeamPage';
   static const String adminUserPage = '/admin/adminUserPage';
-  static const String underConstruction = '/underConstructionPage';
 }
 
 //final menuKey = GlobalKey<DrawerMenuPageState>();
@@ -193,6 +192,9 @@ final routesLoggedOut = RouteMap(
     AppRoutes.deviceSharedPage: (_) => TransitionPage(
         child: DeviceMainPage(
             key: GlobalObjectKey('deviceSharedPage'), selectedPage: DeviceSelectedPage.sharedPage)),
+    AppRoutes.deviceTeamPage: (_) => TransitionPage(
+        child: DeviceMainPage(
+            key: GlobalObjectKey('deviceTeamPage'), selectedPage: DeviceSelectedPage.teamPage)),
     AppRoutes.adminMainPage: (_) => TransitionPage(
         child: AdminMainPage(
             key: GlobalObjectKey('AdminMainPage'), selectedPage: AdminSelectedPage.enterprise)),
@@ -494,9 +496,6 @@ final routesLoggedOut = RouteMap(
         ),
       );
     },
-    AppRoutes.underConstruction: (_) => TransitionPage(
-          child: UnderConstructionPage(),
-        ),
   },
 );
 

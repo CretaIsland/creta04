@@ -190,8 +190,9 @@ mixin DrawerMixin {
           CretaMenuItem(
             caption: CretaDeviceLang['teamCretaDevice'] ?? 'teamCretaDevice',
             onPressed: () {
-              // Routemaster.of(context).push(AppRoutes.studioBookTeamPage);
-              // DeviceMainPage.lastGridMenu = AppRoutes.studioBookSharedPage;
+              Routemaster.of(context).pop();
+              Routemaster.of(context).push(AppRoutes.deviceTeamPage);
+              DeviceMainPage.lastGridMenu = AppRoutes.deviceTeamPage;
             },
             iconData: Icons.group_outlined,
           ),

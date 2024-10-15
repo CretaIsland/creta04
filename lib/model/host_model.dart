@@ -35,6 +35,8 @@ class HostModel extends CretaModel {
   String hostId = ''; // read only
   String hostName = '';
   String enterprise = '';
+  String team = ''; // team mid
+  String teamName = ''; // team name
   String macAddress = '';
   String ip = '';
   String interfaceName = ''; // read only
@@ -117,6 +119,8 @@ class HostModel extends CretaModel {
     required this.hostId,
     this.hostName = '',
     this.enterprise = '',
+    this.team = '',
+    this.teamName = '',
     this.macAddress = '',
     super.parent = '',
     this.interfaceName = '',
@@ -134,6 +138,8 @@ class HostModel extends CretaModel {
         hostId,
         hostName,
         enterprise,
+        team,
+        teamName,
         macAddress,
         interfaceName,
         ip,
@@ -206,6 +212,8 @@ class HostModel extends CretaModel {
     hostId = srcHost.hostId;
     hostName = srcHost.hostName;
     enterprise = srcHost.enterprise;
+    team = srcHost.team;
+    teamName = srcHost.teamName;
     macAddress = srcHost.macAddress;
     interfaceName = srcHost.interfaceName;
     ip = srcHost.ip;
@@ -281,6 +289,8 @@ class HostModel extends CretaModel {
     hostId = srcHost.hostId;
     hostName = srcHost.hostName;
     enterprise = srcHost.enterprise;
+    team = srcHost.team;
+    teamName = srcHost.teamName;
     macAddress = srcHost.macAddress;
     interfaceName = srcHost.interfaceName;
     ip = srcHost.ip;
@@ -356,6 +366,12 @@ class HostModel extends CretaModel {
     if (srcHost.enterprise.isNotEmpty && srcHost.enterprise != enterprise) {
       enterprise = srcHost.enterprise;
     }
+    if (srcHost.team.isNotEmpty && srcHost.team != team) {
+      team = srcHost.team;
+    }
+    if (srcHost.teamName.isNotEmpty && srcHost.teamName != teamName) {
+      teamName = srcHost.teamName;
+    }
     if (srcHost.macAddress.isNotEmpty && srcHost.macAddress != macAddress) {
       macAddress = srcHost.macAddress;
     }
@@ -425,6 +441,8 @@ class HostModel extends CretaModel {
     hostId = map["hostId"] ?? '';
     hostName = map["hostName"] ?? '';
     enterprise = map["enterprise"] ?? '';
+    team = map["team"] ?? '';
+    teamName = map["teamName"] ?? '';
     macAddress = map["macAddress"] ?? '';
     interfaceName = map["interfaceName"] ?? '';
     ip = map["ip"] ?? '';
@@ -501,6 +519,8 @@ class HostModel extends CretaModel {
         "hostId": hostId,
         "hostName": hostName,
         "enterprise": enterprise,
+        "team": team,
+        "teamName": teamName,
         "macAddress": macAddress,
         "interfaceName": interfaceName,
         "ip": ip,

@@ -330,7 +330,7 @@ class StickerViewState extends CretaState<StickerView> with SingleTickerProvider
     for (var pageInfo in widget.allPageInfos!) {
       //print('pageInfo.pageModel.name=${pageInfo.pageModel.name.value}');
       if (cache.contains(pageInfo.pageModel.mid)) {
-        print('chched ${pageInfo.pageModel.name.value}');
+        //print('chched ${pageInfo.pageModel.name.value}');
 
         if (_pageWidgetMap[pageInfo.pageModel.mid] == null) {
           //print('input mid= ${pageInfo.pageModel.mid} ${pageInfo.pageModel.name.value}');
@@ -347,13 +347,13 @@ class StickerViewState extends CretaState<StickerView> with SingleTickerProvider
           _pageWidgetMap[pageInfo.pageModel.mid] = eachPage;
         }
       } else {
-        print('not chched ${pageInfo.pageModel.name.value}');
+        //print('not chched ${pageInfo.pageModel.name.value}');
         _pageWidgetMap.remove(pageInfo.pageModel.mid);
       }
     }
 
-    print(
-        'after _pageWidgetMap build ,cached pages=${_pageWidgetMap.length} , maxMemoryPage=${StudioVariables.maxMemoryPage}');
+    //print(
+    //    'after _pageWidgetMap build ,cached pages=${_pageWidgetMap.length} , maxMemoryPage=${StudioVariables.maxMemoryPage}');
 
     // while (_pageWidgetMap.length > StudioVariables.maxMemoryPage) {
     //   print('over max memory page ${_pageWidgetMap.length}');

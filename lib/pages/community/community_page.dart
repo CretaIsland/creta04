@@ -1919,7 +1919,11 @@ class _CommunityPageState extends State<CommunityPage> with CretaBasicLayoutMixi
     if (kDebugMode) print('_onUpdateSubscriptionModelList=${subscriptionList.length}');
     setState(() {
       _subscriptionModelList = [...subscriptionList];
-      _selectedSubscriptionModel = _subscriptionModelList?[0];
+      if (_subscriptionModelList!.isNotEmpty) {
+        _selectedSubscriptionModel = _subscriptionModelList?[0];
+      } else {
+        logger.warning('has no subscriptionList');
+      }
     });
   }
 
@@ -2057,8 +2061,10 @@ class _CommunityPageState extends State<CommunityPage> with CretaBasicLayoutMixi
       case AppRoutes.channel:
         break;
       case AppRoutes.subscriptionList:
+        // skpark 임시로 막아놓음
         return Positioned(
-          left: 310 + 40,
+          //left: 310 + 40,
+          left: 40, //skpark 왼쪽으로 이동시킴.
           top: 140, //196 - 40 - 20 + 4,
           child: Container(
             width: 286,
@@ -2113,6 +2119,11 @@ class _CommunityPageState extends State<CommunityPage> with CretaBasicLayoutMixi
         ),
       );
     }
+
+    if (widgetList.isEmpty) {
+      return [Text(CretaCommuLang['noSubs'] ?? '아직 구독하고 있는 채널이 없습니다.')];
+    }
+
     return widgetList;
   }
 

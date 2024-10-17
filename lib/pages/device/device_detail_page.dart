@@ -538,26 +538,21 @@ class _DeviceDetailPageState extends State<DeviceDetailPage> {
                                 )
                               : _nvRow('Owner', widget.hostModel.creator),
                           _hasAuth()
-                              ? SizedBox(
-                                  height: 200,
-                                  child: CretaSingleSelect(
-                                    title:
-                                        Text(CretaDeviceLang["team"] ?? 'team', style: titleStyle),
-                                    items: DeviceMainPage.teamMap.keys.toList(),
-                                    initValue: widget.hostModel.teamName,
-                                    onSelect: (value) {
-                                      if (value != null) {
-                                        if (DeviceMainPage.teamMap[value] != null) {
-                                          widget.hostModel.team =
-                                              DeviceMainPage.teamMap[value]!.mid;
-                                          widget.hostModel.teamName = value;
-                                        }
-                                      } else {
-                                        widget.hostModel.team = '';
-                                        widget.hostModel.teamName = '';
+                              ? CretaSingleSelect(
+                                  title: Text(CretaDeviceLang["team"] ?? 'team', style: titleStyle),
+                                  items: DeviceMainPage.teamMap.keys.toList(),
+                                  initValue: widget.hostModel.teamName,
+                                  onSelect: (value) {
+                                    if (value != null) {
+                                      if (DeviceMainPage.teamMap[value] != null) {
+                                        widget.hostModel.team = DeviceMainPage.teamMap[value]!.mid;
+                                        widget.hostModel.teamName = value;
                                       }
-                                    },
-                                  ),
+                                    } else {
+                                      widget.hostModel.team = '';
+                                      widget.hostModel.teamName = '';
+                                    }
+                                  },
                                 )
                               // TextFormField(
                               //     initialValue: widget.hostModel.team,

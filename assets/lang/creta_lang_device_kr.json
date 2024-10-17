@@ -35,6 +35,8 @@
     "usageHostFilter": ["전체", "사용", "미사용"],
     "connectedHostFilter": ["전체", "연결", "미연결"],
     "notice": "긴급공지",
+    "clickToSelectToTeam" : " 팀 선택을 위해 클릭하세요",
+    "chooseOneOfTheTeamsBelow" : " 아래 팀 중 하나를 선택하세요",
 
     "usageSetting": "사용상태 설정",
     "generalSetting": "일반 정보 설정",

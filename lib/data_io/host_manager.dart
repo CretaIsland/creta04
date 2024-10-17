@@ -163,7 +163,8 @@ class HostManager extends CretaManager {
   }
 
   void initTeamStream(List<String> teams, {int? limit}) {
-    // skpark 여기 코딩을 다시 해야함. !!!
+    print('initTeamStream($teams)');
+
     Map<String, QueryValue> query = {};
     // if (teams.isEmpty) {
     //   return;

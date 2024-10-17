@@ -283,41 +283,46 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
     }
   }
 
-  void _initData() {
+  Future<List<String>> _getTeams() async {
+    List<AbsExModel>? modelList;
+    List<String> teamMids = [];
     if (AccountManager.currentLoginUser.isSuperUser == false) {
+      // 자기 것만 가져온다.
       if (CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.teams.isNotEmpty) {
-        TeamManager.teamManagerHolder
-            ?.getTeamModelByMid(
-                CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.teams)
-            .then((modelList) {
-          print('=============My Team list fetched = ${modelList.length}');
-
-          for (var ele in modelList) {
-            TeamModel model = ele as TeamModel;
-            DeviceMainPage.teamMap[model.name] = model;
-          }
-        });
+        print('============= My Team case =============');
+        modelList = await TeamManager.teamManagerHolder?.getTeamModelByMid(
+            CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.teams);
       }
     } else {
       // team목록을 미리 모두 가져온다.
-      TeamManager.teamManagerHolder
-          ?.myDataOnly(CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.enterprise)
-          .then((modelList) {
-        print('=============Enterprise Team list fetched = ${modelList.length}');
-        for (var ele in modelList) {
-          TeamModel model = ele as TeamModel;
-          DeviceMainPage.teamMap[model.name] = model;
-        }
-      });
+      print('============= Enterprise Team case =============');
+      modelList = await TeamManager.teamManagerHolder
+          ?.myDataOnly(CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.enterprise);
     }
 
+    if (modelList != null) {
+      print('============= Team list fetched = ${modelList.length}');
+      for (var ele in modelList) {
+        TeamModel model = ele as TeamModel;
+        DeviceMainPage.teamMap[model.name] = model;
+        teamMids.add(model.mid);
+      }
+    } else {
+      logger.severe('No Team list fetched');
+    }
+
+    return teamMids;
+  }
+
+  void _initData() async {
     if (HycopFactory.serverType == ServerType.firebase ||
         HycopFactory.serverType == ServerType.supabase) {
       if (widget.selectedPage == DeviceSelectedPage.myPage) {
         return hostManagerHolder!.initMyStream(
           AccountManager.currentLoginUser.email,
         );
-      } else if (widget.selectedPage == DeviceSelectedPage.sharedPage) {
+      }
+      if (widget.selectedPage == DeviceSelectedPage.sharedPage) {
         String enterprise = '';
         if (AccountManager.currentLoginUser.isSuperUser == false) {
           enterprise = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.enterprise;
@@ -325,8 +330,10 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
         return hostManagerHolder!.initSharedStream(
           enterprise,
         );
-      } else if (widget.selectedPage == DeviceSelectedPage.teamPage) {
-        List<String> teams = [];
+      }
+      if (widget.selectedPage == DeviceSelectedPage.teamPage) {
+        List<String> teams = await _getTeams();
+
         if (AccountManager.currentLoginUser.isSuperUser == false) {
           teams = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.teams;
         }
@@ -343,7 +350,9 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
             hostManagerHolder!.addRealTimeListen(value.first.mid);
           }
         });
-      } else if (widget.selectedPage == DeviceSelectedPage.sharedPage) {
+        return;
+      }
+      if (widget.selectedPage == DeviceSelectedPage.sharedPage) {
         String enterprise = '';
         if (AccountManager.currentLoginUser.isSuperUser == false) {
           enterprise = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.enterprise;
@@ -357,8 +366,11 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
             hostManagerHolder!.addRealTimeListen(value.first.mid);
           }
         });
-      } else if (widget.selectedPage == DeviceSelectedPage.teamPage) {
-        List<String> teams = [];
+        return;
+      }
+      if (widget.selectedPage == DeviceSelectedPage.teamPage) {
+        List<String> teams = await _getTeams();
+
         if (AccountManager.currentLoginUser.isSuperUser == false) {
           teams = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.teams;
         }
@@ -367,6 +379,7 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
             hostManagerHolder!.addRealTimeListen(value.first.mid);
           }
         });
+        return;
       }
     }
   }

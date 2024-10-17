@@ -26,7 +26,7 @@ class DeviceHeaderInfo {
               {
                   "name": "lastUpdateTime",
                   "label": "lastUpdateTime",
-                  "width": 100
+                  "width": 160
               },
               {
                   "name": "hostId",
@@ -47,6 +47,11 @@ class DeviceHeaderInfo {
                   "name": "creator",
                   "label": "owner",
                   "width": 120
+              },
+              {
+                  "name": "teamName",
+                  "label": "team",
+                  "width": 100
               },
               {
                   "name": "netInfo",

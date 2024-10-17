@@ -1,8 +1,13 @@
+import 'package:creta_common/common/creta_color.dart';
+import 'package:creta_common/common/creta_font.dart';
 import 'package:flutter/material.dart';
+
+import '../../lang/creta_device_lang.dart';
 
 class CretaSingleSelect extends StatefulWidget {
   final Widget title;
   final double listHeight;
+  final double textWidth;
   final List<String> items;
   final String initValue;
   final void Function(String?) onSelect;
@@ -13,7 +18,8 @@ class CretaSingleSelect extends StatefulWidget {
     required this.initValue,
     required this.items,
     required this.onSelect,
-    this.listHeight = 100,
+    this.listHeight = 80,
+    this.textWidth = 480,
   });
 
   @override
@@ -22,6 +28,7 @@ class CretaSingleSelect extends StatefulWidget {
 
 class CretaSingleSelectState extends State<CretaSingleSelect> {
   String? _selectedItem;
+  bool _showTeams = false;
 
   @override
   void initState() {
@@ -46,57 +53,32 @@ class CretaSingleSelectState extends State<CretaSingleSelect> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           widget.title,
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              height: widget.listHeight,
-              child: SingleChildScrollView(
-                child: Wrap(
-                  spacing: 8.0, // Horizontal spacing between children
-                  runSpacing: 4.0, // Vertical spacing between lines
-                  children: widget.items.map((item) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _selectedItem = item;
-                        });
-                        widget.onSelect(_selectedItem);
-                      },
-                      child: Card(
-                        margin: const EdgeInsets.symmetric(vertical: 2.0), // Reduce vertical margin
-                        elevation: 2.0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 4.0), // Reduce padding
-                          child: Text(
-                            item,
-                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
-            ),
-          ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(2.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(4.0),
-                  ),
-                  child: Text(
-                    (_selectedItem == null || _selectedItem!.isEmpty)
-                        ? 'click to select to team'
-                        : _selectedItem!,
-                    style: const TextStyle(fontSize: 16),
+              SizedBox(
+                height: 40,
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _showTeams = !_showTeams;
+                    });
+                    widget.onSelect(_selectedItem);
+                  },
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    width: widget.textWidth,
+                    margin: const EdgeInsets.symmetric(vertical: 4.0),
+                    color: CretaColor.text[200],
+                    child: Text(
+                      (_selectedItem == null || _selectedItem!.isEmpty)
+                          ? _showTeams
+                              ? CretaDeviceLang['chooseOneOfTheTeamsBelow'] ??
+                                  ' Choose one of the teams below'
+                              : CretaDeviceLang['clickToSelectToTeam'] ?? ' click to select to team'
+                          : _selectedItem!,
+                      style: const TextStyle(fontSize: 16),
+                    ),
                   ),
                 ),
               ),
@@ -111,6 +93,62 @@ class CretaSingleSelectState extends State<CretaSingleSelect> {
               ),
             ],
           ),
+          _showTeams
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        //color: CretaColor.text[200],
+                        height: widget.listHeight,
+                        child: SingleChildScrollView(
+                          child: Wrap(
+                            spacing: 4.0, // Horizontal spacing between children
+                            runSpacing: 4.0, // Vertical spacing between lines
+                            children: widget.items.map((item) {
+                              return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _selectedItem = item;
+                                    _showTeams = false;
+                                  });
+                                  widget.onSelect(_selectedItem);
+                                },
+                                child: Card(
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 2.0), // Reduce vertical margin
+                                  elevation: 2.0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0, vertical: 4.0), // Reduce padding
+                                    child: Text(
+                                      item,
+                                      style: CretaFont.buttonLarge,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () {
+                        setState(() {
+                          _showTeams = false;
+                        });
+                      },
+                    ),
+                  ],
+                )
+              : const SizedBox.shrink()
         ],
       ),
     );

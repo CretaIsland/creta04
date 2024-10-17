@@ -35,8 +35,9 @@
    "usageHostFilter": ["all", "used", "unused"],
    "connectedHostFilter": ["all", "connected", "unconnected"],
    "notice": "Urgent notice",
+   "clickToSelectToTeam" : " Click to select a team",
+   "chooseOneOfTheTeamsBelow" : " Select one of the teams below",
 
-  
     "usageSetting": "Usage Status Settings",
     "generalSetting": "General Settings",
     "powerSetting": "Power Settings",

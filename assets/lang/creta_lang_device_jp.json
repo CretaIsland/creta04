@@ -35,6 +35,9 @@
    "usageHostFilter": ["全体", "使用", "未使用"],
    "connectedHostFilter": ["全体", "接続", "未接続"],
    "notice": "緊急通知",
+   "clickToSelectToTeam" : " チーム選択のためにクリックしてください",
+   "chooseOneOfTheTeamsBelow" : " 下記のチームの中から一つを選択してください",
+
 
 
     "usageSetting": "使用状態設定",

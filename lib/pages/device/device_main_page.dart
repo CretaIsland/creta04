@@ -155,7 +155,6 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
   GlobalKey dropDownButtonKey = GlobalKey();
 
   LanguageType oldLanguage = LanguageType.none;
-
   //data table
 
   // @override
@@ -190,9 +189,7 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
     hostManagerHolder!.clearAll();
 
     //print('--------------->>> widget.selectedPage = ${widget.selectedPage}');
-    _initData();
-
-    isLangInit = initLang();
+    _isInited = _initData();
 
     MyDataCell Function(dynamic, String)? isVNCCell;
     isVNCCell = (value, key) => MyDataCell(
@@ -289,19 +286,19 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
     if (AccountManager.currentLoginUser.isSuperUser == false) {
       // 자기 것만 가져온다.
       if (CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.teams.isNotEmpty) {
-        print('============= My Team case =============');
+        //print('============= My Team case =============');
         modelList = await TeamManager.teamManagerHolder?.getTeamModelByMid(
             CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.teams);
       }
     } else {
       // team목록을 미리 모두 가져온다.
-      print('============= Enterprise Team case =============');
+      //print('============= Enterprise Team case =============');
       modelList = await TeamManager.teamManagerHolder
           ?.myDataOnly(CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.enterprise);
     }
 
     if (modelList != null) {
-      print('============= Team list fetched = ${modelList.length}');
+      //print('============= Team list fetched = ${modelList.length}');
       for (var ele in modelList) {
         TeamModel model = ele as TeamModel;
         DeviceMainPage.teamMap[model.name] = model;
@@ -314,30 +311,27 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
     return teamMids;
   }
 
-  void _initData() async {
+  Future<bool>? _initData() async {
+    List<String> teams = await _getTeams();
     if (HycopFactory.serverType == ServerType.firebase ||
         HycopFactory.serverType == ServerType.supabase) {
       if (widget.selectedPage == DeviceSelectedPage.myPage) {
-        return hostManagerHolder!.initMyStream(
+        hostManagerHolder!.initMyStream(
           AccountManager.currentLoginUser.email,
         );
-      }
-      if (widget.selectedPage == DeviceSelectedPage.sharedPage) {
-        String enterprise = '';
+      } else if (widget.selectedPage == DeviceSelectedPage.sharedPage) {
+        String enterprise = CretaConst.superAdmin;
         if (AccountManager.currentLoginUser.isSuperUser == false) {
           enterprise = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.enterprise;
         }
-        return hostManagerHolder!.initSharedStream(
+        hostManagerHolder!.initSharedStream(
           enterprise,
         );
-      }
-      if (widget.selectedPage == DeviceSelectedPage.teamPage) {
-        List<String> teams = await _getTeams();
-
-        if (AccountManager.currentLoginUser.isSuperUser == false) {
-          teams = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.teams;
-        }
-        return hostManagerHolder!.initTeamStream(teams);
+      } else if (widget.selectedPage == DeviceSelectedPage.teamPage) {
+        // if (AccountManager.currentLoginUser.isSuperUser == false) {
+        //   teams = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.teams;
+        // }
+        hostManagerHolder!.initTeamStream(teams);
       }
     } else {
       if (widget.selectedPage == DeviceSelectedPage.myPage) {
@@ -350,9 +344,7 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
             hostManagerHolder!.addRealTimeListen(value.first.mid);
           }
         });
-        return;
-      }
-      if (widget.selectedPage == DeviceSelectedPage.sharedPage) {
+      } else if (widget.selectedPage == DeviceSelectedPage.sharedPage) {
         String enterprise = '';
         if (AccountManager.currentLoginUser.isSuperUser == false) {
           enterprise = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.enterprise;
@@ -366,27 +358,24 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
             hostManagerHolder!.addRealTimeListen(value.first.mid);
           }
         });
-        return;
-      }
-      if (widget.selectedPage == DeviceSelectedPage.teamPage) {
-        List<String> teams = await _getTeams();
-
-        if (AccountManager.currentLoginUser.isSuperUser == false) {
-          teams = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.teams;
-        }
+      } else if (widget.selectedPage == DeviceSelectedPage.teamPage) {
+        // if (AccountManager.currentLoginUser.isSuperUser == false) {
+        //   teams = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.teams;
+        // }
         hostManagerHolder!.teamData(teams).then((value) {
           if (value.isNotEmpty) {
             hostManagerHolder!.addRealTimeListen(value.first.mid);
           }
         });
-        return;
       }
     }
+    await _initLang();
+    return true; // _initLang() include _initData();
   }
 
-  static Future<bool>? isLangInit;
+  static Future<bool>? _isInited;
 
-  Future<bool>? initLang() async {
+  Future<bool>? _initLang() async {
     await Snippet.setLang();
     _initMenu();
     oldLanguage = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.language;
@@ -497,7 +486,7 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
         ),
       ],
       child: FutureBuilder<bool>(
-          future: isLangInit,
+          future: _isInited,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               //error가 발생하게 될 경우 반환하게 되는 부분
@@ -1357,6 +1346,14 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
                 });
           },
         ),
+        //  BTN.fill_gray_it_l(
+        //   width: 106 + 31,
+        //   text: CretaDeviceLang['assignHost'] ?? "단말 할당",
+        //   icon: Icons.person_add_alt_1_outlined,
+        //    onPressed: () async {
+        //     await _showDetailView(isMultiSelected: true, isChangeBook: false);
+        //   },
+        // ),
       ],
     );
     return Consumer<DeviceSelectNotifier>(builder: (context, selectedNotifier, child) {

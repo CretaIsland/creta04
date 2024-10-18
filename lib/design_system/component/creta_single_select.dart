@@ -19,7 +19,7 @@ class CretaSingleSelect extends StatefulWidget {
     required this.items,
     required this.onSelect,
     this.listHeight = 80,
-    this.textWidth = 480,
+    this.textWidth = 360,
   });
 
   @override

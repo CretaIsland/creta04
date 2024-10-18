@@ -1,4 +1,5 @@
 import 'package:creta04/data_io/enterprise_manager.dart';
+import 'package:creta_common/common/creta_const.dart';
 import 'package:creta_common/common/creta_font.dart';
 import 'package:creta_studio_model/model/book_model.dart';
 import 'package:creta_studio_model/model/page_model.dart';
@@ -44,8 +45,7 @@ class _DeveloperPageState extends State<DeveloperPage> with DrawerMixin {
   }
 
   void _invalidate() {
-    setState(() {
-    });
+    setState(() {});
     //CretaAccountManager.userPropertyManagerHolder.notify();
   }
 
@@ -122,25 +122,25 @@ class _DeveloperPageState extends State<DeveloperPage> with DrawerMixin {
               child: const Text('Generate Creta Enterprise, Team, User'),
               onPressed: () async {
                 EnterpriseModel enterpriseModel = await EnterpriseManager().createEnterprise(
-                  name: 'creta',
+                  name: CretaConst.superAdmin,
                   description: 'super admin',
                   enterpriseUrl: '',
                   mediaApiUrl: "https://letscreta.com:444",
-                  adminEmail: 'cretacreates@gmail.com',
+                  adminEmail: CretaConst.superAdminEmail,
                 );
                 EnterpriseManager().createToDB(enterpriseModel);
 
                 TeamModel cretaTeam = TeamModel(enterpriseModel.mid);
-                cretaTeam.name = 'notloginuserid Team';
-                cretaTeam.enterprise = 'creta';
-                cretaTeam.owner = 'notloginuserid@sqisoft.com';
-                cretaTeam.teamMembers = ['notloginuserid@sqisoft.com'];
+                cretaTeam.name = CretaConst.notLoginUserTeam;
+                cretaTeam.enterprise = CretaConst.superAdmin;
+                cretaTeam.owner = CretaConst.notLoginUserEmail;
+                cretaTeam.teamMembers = [cretaTeam.owner];
                 TeamManager().createTeam(cretaTeam);
 
                 UserPropertyModel cretaUser = UserPropertyModel(cretaTeam.mid);
-                cretaUser.nickname = 'notloginuser';
-                cretaUser.enterprise = 'creta';
-                cretaUser.email = 'notloginuserid@sqisoft.com';
+                cretaUser.nickname = CretaConst.notLoginUserName;
+                cretaUser.enterprise = CretaConst.superAdmin;
+                cretaUser.email = CretaConst.notLoginUserEmail;
                 cretaUser.teams = [cretaTeam.mid];
                 UserPropertyManager().createUserProperty(
                   createModel: cretaUser,
@@ -152,8 +152,8 @@ class _DeveloperPageState extends State<DeveloperPage> with DrawerMixin {
             TextButton(
                 child: const Text('connect creta_user_property and hycop_users'),
                 onPressed: () async {
-                  _updateUserPropertyParentMidUsingHycopUsersUserId("notloginuserid@sqisoft.com");
-                  _updateUserPropertyParentMidUsingHycopUsersUserId("cretacreates@gmail.com");
+                  _updateUserPropertyParentMidUsingHycopUsersUserId(CretaConst.notLoginUserEmail);
+                  _updateUserPropertyParentMidUsingHycopUsersUserId(CretaConst.superAdminEmail);
                 }),
             const Divider(),
             TextButton(

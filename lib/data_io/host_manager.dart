@@ -163,7 +163,7 @@ class HostManager extends CretaManager {
   }
 
   void initTeamStream(List<String> teams, {int? limit}) {
-    print('initTeamStream($teams)');
+    //print('initTeamStream($teams)');
 
     Map<String, QueryValue> query = {};
     // if (teams.isEmpty) {

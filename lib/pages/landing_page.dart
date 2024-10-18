@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:creta_common/common/creta_const.dart';
 import 'package:creta_common/common/creta_snippet.dart';
 
 import 'package:carousel_slider/carousel_slider.dart';
@@ -149,6 +150,7 @@ class _LandingPageState extends State<LandingPage> {
     await Snippet.setLang();
     //print('========1');
     _initMenu();
+
     ///print('========2');
     if (CretaAccountManager.userPropertyManagerHolder.userPropertyModel != null) {
       oldLanguage = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.language;
@@ -1116,7 +1118,7 @@ class _LandingPageState extends State<LandingPage> {
                                 height: 1.6),
                             children: [
                               TextSpan(
-                                  text: CretaCommuLang['creta']!, // "크레타",
+                                  text: CretaCommuLang[CretaConst.superAdmin]!, // "크레타",
                                   style: CretaFont.titleLarge.copyWith(
                                       fontWeight: FontWeight.w700,
                                       fontSize: 40,

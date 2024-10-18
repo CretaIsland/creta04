@@ -516,7 +516,7 @@ class _BookMainPageState extends State<BookMainPage> {
 
     if (AccountManager.currentLoginUser.isLoginedUser) {
       HycopFactory.realtime!.startTemp(model.mid);
-      HycopFactory.realtime!.setPrefix('creta');
+      HycopFactory.realtime!.setPrefix(CretaConst.superAdmin);
     }
 
     if (model.backgroundMusicFrame.value.isNotEmpty) {

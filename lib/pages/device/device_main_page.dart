@@ -155,6 +155,14 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
   GlobalKey dropDownButtonKey = GlobalKey();
 
   LanguageType oldLanguage = LanguageType.none;
+
+  MyDataCell Function(dynamic, String)? isVNCCell;
+  MyDataCell Function(dynamic, String)? isUsedCell;
+  MyDataCell Function(dynamic, String)? isOperationalCell;
+  MyDataCell Function(dynamic, String)? wifiCell;
+  MyDataCell Function(dynamic, String)? hddCell;
+  MyDataCell Function(dynamic, String)? hostIdCell;
+
   //data table
 
   // @override
@@ -170,7 +178,8 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
     logger.fine('initState start');
 
     super.initState();
-    initMixin(columName: 'hostName', ascending: false, scroll: getBannerScrollController);
+    //initMixin(columName: 'hostName', ascending: false, scroll: getBannerScrollController);
+    initMixin(columName: 'hostName', ascending: false);
 
     // if (widget.filterTexts != null) {
     //   _filterTexts = [...widget.filterTexts!];
@@ -178,6 +187,7 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
     // data table
     //_scrollContoller = ScrollController();
     //_scrollContoller.addListener(_scrollListener);
+
     setUsingBannerScrollBar(
       scrollChangedCallback: _scrollListener,
       // bannerMaxHeight: 196 + 200,
@@ -190,9 +200,14 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
 
     //print('--------------->>> widget.selectedPage = ${widget.selectedPage}');
     _isInited = _initData();
+    _initColumnInfo();
+  }
 
-    MyDataCell Function(dynamic, String)? isVNCCell;
-    isVNCCell = (value, key) => MyDataCell(
+  void _initColumnInfo({bool reOrder = false}) {
+    DeviceHeaderInfo headerInfo = DeviceHeaderInfo();
+    columnInfoList = headerInfo.initColumnInfo(reOrder: reOrder);
+
+    isVNCCell ??= (value, key) => MyDataCell(
           Icon(
             value ? Icons.visibility_outlined : Icons.visibility_off_outlined,
             color: value ? Colors.green : Colors.grey,
@@ -205,36 +220,35 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
           },
         );
 
-    MyDataCell Function(dynamic, String)? isUsedCell;
-    isUsedCell = (value, key) => MyDataCell(
+    isUsedCell ??= (value, key) => MyDataCell(
           Icon(
             value ? Icons.check_circle_outline : Icons.warning,
             color: value ? Colors.green : Colors.grey,
           ),
         );
-    MyDataCell Function(dynamic, String)? isOperationalCell;
-    isOperationalCell = (value, key) => MyDataCell(
+
+    isOperationalCell ??= (value, key) => MyDataCell(
           Icon(
             value ? Icons.check_circle_outline : Icons.warning,
             color: value ? Colors.green : Colors.red,
           ),
         );
-    MyDataCell Function(dynamic, String)? wifiCell;
-    wifiCell = (value, key) {
+
+    wifiCell ??= (value, key) {
       final wifi = jsonDecode((value as String).isEmpty ? '{}' : value);
       String wifiLevel = wifi['level'] ?? "0";
 
       return MyDataCell(Text(wifiLevel));
     };
-    MyDataCell Function(dynamic, String)? hddCell;
-    hddCell = (value, key) {
+
+    hddCell ??= (value, key) {
       final hdd = jsonDecode((value as String).isEmpty ? '{}' : value);
       double hddUsage = (hdd['used'] ?? 0) / (hdd['total'] ?? 1) * 100;
 
       return MyDataCell(Text('${hddUsage.toStringAsFixed(1)}%'));
     };
-    MyDataCell Function(dynamic, String)? hostIdCell;
-    hostIdCell = (value, key) => MyDataCell(
+
+    hostIdCell ??= (value, key) => MyDataCell(
           Text(
             '$value',
             style: TextStyle(
@@ -253,9 +267,6 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
             }
           },
         );
-
-    DeviceHeaderInfo headerInfo = DeviceHeaderInfo();
-    columnInfoList = headerInfo.initColumnInfo();
 
     for (var ele in columnInfoList) {
       if (ele.name == 'lastUpdateTime' ||
@@ -534,6 +545,7 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
                     context: context,
                     child: mainPage(
                       context,
+                      scrollbarOnRight: false,
                       gotoButtonPressed: () {
                         Routemaster.of(context).push(AppRoutes.communityHome);
                       },
@@ -903,19 +915,21 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
       },
     );
 
-    return Scrollbar(
-      thumbVisibility: true,
-      controller: scrollContoller,
-      child: Padding(
-        padding: LayoutConst.cretaPadding,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _toolbar(),
-            Expanded(child: _isGridView ? gridView : dataTable),
-          ],
-        ),
+    return
+        // Scrollbar(
+        //thumbVisibility: true,
+        //controller: scrollContoller,
+        //child:
+        Padding(
+      padding: LayoutConst.cretaPadding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _toolbar(),
+          Expanded(child: _isGridView ? gridView : dataTable),
+        ],
       ),
+      //),
     );
   }
 
@@ -1346,6 +1360,7 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
                 });
           },
         ),
+
         //  BTN.fill_gray_it_l(
         //   width: 106 + 31,
         //   text: CretaDeviceLang['assignHost'] ?? "단말 할당",
@@ -1363,12 +1378,12 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
         //height: LayoutConst.deviceToolbarHeight,
         //color: Colors.amberAccent,
         child: Wrap(
-          alignment: WrapAlignment.spaceBetween,
-          runAlignment: WrapAlignment.spaceBetween,
+          alignment: WrapAlignment.start,
+          runAlignment: WrapAlignment.start,
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
-              width: 120,
+              width: (_isGridView == false) ? 160 : 120,
               child: Row(children: [
                 _isGridView
                     ? BTN.fill_gray_i_l(
@@ -1418,6 +1433,16 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
                   iconSize: 24,
                   onPressed: insertItem,
                 ),
+                if (_isGridView == false)
+                  BTN.fill_gray_i_l(
+                      tooltip: CretaDeviceLang['initializeColumn'] ?? '컬럼 초기화',
+                      tooltipBg: Colors.black12,
+                      icon: Icons.swap_horiz_outlined,
+                      onPressed: () async {
+                        setState(() {
+                          _initColumnInfo(reOrder: true);
+                        });
+                      }),
               ]),
             ),
             selectNotifierHolder.hasSelected() == false

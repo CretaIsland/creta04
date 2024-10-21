@@ -121,8 +121,9 @@
     "availiableName":    "名前は利用可能です。",
 
     "noTeamExist" : "チームが存在しません。",
-    "BooksWillLoseTtsOwner" : "이 유저는 다음과 같은 Book 의 소유자 입니다. 유저를 삭제하면 Book 의 접근권한이 사라질 수도 있습니다. 삭제하기 전에 Book의 소유권을 다른 사람에게 이전하시기 바랍니다.",
+    "BooksWillLoseTtsOwner" : "このユーザーは次の Book の所有者です。ユーザーを削除すると、Book のアクセス権が消えることがあります。削除する前に本の所有権を他の人に転送してください。",
 
+    "initializeColumn" : "列の初期化",
 
    "end"  : "End"
 

@@ -131,7 +131,11 @@ class DeviceHeaderInfo {
           ]
       }''';
 
-  List<MyColumnInfo> initColumnInfo() {
+  List<MyColumnInfo> initColumnInfo({bool reOrder = false}) {
+    if (reOrder) {
+      return columnInfoFromJson(jsonDecode(defaultListStr)['columnInfoList'] as List);
+    }
+
     String userDefineStr = CretaAccountManager.getDeviceColumnInfo();
     //print('---------------------userDefineStr: $userDefineStr');
     if (userDefineStr.isEmpty) {

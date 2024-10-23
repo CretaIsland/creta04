@@ -152,7 +152,18 @@ class _LinkPropertyState extends State<LinkProperty> with PropertyMixin {
               ),
               propertyLine(
                 name: CretaStudioLang['linkClass']!,
-                widget: Text(widget.linkModel.name),
+                widget: CretaTextField(
+                  width: 200,
+                  height: 40,
+                  hintText: 'comment here',
+                  textFieldKey: GlobalKey(),
+                  value: widget.linkModel.comment.value,
+                  onEditComplete: ((value) {
+                    logger.info('onEditComplete');
+                    widget.linkModel.comment.set(value);
+                    widget.onPosChanged();
+                  }),
+                ),
               ),
             ],
           ),

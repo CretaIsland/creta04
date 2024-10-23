@@ -355,12 +355,22 @@ class _RightMenuState
                 if (linkManager != null) {
                   LinkModel? linkModel = linkManager.getSelected() as LinkModel?;
                   if (linkModel != null) {
-                    title = '${linkModel.name} Link';
+                    title = linkModel.name.value;
+                    return StudioSnippet.showTitleText(
+                      title: title,
+                      onEditComplete: (value) {
+                        setState(() {
+                          linkModel.name.set(value);
+                        });
+                        BookMainPage.bookManagerHolder?.notify();
+                      },
+                    );
                   }
                 }
               }
             }
           }
+
           return Text(
             title,
             textAlign: TextAlign.center,

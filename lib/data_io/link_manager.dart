@@ -121,7 +121,7 @@ class LinkManager extends BaseLinkManager {
     link.parentMid.set(contentsModel.mid, save: false, noUndo: true);
     link.posX.set(posX, save: false, noUndo: true);
     link.posY.set(posY, save: false, noUndo: true);
-    link.name = name ?? '';
+    link.name.set(name ?? '', save: false, noUndo: true);
     link.connectedMid = connectedMid ?? '';
     link.connectedClass = connectedClass ?? '';
     link.order.set(getMaxOrder() + 1, save: false, noUndo: true);
@@ -257,7 +257,7 @@ class LinkManager extends BaseLinkManager {
       }
       //print('model.name=${model.name}');
 
-      String name = model.name;
+      final String name = model.name.value;
       conNodes.add(tree.Node<CretaModel>(
           key: '${pageModel.mid}/${frameModel.mid}/${model.parentMid.value}/${model.mid}',
           keyType: ContaineeEnum.Link,

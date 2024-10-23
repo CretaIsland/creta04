@@ -3,7 +3,7 @@ import 'package:hycop/hycop.dart';
 import 'package:logging/logging.dart';
 import 'package:creta04/lang/creta_commu_lang.dart';
 import 'package:creta04/routes.dart';
-import 'package:creta_common/common/creta_Vars.dart';
+import 'package:creta_common/common/creta_vars.dart';
 import 'package:creta_common/lang/creta_lang.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

@@ -20,7 +20,7 @@ import 'package:creta_common/common/creta_common_utils.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:hycop/hycop.dart';
 import 'package:creta_common/common/creta_const.dart';
-import 'package:creta_common/common/creta_Vars.dart';
+import 'package:creta_common/common/creta_vars.dart';
 import 'package:url_launcher/link.dart';
 //import '../../common/creta_utils.dart';
 import '../../data_io/frame_manager.dart';

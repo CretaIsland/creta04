@@ -573,7 +573,7 @@ class _LinkWidgetState extends State<LinkWidget> {
         widget.frameOffset,
         model.connectedMid,
         'page',
-        model.name,
+        model.name.value,
         widget.frameManager.pageModel.mid,
       );
       //_lineDrawSendEvent?.sendEvent(isShow);
@@ -613,7 +613,7 @@ class _LinkWidgetState extends State<LinkWidget> {
           widget.frameOffset,
           model.connectedMid,
           'page',
-          model.name,
+          model.name.value,
           widget.frameManager.pageModel.mid,
         );
         // LinkParams.linkPostion = Offset(posX, posY);

@@ -2,7 +2,7 @@
 
 import 'dart:math';
 
-import 'package:creta_common/common/creta_Vars.dart';
+import 'package:creta_common/common/creta_vars.dart';
 import 'package:creta_common/common/creta_const.dart';
 import 'package:creta_user_io/data_io/creta_manager.dart';
 import 'package:creta_user_io/data_io/team_manager.dart';

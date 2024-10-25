@@ -14,7 +14,6 @@ import 'package:provider/provider.dart';
 import 'package:hycop/hycop.dart';
 //import 'package:hycop/common/util/logger.dart';
 import 'package:routemaster/routemaster.dart';
-//import 'package:url_strategy/url_strategy.dart';
 import 'package:url_launcher/link.dart';
 import '../../data_io/host_manager.dart';
 import '../../lang/creta_commu_lang.dart';

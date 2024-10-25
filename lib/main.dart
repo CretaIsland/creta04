@@ -12,7 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hycop/hycop.dart';
-import 'package:url_strategy/url_strategy.dart';
+//import 'package:url_strategy/url_strategy.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:logging/logging.dart';
 import 'package:get/get.dart';
 import 'package:creta_common/common/cross_common_job.dart';
@@ -53,7 +54,9 @@ Level logLevelFromString(String level) {
 void main() async {
   const String isDeveloper = String.fromEnvironment('isDeveloper', defaultValue: 'false');
   CretaVars.instance.isDeveloper = (isDeveloper == 'true');
-  setPathUrlStrategy();
+  //setPathUrlStrategy();  <-- 예전에는 이렇게 사용했음 그러나 지금은...
+  usePathUrlStrategy(); // <-- 이렇게 사용함
+
   WidgetsFlutterBinding.ensureInitialized();
   setupLogger();
   const String level = String.fromEnvironment('logLevel', defaultValue: 'severe');

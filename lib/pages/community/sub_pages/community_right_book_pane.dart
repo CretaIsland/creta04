@@ -21,7 +21,6 @@ import 'package:url_launcher/link.dart';
 //import 'package:hycop/hycop.dart';
 //import 'package:hycop/common/util/logger.dart';
 import 'package:routemaster/routemaster.dart';
-//import 'package:url_strategy/url_strategy.dart';
 import 'package:creta_common/common/cross_common_job.dart';
 import '../../../design_system/buttons/creta_button_wrapper.dart';
 //import '../../../design_system/buttons/creta_elibated_button.dart';

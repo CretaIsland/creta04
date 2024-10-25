@@ -10,7 +10,6 @@ import 'package:url_launcher/link.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:creta_common/common/creta_common_utils.dart';
 
-//import 'package:url_strategy/url_strategy.dart';
 import 'package:creta_common/common/creta_color.dart';
 import 'package:creta_common/common/creta_font.dart';
 import '../../design_system/buttons/creta_button_wrapper.dart';

@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:hycop/hycop.dart';
 //import 'package:hycop/hycop/account/account_manager.dart';
 //import 'package:hycop/common/util/logger.dart';
-//import 'package:url_strategy/url_strategy.dart';
 //import '../../../design_system/component/snippet.dart';
 //import '../../design_system/menu/creta_drop_down.dart';
 //import '../../../design_system/component/creta_popup.dart';

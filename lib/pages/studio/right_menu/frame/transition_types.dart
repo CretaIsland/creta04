@@ -64,7 +64,11 @@ class _TransitionTypesState extends State<TransitionTypes> with ExampleBoxStateM
     //   }
     // }
     _pageController = PageController(initialPage: _currentPage, viewportFraction: 0.65);
+    
+    // after build
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
     startAutoScroll();
+    });
   }
 
   @override
@@ -76,9 +80,11 @@ class _TransitionTypesState extends State<TransitionTypes> with ExampleBoxStateM
   void startAutoScroll() {
     if (_isPlayling) {
       Future.delayed(const Duration(milliseconds: 5000), () {
-        _pageController.nextPage(
+        if(mounted) {
+          _pageController.nextPage(
             duration: const Duration(milliseconds: 5000), curve: Curves.linear);
         startAutoScroll();
+        }
       });
     }
   }

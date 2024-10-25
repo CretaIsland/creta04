@@ -61,6 +61,31 @@ class TriangleContainer extends StatelessWidget {
 //   }
 }
 
+class RevTrianglePainter extends CustomPainter {
+  final Color color;
+
+  RevTrianglePainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.fill;
+
+    final path = Path()
+      ..moveTo(size.width / 2, size.height) // 삼각형의 꼭짓점 (아래쪽)
+      ..lineTo(size.width, 0) // 오른쪽 위
+      ..lineTo(0, 0) // 왼쪽 위
+      ..close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
+  }
+}
 // class TrianglePainter extends CustomPainter {
 //   final Color color;
 //   final double borderWidth;

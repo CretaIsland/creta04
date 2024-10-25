@@ -66,6 +66,7 @@ class StudioVariables {
 
   static bool isSizeChanging = false;
   static bool isPreview = false;
+  static bool showPageIndex = false;
   static bool hideMouse = false;
 
   static bool isFullscreen = false;

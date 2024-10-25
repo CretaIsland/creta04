@@ -517,6 +517,18 @@ class PageManager extends BasePageManager {
     return false;
   }
 
+  Future<bool> gotoPage(String pageMid) async {
+    // 문제는 여기서, 다른 페이지의 모든 콘텐츠를 pause 해야한다는 것임.
+    await StudioVariables.pauseAll();
+
+    _prevModel = getSelected() as PageModel?;
+    print('gotoPage $pageMid');
+    bool retval = _movePage(pageMid);
+    //if (StudioVariables.isPreview && mid != null) gotoNextStickers(mid);
+
+    return retval;
+  }
+
   Future<bool> gotoNext({bool loop = true}) async {
     // 문제는 여기서, 다른 페이지의 모든 콘텐츠를 pause 해야한다는 것임.
     await StudioVariables.pauseAll();

@@ -283,6 +283,15 @@ class _RightMenuFrameAndContentsState extends State<RightMenuFrameAndContents> {
             linkModel.bgColor.set(color);
             linkManager.notify();
           },
+          onNameColorChanged: (color) {
+            linkModel.nameBgColor.set(color);
+            linkManager.notify();
+          },
+          onCommentColorChanged: (color) {
+            linkModel.commentBgColor.set(color);
+            linkManager.notify();
+          },
+
           onOpacityChanged: (opacity) {
             linkModel.bgColor.set(linkModel.bgColor.value.withOpacity(opacity));
             linkManager.notify();

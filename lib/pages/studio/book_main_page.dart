@@ -7,6 +7,7 @@ import 'dart:async';
 import 'package:creta04/no_authority.dart';
 import 'package:creta_common/common/creta_vars.dart';
 import 'package:creta_common/model/app_enums.dart';
+import 'package:creta_common/model/creta_model.dart';
 import 'package:creta_user_io/data_io/user_property_manager.dart';
 //import 'package:creta_common/common/creta_vars.dart';
 import 'package:flutter/foundation.dart';
@@ -71,6 +72,7 @@ import 'left_menu/left_menu.dart';
 import 'containees/page/page_main.dart';
 import 'left_menu/music/music_player_frame.dart';
 import 'mouse_hider.dart';
+import 'page_index_dialog.dart';
 import 'right_menu/book/book_editor_property.dart';
 import 'right_menu/right_menu.dart';
 import 'stick_menu.dart';
@@ -1964,6 +1966,50 @@ class _BookMainPageState extends State<BookMainPage> {
                       Routemaster.of(context).push(
                           '${AppRoutes.studioBookMainPage}?${StudioVariables.selectedBookMid}');
                     }
+                  },
+                  showPageIndex: () async {
+                    List<CretaModel> pageList = pageManager.getOrdered().toList();
+                    // for (var ele in pageList) {
+                    //   PageModel pageModel = ele as PageModel;
+                    //   print('pageModel.name=${pageModel.name.value}');
+                    // }
+
+                    await showGeneralDialog(
+                      context: context,
+                      barrierDismissible: true,
+                      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+                      barrierColor: Colors.black54,
+                      transitionDuration: const Duration(milliseconds: 200),
+                      pageBuilder: (BuildContext buildContext, Animation animation,
+                          Animation secondaryAnimation) {
+                        return Align(
+                          alignment: Alignment.bottomRight,
+                          child: PageIndexDialog(
+                            pageList: pageList,
+                            onSelected: (int index) {
+                              PageModel pageModel = pageList[index] as PageModel;
+                              print('pageModel.name=${pageModel.name.value}');
+                              MouseHider.lastMouseMoveTime = DateTime.now();
+                              BookPreviewMenu.previewMenuPressed = true;
+                              StudioVariables.stopPaging = false;
+                              StudioVariables.stopNextContents = false;
+                              pageManager.gotoPage(pageModel.mid);
+                            },
+                          ),
+                        );
+                      },
+                      transitionBuilder: (context, animation, secondaryAnimation, child) {
+                        return SlideTransition(
+                          position: Tween<Offset>(
+                            begin: const Offset(0.4, 0.6),
+                            end: const Offset(0.4, 0.3),
+                          ).animate(animation),
+                          child: Align(
+                              alignment: Alignment.bottomRight, // 최종 위치를 화면 우측 하단으로 설정
+                              child: child),
+                        );
+                      },
+                    );
                   },
                   muteFunction: () {
                     MouseHider.lastMouseMoveTime = DateTime.now();

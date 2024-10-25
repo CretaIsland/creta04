@@ -50,7 +50,7 @@ class _CretaFontSelectorState extends State<CretaFontSelector> {
       align: MainAxisAlignment.start,
       selectedColor: CretaColor.text[700]!,
       textStyle: widget.textStyle,
-      width: 167,
+      width: 173,
       height: 22,
       itemHeight: 24,
       dropDownMenuItemList: StudioSnippet.getFontListItem(
@@ -74,7 +74,7 @@ class _CretaFontSelectorState extends State<CretaFontSelector> {
       align: MainAxisAlignment.start,
       selectedColor: CretaColor.text[700]!,
       textStyle: widget.textStyle,
-      width: 115,
+      width: 137,
       height: 22,
       itemHeight: 24,
       dropDownMenuItemList: StudioSnippet.getFontWeightListItem(
@@ -99,7 +99,7 @@ class _CretaFontSelectorState extends State<CretaFontSelector> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       font,
-                      const SizedBox(width: 9),
+                      const SizedBox(width: 2),
                       fontWeight,
                     ],
                   )
@@ -109,7 +109,7 @@ class _CretaFontSelectorState extends State<CretaFontSelector> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   font,
-                  const SizedBox(width: 19),
+                  const SizedBox(width: 7),
                   fontWeight,
                 ],
               ));

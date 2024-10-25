@@ -186,6 +186,7 @@ dependencies:
   email_validator: ^2.1.17
   animate_icons: ^2.0.0
   tcard: ^1.3.5
+  auto_size_text: ^3.0.0
   # flutter_web_data_table: ^1.0.0
 
 dev_dependencies:

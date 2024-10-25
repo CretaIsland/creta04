@@ -12,6 +12,7 @@ class BookPreviewMenu extends StatefulWidget {
   final int pageNo;
   final int totalPage;
   final void Function() goBackProcess;
+  final void Function() showPageIndex;
   final void Function() muteFunction;
   final void Function() playFunction;
   final Future<void> Function() gotoNext;
@@ -23,6 +24,7 @@ class BookPreviewMenu extends StatefulWidget {
     required this.pageNo,
     required this.totalPage,
     required this.goBackProcess,
+    required this.showPageIndex,
     required this.muteFunction,
     required this.playFunction,
     required this.gotoNext,
@@ -158,14 +160,28 @@ class _BookPreviewMenuState extends State<BookPreviewMenu> {
                             iconSize: 20,
                             doToggle: false,
                           )
-                        : CretaTrasparentButton(
-                            tooltip: CretaStudioLang['gobackToStudio']!,
-                            onPressed: widget.goBackProcess,
-                            icon1: Icons.logout_outlined,
-                            icon2: Icons.logout_outlined,
-                            toggleValue: StudioVariables.isPreview,
-                            iconSize: 20,
-                            doToggle: false,
+                        : Row(
+                            children: [
+                              CretaTrasparentButton(
+                                tooltip: CretaStudioLang['showPageIndex'] ?? '페이지 목차 보기',
+                                onPressed: widget.showPageIndex,
+                                icon1: Icons.featured_play_list_outlined,
+                                icon2: Icons.featured_play_list_outlined,
+                                toggleValue: StudioVariables.showPageIndex,
+                                iconSize: 20,
+                                doToggle: false,
+                              ),
+                              const SizedBox(width: 15),
+                              CretaTrasparentButton(
+                                tooltip: CretaStudioLang['gobackToStudio']!,
+                                onPressed: widget.goBackProcess,
+                                icon1: Icons.logout_outlined,
+                                icon2: Icons.logout_outlined,
+                                toggleValue: StudioVariables.isPreview,
+                                iconSize: 20,
+                                doToggle: false,
+                              ),
+                            ],
                           ),
                   ],
                 )

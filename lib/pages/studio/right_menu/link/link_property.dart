@@ -7,6 +7,7 @@ import 'package:creta_common/common/creta_common_utils.dart';
 
 import '../../../../data_io/contents_manager.dart';
 import '../../../../data_io/frame_manager.dart';
+import '../../../../design_system/buttons/creta_toggle_button.dart';
 import '../../../../design_system/component/creta_proprty_slider.dart';
 import 'package:creta_common/common/creta_color.dart';
 import 'package:creta_common/common/creta_font.dart';
@@ -25,6 +26,8 @@ class LinkProperty extends StatefulWidget {
   final FrameManager frameManager;
   final BookModel? book;
   final void Function(Color) onColorChanged;
+  final void Function(Color) onNameColorChanged;
+  final void Function(Color) onCommentColorChanged;
   final void Function(double) onOpacityChanged;
   final void Function() onPosChanged;
   final void Function(double) onSizeChanged;
@@ -37,6 +40,8 @@ class LinkProperty extends StatefulWidget {
     required this.frameManager,
     required this.book,
     required this.onColorChanged,
+    required this.onNameColorChanged,
+    required this.onCommentColorChanged,
     required this.onOpacityChanged,
     required this.onPosChanged,
     required this.onSizeChanged,
@@ -165,6 +170,91 @@ class _LinkPropertyState extends State<LinkProperty> with PropertyMixin {
                   }),
                 ),
               ),
+              propertyLine(
+                topPadding: 10,
+                name: CretaStudioLang['showLinkName'] ?? '이름 보이기',
+                widget: Row(
+                  children: [
+                    CretaToggleButton(
+                      width: 54 * 0.75,
+                      height: 28 * 0.75,
+                      defaultValue: widget.linkModel.showName.value,
+                      onSelected: (val) {
+                        widget.linkModel.showName.set(val);
+                        widget.onPosChanged();
+                        //setState(() {});
+                      },
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Text("/ ${CretaStudioLang['color'] ?? '색'}")),
+                    colorIndicator(
+                      widget.linkModel.nameBgColor.value,
+                      1.0,
+                      onColorChanged: (color) {
+                        widget.onNameColorChanged(color);
+                        setState(() {});
+                      },
+                      onClicked: () {},
+                    ),
+                  ],
+                ),
+              ),
+              propertyLine(
+                topPadding: 10,
+                name: CretaStudioLang['showLinkComment'] ?? '내용 보이기',
+                widget: Row(
+                  children: [
+                    CretaToggleButton(
+                      width: 54 * 0.75,
+                      height: 28 * 0.75,
+                      defaultValue: widget.linkModel.showComment.value,
+                      onSelected: (val) {
+                        widget.linkModel.showComment.set(val);
+                        widget.onPosChanged();
+                        //setState(() {});
+                      },
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Text("/ ${CretaStudioLang['color'] ?? '색'}")),
+                    colorIndicator(
+                      widget.linkModel.commentBgColor.value,
+                      1.0,
+                      onColorChanged: (color) {
+                        widget.onCommentColorChanged(color);
+                        setState(() {});
+                      },
+                      onClicked: () {},
+                    ),
+                  ],
+                ),
+              ),
+
+              // propertyLine(
+              //   name: CretaStudioLang['linkNameColor'] ?? '링크 이름 색',
+              //   widget: colorIndicator(
+              //     widget.linkModel.nameBgColor.value,
+              //     1.0,
+              //     onColorChanged: (color) {
+              //       widget.onNameColorChanged(color);
+              //       setState(() {});
+              //     },
+              //     onClicked: () {},
+              //   ),
+              // ),
+              //  propertyLine(
+              //   name: CretaStudioLang['linkCommentColor'] ?? '링크 내용 색',
+              //   widget: colorIndicator(
+              //     widget.linkModel.commentBgColor.value,
+              //     1.0,
+              //     onColorChanged: (color) {
+              //       widget.onCommentColorChanged(color);
+              //       setState(() {});
+              //     },
+              //     onClicked: () {},
+              //   ),
+              // ),
             ],
           ),
         ),

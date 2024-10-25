@@ -1,6 +1,8 @@
 //import 'dart:math';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:creta04/pages/studio/studio_variables.dart';
+import 'package:creta_common/common/creta_font.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hycop/common/util/logger.dart';
@@ -14,6 +16,7 @@ import '../../../../data_io/link_manager.dart';
 import '../../../../design_system/buttons/creta_button_wrapper.dart';
 import '../../../../design_system/component/creta_right_mouse_menu.dart';
 import 'package:creta_common/common/creta_color.dart';
+import '../../../../design_system/component/shape/triangle_container.dart';
 import '../../../../design_system/menu/creta_popup_menu.dart';
 import 'package:creta_common/lang/creta_lang.dart';
 import '../../../../lang/creta_studio_lang.dart';
@@ -350,9 +353,100 @@ class _LinkWidgetState extends State<LinkWidget> {
       return const SizedBox.shrink();
     }
     _position = Offset(posX, posY);
-    logger.info('--------------------drawEachLink--------------------------');
+    print(
+        '--------------------drawEachLink : $_position, ${widget.frameModel.width.value * widget.applyScale},${widget.frameModel.height.value * widget.applyScale}');
     _linkCount++;
-    return Positioned(
+
+    double nameWidth = 0;
+    const double nameHeight = 20;
+    Widget? nameWidget;
+    //Widget? verticalLine;
+    Widget? triangle;
+    String text = '';
+    Color textColor = model.nameBgColor.value;
+    if (model.showName.value == true) {
+      nameWidth += 100;
+      text = model.name.value;
+      textColor = model.nameBgColor.value;
+    }
+    if (model.showComment.value == true) {
+      nameWidth += 100;
+      if (text.isNotEmpty) {
+        text += ' ';
+      }
+      text += model.comment.value;
+      textColor = model.commentBgColor.value;
+    }
+
+    if (text.isNotEmpty) {
+      double frameWidth = widget.frameModel.width.value * widget.applyScale;
+      //double frameHeight = widget.frameModel.height.value * widget.applyScale;
+
+      double pX = _position.dx - (nameWidth - model.iconSize.value - 4) / 2;
+      double pY = _position.dy - 24;
+
+      if (pX < 0) {
+        // 이경우 좌측으로 벗어났다고 본다.
+        pX = 0;
+      } else if (pX + nameWidth > frameWidth) {
+        // 이경우 우측으로 벗어났다고 본다.
+        pX = frameWidth - nameWidth - 4;
+      }
+
+      double round = 10;
+      nameWidget = Positioned(
+        left: pX,
+        top: pY,
+        child: Container(
+          width: nameWidth,
+          height: nameHeight,
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.5),
+            borderRadius: BorderRadius.circular(round), // 둥근 모서리 추가
+          ),
+          child: Center(
+            child: AutoSizeText(
+              textAlign: TextAlign.center,
+              text,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+              minFontSize: 8, // 최소 글자 크기 설정
+              style: CretaFont.bodySmall.copyWith(color: textColor),
+            ),
+          ),
+        ),
+      );
+
+      // 수직선 추가
+      // verticalLine = Positioned(
+      //   left: _position.dx + (model.iconSize.value + 4) / 2,
+      //   top: _position.dy - 24 + nameHeight,
+      //   child: Container(
+      //     width: 2,
+      //     height: 24 - (model.iconSize.value + 4) / 2, // 원하는 높이로 설정
+      //     color: Colors.white.withOpacity(0.5), // 원하는 색상으로 설정
+      //   ),
+      // );
+
+      const double triangleSize = 10;
+      double triangleX = _position.dx + (model.iconSize.value + 4) / 2 - triangleSize / 2;
+      if (triangleX + triangleSize + round > frameWidth) {
+        triangleX = frameWidth - triangleSize - round;
+      }
+      triangle = Positioned(
+        left: triangleX,
+        top: pY + nameHeight,
+        child: CustomPaint(
+          size: Size(
+            triangleSize,
+            24 - (model.iconSize.value + 4) / 2,
+          ), // 삼각형의 크기 설정
+          painter: RevTrianglePainter(color: Colors.white.withOpacity(0.5)),
+        ),
+      );
+    }
+
+    Widget linkIcon = Positioned(
       left: _position.dx,
       top: _position.dy,
       child:
@@ -446,6 +540,8 @@ class _LinkWidgetState extends State<LinkWidget> {
         ),
       ),
     );
+
+    return nameWidget == null ? linkIcon : Stack(children: [linkIcon, triangle!, nameWidget]);
   }
 
   Widget _mainButton(LinkModel model) {

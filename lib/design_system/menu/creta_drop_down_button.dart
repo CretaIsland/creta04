@@ -113,7 +113,7 @@ class _CretaDropDownButtonState extends State<CretaDropDownButton> {
               overflow: TextOverflow.fade,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 8.0),
+              padding: const EdgeInsets.only(left: 4.0),
               child: Icon(
                 color: widget.allTextColor ??
                     (allText == displayString ? CretaColor.text[700] : widget.selectedColor),
@@ -285,7 +285,7 @@ class _CretaDropDownButtonState extends State<CretaDropDownButton> {
                       width: width + 8,
                       height: itemHeight,
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 2.0),
                         child: ElevatedButton(
                           style: _buttonStyle(item.selected, true),
                           onPressed: () {

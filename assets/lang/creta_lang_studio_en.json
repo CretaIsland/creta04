@@ -610,5 +610,7 @@
   "infoUrl": "Web page URL",
   "showLinkName": "Show name",
   "showLinkComment": "Show comment",
+  "showPageIndex": "Show page index",
+  "showContentsIndex": "Show content index",
   "end": "End"
 }

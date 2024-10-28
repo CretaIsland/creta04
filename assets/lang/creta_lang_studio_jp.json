@@ -615,5 +615,7 @@
     "infoUrl": "接続Webアドレス",
     "showLinkName": "リンク名を表示",
     "showLinkComment": "リンクコメントを表示",
+    "showPageIndex": "ページ目次を表示",
+    "showContentsIndex": "コンテンツの目次を表示",
     "end": "End"
 }

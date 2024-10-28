@@ -47,6 +47,8 @@ class LinkWidget extends StatefulWidget {
   final FrameModel frameModel;
   final Offset frameOffset;
   final void Function() onFrameShowUnshow;
+  final void Function() showContentsIndex;
+
   const LinkWidget({
     super.key,
     required this.applyScale,
@@ -57,6 +59,7 @@ class LinkWidget extends StatefulWidget {
     required this.frameModel,
     required this.frameOffset,
     required this.onFrameShowUnshow,
+    required this.showContentsIndex,
   });
 
   @override
@@ -162,6 +165,7 @@ class _LinkWidgetState extends State<LinkWidget> {
   }
 
   Widget _drawAll(LinkManager linkManager, bool showLinkCursor) {
+    bool showVisibleButton = _showVisibleButton();
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -174,10 +178,6 @@ class _LinkWidgetState extends State<LinkWidget> {
             playManager: widget.playManager,
             canMove: (_linkCount > 0),
           ),
-        // if (DraggableStickers.isFrontBackHover &&
-        //     LinkParams.isLinkNewMode == false &&
-        //     widget.contentsModel.isLinkEditMode == false)
-        //   _drawOrder(hasContents),
         if (showLinkCursor) // 생성시 그려지는 것을 말한다.
           OnLinkCursor(
             key: GlobalObjectKey('OnLinkCursor${widget.frameModel.mid}'),
@@ -188,9 +188,10 @@ class _LinkWidgetState extends State<LinkWidget> {
             contentsManager: widget.contentsManager,
             applyScale: widget.applyScale,
           ),
-        if (_showVisibleButton()) _drawVisibleButton(),
-        if (_showVisibleButton()) _drawMaximizeButton(),
-        if (_showVisibleButton()) _drawStopNextContents(),
+        if (showVisibleButton) _drawIndexButton(),
+        if (showVisibleButton) _drawVisibleButton(),
+        if (showVisibleButton) _drawMaximizeButton(),
+        if (showVisibleButton) _drawStopNextContents(),
       ],
     );
   }
@@ -216,6 +217,32 @@ class _LinkWidgetState extends State<LinkWidget> {
     return true;
   }
 
+  Widget _drawIndexButton() {
+    double buttonSize = 20;
+    double margin = 20;
+    double posX = (widget.frameModel.width.value - 4 * (buttonSize + margin)) * widget.applyScale;
+    double posY = margin / 2 * widget.applyScale;
+
+    return Positioned(
+      left: posX, // 화면의 왼쪽에서 16픽셀 떨어진 위치
+      top: posY,
+      child: SizedBox(
+        width: buttonSize,
+        height: buttonSize,
+        child: BTN.fill_i_s(
+          tooltip: CretaStudioLang['showContentsIndex'] ?? '콘텐츠 목차 보기',
+          onPressed: widget.showContentsIndex,
+          icon: Icons.featured_play_list_outlined,
+          useTapUp: true,
+          //icon2: Icons.featured_play_list_outlined,
+          //toggleValue: StudioVariables.showPageIndex,
+          //iconSize: 14,
+          //doToggle: false,
+        ),
+      ),
+    );
+  }
+
   Widget _drawVisibleButton() {
     double buttonSize = 20;
     double margin = 20;
@@ -229,6 +256,7 @@ class _LinkWidgetState extends State<LinkWidget> {
           width: buttonSize,
           height: buttonSize,
           child: BTN.fill_i_s(
+              tooltip: CretaStudioLang['showVisibleButton'] ?? '숨기기/보이기',
               useTapUp: true,
               icon: widget.frameModel.isShow.value
                   ? Icons.visibility_outlined
@@ -257,6 +285,7 @@ class _LinkWidgetState extends State<LinkWidget> {
           width: buttonSize,
           height: buttonSize,
           child: BTN.fill_i_s(
+              tooltip: CretaStudioLang['stopRolling'] ?? '고정/해제',
               useTapUp: true,
               icon: StudioVariables.stopNextContents == true
                   ? Icons.push_pin_outlined
@@ -286,6 +315,7 @@ class _LinkWidgetState extends State<LinkWidget> {
           width: buttonSize,
           height: buttonSize,
           child: BTN.fill_i_s(
+              tooltip: CretaStudioLang['maximize'] ?? '최대화/되돌리기',
               useTapUp: true,
               icon: isFullScreen ? Icons.fullscreen_exit_outlined : Icons.fullscreen_outlined,
               onPressed: () {
@@ -329,6 +359,9 @@ class _LinkWidgetState extends State<LinkWidget> {
     if (StudioVariables.isPreview == false) return false;
     if (StudioVariables.hideMouse) return false;
     //if (widget.contentsModel.contentsType == ContentsType.document) return false;
+
+    // 화면 사이즈가 너무 작으면 나오지 않는다.
+    if (widget.frameModel.width.value * StudioVariables.applyScale < 4 * 36) return false;
     return true;
   }
 
@@ -353,8 +386,8 @@ class _LinkWidgetState extends State<LinkWidget> {
       return const SizedBox.shrink();
     }
     _position = Offset(posX, posY);
-    print(
-        '--------------------drawEachLink : $_position, ${widget.frameModel.width.value * widget.applyScale},${widget.frameModel.height.value * widget.applyScale}');
+    //print(
+    //    '--------------------drawEachLink : $_position, ${widget.frameModel.width.value * widget.applyScale},${widget.frameModel.height.value * widget.applyScale}');
     _linkCount++;
 
     double nameWidth = 0;

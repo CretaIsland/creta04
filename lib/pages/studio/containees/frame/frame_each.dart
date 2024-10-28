@@ -33,6 +33,7 @@ import '../../../../player/creta_play_manager.dart';
 import '../../book_main_page.dart';
 import '../../left_menu/depot/depot_display.dart';
 import '../../left_menu/music/music_player_frame.dart';
+import '../../page_index_dialog.dart';
 import '../../studio_getx_controller.dart';
 import '../../studio_snippet.dart';
 import '../../studio_variables.dart';
@@ -734,6 +735,59 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
                             onFrameShowUnshow: () {
                               logger.fine('onFrameShowUnshow');
                               widget.frameManager.notify();
+                            },
+                            showContentsIndex: () async {
+                              //print('showContentsIndex in frame_each');
+
+                              ContentsManager? contentsManager =
+                                  frameManager!.getContentsManager(frameModel.mid);
+                              if (contentsManager != null) {
+                                List<CretaModel> contentsList =
+                                    contentsManager.getOrdered().toList();
+
+                                await showGeneralDialog(
+                                  context: context,
+                                  barrierDismissible: true,
+                                  barrierLabel:
+                                      MaterialLocalizations.of(context).modalBarrierDismissLabel,
+                                  barrierColor: Colors.black54,
+                                  transitionDuration: const Duration(milliseconds: 200),
+                                  pageBuilder: (BuildContext buildContext, Animation animation,
+                                      Animation secondaryAnimation) {
+                                    return PageIndexDialog(
+                                      modelList: contentsList,
+                                      onSelected: (int index) {
+                                        ContentsModel contentsModel =
+                                            contentsList[index] as ContentsModel;
+                                        //print('goto contentsModel.name=${contentsModel.name}');
+
+                                        if (contentsManager.isSelected(contentsModel.mid) == true) {
+                                          return;
+                                        }
+
+                                        contentsManager.playManager?.releasePause();
+                                        contentsManager.goto(contentsModel.order.value);
+                                        contentsManager.setSelectedMid(contentsModel.mid,
+                                            doNotify: true); // 현재 선택된 것이 무엇인지 확실시,
+                                      },
+                                    );
+                                  },
+                                  transitionBuilder:
+                                      (context, animation, secondaryAnimation, child) {
+                                    return SlideTransition(
+                                      position: Tween<Offset>(
+                                        begin: const Offset(0.6, 0.3),
+                                        end: const Offset(0.4, 0.3),
+                                      ).animate(animation),
+                                      child: child,
+                                    );
+                                  },
+                                );
+
+                                widget.frameManager.notify();
+                              } else {
+                                logger.severe('contentsManager is null');
+                              }
                             },
                           ),
                         if (frameModel.dragOnMove == true)

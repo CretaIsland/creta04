@@ -35,9 +35,15 @@ class BTN {
   static CretaButton fill_i_s({
     required IconData icon,
     required Function onPressed,
+    String? tooltip,
+    Color? tooltipFg,
+    Color? tooltipBg,
     bool useTapUp = false,
   }) {
     return CretaButton(
+      tooltip: tooltip,
+      tooltipFg: tooltipFg,
+      tooltipBg: tooltipBg,
       useTapUp: useTapUp,
       width: 28,
       height: 28,

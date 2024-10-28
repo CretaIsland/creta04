@@ -522,7 +522,7 @@ class PageManager extends BasePageManager {
     await StudioVariables.pauseAll();
 
     _prevModel = getSelected() as PageModel?;
-    print('gotoPage $pageMid');
+    //print('gotoPage $pageMid');
     bool retval = _movePage(pageMid);
     //if (StudioVariables.isPreview && mid != null) gotoNextStickers(mid);
 

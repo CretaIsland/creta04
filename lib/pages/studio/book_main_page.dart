@@ -1982,31 +1982,30 @@ class _BookMainPageState extends State<BookMainPage> {
                       transitionDuration: const Duration(milliseconds: 200),
                       pageBuilder: (BuildContext buildContext, Animation animation,
                           Animation secondaryAnimation) {
-                        return Align(
-                          alignment: Alignment.bottomRight,
-                          child: PageIndexDialog(
-                            pageList: pageList,
-                            onSelected: (int index) {
-                              PageModel pageModel = pageList[index] as PageModel;
-                              print('pageModel.name=${pageModel.name.value}');
-                              MouseHider.lastMouseMoveTime = DateTime.now();
-                              BookPreviewMenu.previewMenuPressed = true;
-                              StudioVariables.stopPaging = false;
-                              StudioVariables.stopNextContents = false;
-                              pageManager.gotoPage(pageModel.mid);
-                            },
-                          ),
+                        return PageIndexDialog(
+                          modelList: pageList,
+                          onSelected: (int index) {
+                            PageModel pageModel = pageList[index] as PageModel;
+                            //print('pageModel.name=${pageModel.name.value}');
+                            if (pageManager.isSelected(pageModel.mid) == true) {
+                              return;
+                            }
+
+                            MouseHider.lastMouseMoveTime = DateTime.now();
+                            BookPreviewMenu.previewMenuPressed = true;
+                            StudioVariables.stopPaging = false;
+                            StudioVariables.stopNextContents = false;
+                            pageManager.gotoPage(pageModel.mid);
+                          },
                         );
                       },
                       transitionBuilder: (context, animation, secondaryAnimation, child) {
                         return SlideTransition(
                           position: Tween<Offset>(
-                            begin: const Offset(0.4, 0.6),
+                            begin: const Offset(0.6, 0.3),
                             end: const Offset(0.4, 0.3),
                           ).animate(animation),
-                          child: Align(
-                              alignment: Alignment.bottomRight, // 최종 위치를 화면 우측 하단으로 설정
-                              child: child),
+                          child: child,
                         );
                       },
                     );

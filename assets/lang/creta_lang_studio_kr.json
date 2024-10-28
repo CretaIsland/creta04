@@ -610,5 +610,7 @@
   "infoUrl": "연결 웹 주소",
   "showLinkName": "이름 보이기",
   "showLinkComment": "내용 보이기",
+  "showPageIndex": "페이지 목차 보이기",
+  "showContentsIndex": "콘텐츠 목차 보이기",
   "end": "End"
 }

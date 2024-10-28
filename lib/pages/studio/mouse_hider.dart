@@ -77,13 +77,14 @@ class MouseHiderState extends State<MouseHider> {
         onHover: (pointerEvent) {
           _mouseMoveCount++;
           MouseHider.lastMouseMoveTime = DateTime.now();
-          if (_mouseMoveCount > 30) {
-            //print('mouse hover');
+          if (_mouseMoveCount > 20) {
+            //print('mouse hover $_mouseMoveCount ${StudioVariables.hideMouse}');
             //SystemChannels.mouseCursor.invokeMethod('mouseCursor', 'auto');
             if (StudioVariables.hideMouse == true) {
               //true일 경우만 한다.
               setState(() {
                 StudioVariables.hideMouse = false;
+                _sendMouseEvent?.sendEvent(Offset.zero);
               });
               widget.onMouseHideChanged.call();
             }
@@ -121,11 +122,11 @@ class MouseHiderState extends State<MouseHider> {
               }
               _mouseMoveCount = 0;
             }
-          } else {
-            // setState(() {
-            //   print('hide mouse 2');
-            //   StudioVariables.hideMouse = true;
-            // });
+            // } else if (StudioVariables.hideMouse == true && _fromPriviewToMain == false) {
+            //   setState(() {
+            //     print('show mouse 2');
+            //     StudioVariables.hideMouse = false;
+            //   });
           }
         }
       });

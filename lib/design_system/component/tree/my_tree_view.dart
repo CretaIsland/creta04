@@ -40,7 +40,7 @@ class MyTreeView extends StatefulWidget {
   final void Function(CretaModel model, int index) showUnshow;
 
   MyTreeView({
-    Key? key,
+    super.key,
     //required this.nodes,
     required this.pageManager,
     required this.removePage,
@@ -48,7 +48,7 @@ class MyTreeView extends StatefulWidget {
     required this.removeContents,
     required this.removeLink,
     required this.showUnshow,
-  }) : super(key: key);
+  });
 
   @override
   MyTreeViewState createState() => MyTreeViewState();
@@ -705,7 +705,7 @@ class CretaColors {}
 class ModContainer extends StatelessWidget {
   final tree.ExpanderModifier modifier;
 
-  const ModContainer(this.modifier, {Key? key}) : super(key: key);
+  const ModContainer(this.modifier, {super.key});
 
   @override
   Widget build(BuildContext context) {

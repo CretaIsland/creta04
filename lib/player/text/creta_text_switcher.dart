@@ -11,13 +11,13 @@ class CretaTextSwitcher extends StatefulWidget {
   final TextAniType aniType;
 
   const CretaTextSwitcher({
-    Key? key,
+    super.key,
     required this.text,
     required this.builder,
     this.switchDuration = const Duration(seconds: 2),
     this.stopDuration = const Duration(seconds: 2),
     this.aniType = TextAniType.fadeTransition,
-  }) : super(key: key);
+  });
 
   @override
   TextSwitcherWidgetState createState() => TextSwitcherWidgetState();

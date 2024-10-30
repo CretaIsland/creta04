@@ -35,10 +35,14 @@ dependencies:
     sdk: flutter
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
+  # get:
+  #   git:
+  #     url: https://github.com/CretaIsland/get-4.6.5.git
+  #     ref: main
   creta_common:
     git:
       url: https://github.com/CretaIsland/creta_common.git
-      ref: main  
+      ref: main
   creta_user_model:
     git:
       url: https://github.com/CretaIsland/creta_user_model.git
@@ -59,6 +63,59 @@ dependencies:
     git:
       url: https://github.com/CretaIsland/my_syncfusion_flutter_pdfviewer.git
       ref: main  
+  html_editor_enhanced:
+    git:
+      url: https://github.com/CretaIsland/html_editor_enhanced-2.5.1.git
+      ref: main  
+  flutter_weather_bg_null_safety:
+    git:
+      url: https://github.com/CretaIsland/flutter_weather_bg_null_safety-1.0.0.git
+      ref: main  
+  group_radio_button:
+    git:
+      url: https://github.com/CretaIsland/group_radio_button-1.3.0.git
+      ref: main  
+  r_dotted_line_border:
+    git:
+      url: https://github.com/CretaIsland/r_dotted_line_border-0.1.1.git
+      ref: main  
+  adaptive_scrollbar:
+    git:
+      url: https://github.com/CretaIsland/adaptive_scrollbar-2.1.2.git
+      ref: main  
+  neonpen:
+    git:
+      url: https://github.com/CretaIsland/neonpen-2.0.5.git   
+      ref: main
+  custom_radio_grouped_button:
+    git:
+      url: https://github.com/CretaIsland/custom_radio_grouped_button-2.2.1.git
+      ref: main
+  video_player:
+    git:
+      url: https://github.com/CretaIsland/video_player-2.8.6.git
+      ref: main
+  just_audio:
+    git:
+      url: https://github.com/CretaIsland/just_audio-0.9.37.git
+      ref: main
+  scroll_loop_auto_scroll:
+    git:
+      url: https://github.com/CretaIsland/scroll_loop_auto_scroll-0.0.5.git
+      ref: main
+  material_tag_editor:
+    git:
+      url: https://github.com/CretaIsland/material_tag_editor-0.1.2.git
+      ref: main
+  dropdown_button2:
+    git:
+      url: https://github.com/CretaIsland/dropdown_button2-1.9.4.git
+      ref: main
+  carousel_slider:
+    git:
+      url: https://github.com/CretaIsland/carousel_slider-4.2.1.git
+      ref: main
+
 
   cupertino_icons: ^1.0.2
   flutter_riverpod: ^1.0.4
@@ -66,14 +123,14 @@ dependencies:
   routemaster: ^1.0.1
   hycop: ^0.4.75  
   outline_search_bar: ^2.3.0
-  custom_radio_grouped_button: ^2.2.1
+  # custom_radio_grouped_button: ^2.2.1
   # elegant_radio_button_group: ^0.0.1
   # roundcheckbox: ^2.0.5
   # flutter_awesome_select: ^6.5.0
   # radio_grouped_buttons: ^1.0.1
-  group_radio_button: ^1.3.0
+  # group_radio_button: ^1.3.0
   another_xlider: ^1.1.2
-  dropdown_button2: ^1.8.9
+  # dropdown_button2: ^1.8.9
   # url_strategy: ^0.3.0
   # flutter_xlider: ^3.4.0
   flutter_vector_icons: ^2.0.0
@@ -83,33 +140,33 @@ dependencies:
   http: ^1.1.0
   universal_html: ^2.0.8
   #firebase_core_platform_interface: ^5.0.0
-  adaptive_scrollbar: ^2.1.2
+  #adaptive_scrollbar: ^2.1.2
   mutex: ^3.0.1
   loading_animation_widget: ^1.2.0+4
   #sortedmap: ^0.5.2
   deep_collection: ^1.0.2
-  get: ^4.6.5
+  get: ^4.6.6
   dotted_border: ^2.0.0+3
-  material_tag_editor: ^0.1.2
+  # material_tag_editor: ^0.1.2
   quiver: ^3.2.1
   flex_color_picker: ^3.4.1
   flutter_animate: ^4.0.0
-  r_dotted_line_border: ^0.1.1
+  #r_dotted_line_border: ^0.1.1
   flutter_inner_shadow: ^0.0.1
   inner_shadow_widget: ^0.0.3
-  confetti: ^0.7.0
-  snowfall: ^0.0.2
-  parallax_rain: ^1.1.0
-  floating_bubbles: ^2.3.0
-  starsview: ^0.0.2
+  #confetti: ^0.7.0
+  #snowfall: ^0.0.2
+  #parallax_rain: ^1.1.0
+  #floating_bubbles: ^2.3.0
+  #starsview: ^0.0.2
   flutter_dropzone: ^3.0.5
   blobs: ^2.0.0
-  video_player: 2.8.6
+  # video_player: 2.8.6
   # youtube_player_iframe: ^3.1.0
   youtube_player_iframe: ^4.0.4
   animated_text_kit: ^4.2.2
   #auto_size_text: ^3.0.0
-  scroll_loop_auto_scroll: ^0.0.5
+  # scroll_loop_auto_scroll: ^0.0.5
   widget_and_text_animator: ^1.0.9
   text_to_speech: ^0.2.3
   image_picker: ^0.8.7
@@ -127,16 +184,15 @@ dependencies:
   #quill_html_editor: ^2.1.9
   shimmer: ^2.0.0
   circular_reveal_animation: ^2.0.1
-  neonpen: ^2.0.5
+  # neonpen: ^2.0.5
   simple_tooltip: ^1.2.0
   # pdfx: ^2.3.0
   # internet_file: ^1.2.0
   # universal_platform: ^1.0.0+1
   # performance: ^0.1.0+1
-  # html_editor_enhanced: ^2.5.1
   # numberpicker: ^2.1.2
   file_picker: ^5.3.1
-  flutter_weather_bg_null_safety: ^1.0.0
+  # flutter_weather_bg_null_safety: ^1.0.0
   weather_animation: ^0.0.2
   just_audio_background: ^0.0.1-beta.10
   flutter_excel: ^1.0.1
@@ -153,7 +209,7 @@ dependencies:
   flutter_webrtc: ^0.9.35
   random_string: ^2.3.1
   audio_service: ^0.18.10
-  just_audio: ^0.9.37
+  # just_audio: ^0.9.37
   mini_music_visualizer: ^1.0.2
   marquee: ^2.2.3
   flutter_media_metadata: ^1.0.0+1
@@ -161,7 +217,7 @@ dependencies:
   # //구글맵 임시로 사용안함.
   # google_maps_flutter_web: ^0.5.7
   # google_maps_flutter: ^2.4.0
-  html_editor_enhanced: ^2.5.1
+  #html_editor_enhanced: ^2.5.1
   flutter_html: ^3.0.0-beta.2
   stop_watch_timer: ^3.0.1
   timeline_tile: ^2.0.0
@@ -181,7 +237,7 @@ dependencies:
   avatar_glow: ^3.0.1
   flutter_glow: ^0.3.0
   quoter: ^0.0.1
-  carousel_slider: ^4.2.1
+  # carousel_slider: ^4.2.1
   expandable_slider: ^2.0.0
   email_validator: ^2.1.17
   animate_icons: ^2.0.0

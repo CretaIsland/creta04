@@ -10,7 +10,7 @@ abstract class DroppedFile {
 class DroppedFileWidget extends StatelessWidget {
   // here we get the uploaded file data
   final ContentsModel? file;
-  const DroppedFileWidget({Key? key, required this.file}) : super(key: key);
+  const DroppedFileWidget({super.key, required this.file});
 
   @override
   Widget build(BuildContext context) {

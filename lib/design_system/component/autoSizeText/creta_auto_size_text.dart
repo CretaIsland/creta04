@@ -20,7 +20,7 @@ class CretaAutoSizeText extends StatefulWidget {
   /// closest enclosing [DefaultTextStyle].
   const CretaAutoSizeText(
     String this.data, {
-    Key? key,
+    super.key,
     required this.mid, //skpark
     this.fontSizeChanged, //skpark
     this.textKey,
@@ -41,15 +41,14 @@ class CretaAutoSizeText extends StatefulWidget {
     this.textScaleFactor,
     this.maxLines,
     this.semanticsLabel,
-  })  : textSpan = null,
-        super(key: key);
+  })  : textSpan = null;
 
   /// Creates a [CretaAutoSizeText] widget with a [TextSpan].
   const CretaAutoSizeText.rich(
     TextSpan this.textSpan, {
     required this.mid, //skpark
     this.fontSizeChanged, //skpark
-    Key? key,
+    super.key,
     this.textKey,
     this.style,
     this.strutStyle,
@@ -68,8 +67,7 @@ class CretaAutoSizeText extends StatefulWidget {
     this.textScaleFactor,
     this.maxLines,
     this.semanticsLabel,
-  })  : data = null,
-        super(key: key);
+  })  : data = null;
 
   /// Sets the key for the resulting [Text] widget.
   ///

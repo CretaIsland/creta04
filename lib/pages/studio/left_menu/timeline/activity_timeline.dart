@@ -132,7 +132,8 @@ class __CretaTimelineSample3 extends State<ActivityTimeline> {
 
 // ignore: must_be_immutable
 class _TimelineActivity extends StatelessWidget {
-  _TimelineActivity({Key? key, required this.steps}) : super(key: key);
+  // ignore: unused_element
+  _TimelineActivity({super.key, required this.steps});
 
   final List<Step> steps;
   Widget? leftChild;
@@ -196,7 +197,8 @@ class _TimelineActivity extends StatelessWidget {
 }
 
 class _RightChildTimeline extends StatelessWidget {
-  const _RightChildTimeline({Key? key, required this.step}) : super(key: key);
+  // ignore: unused_element
+  const _RightChildTimeline({super.key, required this.step});
 
   final Step step;
 
@@ -239,7 +241,7 @@ class _RightChildTimeline extends StatelessWidget {
 }
 
 class _LeftChildTimeline extends StatelessWidget {
-  const _LeftChildTimeline({Key? key, required this.step}) : super(key: key);
+  const _LeftChildTimeline({required this.step});
 
   final Step step;
 

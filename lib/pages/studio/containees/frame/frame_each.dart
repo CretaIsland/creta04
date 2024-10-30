@@ -52,7 +52,7 @@ class FrameEach extends StatefulWidget {
   final double height;
   final Offset frameOffset;
   const FrameEach({
-    Key? key,
+    super.key,
     required this.frameManager,
     required this.pageModel,
     required this.model,
@@ -60,7 +60,7 @@ class FrameEach extends StatefulWidget {
     required this.width,
     required this.height,
     required this.frameOffset,
-  }) : super(key: key);
+  });
 
   @override
   State<FrameEach> createState() => FrameEachState();
@@ -754,32 +754,39 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
                                   transitionDuration: const Duration(milliseconds: 200),
                                   pageBuilder: (BuildContext buildContext, Animation animation,
                                       Animation secondaryAnimation) {
-                                    return PageIndexDialog(
-                                      modelList: contentsList,
-                                      onSelected: (int index) {
-                                        ContentsModel contentsModel =
-                                            contentsList[index] as ContentsModel;
-                                        //print('goto contentsModel.name=${contentsModel.name}');
+                                    return Align(
+                                      alignment: Alignment.topRight,
+                                      child: PageIndexDialog(
+                                        modelList: contentsList,
+                                        onSelected: (int index) {
+                                          ContentsModel contentsModel =
+                                              contentsList[index] as ContentsModel;
+                                          //print('goto contentsModel.name=${contentsModel.name}');
 
-                                        if (contentsManager.isSelected(contentsModel.mid) == true) {
-                                          return;
-                                        }
+                                          if (contentsManager.isSelected(contentsModel.mid) ==
+                                              true) {
+                                            return;
+                                          }
 
-                                        contentsManager.playManager?.releasePause();
-                                        contentsManager.goto(contentsModel.order.value);
-                                        contentsManager.setSelectedMid(contentsModel.mid,
-                                            doNotify: true); // 현재 선택된 것이 무엇인지 확실시,
-                                      },
+                                          contentsManager.playManager?.releasePause();
+                                          contentsManager.goto(contentsModel.order.value);
+                                          contentsManager.setSelectedMid(contentsModel.mid,
+                                              doNotify: true); // 현재 선택된 것이 무엇인지 확실시,
+                                        },
+                                      ),
                                     );
                                   },
                                   transitionBuilder:
                                       (context, animation, secondaryAnimation, child) {
-                                    return SlideTransition(
-                                      position: Tween<Offset>(
-                                        begin: const Offset(0.6, 0.3),
-                                        end: const Offset(0.4, 0.3),
-                                      ).animate(animation),
-                                      child: child,
+                                    return Align(
+                                      alignment: Alignment.topRight,
+                                      child: SlideTransition(
+                                        position: Tween<Offset>(
+                                          begin: const Offset(0.6, -0.3),
+                                          end: const Offset(0.4, -0.3),
+                                        ).animate(animation),
+                                        child: child,
+                                      ),
                                     );
                                   },
                                 );

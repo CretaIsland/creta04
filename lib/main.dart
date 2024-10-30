@@ -82,7 +82,7 @@ void main() async {
 }
 
 class MainRouteApp extends ConsumerStatefulWidget {
-  const MainRouteApp({Key? key}) : super(key: key);
+  const MainRouteApp({super.key});
   // This widget is the root of your application.
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _MainRouteAppState();

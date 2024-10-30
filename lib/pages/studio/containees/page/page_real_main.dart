@@ -172,20 +172,21 @@ class PageRealMainState extends CretaState<PageRealMain> with ContaineeMixin {
         //   },
         // ),
       ],
-      child: _pageEffect(),
+      //child: _pageEffect(),
+      child: _drawFrames(),
     );
   }
 
-  Widget _pageEffect() {
-    if (widget.pageModel.effect.value != EffectType.none) {
-      return Stack(alignment: Alignment.center, children: [
-        effectWidget(widget.pageModel),
-        _drawFrames(),
-        //_pageController(),
-      ]);
-    }
-    return _drawFrames();
-  }
+  // Widget _pageEffect() {
+  //   if (widget.pageModel.effect.value != EffectType.none) {
+  //     return Stack(alignment: Alignment.center, children: [
+  //       effectWidget(widget.pageModel),
+  //       _drawFrames(),
+  //       //_pageController(),
+  //     ]);
+  //   }
+  //   return _drawFrames();
+  // }
 
   Widget _drawFrames() {
     return Consumer<FrameManager>(builder: (context, manager, child) {

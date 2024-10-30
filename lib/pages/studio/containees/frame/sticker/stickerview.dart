@@ -472,7 +472,7 @@ class Sticker extends StatefulWidget {
   // GlobalKey<DraggableResizableState>? dragableResiableKey;
 
   Sticker({
-    Key? key,
+    super.key,
     //required this.id,
     //required this.frameKey,
     required this.frameManager,
@@ -486,7 +486,7 @@ class Sticker extends StatefulWidget {
     required this.isOverlay,
     //this.isText,
     this.child,
-  }) : super(key: key);
+  });
   @override
   StickerState createState() => StickerState();
 }

@@ -98,7 +98,7 @@ class _SuccessTimelineState extends State<SuccessTimeline> {
 }
 
 class _TimelineSteps extends StatelessWidget {
-  const _TimelineSteps({Key? key, required this.steps}) : super(key: key);
+  const _TimelineSteps({required this.steps});
 
   final List<Step> steps;
 
@@ -161,7 +161,7 @@ class _TimelineSteps extends StatelessWidget {
 }
 
 class _TimelineStepIndicator extends StatelessWidget {
-  const _TimelineStepIndicator({Key? key, required this.step}) : super(key: key);
+  const _TimelineStepIndicator({required this.step});
 
   final String step;
 
@@ -188,11 +188,10 @@ class _TimelineStepIndicator extends StatelessWidget {
 
 class _TimelineStepsChild extends StatelessWidget {
   const _TimelineStepsChild({
-    Key? key,
     required this.title,
     required this.subtitle,
     required this.isLeftAlign,
-  }) : super(key: key);
+  });
 
   final String title;
   final String subtitle;

@@ -245,7 +245,7 @@ class _DeliveryTimelineState extends State<_DeliveryTimeline> {
 enum _DeliveryStatus { done, doing, todo }
 
 class _StartChildDelivery extends StatelessWidget {
-  const _StartChildDelivery({Key? key, required this.index}) : super(key: key);
+  const _StartChildDelivery({required this.index});
 
   final int index;
 
@@ -259,10 +259,9 @@ class _StartChildDelivery extends StatelessWidget {
 
 class _EndChildDelivery extends StatelessWidget {
   const _EndChildDelivery({
-    Key? key,
     required this.text,
     required this.current,
-  }) : super(key: key);
+  });
 
   final String text;
   final bool current;
@@ -296,7 +295,7 @@ class _EndChildDelivery extends StatelessWidget {
 }
 
 class _IndicatorDelivery extends StatelessWidget {
-  const _IndicatorDelivery({Key? key, required this.status}) : super(key: key);
+  const _IndicatorDelivery({required this.status});
 
   final _DeliveryStatus status;
 

@@ -153,7 +153,7 @@ class _CretaTimelineSample2State extends State<FootballTimeline> {
 }
 
 class _TimelineFootball extends StatelessWidget {
-  const _TimelineFootball({Key? key, required this.data}) : super(key: key);
+  const _TimelineFootball({required this.data});
 
   final List<FootballData> data;
 
@@ -193,7 +193,7 @@ class _TimelineFootball extends StatelessWidget {
 }
 
 class _MessageTimeline extends StatelessWidget {
-  const _MessageTimeline({Key? key, required this.message}) : super(key: key);
+  const _MessageTimeline({required this.message});
 
   final String message;
 
@@ -229,12 +229,11 @@ class _MessageTimeline extends StatelessWidget {
 
 class _TimelineFootballChild extends StatelessWidget {
   const _TimelineFootballChild({
-    Key? key,
     required this.action,
     required this.title,
     required this.subtitle,
     required this.isLeftChild,
-  }) : super(key: key);
+  });
 
   final Action action;
   final String title;
@@ -294,7 +293,7 @@ class _TimelineFootballChild extends StatelessWidget {
 }
 
 class _TimelineFootballIndicator extends StatelessWidget {
-  const _TimelineFootballIndicator({Key? key, required this.time}) : super(key: key);
+  const _TimelineFootballIndicator({required this.time});
 
   final String time;
 
@@ -360,7 +359,7 @@ class _Scoreboard extends StatelessWidget {
 }
 
 class _Score extends StatelessWidget {
-  const _Score({Key? key, required this.score, required this.team}) : super(key: key);
+  const _Score({required this.score, required this.team});
 
   final String score;
   final String team;

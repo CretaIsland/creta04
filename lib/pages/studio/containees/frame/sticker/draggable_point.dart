@@ -9,7 +9,7 @@ enum PositionMode { local, global }
 
 class DraggablePoint extends StatefulWidget {
   const DraggablePoint({
-    Key? key,
+    super.key,
     required this.child,
     required this.onComplete,
     required this.onScaleStart,
@@ -18,7 +18,7 @@ class DraggablePoint extends StatefulWidget {
     this.onRotate,
     //required this.onTap,
     this.mode = PositionMode.global,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final PositionMode mode;

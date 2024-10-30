@@ -119,12 +119,11 @@ class _TimelineDelivery extends StatelessWidget {
 
 class _RightChild extends StatelessWidget {
   const _RightChild({
-    Key? key,
     required this.asset,
     required this.title,
     required this.message,
     this.disabled = false,
-  }) : super(key: key);
+  });
 
   final String asset;
   final String title;

@@ -27,8 +27,7 @@ class TeamTreeWidget extends StatefulWidget {
   final double height;
 
   const TeamTreeWidget(
-      {Key? key, required this.enterpriseModel, required this.width, required this.height})
-      : super(key: key);
+      {super.key, required this.enterpriseModel, required this.width, required this.height});
 
   @override
   State<TeamTreeWidget> createState() => _TeamTreeWidgetState();

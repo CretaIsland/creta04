@@ -269,11 +269,11 @@ class PageManager extends BasePageManager {
   static bool isGotoNext = true;
 
   PageManager({
-    String tableName = 'creta_page',
+    super.tableName,
     super.isPublishedMode = false,
     super.onGotoPrevBook,
     super.onGotoNextBook,
-  }) : super(tableName: tableName) {
+  }) {
     //saveManagerHolder?.registerManager('page', this);
   }
   // @override

@@ -351,11 +351,12 @@ class _EditorDialogState extends State<EditorDialog> {
         ],
       ),
       htmlEditorOptions: HtmlEditorOptions(
-          //disabled: true,
-          hint: "Type you Text here",
-          initialText: widget.initialText,
-          backgroundColor: widget.backgroundColor ?? Colors.transparent,
-          width: _isFullScreen ? realSize.width - 200 : realSize.width),
+        //disabled: true,
+        hint: "Type you Text here",
+        initialText: widget.initialText,
+        //backgroundColor: widget.backgroundColor ?? Colors.transparent,
+        //width: _isFullScreen ? realSize.width - 200 : realSize.width
+      ),
       otherOptions: OtherOptions(
         decoration: BoxDecoration(
             color: widget.backgroundColor,

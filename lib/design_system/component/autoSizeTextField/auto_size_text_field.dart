@@ -441,7 +441,7 @@ class AutoSizeTextField extends StatefulWidget {
   /// If the [style] argument is null, the text will use the style from the
   /// closest enclosing [DefaultTextStyle].
   const AutoSizeTextField({
-    Key? key,
+    super.key,
     this.useAutoSize = true, //skpark
     required this.initialHeight, //skpark , 문자열이 엠프티일때, 초기 높이를 알기 위해.
     required this.fontSize, //skpark ,
@@ -512,8 +512,7 @@ class AutoSizeTextField extends StatefulWidget {
         assert(!obscureText || maxLines == 1, 'Obscured fields cannot be multiline.'),
         assert(maxLength == null || maxLength == TextField.noMaxLength || maxLength > 0),
         keyboardType =
-            keyboardType ?? (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
-        super(key: key);
+            keyboardType ?? (maxLines == 1 ? TextInputType.text : TextInputType.multiline);
 
   /// The text to display.
   ///

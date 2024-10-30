@@ -30,10 +30,10 @@ class MusicPlayerFrame extends StatefulWidget {
 
   const MusicPlayerFrame({
     // super.key,
-    Key? key,
+    super.key,
     required this.contentsManager,
     required this.size,
-  }) : super(key: key);
+  });
 
   @override
   State<MusicPlayerFrame> createState() => MusicPlayerFrameState();

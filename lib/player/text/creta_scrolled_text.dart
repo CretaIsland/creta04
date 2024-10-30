@@ -8,7 +8,7 @@ class CretaScrolledText extends StatefulWidget {
     required this.text,
     required this.style,
     required this.realSize,
-    Key? key,
+    super.key,
     this.stopSeconds = 1,
     this.delay = const Duration(seconds: 1),
     this.duration = const Duration(seconds: 50),
@@ -17,7 +17,7 @@ class CretaScrolledText extends StatefulWidget {
     this.duplicateChild = 25,
     this.enableScrollInput = true,
     this.delayAfterScrollInput = const Duration(seconds: 1),
-  }) : super(key: key);
+  });
 
   final String text;
   final TextStyle style;

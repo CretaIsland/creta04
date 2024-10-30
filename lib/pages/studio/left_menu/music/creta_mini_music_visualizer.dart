@@ -41,14 +41,14 @@ class MyVisualizer {
 
 class CretaVisualComponent extends StatefulWidget {
   const CretaVisualComponent({
-    Key? key,
+    super.key,
     required this.duration,
     required this.color,
     required this.curve,
     this.width,
     this.height,
     required this.isPlaying,
-  }) : super(key: key);
+  });
 
   final int duration;
   final Color color;

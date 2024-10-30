@@ -9,7 +9,7 @@ import '../../pages/studio/book_main_page.dart';
 
 class PinchPage extends StatefulWidget {
   final String url;
-  const PinchPage({Key? key, required this.url}) : super(key: key);
+  const PinchPage({super.key, required this.url});
 
   @override
   State<PinchPage> createState() => _PinchPageState();

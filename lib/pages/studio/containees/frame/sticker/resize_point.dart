@@ -32,7 +32,7 @@ const _cursorLookup = <ResizePointType, MouseCursor>{
 
 class ResizePoint extends StatefulWidget {
   const ResizePoint(
-      {Key? key,
+      {super.key,
       required this.onDrag,
       required this.type,
       this.onTap,
@@ -41,8 +41,7 @@ class ResizePoint extends StatefulWidget {
       // ignore: unused_element
       this.onScaleUpdate,
       required this.onScaleStart,
-      this.iconData})
-      : super(key: key);
+      this.iconData});
 
   final VoidCallback onScaleStart;
   final ValueSetter<Offset> onDrag;

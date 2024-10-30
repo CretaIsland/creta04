@@ -422,7 +422,7 @@ class AutoSizeTextFormField extends StatefulWidget {
   /// If the [style] argument is null, the text will use the style from the
   /// closest enclosing [DefaultTextStyle].
   const AutoSizeTextFormField({
-    Key? key,
+    super.key,
     this.autovalidateMode,
     this.initialValue,
     this.validator,
@@ -501,8 +501,7 @@ class AutoSizeTextFormField extends StatefulWidget {
                     cut: true,
                     selectAll: true,
                     paste: true,
-                  )),
-        super(key: key);
+                  ));
 
   /// The text to display.
   ///

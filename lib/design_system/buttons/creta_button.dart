@@ -123,8 +123,8 @@ class CretaButton extends StatefulWidget {
     this.onHover,
     this.useTapUp = false,
     this.noHoverEffect = false,
-    Key? key,
-  }) : super(key: key) {
+    super.key,
+  }) {
     _setColor();
   }
 

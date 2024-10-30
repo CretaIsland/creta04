@@ -14,12 +14,12 @@ class QuotePage extends StatefulWidget {
   final Quoter quoter;
 
   const QuotePage({
-    Key? key,
+    super.key,
     this.quoter = const Quoter(),
     this.width,
     this.height,
     this.frameModel,
-  }) : super(key: key);
+  });
 
   @override
   State<QuotePage> createState() => _QuotePageState();

@@ -634,70 +634,70 @@ mixin PropertyMixin {
     );
   }
 
-  Widget effect(
-    String title, {
-    required double padding,
-    required void Function() setState,
-    required String modelPrefix,
-    required CretaStyleMixin model,
-    required void Function() onSelected,
-    required Function onDelete,
-  }) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: padding),
-      child: propertyCard(
-        isOpen: isEffectOpen,
-        onPressed: () {
-          isEffectOpen = !isEffectOpen;
-          setState();
-        },
-        titleWidget: Text(CretaStudioLang['effect']!, style: CretaFont.titleSmall),
-        //trailWidget: isColorOpen ? _gradationButton() : _colorIndicator(),
-        trailWidget: Text(
-          title,
-          textAlign: TextAlign.right,
-          style: CretaFont.titleSmall.copyWith(overflow: TextOverflow.fade),
-        ),
-        hasRemoveButton: model.effect.value != EffectType.none,
-        onDelete: onDelete,
-        bodyWidget: effectBody(
-          modelPrefix: modelPrefix,
-          model: model,
-          onSelected: onSelected,
-        ),
-      ),
-    );
-  }
+  // Widget effect(
+  //   String title, {
+  //   required double padding,
+  //   required void Function() setState,
+  //   required String modelPrefix,
+  //   required CretaStyleMixin model,
+  //   required void Function() onSelected,
+  //   required Function onDelete,
+  // }) {
+  //   return Padding(
+  //     padding: EdgeInsets.symmetric(horizontal: padding),
+  //     child: propertyCard(
+  //       isOpen: isEffectOpen,
+  //       onPressed: () {
+  //         isEffectOpen = !isEffectOpen;
+  //         setState();
+  //       },
+  //       titleWidget: Text(CretaStudioLang['effect']!, style: CretaFont.titleSmall),
+  //       //trailWidget: isColorOpen ? _gradationButton() : _colorIndicator(),
+  //       trailWidget: Text(
+  //         title,
+  //         textAlign: TextAlign.right,
+  //         style: CretaFont.titleSmall.copyWith(overflow: TextOverflow.fade),
+  //       ),
+  //       hasRemoveButton: model.effect.value != EffectType.none,
+  //       onDelete: onDelete,
+  //       bodyWidget: effectBody(
+  //         modelPrefix: modelPrefix,
+  //         model: model,
+  //         onSelected: onSelected,
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  Widget effectBody(
-      {required String modelPrefix,
-      required CretaStyleMixin model,
-      required void Function() onSelected}) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 16.0),
-      child: Wrap(
-        spacing: 16,
-        runSpacing: 16,
-        children: [
-          for (int i = 1; i < EffectType.end.index; i++)
-            EffectExampleBox(
-              //key: ValueKey('$modelPrefix=${EffectType.values[i].name}'),
-              key: ValueKey(
-                  '$modelPrefix=${EffectType.values[i].name}+${model.effect.value == EffectType.values[i]}'),
-              model: model,
-              name: EffectType.values[i].name,
-              effectType: EffectType.values[i],
-              selected: model.effect.value == EffectType.values[i],
-              onSelected: onSelected,
-            ),
-          // SizedBox(
-          //     width: 156,
-          //     height: 106,
-          //     child: Text(EffectType.values.elementAt(i).name, style: titleStyle)),
-        ],
-      ),
-    );
-  }
+  // Widget effectBody(
+  //     {required String modelPrefix,
+  //     required CretaStyleMixin model,
+  //     required void Function() onSelected}) {
+  //   return Padding(
+  //     padding: const EdgeInsets.only(top: 16.0),
+  //     child: Wrap(
+  //       spacing: 16,
+  //       runSpacing: 16,
+  //       children: [
+  //         for (int i = 1; i < EffectType.end.index; i++)
+  //           EffectExampleBox(
+  //             //key: ValueKey('$modelPrefix=${EffectType.values[i].name}'),
+  //             key: ValueKey(
+  //                 '$modelPrefix=${EffectType.values[i].name}+${model.effect.value == EffectType.values[i]}'),
+  //             model: model,
+  //             name: EffectType.values[i].name,
+  //             effectType: EffectType.values[i],
+  //             selected: model.effect.value == EffectType.values[i],
+  //             onSelected: onSelected,
+  //           ),
+  //         // SizedBox(
+  //         //     width: 156,
+  //         //     height: 106,
+  //         //     child: Text(EffectType.values.elementAt(i).name, style: titleStyle)),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget tagWidget({
     required String mid,

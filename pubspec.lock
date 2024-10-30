@@ -20,10 +20,11 @@ packages:
   adaptive_scrollbar:
     dependency: "direct main"
     description:
-      name: adaptive_scrollbar
-      sha256: d615755ffba8bce96aa8445afc79727d1339651bbf4c08ce80a077c619eb7a1b
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: effcb7fb03abc2533b7a023324bf9df3fe64f972
+      url: "https://github.com/CretaIsland/adaptive_scrollbar-2.1.2.git"
+    source: git
     version: "2.1.2"
   analyzer:
     dependency: transitive
@@ -244,10 +245,11 @@ packages:
   carousel_slider:
     dependency: "direct main"
     description:
-      name: carousel_slider
-      sha256: "9c695cc963bf1d04a47bd6021f68befce8970bcd61d24938e1fb0918cf5d9c42"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: f1353146483bdb3fd96d23d1153d2bf3779f5d9a
+      url: "https://github.com/CretaIsland/carousel_slider-4.2.1.git"
+    source: git
     version: "4.2.1"
   characters:
     dependency: transitive
@@ -337,14 +339,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
-  confetti:
-    dependency: "direct main"
-    description:
-      name: confetti
-      sha256: "979aafde2428c53947892c95eb244466c109c129b7eee9011f0a66caaca52267"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.0"
   convert:
     dependency: transitive
     description:
@@ -374,46 +368,46 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "90a5d7bd0d534a321938d773af8f677cc5dfc906"
+      resolved-ref: b1bda28a9af6dda5e2e88dbc20e684c8917b9fd9
       url: "https://github.com/CretaIsland/creta_common.git"
     source: git
-    version: "0.0.3"
+    version: "0.0.5"
   creta_studio_io:
     dependency: "direct main"
     description:
       path: "."
       ref: main
-      resolved-ref: "25f3f7a221a4dcbf25f5c1c8722bbac8cad62278"
+      resolved-ref: "856392f1495fa8e19afd6365fb6008059f7b06dc"
       url: "https://github.com/CretaIsland/creta_studio_io.git"
     source: git
-    version: "0.0.2"
+    version: "0.0.6"
   creta_studio_model:
     dependency: "direct main"
     description:
       path: "."
       ref: main
-      resolved-ref: df3f43105c03a7abc738be422fc6500c1abf596c
+      resolved-ref: d5f0e6af3edea3a2a4e1c3639b0d07848da0a5ba
       url: "https://github.com/CretaIsland/creta_studio_model.git"
     source: git
-    version: "0.0.2"
+    version: "0.0.5"
   creta_user_io:
     dependency: "direct main"
     description:
       path: "."
       ref: main
-      resolved-ref: adbd609ad41b2d72615019b6a071ce85491a5fba
+      resolved-ref: aeb8db6456cf069f0f9eaa64013e5f03c65e07a2
       url: "https://github.com/CretaIsland/creta_user_io.git"
     source: git
-    version: "0.0.2"
+    version: "0.0.5"
   creta_user_model:
     dependency: "direct main"
     description:
       path: "."
       ref: main
-      resolved-ref: "50150e4347338e26baec8081f31010ca8bea4d92"
+      resolved-ref: "73e407143f47ce1df5810823992055a2620fa451"
       url: "https://github.com/CretaIsland/creta_user_model.git"
     source: git
-    version: "0.0.2"
+    version: "0.0.5"
   cross_file:
     dependency: transitive
     description:
@@ -449,10 +443,11 @@ packages:
   custom_radio_grouped_button:
     dependency: "direct main"
     description:
-      name: custom_radio_grouped_button
-      sha256: b07bd6dec2c1c5d64776a354eb2c01c67a77e4a5700098ae6fbde18cc94ad33d
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: "77d80f54cd7c8abcdec27ae8f29ee7b1395a00bb"
+      url: "https://github.com/CretaIsland/custom_radio_grouped_button-2.2.1.git"
+    source: git
     version: "2.2.1"
   dart_appwrite:
     dependency: transitive
@@ -521,10 +516,11 @@ packages:
   dropdown_button2:
     dependency: "direct main"
     description:
-      name: dropdown_button2
-      sha256: "604b87283e251e0e4a0cb1d0fdfa91fd527702b06e80999c4054cecc603e10e7"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: "5b3fe5a4912b2834d4aa50b75649cf388934e5d3"
+      url: "https://github.com/CretaIsland/dropdown_button2-1.9.4.git"
+    source: git
     version: "1.9.4"
   effective_dart:
     dependency: transitive
@@ -766,14 +762,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.0"
-  floating_bubbles:
-    dependency: "direct main"
-    description:
-      name: floating_bubbles
-      sha256: "4f39efc44eb5777861e346aa747950b605c2ba538ec0c67e9a2219330191f533"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.6.2"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -1008,10 +996,11 @@ packages:
   flutter_weather_bg_null_safety:
     dependency: "direct main"
     description:
-      name: flutter_weather_bg_null_safety
-      sha256: "268820fad42588882341ca4475ec0dc54d69897c5b1b15f2b4d13ccacd0b7457"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: "7023e42aa719aeba0e7e1160a116b640095d70c2"
+      url: "https://github.com/CretaIsland/flutter_weather_bg_null_safety-1.0.0.git"
+    source: git
     version: "1.0.0"
   flutter_web_auth_2:
     dependency: transitive
@@ -1134,10 +1123,10 @@ packages:
     dependency: "direct main"
     description:
       name: get
-      sha256: "2ba20a47c8f1f233bed775ba2dd0d3ac97b4cf32fc17731b3dfc672b06b0e92a"
+      sha256: e4e7335ede17452b391ed3b2ede016545706c01a02292a6c97619705e7d2a85e
       url: "https://pub.dev"
     source: hosted
-    version: "4.6.5"
+    version: "4.6.6"
   giphy_get:
     dependency: "direct main"
     description:
@@ -1245,10 +1234,11 @@ packages:
   group_radio_button:
     dependency: "direct main"
     description:
-      name: group_radio_button
-      sha256: "204de8d16b224be7fc72dade0c3afd410ff5a34417d89f74f0fd8be7a8c2b4d6"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: d20bbeb1111e38dffedf347d78a7aad6193e86ed
+      url: "https://github.com/CretaIsland/group_radio_button-1.3.0.git"
+    source: git
     version: "1.3.0"
   gtk:
     dependency: transitive
@@ -1285,10 +1275,11 @@ packages:
   html_editor_enhanced:
     dependency: "direct main"
     description:
-      name: html_editor_enhanced
-      sha256: c2a0d0a50970fe4aa565e79e57081c8a69c3b2e94162e8f1df3e1b750c7aeb5e
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: d417de3c4849c052c5eb296a67928593b7e8ad61
+      url: "https://github.com/CretaIsland/html_editor_enhanced-2.5.1.git"
+    source: git
     version: "2.5.1"
   http:
     dependency: "direct main"
@@ -1461,10 +1452,11 @@ packages:
   just_audio:
     dependency: "direct main"
     description:
-      name: just_audio
-      sha256: b7cb6bbf3750caa924d03f432ba401ec300fd90936b3f73a9b33d58b1e96286b
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: "4553c5b9f5c29a6a5ef06969bab6fb6d67c7f7a2"
+      url: "https://github.com/CretaIsland/just_audio-0.9.37.git"
+    source: git
     version: "0.9.37"
   just_audio_background:
     dependency: "direct main"
@@ -1589,10 +1581,11 @@ packages:
   material_tag_editor:
     dependency: "direct main"
     description:
-      name: material_tag_editor
-      sha256: "02582fad5f2f4e761ae089b1b63156827612bc720e1c229ca887f99c22ada0b9"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: "258c784e5338492c90fb071c2adb62c6b5b7673e"
+      url: "https://github.com/CretaIsland/material_tag_editor-0.1.2.git"
+    source: git
     version: "0.1.2"
   md5_file_checksum:
     dependency: transitive
@@ -1654,10 +1647,11 @@ packages:
   neonpen:
     dependency: "direct main"
     description:
-      name: neonpen
-      sha256: "35193617c462a773244959933471f4f74d2d44d0fc1781a619e39b37fcf7c868"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: "3d7c0573dedfd8b9b9dc255a62618f9cf84c9e72"
+      url: "https://github.com/CretaIsland/neonpen-2.0.5.git"
+    source: git
     version: "2.0.5"
   nested:
     dependency: transitive
@@ -1723,14 +1717,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
-  parallax_rain:
-    dependency: "direct main"
-    description:
-      name: parallax_rain
-      sha256: "433eb7b572147f26da212d30959332bce87e55a270f725fb2e92e599e97b47d8"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.1"
   path:
     dependency: transitive
     description:
@@ -1926,10 +1912,11 @@ packages:
   r_dotted_line_border:
     dependency: "direct main"
     description:
-      name: r_dotted_line_border
-      sha256: "07d95addac75072ad4eb8f16e379c95d2a67d663575988361ccf30b333939fb2"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: "9d8b452d9f634c85e5265d54a0afa5c42d6ab403"
+      url: "https://github.com/CretaIsland/r_dotted_line_border-0.1.1.git"
+    source: git
     version: "0.1.1"
   random_string:
     dependency: "direct main"
@@ -1979,21 +1966,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
-  sa4_migration_kit:
-    dependency: transitive
-    description:
-      name: sa4_migration_kit
-      sha256: "635df6de79b8b396705a630ba2d7bc7a2a1df4f69b4bfc10aa104290f6fdca85"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
   scroll_loop_auto_scroll:
     dependency: "direct main"
     description:
-      name: scroll_loop_auto_scroll
-      sha256: "83645b380c58c9dac2a9948b11a6b09149a2aebd18a7ca25bbf3be3c89dbbbff"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: "483f326cbc7b2f405d63a0c43df8f12defec1a86"
+      url: "https://github.com/CretaIsland/scroll_loop_auto_scroll-0.0.5.git"
+    source: git
     version: "0.0.5"
   sdp_transform:
     dependency: transitive
@@ -2099,14 +2079,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
-  simple_animations:
-    dependency: transitive
-    description:
-      name: simple_animations
-      sha256: "1ea7b93fb98e2a611b6865d632de55607b766328d14700143353129ee0559d3a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.2"
   simple_text_field:
     dependency: transitive
     description:
@@ -2128,14 +2100,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
-  snowfall:
-    dependency: "direct main"
-    description:
-      name: snowfall
-      sha256: "9e000c719db595caa57738e0fa9a40f6df8f40bc18c10c4560127077750b3338"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.2"
   socket_io_client:
     dependency: transitive
     description:
@@ -2208,14 +2172,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.1"
-  starsview:
-    dependency: "direct main"
-    description:
-      name: starsview
-      sha256: "0455217cb78176430c59e69d7115123d0bbaa24eb2dbdda3a0042d250f6d8bca"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.2"
   state_notifier:
     dependency: transitive
     description:
@@ -2555,10 +2511,11 @@ packages:
   video_player:
     dependency: "direct main"
     description:
-      name: video_player
-      sha256: db6a72d8f4fd155d0189845678f55ad2fd54b02c10dcafd11c068dbb631286c0
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: a4f75bc8b507813b9d0b50e0c4bb6112d1f95321
+      url: "https://github.com/CretaIsland/video_player-2.8.6.git"
+    source: git
     version: "2.8.6"
   video_player_android:
     dependency: transitive

@@ -121,11 +121,11 @@ class DeviceMainPage extends StatefulWidget {
   //final List<String>? filterTexts;
 
   const DeviceMainPage({
-    Key? key,
+    super.key,
     required this.selectedPage,
     this.openDrawer,
     //this.filterTexts,
-  }) : super(key: key);
+  });
 
   @override
   State<DeviceMainPage> createState() => _DeviceMainPageState();

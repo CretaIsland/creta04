@@ -41,9 +41,8 @@ class DigitalClock extends StatefulWidget {
       this.contentsModel,
       this.timeChanged,
       isLive,
-      Key? key})
-      : isLive = isLive ?? (datetime == null),
-        super(key: key);
+      super.key})
+      : isLive = isLive ?? (datetime == null);
 
   @override
   _DigitalClockState createState() => _DigitalClockState(datetime);

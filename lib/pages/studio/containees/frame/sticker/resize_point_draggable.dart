@@ -9,7 +9,7 @@ import 'draggable_point.dart';
 
 class ResizePointDraggable extends StatefulWidget {
   const ResizePointDraggable({
-    Key? key,
+    super.key,
     required this.child,
     required this.onComplete,
     this.onDrag,
@@ -18,7 +18,7 @@ class ResizePointDraggable extends StatefulWidget {
     this.onRotate,
     required this.onTap,
     this.mode = PositionMode.global,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final PositionMode mode;

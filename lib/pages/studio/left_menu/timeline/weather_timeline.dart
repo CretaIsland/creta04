@@ -153,10 +153,9 @@ class WeatherTimeline extends StatelessWidget {
 
 class _IconIndicator extends StatelessWidget {
   const _IconIndicator({
-    Key? key,
     required this.iconData,
     required this.size,
-  }) : super(key: key);
+  });
 
   final IconData iconData;
   final double size;

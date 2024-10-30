@@ -58,8 +58,8 @@ copy src_modify\html_editor_enhanced\utils.daxt "C:\Users\skpar\AppData\Local\Pu
 
 
 REM seventhstone 23\10\10
-copy src_modify\snowflake_model.daxt "C:\Users\skpar\AppData\Local\Pub\Cache\hosted\pub.dev\snowfall-0.0.2\lib\snowfall\snowflake_model.dart"
-copy src_modify\snowfall_pubspec.yaml "C:\Users\skpar\AppData\Local\Pub\Cache\hosted\pub.dev\snowfall-0.0.2\pubspec.yaml"
+REM copy src_modify\snowflake_model.daxt "C:\Users\skpar\AppData\Local\Pub\Cache\hosted\pub.dev\snowfall-0.0.2\lib\snowfall\snowflake_model.dart"
+REM copy src_modify\snowfall_pubspec.yaml "C:\Users\skpar\AppData\Local\Pub\Cache\hosted\pub.dev\snowfall-0.0.2\pubspec.yaml"
 
 REM skpark modify 23\10\10
 copy src_modify\CustomRadioButton.daxt "C:\Users\skpar\AppData\Local\Pub\Cache\hosted\pub.dev\custom_radio_grouped_button-2.2.1\lib\CustomButtons\CustomRadioButton.dart"

@@ -42,17 +42,12 @@ class CretaOutLinePainter extends CustomPainter {
 
 class CretaOutLinePathPainter extends CretaOutLinePainter {
   CretaOutLinePathPainter({
-    ShapeType shapeType = ShapeType.none,
-    double strokeWidth = 0,
-    Color strokeColor = Colors.transparent,
-    BorderCapType borderCap = BorderCapType.round,
-    double applyScale = 1.0,
-  }) : super(
-            shapeType: shapeType,
-            strokeWidth: strokeWidth,
-            strokeColor: strokeColor,
-            borderCap: borderCap,
-            applyScale: applyScale);
+    super.shapeType,
+    super.strokeWidth,
+    super.strokeColor,
+    super.borderCap,
+    super.applyScale,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -75,15 +70,11 @@ class CretaOutLineOvalPainter extends CretaOutLinePainter {
     //required this.rect,
     required this.width,
     required this.height,
-    ShapeType shapeType = ShapeType.none,
-    double strokeWidth = 0,
-    Color strokeColor = Colors.transparent,
-    BorderCapType borderCap = BorderCapType.round,
-  }) : super(
-            shapeType: shapeType,
-            strokeWidth: strokeWidth,
-            strokeColor: strokeColor,
-            borderCap: borderCap);
+    super.shapeType,
+    super.strokeWidth,
+    super.strokeColor,
+    super.borderCap,
+  });
   @override
   void paint(Canvas canvas, Size size) {
     double margin = strokeWidth / 2;
@@ -112,15 +103,11 @@ class CretaOutLineRRectPainter extends CretaOutLinePainter {
     required this.radiusLeftTop,
     required this.radiusRightBottom,
     required this.radiusRightTop,
-    ShapeType shapeType = ShapeType.none,
-    double strokeWidth = 0,
-    Color strokeColor = Colors.transparent,
-    BorderCapType borderCap = BorderCapType.round,
-  }) : super(
-            shapeType: shapeType,
-            strokeWidth: strokeWidth,
-            strokeColor: strokeColor,
-            borderCap: borderCap);
+    super.shapeType,
+    super.strokeWidth,
+    super.strokeColor,
+    super.borderCap,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -168,15 +155,11 @@ class CretaOutLineCirclePainter extends CretaOutLinePainter {
   CretaOutLineCirclePainter({
     required this.width,
     required this.height,
-    ShapeType shapeType = ShapeType.none,
-    double strokeWidth = 0,
-    Color strokeColor = Colors.transparent,
-    BorderCapType borderCap = BorderCapType.round,
-  }) : super(
-            shapeType: shapeType,
-            strokeWidth: strokeWidth,
-            strokeColor: strokeColor,
-            borderCap: borderCap);
+    super.shapeType,
+    super.strokeWidth,
+    super.strokeColor,
+    super.borderCap,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {

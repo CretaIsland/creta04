@@ -36,11 +36,11 @@ class TeamListWidget extends StatefulWidget {
   final EnterpriseModel? enterprise;
 
   const TeamListWidget({
-    Key? key,
+    super.key,
     required this.width,
     required this.height,
     required this.enterprise,
-  }) : super(key: key);
+  });
 
   @override
   State<TeamListWidget> createState() => _TeamListWidgetState();

@@ -1064,7 +1064,7 @@ class Snippet {
                                       )),
                                 ),
                               ))
-                          .toList(),
+                          ,
                     ],
                   );
                 }),

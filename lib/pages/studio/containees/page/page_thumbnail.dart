@@ -258,7 +258,7 @@ class PageThumbnailState extends CretaState<PageThumbnail> with ContaineeMixin {
       return Stack(
         alignment: Alignment.center,
         children: [
-          effectWidget(widget.pageModel),
+          //effectWidget(widget.pageModel),
           _drawFrames(),
         ],
       );

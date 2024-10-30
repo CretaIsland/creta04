@@ -1663,7 +1663,7 @@ class _FramePropertyState extends State<FrameProperty> with PropertyMixin {
                   choiceStringElement(CretaStudioLang['noBorder']!, 156, 30),
                   ...CretaCommonUtils.borderStyle.map((e) {
                     return _borderStyle(156, 10, e[0], e[1]);
-                  }).toList(),
+                  }),
                 ],
                 defaultValue: widget.model.borderType.value,
                 onSelected: onStyleChanged,

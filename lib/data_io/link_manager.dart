@@ -11,7 +11,7 @@ import 'package:creta_studio_model/model/book_model.dart';
 import 'package:creta_studio_model/model/contents_model.dart';
 import 'package:creta_studio_model/model/frame_model.dart';
 import 'package:creta_studio_model/model/link_model.dart';
-import 'package:creta_studio_model/model/page_model.dart';
+//import 'package:creta_studio_model/model/page_model.dart';
 import '../pages/studio/book_main_page.dart';
 import '../pages/studio/containees/containee_nofifier.dart';
 import '../pages/studio/left_menu/left_menu_page.dart';
@@ -25,13 +25,13 @@ class LinkManager extends BaseLinkManager {
   // final FrameModel frameModel;
   // final bool isPublishedMode;
   LinkManager(
-    String contentsMid,
-    String bookMid,
-    PageModel pageModel,
-    FrameModel frameModel, {
-    String tableName = 'creta_link',
+    super.contentsMid,
+    super.bookMid,
+    super.pageModel,
+    super.frameModel, {
+    super.tableName,
     super.isPublishedMode = false,
-  }) : super(contentsMid, bookMid, pageModel, frameModel, tableName: tableName) {
+  }) {
     //saveManagerHolder?.registerManager('link', this, postfix: contentsMid);
   }
 

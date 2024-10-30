@@ -39,7 +39,7 @@ class BookManager extends BaseBookManager {
 
   Timer? _downloadReceivetimer;
 
-  BookManager({String tableName = 'creta_book'}) : super(tableName: tableName) {
+  BookManager({super.tableName}) {
     //saveManagerHolder?.registerManager('book', this);
   }
 

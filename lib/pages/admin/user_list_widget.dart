@@ -97,12 +97,12 @@ class UserListWidget extends StatefulWidget {
   final List<String> filterTexts;
 
   const UserListWidget({
-    Key? key,
+    super.key,
     required this.width,
     required this.height,
     required this.enterprise,
     required this.filterTexts,
-  }) : super(key: key);
+  });
 
   @override
   State<UserListWidget> createState() => _UserListWidgetState();

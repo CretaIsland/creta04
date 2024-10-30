@@ -132,27 +132,27 @@ class _PagePropertyState extends State<PageProperty> with PropertyMixin {
         // _texture(),
         // propertyDivider(),
         _pageTransition(), // 페이지 전환 효과는 일단 막아둔다. 나중에 다시 작업할 예정
-        propertyDivider(),
-        effect(
-          _model!.effect.value.name,
-          padding: horizontalPadding,
-          setState: () {
-            setState(() {});
-          },
-          model: _model!,
-          modelPrefix: 'page',
-          onSelected: () {
-            setState(() {});
-            BookMainPage.bookManagerHolder!.notify();
-          },
-          onDelete: () {
-            setState(() {
-              _model!.effect.set(EffectType.none);
-            });
-            _sendEvent?.sendEvent(_model!);
-            _pageManager?.notify();
-          },
-        ),
+        // propertyDivider(),
+        // effect(
+        //   _model!.effect.value.name,
+        //   padding: horizontalPadding,
+        //   setState: () {
+        //     setState(() {});
+        //   },
+        //   model: _model!,
+        //   modelPrefix: 'page',
+        //   onSelected: () {
+        //     setState(() {});
+        //     BookMainPage.bookManagerHolder!.notify();
+        //   },
+        //   onDelete: () {
+        //     setState(() {
+        //       _model!.effect.set(EffectType.none);
+        //     });
+        //     _sendEvent?.sendEvent(_model!);
+        //     _pageManager?.notify();
+        //   },
+        // ),
         propertyDivider(),
         _timeBasePage(),
         propertyDivider(),

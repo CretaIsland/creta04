@@ -15,12 +15,12 @@ class RateResult extends StatefulWidget {
   final XchangeEle xChangeEle;
 
   const RateResult({
-    Key? key,
+    super.key,
     this.width,
     this.height,
     this.frameModel,
     required this.xChangeEle,
-  }) : super(key: key);
+  });
 
   @override
   State<RateResult> createState() => _RateResultState();

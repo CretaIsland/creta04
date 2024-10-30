@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'remote_stream.dart';
 
 class ListRemoteStreams extends StatelessWidget {
-  const ListRemoteStreams({Key? key}) : super(key: key);
+  const ListRemoteStreams({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -12,13 +12,13 @@ class DiamondContainer extends StatelessWidget {
   final double applyScale;
 
   const DiamondContainer({
-    Key? key,
+    super.key,
     required this.width,
     required this.height,
     required this.color,
     required this.applyScale,
     this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

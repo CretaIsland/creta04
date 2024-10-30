@@ -48,9 +48,8 @@ class AnalogClock extends StatefulWidget {
       this.height = double.infinity,
       this.decoration = const BoxDecoration(),
       isLive,
-      Key? key})
-      : isLive = isLive ?? (datetime == null),
-        super(key: key);
+      super.key})
+      : isLive = isLive ?? (datetime == null);
 
   const AnalogClock.dark({
     datetime,

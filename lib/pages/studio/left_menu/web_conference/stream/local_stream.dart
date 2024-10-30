@@ -11,7 +11,7 @@ import '../button/audio_btn.dart';
 import '../button/video_btn.dart';
 
 class LocalStream extends StatefulWidget {
-  const LocalStream({Key? key}) : super(key: key);
+  const LocalStream({super.key});
   @override
   // ignore: library_private_types_in_public_api
   _LocalStreamState createState() => _LocalStreamState();

@@ -19,13 +19,12 @@ class DropZoneWidget extends StatefulWidget {
   final Color bgColor;
 
   const DropZoneWidget(
-      {Key? key,
+      {super.key,
       required this.onDroppedFile,
       required this.bookMid,
       required this.parentId,
       this.child,
-      this.bgColor = Colors.black})
-      : super(key: key);
+      this.bgColor = Colors.black});
   @override
   DropZoneWidgetState createState() => DropZoneWidgetState();
 }

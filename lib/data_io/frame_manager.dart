@@ -346,9 +346,8 @@ class FrameManager extends BaseFrameManager {
   FrameManager(
       {required super.pageModel,
       required super.bookModel,
-      String tableName = 'creta_frame',
-      super.isPublishedMode = false})
-      : super(tableName: tableName) {
+      super.tableName,
+      super.isPublishedMode = false}) {
     //saveManagerHolder?.registerManager('frame', this, postfix: pageModel.mid);
     //print('FrameManager created');
   }

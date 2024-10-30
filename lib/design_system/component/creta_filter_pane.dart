@@ -138,7 +138,7 @@ class _CretaFilterPaneState extends State<CretaFilterPane> {
                           .map(
                             (e) => CretaDropDownButton(height: 36, dropDownMenuItemList: e),
                           )
-                          .toList(),
+                          ,
                     ],
                   )
           ],

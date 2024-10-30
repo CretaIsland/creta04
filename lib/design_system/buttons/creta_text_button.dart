@@ -23,7 +23,7 @@ class CretaTextButton extends StatefulWidget {
   double? iconSize;
 
   CretaTextButton({
-    Key? key,
+    super.key,
     required this.text,
     this.width = 266,
     this.height = 72,
@@ -34,7 +34,7 @@ class CretaTextButton extends StatefulWidget {
     required this.textStyle,
     this.iconData,
     this.iconSize,
-  }) : super(key: key);
+  });
 
   @override
   State<CretaTextButton> createState() => _CretaTextButtonState();

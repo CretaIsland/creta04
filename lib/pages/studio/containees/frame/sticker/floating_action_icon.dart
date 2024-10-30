@@ -7,10 +7,10 @@ class FloatingActionIcon extends StatefulWidget {
   final VoidCallback? onTap;
 
   const FloatingActionIcon({
-    Key? key,
+    super.key,
     required this.iconData,
     this.onTap,
-  }) : super(key: key);
+  });
   @override
   State<FloatingActionIcon> createState() => FloatingActionIconState();
 }

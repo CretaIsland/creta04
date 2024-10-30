@@ -63,7 +63,7 @@ class BookGridPage extends StatefulWidget {
   final VoidCallback? openDrawer;
   final SelectedPage selectedPage;
 
-  const BookGridPage({Key? key, required this.selectedPage, this.openDrawer}) : super(key: key);
+  const BookGridPage({super.key, required this.selectedPage, this.openDrawer});
 
   @override
   State<BookGridPage> createState() => _BookGridPageState();

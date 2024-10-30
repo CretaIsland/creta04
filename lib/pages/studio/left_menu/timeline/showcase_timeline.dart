@@ -73,7 +73,7 @@ class ShowcaseTimeline extends StatelessWidget {
 }
 
 class _IndicatorExample extends StatelessWidget {
-  const _IndicatorExample({Key? key, required this.number}) : super(key: key);
+  const _IndicatorExample({required this.number});
 
   final String number;
 
@@ -105,7 +105,7 @@ class _IndicatorExample extends StatelessWidget {
 
 // ignore: must_be_immutable
 class _RowExample extends StatelessWidget {
-  _RowExample({Key? key, required this.title}) : super(key: key);
+  _RowExample({required this.title});
   String title = '';
   @override
   Widget build(BuildContext context) {

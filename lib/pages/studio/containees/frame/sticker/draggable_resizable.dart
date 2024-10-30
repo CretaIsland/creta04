@@ -51,7 +51,7 @@ class DragUpdate {
 class DraggableResizable extends StatefulWidget {
   /// {@macro draggable_resizable}
   DraggableResizable({
-    Key? key,
+    super.key,
     required this.sticker,
     // required this.mid,
     // required this.pageMid,
@@ -77,8 +77,7 @@ class DraggableResizable extends StatefulWidget {
     this.isVerticalResiable = true,
     this.isHorizontalResiable = true,
     //this.canTransform = false,
-  }) : //constraints = constraints ?? BoxConstraints.loose(Size.infinite),
-        super(key: key);
+  });
 
   /// The child which will be draggable/resizable.
   final Widget child;

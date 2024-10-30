@@ -35,8 +35,7 @@ class EnterpriseListWidget extends StatefulWidget {
   final double width;
   final double height;
 
-  const EnterpriseListWidget({Key? key, required this.width, required this.height})
-      : super(key: key);
+  const EnterpriseListWidget({super.key, required this.width, required this.height});
 
   @override
   State<EnterpriseListWidget> createState() => _EnterpriseListWidgetState();

@@ -48,12 +48,11 @@ class TreeNode extends StatefulWidget {
   final Widget Function(CretaModel model, String key) button2;
 
   const TreeNode(
-      {Key? key,
+      {super.key,
       required this.index,
       required this.node,
       required this.button1,
-      required this.button2})
-      : super(key: key);
+      required this.button2});
 
   @override
   _TreeNodeState createState() => _TreeNodeState();

@@ -122,7 +122,7 @@ class CretaPopupMenu {
                       },
                     );
                   }
-                }).toList(),
+                }),
               ],
             ),
           ),

@@ -89,7 +89,7 @@ enum AdminSelectedPage {
 // ignore: must_be_immutable
 class AdminMainPage extends StatefulWidget {
   final AdminSelectedPage selectedPage;
-  const AdminMainPage({Key? key, required this.selectedPage}) : super(key: key);
+  const AdminMainPage({super.key, required this.selectedPage});
 
   @override
   State<AdminMainPage> createState() => _AdminMainPageState();

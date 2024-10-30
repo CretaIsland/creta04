@@ -93,7 +93,7 @@ class TreeView extends InheritedWidget {
   final String selectedNode;
 
   TreeView({
-    Key? key,
+    super.key,
     required this.selectedNode,
     required this.controller,
     this.onNodeTap,
@@ -112,7 +112,6 @@ class TreeView extends InheritedWidget {
     TreeViewTheme? theme,
   })  : theme = theme ?? const TreeViewTheme(),
         super(
-          key: key,
           child: _TreeViewData(
             selectedNode,
             controller,

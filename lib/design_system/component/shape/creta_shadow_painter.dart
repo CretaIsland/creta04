@@ -56,7 +56,7 @@ class CretaShadowPathPainter extends CretaShadowPainter {
     required double pblurSpread,
     required double popacity,
     required Color pshadowColor,
-    required double applyScale,
+    required super.applyScale,
   }) : super(
           shapeType: pshapeType,
           offset: poffset,
@@ -64,7 +64,6 @@ class CretaShadowPathPainter extends CretaShadowPainter {
           blurSpread: pblurSpread,
           opacity: popacity,
           shadowColor: pshadowColor,
-          applyScale: applyScale,
         );
 
   @override

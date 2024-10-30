@@ -32,8 +32,8 @@ done
 
 # src_modify/modify_n.sh 실행 후 의존성 재설치
 execute_command src_modify/modify_n.sh
-execute_command flutter clean
-execute_command flutter pub get
+#execute_command flutter clean
+#execute_command flutter pub get
 
 echo "package updgrade 작업이 완료되었습니다."
 

@@ -26,3 +26,13 @@ tag_editor.daxt|material_tag_editor-0.1.2\lib\tag_editor.dart
 dropdown_button2.daxt|dropdown_button2-1.9.4\lib\dropdown_button2.dart
 extension_navigation.daxt|get-4.6.5\lib\get_navigation\src\extension_navigation.dart
 carousel_slider.daxt|carousel_slider-4.2.1\lib\carousel_slider.dart
+# 폰트 파일들 추가
+html_editor_enhanced\Jua-Regular.ttf|html_editor_enhanced-2.5.1\lib\assets\font\Jua\Jua-Regular.ttf
+html_editor_enhanced\Macondo-Regular.ttf|html_editor_enhanced-2.5.1\lib\assets\font\Macondo\Macondo-Regular.ttf
+html_editor_enhanced\NanumGothic-Regular.ttf|html_editor_enhanced-2.5.1\lib\assets\font\Nanum_Gothic\NanumGothic-Regular.ttf
+html_editor_enhanced\NanumMyeongjo-Regular.ttf|html_editor_enhanced-2.5.1\lib\assets\font\Nanum_Myeongjo\NanumMyeongjo-Regular.ttf
+html_editor_enhanced\NanumPenScript-Regular.ttf|html_editor_enhanced-2.5.1\lib\assets\font\Nanum_Pen_Script\NanumPenScript-Regular.ttf
+html_editor_enhanced\NotoSansKR-Regular.otf|html_editor_enhanced-2.5.1\lib\assets\font\Noto_Sans_KR\NotoSansKR-Regular.otf
+html_editor_enhanced\NotoSans-Regular.ttf|html_editor_enhanced-2.5.1\lib\assets\font\Noto_Sans\NotoSans-Regular.ttf
+html_editor_enhanced\Pretendard-Regular.otf|html_editor_enhanced-2.5.1\lib\assets\font\Pretendard\Pretendard-Regular.otf
+html_editor_enhanced\Zocial.ttf|html_editor_enhanced-2.5.1\lib\assets\font\Zocial\Zocial.ttf

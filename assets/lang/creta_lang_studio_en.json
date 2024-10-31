@@ -416,7 +416,8 @@
   "frontFrameTooltip": "Pull forward",
   "backFrameTooltip": "Send back",
   "rotateFrameTooltip": "Rotate in 15 degree increments",
-  "linkFrameTooltip": "Link to other frame content",
+  "linkFrameTooltip": "Link to other frame",
+  "linkContentsTooltip": "Link to other frame content",
   "mainFrameTooltip": "Make it the main frame",
   "flipConTooltip": "Flip",
   "rotateConTooltip": "Rotate",
@@ -612,5 +613,9 @@
   "showLinkComment": "Show comment",
   "showPageIndex": "Show page index",
   "showContentsIndex": "Show content index",
+  "whereToLink": "Linked content",
+  "tooltipPin": "Pin",
+  "tooltipRolling": "Rolling",
+
   "end": "End"
 }

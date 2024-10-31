@@ -529,25 +529,37 @@ class PageManager extends BasePageManager {
     return retval;
   }
 
-  Future<bool> gotoNext({bool loop = true}) async {
-    // 문제는 여기서, 다른 페이지의 모든 콘텐츠를 pause 해야한다는 것임.
-    await StudioVariables.pauseAll();
+  Future<bool> gotoNext({bool loop = true, bool force = false}) async {
+    //print("gotoNext ------------------------------------------------------------");
 
     _prevModel = getSelected() as PageModel?;
+    if(force == false) {
+      if (_prevModel != null && _prevModel!.isCircle.value == true) {
+        return _movePage(_prevModel!.mid);
+      }
+    }
+    // 문제는 여기서, 다른 페이지의 모든 콘텐츠를 pause 해야한다는 것임.
+    await StudioVariables.pauseAll();
     //print('gotoNext');
     _transitForward = !_transitForward;
     String? mid = getNextMid(loop: loop);
-    bool retval = _movePage(mid);
+    return _movePage(mid);
     //if (StudioVariables.isPreview && mid != null) gotoNextStickers(mid);
-
-    return retval;
   }
 
-  Future<bool> gotoPrev({bool loop = true}) async {
+  Future<bool> gotoPrev({bool loop = true, bool force = false}) async {
     // 문제는 여기서, 다른 페이지의 모든 콘텐츠를 pause 해야한다는 것임.
-    await StudioVariables.pauseAll();
+    //print("gotoNext ------------------------------------------------------------");
 
     _prevModel = getSelected() as PageModel?;
+    if(force == false) {
+      if (_prevModel != null && _prevModel!.isCircle.value == true) {
+        return _movePage(_prevModel!.mid);
+      }
+    }
+
+    await StudioVariables.pauseAll();
+
     //print('gotoPrev');
     _transitForward = !_transitForward;
     PageManager.isGotoNext = false;

@@ -18,7 +18,7 @@ import '../../../../design_system/component/creta_right_mouse_menu.dart';
 import 'package:creta_common/common/creta_color.dart';
 import '../../../../design_system/component/shape/triangle_container.dart';
 import '../../../../design_system/menu/creta_popup_menu.dart';
-import 'package:creta_common/lang/creta_lang.dart';
+//import 'package:creta_common/lang/creta_lang.dart';
 import '../../../../lang/creta_studio_lang.dart';
 import 'package:creta_common/model/app_enums.dart';
 import 'package:creta_studio_model/model/book_model.dart';
@@ -169,6 +169,9 @@ class _LinkWidgetState extends State<LinkWidget> {
     return Stack(
       alignment: Alignment.center,
       children: [
+        if (showVisibleButton &&
+            widget.frameModel.width.value * StudioVariables.applyScale > (4 * 36 + 200))
+          _drawTitle(),
         ..._drawLinkCursor(linkManager),
         if (_showPlayButton())
           PlayButton(
@@ -217,6 +220,57 @@ class _LinkWidgetState extends State<LinkWidget> {
     return true;
   }
 
+  Widget _drawTitle() {
+    return Positioned(
+      left: 12,
+      top: 10,
+      child: SizedBox(
+        width: 200,
+        child: Stack(
+          children: [
+            // 테두리를 그리는 Container
+            Text(
+              widget.contentsModel.name,
+              style: CretaFont.bodyMedium.copyWith(
+                foreground: Paint()
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 2
+                  ..color = Colors.black, // 테두리 색상
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+            // 실제 텍스트
+            Text(
+              widget.contentsModel.name,
+              style: CretaFont.bodyMedium.copyWith(color: Colors.white),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  // Widget _drawTitle() {
+  //   return Positioned(
+  //     left: 0,
+  //     top: 0,
+  //     child: Container(
+  //       width: 200,
+  //       height: 36,
+  //       //color: CretaColor.text[400]!.withOpacity(0.5),
+  //       alignment: Alignment.centerLeft,
+  //       child: Padding(
+  //         padding: const EdgeInsets.only(left: 12.0),
+  //         child: Text(
+  //           widget.contentsModel.name,
+  //           style: CretaFont.bodyMedium.copyWith(color: Colors.white),
+  //           overflow: TextOverflow.ellipsis,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+
   Widget _drawIndexButton() {
     double buttonSize = 20;
     double margin = 20;
@@ -224,7 +278,7 @@ class _LinkWidgetState extends State<LinkWidget> {
     double posY = margin / 2 * widget.applyScale;
 
     return Positioned(
-      left: posX, // 화면의 왼쪽에서 16픽셀 떨어진 위치
+      left: posX,
       top: posY,
       child: SizedBox(
         width: buttonSize,
@@ -362,6 +416,7 @@ class _LinkWidgetState extends State<LinkWidget> {
 
     // 화면 사이즈가 너무 작으면 나오지 않는다.
     if (widget.frameModel.width.value * StudioVariables.applyScale < 4 * 36) return false;
+    if (widget.frameModel.height.value * StudioVariables.applyScale < 36) return false;
     return true;
   }
 
@@ -504,6 +559,7 @@ class _LinkWidgetState extends State<LinkWidget> {
         // },
         onTapUp: (details) {
           if (StudioVariables.isPreview == false) {
+            _showLinkProperty(linkManager, model);
             if (_linkManager != null) {
               _showRightMouseMenu(
                 model,
@@ -675,8 +731,8 @@ class _LinkWidgetState extends State<LinkWidget> {
   }
 
   void _goto(LinkModel model) {
-    logger.fine('link button pressed ${model.connectedMid},${model.connectedClass}');
-    logger.info('link button pressed ${widget.frameModel.mid},${widget.frameModel.isShow.value}');
+    // print('link button pressed ${model.connectedMid},${model.connectedClass}');
+    // print('link button pressed ${widget.frameModel.mid},${widget.frameModel.isShow.value}');
     BookMainPage.containeeNotifier!.setFrameClick(true);
 
     //if (widget.contentsModel.isLinkEditMode == true) return;
@@ -687,97 +743,188 @@ class _LinkWidgetState extends State<LinkWidget> {
     double posY = (model.posY.value - stickerOffset) * widget.applyScale;
 
     if (model.connectedClass == 'page') {
-      // show Page
-      PageModel? pageModel =
-          BookMainPage.pageManagerHolder!.getModel(model.connectedMid) as PageModel?;
-      if (pageModel == null) {
-        logger.severe('connected = ${model.connectedMid} not founded');
-        return;
-      }
-      //print('connected = ${model.connectedMid} founded');
-
-      pageModel.isTempVisible = true;
-      LinkParams.linkSet(
-        Offset(posX, posY),
-        widget.frameOffset,
-        model.connectedMid,
-        'page',
-        model.name.value,
-        widget.frameManager.pageModel.mid,
-      );
-      //_lineDrawSendEvent?.sendEvent(isShow);
-      //_linkManager?.notify();
-
-      BookPreviewMenu.previewMenuPressed = true;
-      BookMainPage.pageManagerHolder?.setSelectedMid(model.connectedMid);
+      //print('connectedClass is page ----------------------');
+      _openPage(model, posX, posY);
       return;
     }
 
     if (model.connectedClass == 'frame') {
       //print('connectedClass is frame ----------------------');
-      FrameModel? childModel = widget.frameManager.getModel(model.connectedMid) as FrameModel?;
-      if (childModel == null) {
-        logger.severe('connected = ${model.connectedMid} not founded');
-        return;
-      }
-      // print('linkMid=${model.mid}');
-      // print('connected=${model.connectedMid}');
-      // print('childMid=${childModel.mid}');
-      // print('frameMid=${widget.frameModel.mid}');
-      // print('PageMid=${widget.frameModel.parentMid.value}');
-      //print('connected = ${model.connectedMid} founded');
+      _openFrame(model, posX, posY);
+      return;
+    }
+    if (model.connectedClass == 'contents') {
+      //print('connectedClass is contents ----------------------');
+      _openContents(model, posX, posY); // 먼저 openFrame 을 하고, Contents가 있는 곳까지 넘어가야 한다.
+    }
+    return;
+  }
 
-      childModel.isShow.set(!childModel.isShow.value, save: false, noUndo: true);
-      if (childModel.isShow.value == true) {
-        // child 모델이 안보이는 상태라면 나타나게 한다.
-        //print('child model invisible case ----------------------');
-        double order = widget.frameManager.getMaxOrder();
-        if (childModel.order.value < order) {
-          widget.frameManager.changeOrderByIsShow(childModel);
-          widget.frameManager.reOrdering();
-        }
-        // 여기서 연결선을 연결한다....
-        LinkParams.linkSet(
-          Offset(posX, posY),
-          widget.frameOffset,
-          model.connectedMid,
-          'page',
-          model.name.value,
-          widget.frameManager.pageModel.mid,
-        );
-        // LinkParams.linkPostion = Offset(posX, posY);
-        // LinkParams.orgPostion = widget.frameOffset;
-        // LinkParams.connectedMid = model.connectedMid;
-        // LinkParams.connectedClass = 'frame';
-        // LinkParams.connectedName = model.name;
-      } else {
-        //print('child model visible case ----------------------');
-        // child 모델이 보이는 상태라면 사라지게 한다.
-        LinkParams.linkClear();
+  void _openPage(LinkModel model, double posX, double posY) {
+    PageModel? pageModel =
+        BookMainPage.pageManagerHolder!.getModel(model.connectedMid) as PageModel?;
+    if (pageModel == null) {
+      logger.severe('connected = ${model.connectedMid} not founded');
+      return;
+    }
+    //print('connected = ${model.connectedMid} founded');
+
+    pageModel.isTempVisible = true;
+    LinkParams.linkSet(
+      Offset(posX, posY),
+      widget.frameOffset,
+      model.connectedMid,
+      'page',
+      model.name.value,
+      widget.frameManager.pageModel.mid,
+    );
+    //_lineDrawSendEvent?.sendEvent(isShow);
+    //_linkManager?.notify();
+
+    BookPreviewMenu.previewMenuPressed = true;
+    BookMainPage.pageManagerHolder?.setSelectedMid(model.connectedMid);
+  }
+
+  void _openFrame(LinkModel model, double posX, double posY) {
+    FrameModel? childModel = widget.frameManager.getModel(model.connectedMid) as FrameModel?;
+    if (childModel == null) {
+      logger.severe('connected = ${model.connectedMid} not founded');
+      return;
+    }
+    // print('linkMid=${model.mid}');
+    // print('connected=${model.connectedMid}');
+    // print('childMid=${childModel.mid}');
+    // print('frameMid=${widget.frameModel.mid}');
+    // print('PageMid=${widget.frameModel.parentMid.value}');
+    //print('connected = ${model.connectedMid} founded');
+
+    childModel.isShow.set(!childModel.isShow.value, save: false, noUndo: true);
+    if (childModel.isShow.value == true) {
+      // child 모델이 안보이는 상태라면 나타나게 한다.
+      //print('child model invisible case ----------------------');
+      double order = widget.frameManager.getMaxOrder();
+      if (childModel.order.value < order) {
         widget.frameManager.changeOrderByIsShow(childModel);
         widget.frameManager.reOrdering();
       }
-      model.showLinkLine = childModel.isShow.value;
-      childModel.save();
-      //_lineDrawSendEvent?.sendEvent(isShow);
-      //print('link button pressed ${widget.frameModel.mid},${widget.frameModel.isShow.value}');
-      widget.frameManager.notify();
-      if (StudioVariables.isPreview == true) {
-        //if (childModel.isShow.value == false) {
-        //  // 보이는 상태라면 사라지게 한다.
-        StickerViewState.clearOffStage(widget.frameManager.pageModel.mid);
-        StickerViewState.offStageChanged = true;
-        //} else {
-        // // widget.frameManager.invalidateFrameEach(
-        // //   childModel.parentMid.value,
-        // //   childModel.mid,
-        // // );
-        //}
-      }
+      // 여기서 연결선을 연결한다....
+      LinkParams.linkSet(
+        Offset(posX, posY),
+        widget.frameOffset,
+        model.connectedMid,
+        'frame',
+        model.name.value,
+        widget.frameManager.pageModel.mid,
+      );
+      // LinkParams.linkPostion = Offset(posX, posY);
+      // LinkParams.orgPostion = widget.frameOffset;
+      // LinkParams.connectedMid = model.connectedMid;
+      // LinkParams.connectedClass = 'frame';
+      // LinkParams.connectedName = model.name;
+    } else {
+      //print('child model visible case ----------------------');
+      // child 모델이 보이는 상태라면 사라지게 한다.
+      LinkParams.linkClear();
+      widget.frameManager.changeOrderByIsShow(childModel);
+      widget.frameManager.reOrdering();
+    }
+    model.showLinkLine = childModel.isShow.value;
+    childModel.save();
+    //_lineDrawSendEvent?.sendEvent(isShow);
+    //print('link button pressed ${widget.frameModel.mid},${widget.frameModel.isShow.value}');
+    widget.frameManager.notify();
+    if (StudioVariables.isPreview == true) {
+      //if (childModel.isShow.value == false) {
+      //  // 보이는 상태라면 사라지게 한다.
+      StickerViewState.clearOffStage(widget.frameManager.pageModel.mid);
+      StickerViewState.offStageChanged = true;
+      //} else {
+      // // widget.frameManager.invalidateFrameEach(
+      // //   childModel.parentMid.value,
+      // //   childModel.mid,
+      // // );
+      //}
+    }
 
-      //_linkManager?.notify();
+    //_linkManager?.notify();
+    return;
+  }
+
+  void _openContents(LinkModel model, double posX, double posY) {
+    ContentsModel? contentsModel = widget.frameManager.findContentsModel(model.connectedMid);
+    if (contentsModel == null) {
+      logger.severe('connected = ${model.connectedMid} not founded');
       return;
     }
+    FrameModel? childModel =
+        widget.frameManager.getModel(contentsModel.parentMid.value) as FrameModel?;
+    if (childModel == null) {
+      logger.severe('connected frame = ${model.connectedMid} not founded');
+      return;
+    }
+    // print('linkMid=${model.mid}');
+    // print('connected=${model.connectedMid}');
+    // print('childMid=${childModel.mid}');
+    // print('frameMid=${widget.frameModel.mid}');
+    // print('PageMid=${widget.frameModel.parentMid.value}');
+    //print('connected = ${model.connectedMid} founded');
+
+    if (childModel.isShow.value == false) {
+      // child 모델이 안보이는 상태라면 나타나게 한다.
+      //print('child model invisible case ----------------------');
+      childModel.isShow.set(true, save: false, noUndo: true);
+      double order = widget.frameManager.getMaxOrder();
+      if (childModel.order.value < order) {
+        widget.frameManager.changeOrderByIsShow(childModel);
+        widget.frameManager.reOrdering();
+      }
+      // 여기서 연결선을 연결한다....
+      LinkParams.linkSet(
+        Offset(posX, posY),
+        widget.frameOffset,
+        model.connectedMid,
+        'contents',
+        model.name.value,
+        widget.frameManager.pageModel.mid,
+      );
+      // LinkParams.linkPostion = Offset(posX, posY);
+      // LinkParams.orgPostion = widget.frameOffset;
+      // LinkParams.connectedMid = model.connectedMid;
+      // LinkParams.connectedClass = 'frame';
+      // LinkParams.connectedName = model.name;
+    }
+    model.showLinkLine = childModel.isShow.value;
+    childModel.save();
+    //_lineDrawSendEvent?.sendEvent(isShow);
+    //print('link button pressed ${widget.frameModel.mid},${widget.frameModel.isShow.value}');
+    widget.frameManager.notify();
+    if (StudioVariables.isPreview == true) {
+      //if (childModel.isShow.value == false) {
+      //  // 보이는 상태라면 사라지게 한다.
+      StickerViewState.clearOffStage(widget.frameManager.pageModel.mid);
+      StickerViewState.offStageChanged = true;
+      //} else {
+      // // widget.frameManager.invalidateFrameEach(
+      // //   childModel.parentMid.value,
+      // //   childModel.mid,
+      // // );
+      //}
+    }
+    //_linkManager?.notify();
+    // 여기까지가 Frame 을 보여준것이고, 이제 타겟 Contents 로 이동해야 한다.
+
+    ContentsManager? contentsManager = widget.frameManager.getContentsManager(childModel.mid);
+    if (contentsManager == null) {
+      logger.severe('contentsManager is null');
+      return;
+    }
+
+    contentsManager.playManager?.releasePause();
+    //print('----------------------------------------');
+    contentsManager.goto(contentsModel.order.value).then((v) {
+      contentsManager.setSelectedMid(contentsModel.mid, doNotify: true); // 현재 선택된 것이 무엇인지 확실시,
+    });
+    //print('*******************************************${contentsModel.name}');
     return;
   }
 
@@ -811,18 +958,12 @@ class _LinkWidgetState extends State<LinkWidget> {
         //       _linkSendEvent!.sendEvent(const Offset(1, 1));
         //       setState(() {});
         //     }),
-        CretaMenuItem(
-            caption: CretaLang['properties']!,
-            onPressed: () {
-              //  링크 속성 메뉴를 누르면, 현재 Frame 이 seletct 된것으로 간주해야 한다.
-              widget.frameManager.setSelectedMid(widget.frameModel.mid);
-              widget.contentsManager.setSelectedMid(widget.contentsModel.mid);
-              linkManager.setSelectedMid(model.mid);
-              BookMainPage.containeeNotifier!.set(ContaineeEnum.Link, doNoti: true);
-
-              LeftMenuPage.initTreeNodes();
-              LeftMenuPage.treeInvalidate();
-            }),
+        // CretaMenuItem(
+        //     caption: CretaLang['properties']!,
+        //     onPressed: () {
+        //       //  링크 속성 메뉴를 누르면, 현재 Frame 이 seletct 된것으로 간주해야 한다.
+        //       _showLinkProperty(linkManager, model);
+        //     }),
       ],
       itemHeight: 24,
       x: dx,
@@ -834,6 +975,16 @@ class _LinkWidgetState extends State<LinkWidget> {
       alwaysShowBorder: true,
       borderRadius: 8,
     );
+  }
+
+  void _showLinkProperty(LinkManager linkManager, LinkModel model) {
+    widget.frameManager.setSelectedMid(widget.frameModel.mid);
+    widget.contentsManager.setSelectedMid(widget.contentsModel.mid);
+    linkManager.setSelectedMid(model.mid);
+    BookMainPage.containeeNotifier!.set(ContaineeEnum.Link, doNoti: true);
+
+    LeftMenuPage.initTreeNodes();
+    LeftMenuPage.treeInvalidate();
   }
 
   // Widget _delButton(LinkModel model, LinkManager linkManager) {

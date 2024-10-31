@@ -1,3 +1,4 @@
+import 'package:creta_studio_model/model/contents_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hycop/common/util/logger.dart';
 
@@ -59,7 +60,7 @@ class StudioVariables {
   static bool isMute = false;
   static bool isReadOnly = false;
   static bool isAutoPlay = true;
-  static bool stopPaging = false;
+  //static bool stopPaging = false;
   static bool stopNextContents = false;
   static bool useMagnet = true;
   static double magnetMargin = 3;
@@ -170,10 +171,10 @@ class StudioVariables {
     //linkSendEvent?.sendEvent(const Offset(1, 1));
     //autoPlaySendEvent?.sendEvent(StudioVariables.isAutoPlay);
 
-    if (StudioVariables.isPreview && StudioVariables.stopPaging == true) {
-      //프리뷰모드에서는 동영상 플레이가 정지하는 것이 아니고, 다음페이지로 넘어가지 않는 것이다.
-      return;
-    }
+    // if (StudioVariables.isPreview && StudioVariables.stopPaging == true) {
+    //   //프리뷰모드에서는 동영상 플레이가 정지하는 것이 아니고, 다음페이지로 넘어가지 않는 것이다.
+    //   return;
+    // }
 
     if (BookMainPage.pageManagerHolder == null) {
       return;
@@ -245,6 +246,8 @@ class LinkParams {
         LinkParams.connectedName = model.name.value;
       } else if (model is PageModel) {
         LinkParams.connectedName = model.name.value;
+      } else if (model is ContentsModel) {
+        LinkParams.connectedName = model.name;
       }
       // if (StudioVariables.isLinkEditMode == false) {
       //   StudioVariables.isLinkEditMode = true;

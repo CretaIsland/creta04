@@ -416,7 +416,8 @@
     "frontFrameTooltip": "前方に引っ張る",
     "backFrameTooltip": "後ろに送る",
     "rotateFrameTooltip": "15度ずつ回転します",
-    "linkFrameTooltip": "他のフレームコンテンツにリンクします",
+    "linkFrameTooltip": "他のフレームにリンクします",
+    "linkContentsTooltip": "他のフレームコンテンツにリンクします",
     "mainFrameTooltip": "メインフレームに指定します",
     "flipConTooltip": "反転",
     "rotateConTooltip": "回転",
@@ -617,5 +618,8 @@
     "showLinkComment": "リンクコメントを表示",
     "showPageIndex": "ページ目次を表示",
     "showContentsIndex": "コンテンツの目次を表示",
+    "whereToLink": "リンクされたコンテンツ",
+    "tooltipPin": "ページ固定",
+    "tooltipRolling": "ページローリング",
     "end": "End"
 }

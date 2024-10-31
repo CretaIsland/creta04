@@ -407,7 +407,7 @@ class _BookMainPageState extends State<BookMainPage> {
 
     if (StudioVariables.isPreview == false) {
       StudioVariables.stopNextContents = false;
-      StudioVariables.stopPaging = false;
+      //StudioVariables.stopPaging = false;
       StudioVariables.hideMouse = false;
     }
 
@@ -1947,6 +1947,11 @@ class _BookMainPageState extends State<BookMainPage> {
               ),
               if (StudioVariables.hideMouse == false)
                 BookPreviewMenu(
+                  pageModel: pageModel,
+                  pageNo: pageNo,
+                  totalPage: totalPage,
+                  isPublishedMode: widget.isPublishedMode,
+                  toggleFullscreen: widget.toggleFullscreen,
                   goBackProcess: () async {
                     //setState(() {
                     await StudioVariables.pauseAll();
@@ -1954,7 +1959,7 @@ class _BookMainPageState extends State<BookMainPage> {
                     //});
                     // 돌아기기
                     _fromPriviewToMain = true;
-                    StudioVariables.stopPaging = false;
+                    //StudioVariables.stopPaging = false;
                     StudioVariables.stopNextContents = false;
 
                     if (kReleaseMode) {
@@ -1993,7 +1998,7 @@ class _BookMainPageState extends State<BookMainPage> {
 
                             MouseHider.lastMouseMoveTime = DateTime.now();
                             BookPreviewMenu.previewMenuPressed = true;
-                            StudioVariables.stopPaging = false;
+                            //StudioVariables.stopPaging = false;
                             StudioVariables.stopNextContents = false;
                             pageManager.gotoPage(pageModel.mid);
                           },
@@ -2014,35 +2019,27 @@ class _BookMainPageState extends State<BookMainPage> {
                     MouseHider.lastMouseMoveTime = DateTime.now();
                     StudioVariables.globalToggleMute(save: false);
                   },
-                  playFunction: () {
-                    MouseHider.lastMouseMoveTime = DateTime.now();
-                    //StudioVariables.globalToggleAutoPlay(_linkSendEvent, _autoPlaySendEvent,
-                    setState(() {
-                      StudioVariables.stopPaging = !StudioVariables.stopPaging;
-                    });
-                    //StudioVariables.globalToggleAutoPlay(save: false);
-                    // if (StudioVariables.isAutoPlay && StudioVariables.isPreview) {
-                    //   _startConnectedUserTimer();
-                    // }
+                  toggleLoop: () {
+                    pageModel!.isCircle.set(!pageModel.isCircle.value, noUndo: true);
+                    // MouseHider.lastMouseMoveTime = DateTime.now();
+                    // setState(() {
+                    //   StudioVariables.stopPaging = !StudioVariables.stopPaging;
+                    // });
                   },
                   gotoNext: () async {
                     MouseHider.lastMouseMoveTime = DateTime.now();
                     BookPreviewMenu.previewMenuPressed = true;
-                    StudioVariables.stopPaging = false;
+                    //StudioVariables.stopPaging = false;
                     StudioVariables.stopNextContents = false;
-                    await pageManager.gotoNext();
+                    await pageManager.gotoNext(force: true);
                   },
                   gotoPrev: () async {
                     MouseHider.lastMouseMoveTime = DateTime.now();
                     BookPreviewMenu.previewMenuPressed = true;
-                    StudioVariables.stopPaging = false;
+                    //StudioVariables.stopPaging = false;
                     StudioVariables.stopNextContents = false;
-                    await pageManager.gotoPrev();
+                    await pageManager.gotoPrev(force: true);
                   },
-                  pageNo: pageNo,
-                  totalPage: totalPage,
-                  isPublishedMode: widget.isPublishedMode,
-                  toggleFullscreen: widget.toggleFullscreen,
                 ),
             ],
           );

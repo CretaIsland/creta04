@@ -1,5 +1,9 @@
 // ignore_for_file: depend_on_referenced_packages, prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields
 
+//import 'package:creta_studio_model/model/frame_model.dart';
+//import 'package:creta_studio_model/model/page_model.dart';
+import 'package:creta_studio_model/model/frame_model.dart';
+import 'package:creta_studio_model/model/page_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hycop/hycop.dart';
@@ -17,7 +21,10 @@ import 'package:creta_common/model/app_enums.dart';
 import 'package:creta_studio_model/model/book_model.dart';
 import 'package:creta_studio_model/model/contents_model.dart';
 import 'package:creta_studio_model/model/link_model.dart';
+//import '../../book_main_page.dart';
+import '../../book_main_page.dart';
 import '../../studio_getx_controller.dart';
+//import '../../studio_variables.dart';
 import '../property_mixin.dart';
 
 class LinkProperty extends StatefulWidget {
@@ -115,6 +122,7 @@ class _LinkPropertyState extends State<LinkProperty> with PropertyMixin {
           hasRemoveButton: false,
           bodyWidget: Column(
             children: [
+              _whereToLink(),
               _position(),
               propertyLine(
                 // 아이콘 색
@@ -266,9 +274,68 @@ class _LinkPropertyState extends State<LinkProperty> with PropertyMixin {
     //});
   }
 
+  IconData _getLinkTypeIcon(String classString) {
+    IconData iconData = Icons.link;
+    if (classString == 'page') {
+      iconData = Icons.menu_book;
+    } else if (classString == 'frame') {
+      iconData = Icons.space_dashboard_outlined;
+    } else if (classString == 'contents') {
+      iconData = Icons.photo;
+    }
+    return iconData;
+  }
+
+  String _getLinkObjectName(String classString, String classMid) {
+    if (classString == 'page') {
+      PageModel? model = BookMainPage.pageManagerHolder!.getModel(classMid) as PageModel?;
+      if (model != null) {
+        return model.name.value;
+      }
+    } else if (classString == 'frame') {
+      FrameModel? model = widget.frameManager.getModel(classMid) as FrameModel?;
+      if (model != null) {
+        return model.name.value;
+      }
+    } else if (classString == 'contents') {
+      // 아직 ContentsType 이 없음.
+      ContentsModel? model = widget.frameManager.findContentsModel(classMid);
+      if (model != null) {
+        return model.name;
+      }
+    }
+    return 'unknown';
+  }
+
+  Widget _whereToLink() {
+    return propertyLine(
+      topPadding: 24,
+      name: CretaStudioLang['whereToLink'] ?? '링크된 곳',
+      widget: Padding(
+        padding: const EdgeInsets.only(left: 10.0),
+        child: Row(
+          children: [
+            Icon(_getLinkTypeIcon(widget.linkModel.connectedClass)),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: SizedBox(
+                width: 220,
+                child: Text(
+                  _getLinkObjectName(
+                      widget.linkModel.connectedClass, widget.linkModel.connectedMid),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _position() {
     return Padding(
-      padding: const EdgeInsets.only(top: 24.0),
+      padding: const EdgeInsets.only(top: 20.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [

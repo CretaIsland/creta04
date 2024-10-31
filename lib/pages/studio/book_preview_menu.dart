@@ -1,3 +1,4 @@
+import 'package:creta_studio_model/model/page_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../design_system/buttons/creta_transparent_button.dart';
@@ -9,24 +10,26 @@ import 'studio_variables.dart';
 
 class BookPreviewMenu extends StatefulWidget {
   static bool previewMenuPressed = false;
+  final PageModel? pageModel;
   final int pageNo;
   final int totalPage;
   final void Function() goBackProcess;
   final void Function() showPageIndex;
   final void Function() muteFunction;
-  final void Function() playFunction;
+  final void Function() toggleLoop;
   final Future<void> Function() gotoNext;
   final Future<void> Function() gotoPrev;
   final bool? isPublishedMode;
   final Function? toggleFullscreen;
   const BookPreviewMenu({
     super.key,
+    required this.pageModel,
     required this.pageNo,
     required this.totalPage,
     required this.goBackProcess,
     required this.showPageIndex,
     required this.muteFunction,
-    required this.playFunction,
+    required this.toggleLoop,
     required this.gotoNext,
     required this.gotoPrev,
     this.isPublishedMode,
@@ -88,11 +91,12 @@ class _BookPreviewMenuState extends State<BookPreviewMenu> {
                           toggleValue: StudioVariables.isMute,
                         ),
                         const SizedBox(width: 15),
+                        if(widget.pageModel != null)
                         CretaTrasparentButton(
-                          toggleValue: StudioVariables.stopPaging, //StudioVariables.isAutoPlay,
+                          toggleValue: widget.pageModel!.isCircle.value, //StudioVariables.stopPlay ,
                           icon1: Icons.push_pin_outlined,
-                          icon2: Icons.repeat_outlined,
-                          onPressed: widget.playFunction,
+                          icon2: Icons.loop,
+                          onPressed: widget.toggleLoop,
                           iconSize: 20,
                         ),
                       ],

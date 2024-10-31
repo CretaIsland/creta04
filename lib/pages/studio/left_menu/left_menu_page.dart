@@ -16,7 +16,7 @@ import 'package:creta_common/common/creta_common_utils.dart';
 import 'package:creta_common/common/window_screenshot.dart';
 import '../../../data_io/link_manager.dart';
 import '../../../data_io/page_manager.dart';
-import '../../../design_system/buttons/creta_button.dart';
+//import '../../../design_system/buttons/creta_button.dart';
 import '../../../design_system/buttons/creta_button_wrapper.dart';
 import '../../../design_system/buttons/creta_label_text_editor.dart';
 import '../../../design_system/buttons/creta_toggle_button.dart';
@@ -439,7 +439,7 @@ class LeftMenuPageState extends State<LeftMenuPage> {
                   textStyle: model.isShow.value
                       ? CretaFont.titleSmall
                       : CretaFont.titleSmall.copyWith(color: CretaColor.text[300]!),
-                  width: 160,
+                  width: 150,
                   height: 20,
                   onEditComplete: (value) {
                     setState(() {
@@ -452,42 +452,58 @@ class LeftMenuPageState extends State<LeftMenuPage> {
             ),
             Row(
               children: [
-                if (_pageManager!.isSelected(model.mid) == false)
-                  BTN.fill_blue_i_menu(
-                      tooltip: CretaStudioLang['linkFrameTooltip']!,
-                      tooltipFg: CretaColor.text,
-                      icon: LinkParams.isLinkNewMode
-                          ? Icons.close
-                          : Icons.link_outlined,
-                      decoType: CretaButtonDeco.opacity,
-                      iconColor: CretaColor.primary,
-                      buttonColor: CretaButtonColor.primary,
-                      onPressed: () {
-                        logger.fine("page header onPageLink");
-                        //BookMainPage.containeeNotifier!.setFrameClick(true);
-                        //BookMainPage.containeeNotifier!.set(ContaineeEnum.Page);
-                        setState(() {
-                          LinkParams.isLinkNewMode = !LinkParams.isLinkNewMode;
-                        });
-                        if (LinkParams.isLinkNewMode) {
-                          if (LinkParams.linkNew(model)) {
-                            //_linkSendEvent?.sendEvent(Offset(1, 1));
-                            BookMainPage.bookManagerHolder?.notify();
-                          }
-                        } else {
-                          LinkParams.linkCancel(model);
-                        }
-                      }),
-                BTN.fill_gray_i_m(
-                    tooltip: CretaStudioLang['copy']!,
+                if (_pageManager!.isSelected(model.mid) == true)
+                  BTN.fill_gray_i_m(
+                    tooltip: CretaStudioLang['newTemplate']!,
                     tooltipBg: CretaColor.text[700]!,
-                    icon: Icons.content_copy_outlined,
-                    onPressed: () async {
-                      //PageModel? page = _pageManager!.getSelected() as PageModel?;
-                      //if (page != null) {
-                      await _pageManager?.copyPage(model);
-                      setState(() {});
-                    }),
+                    icon: Icons.file_copy,
+                    onPressed: () {
+                      _saveAsTemplate(model);
+                    },
+                  ),
+                if (_pageManager!.isSelected(model.mid) == false)
+                  BTN.fill_gray_i_m(
+                    tooltip: CretaStudioLang['linkFrameTooltip']!,
+                    tooltipFg: CretaColor.text,
+                    icon: LinkParams.isLinkNewMode ? Icons.close : Icons.link_outlined,
+                    onPressed: () {
+                      logger.fine("page header onPageLink");
+                      setState(() {
+                        LinkParams.isLinkNewMode = !LinkParams.isLinkNewMode;
+                      });
+                      if (LinkParams.isLinkNewMode) {
+                        if (LinkParams.linkNew(model)) {
+                          //_linkSendEvent?.sendEvent(Offset(1, 1));
+                          BookMainPage.bookManagerHolder?.notify();
+                        }
+                      } else {
+                        LinkParams.linkCancel(model);
+                      }
+                    },
+                  ),
+                //  BTN.fill_blue_i_menu(
+                //   tooltip: CretaStudioLang['linkFrameTooltip']!,
+                //   tooltipFg: CretaColor.text,
+                //   icon: LinkParams.isLinkNewMode ? Icons.close : Icons.link_outlined,
+                //   decoType: CretaButtonDeco.opacity,
+                //   iconColor: CretaColor.primary,
+                //   buttonColor: CretaButtonColor.primary,
+                //   onPressed: () {
+                //     logger.fine("page header onPageLink");
+                //     setState(() {
+                //       LinkParams.isLinkNewMode = !LinkParams.isLinkNewMode;
+                //     });
+                //     if (LinkParams.isLinkNewMode) {
+                //       if (LinkParams.linkNew(model)) {
+                //         //_linkSendEvent?.sendEvent(Offset(1, 1));
+                //         BookMainPage.bookManagerHolder?.notify();
+                //       }
+                //     } else {
+                //       LinkParams.linkCancel(model);
+                //     }
+                //   },
+                // ),
+
                 BTN.fill_gray_i_m(
                   tooltip: model.isTimeBase()
                       ? CretaStudioLang['timeBasePage']!
@@ -504,46 +520,47 @@ class LeftMenuPageState extends State<LeftMenuPage> {
                     }
                   },
                 ),
-                BTN.fill_gray_image_m(
+                BTN.fill_gray_i_m(
+                  tooltip: model.isCircle.value
+                      ? CretaStudioLang['tooltipPin'] ?? '페이지 고정'
+                      : CretaStudioLang['tooltipRolling'] ?? '페이지 롤링',
+                  tooltipBg: CretaColor.text[700]!,
+                  icon: model.isCircle.value ? Icons.push_pin : Icons.loop,
+                  onPressed: () {
+                    model.isCircle.set(!model.isCircle.value, noUndo: true);
+                    _pageManager!.notify();
+                  },
+                ),
+                // BTN.fill_gray_image_m(
+                //   tooltip: CretaStudioLang['tooltipDelete']!,
+                //   tooltipBg: CretaColor.text[700]!,
+                //   iconImageFile: "assets/delete.svg",
+                //   onPressed: () {
+                //     // Delete Page
+                //     logger.fine('remove page');
+                //     _pageManager!.removePage(model);
+                //   },
+                // ),
+                BTN.fill_gray_i_m(
+                    tooltip: CretaStudioLang['copy']!,
+                    tooltipBg: CretaColor.text[700]!,
+                    icon: Icons.content_copy_outlined,
+                    onPressed: () async {
+                      //PageModel? page = _pageManager!.getSelected() as PageModel?;
+                      //if (page != null) {
+                      await _pageManager?.copyPage(model);
+                      setState(() {});
+                    }),
+                BTN.fill_gray_i_m(
                   tooltip: CretaStudioLang['tooltipDelete']!,
                   tooltipBg: CretaColor.text[700]!,
-                  iconImageFile: "assets/delete.svg",
+                  icon: Icons.close_rounded,
                   onPressed: () {
                     // Delete Page
                     logger.fine('remove page');
                     _pageManager!.removePage(model);
-                    //mychangeStack.startTrans();
-                    // model.isRemoved.set(true);
-                    // _pageManager!.removeChild(model.mid).then((value) {
-                    //   mychangeStack.endTrans();
-                    //   if (_pageManager!.isSelected(model.mid)) {
-                    //     _pageManager!.gotoFirst();
-                    //   } else {
-                    //     _pageManager!.notify();
-                    //   }
-                    //   return null;
-                    // });
                   },
                 ),
-                if (_pageManager!.isSelected(model.mid) == true)
-                  BTN.fill_gray_i_m(
-                    tooltip: CretaStudioLang['newTemplate']!,
-                    tooltipBg: CretaColor.text[700]!,
-                    icon: Icons.file_copy,
-                    onPressed: () {
-                      _saveAsTemplate(model);
-                    },
-                  ),
-                //  BTN.fill_gray_i_m(
-                //   tooltip: CretaStudioLang['tooltipDelete']!,
-                //   tooltipBg: CretaColor.text[700]!,
-                //   icon: Icons.delete_outlined,
-                //   onPressed: () {
-                //     // Delete Page
-                //     model.isRemoved.set(true);
-                //     _pageManager!.notify();
-                //   },
-                // ),
               ],
             ),
           ]),

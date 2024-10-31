@@ -332,14 +332,14 @@ class MiniMenuState extends State<MiniMenu> {
       //     }),
       // 링크하기
       BTN.fill_blue_i_menu(
-          tooltip: CretaStudioLang['linkFrameTooltip']!,
+          tooltip: CretaStudioLang['linkFrameTooltip'] ?? '다른 프레임에 연결합니다',
           tooltipFg: CretaColor.text,
           icon: LinkParams.isLinkNewMode ? Icons.close : Icons.link_outlined,
           decoType: CretaButtonDeco.opacity,
           iconColor: CretaColor.primary,
           buttonColor: CretaButtonColor.primary,
           onPressed: () {
-            logger.fine("MinuMenu onFrameLink");
+            logger.fine("MinuMenu onContentsLink");
             BookMainPage.containeeNotifier!.setFrameClick(true);
             setState(() {
               LinkParams.isLinkNewMode = !LinkParams.isLinkNewMode;
@@ -498,6 +498,35 @@ class MiniMenuState extends State<MiniMenu> {
             widget.contentsManager?.notify();
             widget.onContentsFullscreen.call();
             setState(() {});
+          }),
+      BTN.fill_blue_i_menu(
+          tooltip: CretaStudioLang['linkContentsTooltip'] ?? '다른 프레임 콘텐츠에 연결합니다',
+          tooltipFg: CretaColor.text,
+          icon: LinkParams.isLinkNewMode ? Icons.close : Icons.link_outlined,
+          decoType: CretaButtonDeco.opacity,
+          iconColor: CretaColor.primary,
+          buttonColor: CretaButtonColor.primary,
+          onPressed: () {
+            logger.fine("MinuMenu onFrameLink");
+            BookMainPage.containeeNotifier!.setFrameClick(true);
+            setState(() {
+              LinkParams.isLinkNewMode = !LinkParams.isLinkNewMode;
+            });
+            ContentsModel? contentsModel = widget.contentsManager!.getSelected() as ContentsModel?;
+            if (contentsModel == null) {
+              logger.severe('selected contents is null');
+              return;
+            }
+            //print('LinkParams.isLinkNewMode=${contentsModel.mid}');
+            //print('LinkParams.isLinkNewMode=${contentsModel.name}');
+            if (LinkParams.isLinkNewMode) {
+              if (LinkParams.linkNew(contentsModel)) {
+                //_linkSendEvent?.sendEvent(const Offset(1, 1));
+                BookMainPage.bookManagerHolder!.notify();
+              }
+            } else {
+              LinkParams.linkCancel(contentsModel);
+            }
           }),
       // 콘텐츠 삭제
       if (widget.contentsManager != null && widget.contentsManager!.iamBusy == false)

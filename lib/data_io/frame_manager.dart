@@ -715,6 +715,16 @@ class FrameManager extends BaseFrameManager {
     return findContentsManagerByMid(frameModel.mid);
   }
 
+  ContentsModel? findContentsModel(String contentsMid) {
+    for (var manager in contentsManagerMap.values) {
+      ContentsModel? model = manager.getModel(contentsMid) as ContentsModel?;
+      if (model != null) {
+        return model;
+      }
+    }
+    return null;
+  }
+
   ContentsModel? getCurrentModel(String frameMid) {
     ContentsManager? retval = contentsManagerMap[frameMid];
     if (retval != null) {
@@ -979,9 +989,9 @@ class FrameManager extends BaseFrameManager {
       return;
     }
     // stopPagin 이면 다음 페이지로 넘어가지 않는다.
-    if (StudioVariables.stopPaging == true) {
-      return;
-    }
+    // if (StudioVariables.stopPaging == true) {
+    //   return;
+    // }
 
     // ignore: unused_local_variable
     BookModel? book = BookMainPage.bookManagerHolder!.onlyOne() as BookModel?;

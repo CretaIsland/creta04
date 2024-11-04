@@ -16,6 +16,7 @@ import 'package:creta_common/common/creta_vars.dart';
 import '../../../../common/creta_utils.dart';
 import '../../../../data_io/contents_manager.dart';
 import '../../../../data_io/frame_manager.dart';
+import '../../../../data_io/link_manager.dart';
 import '../../../../design_system/component/creta_popup.dart';
 import '../../../../lang/creta_studio_lang.dart';
 import 'package:creta_studio_model/model/book_model.dart';
@@ -601,6 +602,12 @@ class FrameMainState extends State<FrameMain> with FramePlayMixin {
       if (item.mid != mid) continue;
       FrameModel model = item as FrameModel;
       model.isRemoved.set(true);
+      bool linkDeleted = await LinkManager.deleteLinkReferenceMe('frame', mid);
+      if (linkDeleted) {
+        print('links are deleted');
+      } else {
+        print('links are not deleted');
+      }
       await frameManager!.removeChild(model.mid);
       if (model.isOverlay.value == true) {
         model.isOverlay.set(false);

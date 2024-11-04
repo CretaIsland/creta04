@@ -64,15 +64,12 @@ class _RightMenuFrameAndContentsState extends State<RightMenuFrameAndContents> {
   @override
   Widget build(BuildContext context) {
     if (BookMainPage.containeeNotifier!.selectedClass == ContaineeEnum.Frame) {
-      //print('frame=======================================================');
       _selectedTab = CretaStudioLang['frameTabBar']!.values.first;
     } else if (BookMainPage.containeeNotifier!.selectedClass == ContaineeEnum.Contents) {
       var valuesList = CretaStudioLang['frameTabBar']!.values.toList();
       _selectedTab = valuesList[1];
-      //print('contents=======================================================');
     } else if (BookMainPage.containeeNotifier!.selectedClass == ContaineeEnum.Link) {
       _selectedTab = CretaStudioLang['frameTabBar']!.values.last;
-      //print('contents=======================================================');
     } else {
       return SizedBox.shrink();
     }
@@ -291,7 +288,6 @@ class _RightMenuFrameAndContentsState extends State<RightMenuFrameAndContents> {
             linkModel.commentBgColor.set(color);
             linkManager.notify();
           },
-
           onOpacityChanged: (opacity) {
             linkModel.bgColor.set(linkModel.bgColor.value.withOpacity(opacity));
             linkManager.notify();

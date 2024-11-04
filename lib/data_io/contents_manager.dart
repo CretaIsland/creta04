@@ -270,6 +270,7 @@ class ContentsManager extends BaseContentsManager {
     } else {
       reOrdering();
     }
+    setSelectedMid(model.mid);
     logger.info('_createNextContents complete ${model.name},${model.order.value},${model.url}');
     return model;
   }
@@ -289,6 +290,7 @@ class ContentsManager extends BaseContentsManager {
     } else {
       reOrdering();
     }
+    setSelectedMid(model.mid);
     logger.fine('_redoCreateNextContents complete ${model.name},${model.order.value},${model.url}');
     return model;
   }
@@ -310,6 +312,7 @@ class ContentsManager extends BaseContentsManager {
     } else {
       reOrdering();
     }
+    clearSelectedMid();
     logger.fine('_undoCreateNextContents complete ${model.name},${model.order.value},${model.url}');
     await setToDB(model);
     return model;
@@ -539,8 +542,9 @@ class ContentsManager extends BaseContentsManager {
       if (model.isImage() == false && model.isVideo() == false && getAvailLength() == 0) {
         // frame 을 지운다.
         await _frameManager?.removeSelected(context);
+      } else {
+        playManager!.next();
       }
-
       iamBusy = false;
       return true;
     }
@@ -560,7 +564,9 @@ class ContentsManager extends BaseContentsManager {
 
   Future<void> _removeContents(BuildContext context, ContentsModel model) async {
     //await pause();
-    //print('_removeContents(${model.name})');
+    print('_removeContents(${model.name})=========================');
+
+    mychangeStack.startTrans();
     model.isRemoved.set(
       true,
       save: true,
@@ -578,6 +584,16 @@ class ContentsManager extends BaseContentsManager {
     //print('remove contents ${model.name}, ${model.mid}');
     await playManager?.reOrdering();
 
+    // 자기한테 속한 링크만 지우면 장땡이 아니다.
+    // 나를 링크로 물고 있는 콘텐츠를 찾아서 지워야 한다.
+
+    bool linkDeleted = await LinkManager.deleteLinkReferenceMe('contents', model.mid);
+    if (linkDeleted) {
+      print('links are deleted');
+    } else {
+      print('links are not deleted');
+    }
+
     if (getAvailLength() == 0) {
       //print('getVisibleLength is 0');
       BookMainPage.containeeNotifier!.set(ContaineeEnum.Frame);
@@ -589,9 +605,11 @@ class ContentsManager extends BaseContentsManager {
       _frameManager?.notify();
       //print('getVisibleLength is not 0');
     }
+
     LeftMenuPage.initTreeNodes();
     LeftMenuPage.treeInvalidate();
     removeChild(model.mid);
+    mychangeStack.endTrans();
 
     return;
   }
@@ -774,6 +792,7 @@ class ContentsManager extends BaseContentsManager {
   Future<void> goto(double order) async {
     pause();
     await playManager?.setCurrentOrder(order);
+    resume();
   }
 
   Future<void> gotoNext() async {
@@ -1135,6 +1154,7 @@ class ContentsManager extends BaseContentsManager {
     BookMainPage.containeeNotifier!.set(ContaineeEnum.Contents, doNoti: true);
     CretaManager.frameSelectNotifier!.set(frameModel.mid, doNotify: false);
     frameManager.setSelectedMid(frameModel.mid);
+
     LeftMenuPage.initTreeNodes();
     LeftMenuPage.treeInvalidate();
     //frameManager!.notify();

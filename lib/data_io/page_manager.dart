@@ -31,6 +31,7 @@ import '../pages/studio/studio_variables.dart';
 import 'book_manager.dart';
 import 'frame_manager.dart';
 import 'key_handler.dart';
+import 'link_manager.dart';
 
 //PageManager? pageManagerHolder;
 
@@ -533,7 +534,7 @@ class PageManager extends BasePageManager {
     //print("gotoNext ------------------------------------------------------------");
 
     _prevModel = getSelected() as PageModel?;
-    if(force == false) {
+    if (force == false) {
       if (_prevModel != null && _prevModel!.isCircle.value == true) {
         return _movePage(_prevModel!.mid);
       }
@@ -552,7 +553,7 @@ class PageManager extends BasePageManager {
     //print("gotoNext ------------------------------------------------------------");
 
     _prevModel = getSelected() as PageModel?;
-    if(force == false) {
+    if (force == false) {
       if (_prevModel != null && _prevModel!.isCircle.value == true) {
         return _movePage(_prevModel!.mid);
       }
@@ -1134,6 +1135,7 @@ class PageManager extends BasePageManager {
     } else {
       notify();
     }
+    LinkManager.deleteLinkReferenceMe('page', model.mid);
     BookMainPage.containeeNotifier!.set(ContaineeEnum.Page);
     LeftMenuPage.treeInvalidate();
 

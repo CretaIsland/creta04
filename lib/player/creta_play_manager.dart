@@ -290,6 +290,9 @@ class CretaPlayManager extends ChangeNotifier {
           contentsManager.getAvailLength() > 1 ||
           _currentModel!.mid != _prevModel!.mid) {
         if (debug) logger.info('notify()');
+        contentsManager.setSelectedMid(_currentModel!.mid,
+            doNotify:
+                false); //skpark 2024.11.04  ContentsManager 에서는 현재 seletedMid를 가지고 있지 않는 경우가 있다.
         notify();
       }
       _forceToChange = false;

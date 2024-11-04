@@ -3,6 +3,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:creta04/pages/studio/studio_variables.dart';
 import 'package:creta_common/common/creta_font.dart';
+import 'package:creta_common/lang/creta_lang.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hycop/common/util/logger.dart';
@@ -81,6 +82,10 @@ class _LinkWidgetState extends State<LinkWidget> {
   bool _isLinkEditMode = false;
 
   Size _frameSize = Size.zero;
+  bool _isShowMenu = true;
+
+  final double _buttonSize = 20;
+  final double _margin = 10;
 
   @override
   void initState() {
@@ -121,7 +126,6 @@ class _LinkWidgetState extends State<LinkWidget> {
               // if (linkManager == null) {
               //   return const SizedBox.shrink();
               // }
-
               bool showLinkCursor = _showLinkCursor(hasContents);
 
               return
@@ -169,11 +173,12 @@ class _LinkWidgetState extends State<LinkWidget> {
     return Stack(
       alignment: Alignment.center,
       children: [
-        if (showVisibleButton &&
+        if (_isShowMenu &&
+            showVisibleButton &&
             widget.frameModel.width.value * StudioVariables.applyScale > (4 * 36 + 200))
           _drawTitle(),
         ..._drawLinkCursor(linkManager),
-        if (_showPlayButton())
+        if (_showPlayButton() && _isShowMenu)
           PlayButton(
             key: GlobalObjectKey('PlayButton${widget.frameModel.mid}${widget.applyScale}'),
             applyScale: widget.applyScale,
@@ -191,10 +196,11 @@ class _LinkWidgetState extends State<LinkWidget> {
             contentsManager: widget.contentsManager,
             applyScale: widget.applyScale,
           ),
-        if (showVisibleButton) _drawIndexButton(),
-        if (showVisibleButton) _drawVisibleButton(),
-        if (showVisibleButton) _drawMaximizeButton(),
-        if (showVisibleButton) _drawStopNextContents(),
+        if (showVisibleButton) _drawMenuButton(),
+        if (showVisibleButton && _isShowMenu) _drawIndexButton(),
+        if (showVisibleButton && _isShowMenu) _drawVisibleButton(),
+        //if (showVisibleButton) _drawMaximizeButton(),
+        //if (showVisibleButton) _drawStopNextContents(),
       ],
     );
   }
@@ -271,18 +277,48 @@ class _LinkWidgetState extends State<LinkWidget> {
   //   );
   // }
 
-  Widget _drawIndexButton() {
-    double buttonSize = 20;
-    double margin = 20;
-    double posX = (widget.frameModel.width.value - 4 * (buttonSize + margin)) * widget.applyScale;
-    double posY = margin / 2 * widget.applyScale;
+  Widget _drawMenuButton() {
+    double posX =
+        (widget.frameModel.width.value - (_isShowMenu ? 3 : 1) * (_buttonSize + _margin)) *
+            widget.applyScale;
+    double posY = _margin / 2 * widget.applyScale;
 
     return Positioned(
       left: posX,
       top: posY,
       child: SizedBox(
-        width: buttonSize,
-        height: buttonSize,
+        width: _buttonSize,
+        height: _buttonSize,
+        child: BTN.fill_i_s(
+          tooltip: CretaStudioLang['showContentsMenut'] ?? '모든 메뉴보이지 않기/보이기',
+          onPressed: () {
+            setState(() {
+              _isShowMenu = !_isShowMenu;
+            });
+          },
+          icon: _isShowMenu
+              ? Icons.keyboard_double_arrow_right_outlined
+              : Icons.keyboard_double_arrow_left_outlined,
+          useTapUp: true,
+          //icon2: Icons.featured_play_list_outlined,
+          //toggleValue: StudioVariables.showPageIndex,
+          //iconSize: 14,
+          //doToggle: false,
+        ),
+      ),
+    );
+  }
+
+  Widget _drawIndexButton() {
+    double posX = (widget.frameModel.width.value - 2 * (_buttonSize + _margin)) * widget.applyScale;
+    double posY = _margin / 2 * widget.applyScale;
+
+    return Positioned(
+      left: posX,
+      top: posY,
+      child: SizedBox(
+        width: _buttonSize,
+        height: _buttonSize,
         child: BTN.fill_i_s(
           tooltip: CretaStudioLang['showContentsIndex'] ?? '콘텐츠 목차 보기',
           onPressed: widget.showContentsIndex,
@@ -298,17 +334,15 @@ class _LinkWidgetState extends State<LinkWidget> {
   }
 
   Widget _drawVisibleButton() {
-    double buttonSize = 20;
-    double margin = 20;
-    double posX = (widget.frameModel.width.value - buttonSize - margin) * widget.applyScale;
-    double posY = margin / 2 * widget.applyScale;
+    double posX = (widget.frameModel.width.value - _buttonSize - _margin) * widget.applyScale;
+    double posY = _margin / 2 * widget.applyScale;
 
     return Positioned(
         left: posX,
         top: posY,
         child: SizedBox(
-          width: buttonSize,
-          height: buttonSize,
+          width: _buttonSize,
+          height: _buttonSize,
           child: BTN.fill_i_s(
               tooltip: CretaStudioLang['showVisibleButton'] ?? '숨기기/보이기',
               useTapUp: true,
@@ -326,18 +360,17 @@ class _LinkWidgetState extends State<LinkWidget> {
         ));
   }
 
+  // ignore: unused_element
   Widget _drawStopNextContents() {
-    double buttonSize = 20;
-    double margin = 20;
-    double posX = (widget.frameModel.width.value - 3 * (buttonSize + margin)) * widget.applyScale;
-    double posY = margin / 2 * widget.applyScale;
+    double posX = (widget.frameModel.width.value - 3 * (_buttonSize + _margin)) * widget.applyScale;
+    double posY = _margin / 2 * widget.applyScale;
 
     return Positioned(
         left: posX,
         top: posY,
         child: SizedBox(
-          width: buttonSize,
-          height: buttonSize,
+          width: _buttonSize,
+          height: _buttonSize,
           child: BTN.fill_i_s(
               tooltip: CretaStudioLang['stopRolling'] ?? '고정/해제',
               useTapUp: true,
@@ -354,11 +387,10 @@ class _LinkWidgetState extends State<LinkWidget> {
         ));
   }
 
+  // ignore: unused_element
   Widget _drawMaximizeButton() {
-    double buttonSize = 20;
-    double margin = 20;
-    double posX = (widget.frameModel.width.value - 2 * (buttonSize + margin)) * widget.applyScale;
-    double posY = margin / 2 * widget.applyScale;
+    double posX = (widget.frameModel.width.value - 2 * (_buttonSize + _margin)) * widget.applyScale;
+    double posY = _margin / 2 * widget.applyScale;
 
     bool isFullScreen = widget.frameModel.isFullScreenTest(_bookModel!);
 
@@ -366,8 +398,8 @@ class _LinkWidgetState extends State<LinkWidget> {
         left: posX,
         top: posY,
         child: SizedBox(
-          width: buttonSize,
-          height: buttonSize,
+          width: _buttonSize,
+          height: _buttonSize,
           child: BTN.fill_i_s(
               tooltip: CretaStudioLang['maximize'] ?? '최대화/되돌리기',
               useTapUp: true,
@@ -946,6 +978,12 @@ class _LinkWidgetState extends State<LinkWidget> {
               LeftMenuPage.initTreeNodes();
               LeftMenuPage.treeInvalidate();
             }),
+        CretaMenuItem(
+            caption: CretaLang['properties']!,
+            onPressed: () {
+              //  링크 속성 메뉴를 누르면, 현재 Frame 이 seletct 된것으로 간주해야 한다.
+              _showLinkProperty(linkManager, model);
+            }),
         // CretaMenuItem(
         //     caption: widget.contentsModel.isLinkEditMode
         //         ? CretaStudioLang['linkControlOff']!
@@ -957,12 +995,6 @@ class _LinkWidgetState extends State<LinkWidget> {
         //       }
         //       _linkSendEvent!.sendEvent(const Offset(1, 1));
         //       setState(() {});
-        //     }),
-        // CretaMenuItem(
-        //     caption: CretaLang['properties']!,
-        //     onPressed: () {
-        //       //  링크 속성 메뉴를 누르면, 현재 Frame 이 seletct 된것으로 간주해야 한다.
-        //       _showLinkProperty(linkManager, model);
         //     }),
       ],
       itemHeight: 24,
@@ -978,6 +1010,9 @@ class _LinkWidgetState extends State<LinkWidget> {
   }
 
   void _showLinkProperty(LinkManager linkManager, LinkModel model) {
+    logger.info('showLinkProperty ${model.connectedMid}, ${model.connectedClass},');
+    logger.info('showLinkProperty ${widget.contentsModel.mid}, ${widget.frameModel.mid}');
+
     widget.frameManager.setSelectedMid(widget.frameModel.mid);
     widget.contentsManager.setSelectedMid(widget.contentsModel.mid);
     linkManager.setSelectedMid(model.mid);

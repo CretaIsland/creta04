@@ -339,6 +339,7 @@ class MiniMenuState extends State<MiniMenu> {
           iconColor: CretaColor.primary,
           buttonColor: CretaButtonColor.primary,
           onPressed: () {
+            logger.fine('${CretaStudioLang['linkFrameTooltip']}-----------------------');
             logger.fine("MinuMenu onContentsLink");
             BookMainPage.containeeNotifier!.setFrameClick(true);
             setState(() {
@@ -507,6 +508,8 @@ class MiniMenuState extends State<MiniMenu> {
           iconColor: CretaColor.primary,
           buttonColor: CretaButtonColor.primary,
           onPressed: () {
+            logger.fine('${CretaStudioLang['linkContentsTooltip']}-----------------------');
+
             logger.fine("MinuMenu onFrameLink");
             BookMainPage.containeeNotifier!.setFrameClick(true);
             setState(() {
@@ -517,12 +520,14 @@ class MiniMenuState extends State<MiniMenu> {
               logger.severe('selected contents is null');
               return;
             }
-            //print('LinkParams.isLinkNewMode=${contentsModel.mid}');
-            //print('LinkParams.isLinkNewMode=${contentsModel.name}');
+            print('before LinkParams.isLinkNewMode=${contentsModel.mid}');
+            print('before LinkParams.isLinkNewMode=${contentsModel.name}');
             if (LinkParams.isLinkNewMode) {
               if (LinkParams.linkNew(contentsModel)) {
                 //_linkSendEvent?.sendEvent(const Offset(1, 1));
                 BookMainPage.bookManagerHolder!.notify();
+                print('after LinkParams.isLinkNewMode=${contentsModel.mid}');
+                print('after LinkParams.isLinkNewMode=${contentsModel.name}');
               }
             } else {
               LinkParams.linkCancel(contentsModel);

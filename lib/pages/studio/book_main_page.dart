@@ -1115,7 +1115,7 @@ class _BookMainPageState extends State<BookMainPage> {
     return Consumer<BookManager>(
         key: ValueKey('consumerFunc+${StudioVariables.selectedBookMid}'),
         builder: (context, bookManager, child) {
-          //print('Consumer  ${bookManager.onlyOne()!.mid}');
+          logger.info('Consumer  ${bookManager.onlyOne()!.mid}');
           String receivedMid = bookManager.onlyOne()!.mid;
           _bookModel ??= bookManager.onlyOne()! as BookModel;
           //print('Consumer  ${_bookModel!.mid}');

@@ -7,8 +7,6 @@ import 'package:creta_studio_model/model/book_model.dart';
 import 'package:creta_studio_model/model/contents_model.dart';
 import 'package:creta_common/model/creta_model.dart';
 import 'package:creta_studio_model/model/depot_model.dart';
-import 'package:creta_studio_model/model/frame_model.dart';
-import 'package:creta_studio_model/model/page_model.dart';
 import '../pages/studio/book_main_page.dart';
 import 'contents_manager.dart';
 import 'package:creta_user_io/data_io/creta_manager.dart';
@@ -270,8 +268,7 @@ class DepotManager extends CretaManager {
         logger.severe('book is null');
         return null;
       }
-      contentsManager =
-          ContentsManager(pageModel: PageModel('', book), frameModel: FrameModel('', book.mid));
+      contentsManager = ContentsManager.dummy(book);
     }
     ContentsModel? retval = await contentsManager.getFromDB(contentsMid) as ContentsModel?;
     return retval;
@@ -300,10 +297,7 @@ class DepotManager extends CretaManager {
       logger.severe('book is null');
       return null;
     }
-    ContentsManager dummyManager = ContentsManager(
-      pageModel: PageModel('', book),
-      frameModel: FrameModel('', book.mid),
-    );
+    ContentsManager dummyManager = ContentsManager.dummy(book);
 
     ContentsModel? model =
         await getContentsInfo(contentsMid: data.contentsMid, contentsManager: dummyManager);

@@ -58,8 +58,6 @@ import 'package:creta_studio_model/model/book_model.dart';
 import '../../../model/channel_model.dart';
 import 'package:creta_studio_model/model/contents_model.dart';
 import 'package:creta_user_model/model/team_model.dart';
-import 'package:creta_studio_model/model/frame_model.dart';
-import 'package:creta_studio_model/model/page_model.dart';
 import 'package:creta_user_model/model/user_property_model.dart';
 import '../../../model/playlist_model.dart';
 import 'package:creta_user_io/data_io/creta_manager.dart';
@@ -181,14 +179,8 @@ class _CommunityRightBookPaneState extends State<CommunityRightBookPane> {
     subscriptionManagerHolder = SubscriptionManager();
     dummyManagerHolder = EnterpriseManager();
 
-    final BookModel dummyBook = BookModel('');
-    final PageModel dummyPage = PageModel('', dummyBook);
-    final FrameModel dummyFrame = FrameModel('', '');
-    contentsManagerHolder = ContentsManager(
-      pageModel: dummyPage,
-      frameModel: dummyFrame,
-      tableName: 'creta_contents_published',
-    );
+    contentsManagerHolder =
+        ContentsManager.dummy(BookModel(''), pTableName: 'creta_contents_published');
 
     //print('startQueries --------------------------');
 

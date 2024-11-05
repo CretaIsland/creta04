@@ -604,9 +604,9 @@ class FrameMainState extends State<FrameMain> with FramePlayMixin {
       model.isRemoved.set(true);
       bool linkDeleted = await LinkManager.deleteLinkReferenceMe('frame', mid);
       if (linkDeleted) {
-        print('links are deleted');
+        logger.fine('links are deleted');
       } else {
-        print('links are not deleted');
+        logger.fine('links are not deleted');
       }
       await frameManager!.removeChild(model.mid);
       if (model.isOverlay.value == true) {

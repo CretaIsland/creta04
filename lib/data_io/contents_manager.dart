@@ -44,6 +44,8 @@ class ContentsManager extends BaseContentsManager {
 
   // for text widget only start
 
+  late final FrameManager frameManager;
+
   KeyHandler textKeyHandler = KeyHandler();
   KeyHandler imageKeyHandler = KeyHandler();
   KeyHandler videoKeyHandler = KeyHandler();
@@ -135,19 +137,32 @@ class ContentsManager extends BaseContentsManager {
 
     BookModel? book = BookMainPage.bookManagerHolder!.onlyOne() as BookModel?;
     if (book != null) {
-      _dummyManager =
-          ContentsManager(pageModel: PageModel('', book), frameModel: FrameModel('', book.mid));
+      _dummyManager = ContentsManager.dummy(book);
     }
     return _dummyManager;
   }
 
   ContentsManager({
+    required this.frameManager,
     required super.pageModel,
     required super.frameModel,
     super.tableName,
     super.isPublishedMode = false,
   }) {
     //saveManagerHolder?.registerManager('contents', this, postfix: frameModel.mid);
+    final ContentsEventController sendEventVar = Get.find(tag: 'contents-property-to-main');
+    sendEvent = sendEventVar;
+  }
+
+  ContentsManager.dummy(BookModel book,
+      {FrameManager? pFrameManager, String pTableName = 'creta_contents'})
+      : super(
+            frameModel: FrameModel('', book.mid),
+            pageModel: PageModel('', book),
+            tableName: pTableName) {
+    // frameManager에 값을 할당
+    frameManager = pFrameManager ?? FrameManager(pageModel: pageModel, bookModel: book);
+
     final ContentsEventController sendEventVar = Get.find(tag: 'contents-property-to-main');
     sendEvent = sendEventVar;
   }
@@ -185,11 +200,10 @@ class ContentsManager extends BaseContentsManager {
   final Map<String, CretaAbsPlayer> _playerMap = {};
   CretaAbsPlayer? getPlayer(String key) => _playerMap[key];
   void setPlayer(String key, CretaAbsPlayer player) => _playerMap[key] = player;
-  Map<String, LinkManager> linkManagerMap = {};
+  //Map<String, LinkManager> linkManagerMap = {};
 
   bool iamBusy = false;
-  FrameManager? _frameManager;
-  void setFrameManager(FrameManager? manager) => _frameManager = manager;
+  //void setFrameManager(FrameManager? manager) => frameManager = manager;
   bool _isVideoResize = false;
   void setIsVideoResize(bool value) => _isVideoResize = value;
 
@@ -502,7 +516,7 @@ class ContentsManager extends BaseContentsManager {
 
   Future<void> resizeFrame(double aspectRatio, Size size, bool invalidate) async {
     if (_isVideoResize) {
-      await _frameManager?.resizeFrame(
+      await frameManager.resizeFrame(
         frameModel,
         aspectRatio,
         size.width,
@@ -541,7 +555,7 @@ class ContentsManager extends BaseContentsManager {
 
       if (model.isImage() == false && model.isVideo() == false && getAvailLength() == 0) {
         // frame 을 지운다.
-        await _frameManager?.removeSelected(context);
+        await frameManager.removeSelected(context);
       } else {
         playManager!.next();
       }
@@ -564,7 +578,7 @@ class ContentsManager extends BaseContentsManager {
 
   Future<void> _removeContents(BuildContext context, ContentsModel model) async {
     //await pause();
-    print('_removeContents(${model.name})=========================');
+    //print('_removeContents(${model.name})=========================');
 
     mychangeStack.startTrans();
     model.isRemoved.set(
@@ -589,20 +603,20 @@ class ContentsManager extends BaseContentsManager {
 
     bool linkDeleted = await LinkManager.deleteLinkReferenceMe('contents', model.mid);
     if (linkDeleted) {
-      print('links are deleted');
+      logger.fine('links are deleted');
     } else {
-      print('links are not deleted');
+      logger.fine('links are not deleted');
     }
 
     if (getAvailLength() == 0) {
       //print('getVisibleLength is 0');
       BookMainPage.containeeNotifier!.set(ContaineeEnum.Frame);
       BookMainPage.containeeNotifier!.notify();
-      _frameManager?.notify();
+      frameManager.notify();
     } else {
       BookMainPage.containeeNotifier!.notify();
       LeftMenuPage.treeInvalidate();
-      _frameManager?.notify();
+      frameManager.notify();
       //print('getVisibleLength is not 0');
     }
 
@@ -616,7 +630,7 @@ class ContentsManager extends BaseContentsManager {
 
   @override
   Future<void> removeChild(String parentMid) async {
-    LinkManager? retval = linkManagerMap[parentMid];
+    LinkManager? retval = LinkManager.findLinkManager(parentMid);
     if (retval != null) {
       retval.removeAll();
     }
@@ -632,10 +646,11 @@ class ContentsManager extends BaseContentsManager {
   }
 
   void removeLink(String frameOrPageMid) {
-    logger.fine('removeLink---------------ContentsManager   ${linkManagerMap.length}');
-    for (var linkManager in linkManagerMap.values) {
-      linkManager.removeLink(frameOrPageMid);
-    }
+    logger.fine('removeLink---------------ContentsManager');
+    LinkManager.clearLink(frameOrPageMid);
+    // for (var linkManager in linkManagerMap.values) {
+    //   linkManager.removeLink(frameOrPageMid);
+    // }
   }
 
   Future<void> setSoundOff({String mid = ''}) async {
@@ -1082,7 +1097,7 @@ class ContentsManager extends BaseContentsManager {
   }
 
   static Future<ContentsManager?> createContents(
-    FrameManager? frameManager,
+    FrameManager? pFrameManager,
     List<ContentsModel> contentsModelList,
     FrameModel frameModel,
     PageModel pageModel, {
@@ -1090,8 +1105,8 @@ class ContentsManager extends BaseContentsManager {
     void Function(ContentsModel)? onUploadComplete,
   }) async {
     // 콘텐츠 매니저를 생성한다.
-    ContentsManager contentsManager = frameManager!.findOrCreateContentsManager(frameModel);
-    //contentsManager ??= frameManager.newContentsManager(frameModel);
+    ContentsManager contentsManager = pFrameManager!.findOrCreateContentsManager(frameModel);
+    //contentsManager ??= pFrameManager.newContentsManager(frameModel);
 
     //int counter = contentsModelList.length;
 
@@ -1099,7 +1114,7 @@ class ContentsManager extends BaseContentsManager {
       contentsModel.parentMid.set(frameModel.mid, save: false, noUndo: true);
 
       if (contentsModel.contentsType == ContentsType.image) {
-        await _imageProcess(frameManager, contentsManager, contentsModel, frameModel, pageModel,
+        await _imageProcess(pFrameManager, contentsManager, contentsModel, frameModel, pageModel,
             isResizeFrame: isResizeFrame);
       } else if (contentsModel.contentsType == ContentsType.video) {
         contentsManager.setIsVideoResize(isResizeFrame);
@@ -1116,7 +1131,7 @@ class ContentsManager extends BaseContentsManager {
             .set(musicFrameSize.height / musicFrameSize.width, save: false, noUndo: true);
 
         if (isResizeFrame) {
-          frameManager.resizeFrame(
+          pFrameManager.resizeFrame(
             frameModel,
             contentsModel.aspectRatio.value,
             contentsModel.width.value,
@@ -1153,17 +1168,17 @@ class ContentsManager extends BaseContentsManager {
     }
     BookMainPage.containeeNotifier!.set(ContaineeEnum.Contents, doNoti: true);
     CretaManager.frameSelectNotifier!.set(frameModel.mid, doNotify: false);
-    frameManager.setSelectedMid(frameModel.mid);
+    pFrameManager.setSelectedMid(frameModel.mid);
 
     LeftMenuPage.initTreeNodes();
     LeftMenuPage.treeInvalidate();
-    //frameManager!.notify();
+    //pFrameManager!.notify();
     // 플레이를 해야하는데, 플레이는 timer 가 model list 에 모델이 있을 경우 계속 돌리고 있게 된다.
 
     return contentsManager;
   }
 
-  static Future<void> _imageProcess(FrameManager? frameManager, ContentsManager contentsManager,
+  static Future<void> _imageProcess(FrameManager? pFrameManager, ContentsManager contentsManager,
       ContentsModel contentsModel, FrameModel frameModel, PageModel pageModel,
       {required bool isResizeFrame}) async {
     if (contentsModel.file == null) return;
@@ -1207,7 +1222,7 @@ class ContentsManager extends BaseContentsManager {
 
     if (isResizeFrame) {
 // 그림의 규격에 따라 프레임 사이즈를 수정해 준다
-      frameManager?.resizeFrame(
+      pFrameManager?.resizeFrame(
         frameModel,
         contentsModel.aspectRatio.value,
         contentsModel.width.value,
@@ -1323,7 +1338,7 @@ class ContentsManager extends BaseContentsManager {
   LinkManager newLinkManager(String contentsId) {
     logger.fine('newLinkManager()*******$contentsId');
 
-    LinkManager? retval = linkManagerMap[contentsId];
+    LinkManager? retval = LinkManager.findLinkManager(contentsId);
     if (retval == null) {
       retval = LinkManager(
         contentsId,
@@ -1333,13 +1348,13 @@ class ContentsManager extends BaseContentsManager {
         tableName: isPublishedMode ? 'creta_link_published' : 'creta_link',
         isPublishedMode: isPublishedMode,
       );
-      linkManagerMap[contentsId] = retval;
+      LinkManager.setLinkManager(contentsId, retval);
     }
     return retval;
   }
 
   LinkManager? findLinkManager(String contentsId, {bool createIfNotExist = true}) {
-    LinkManager? retval = linkManagerMap[contentsId];
+    LinkManager? retval = LinkManager.findLinkManager(contentsId);
     logger.fine('findLinkManager()*******');
     if (retval == null && createIfNotExist == true) {
       retval = LinkManager(
@@ -1350,8 +1365,8 @@ class ContentsManager extends BaseContentsManager {
         tableName: isPublishedMode ? 'creta_link_published' : 'creta_link',
         isPublishedMode: isPublishedMode,
       );
-      linkManagerMap[contentsId] = retval;
-      return linkManagerMap[contentsId];
+      LinkManager.setLinkManager(contentsId, retval);
+      return retval;
     }
     return retval;
   }
@@ -1375,7 +1390,7 @@ class ContentsManager extends BaseContentsManager {
       //print('create new Contents ${newModel.name},${newModel.mid} ${org.mid} ');
       if (samePage) {
         // 링크는 same page 에서만 copy 된다.
-        LinkManager? linkManager = linkManagerMap[org.mid];
+        LinkManager? linkManager = LinkManager.findLinkManager(org.mid);
         await linkManager?.copyLinks(newModel.mid, bookMid);
       }
       await createToDB(newModel);
@@ -1674,7 +1689,7 @@ class ContentsManager extends BaseContentsManager {
         ? LinkManager('', '', pageModel, frameModel, tableName: 'creta_link_published')
         : LinkManager('', '', pageModel, frameModel);
     //contentsManagerMap.forEach((key, value) { }); ==> forEach는 await 처리가 불가능
-    for (MapEntry entry in linkManagerMap.entries) {
+    for (MapEntry entry in LinkManager.linkManagerMap.entries) {
       copyLinkManagerHolder.modelList = [...entry.value.modelList];
       await copyLinkManagerHolder.makeClone(newBook, cloneToPublishedBook: cloneToPublishedBook);
     }

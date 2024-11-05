@@ -15,7 +15,7 @@ import 'package:creta_common/common/creta_font.dart';
 class IntroPage extends StatefulWidget {
   const IntroPage({super.key});
   static final List<String> cretaVersionList = [
-    "0.7.02",
+    "0.7.03",
     "0.7.02",
     "0.7.01",
     "0.7.00",

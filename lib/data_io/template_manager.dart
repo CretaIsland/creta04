@@ -135,6 +135,7 @@ class TemplateManager extends CretaManager {
       if (frameList.isNotEmpty) {
         for (var each in frameList) {
           ContentsManager contentsManager = ContentsManager(
+            frameManager: frameManager,
             pageModel: page,
             frameModel: each as FrameModel,
           );

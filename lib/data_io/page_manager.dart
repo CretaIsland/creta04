@@ -44,7 +44,8 @@ class PageInfo {
 
 class PageManager extends BasePageManager {
   // BookModel? bookModel;
-  Map<String, FrameManager?> frameManagerMap = {};
+  Map<String, FrameManager?> frameManagerMap = {};  // pageMid, FrameManager  
+  
   // //Map<String, GlobalObjectKey> thumbKeyMap = {};
 
   int updateContents(ContentsModel model) {

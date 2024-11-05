@@ -520,14 +520,14 @@ class MiniMenuState extends State<MiniMenu> {
               logger.severe('selected contents is null');
               return;
             }
-            print('before LinkParams.isLinkNewMode=${contentsModel.mid}');
-            print('before LinkParams.isLinkNewMode=${contentsModel.name}');
+            logger.fine('before LinkParams.isLinkNewMode=${contentsModel.mid}');
+            logger.fine('before LinkParams.isLinkNewMode=${contentsModel.name}');
             if (LinkParams.isLinkNewMode) {
               if (LinkParams.linkNew(contentsModel)) {
                 //_linkSendEvent?.sendEvent(const Offset(1, 1));
                 BookMainPage.bookManagerHolder!.notify();
-                print('after LinkParams.isLinkNewMode=${contentsModel.mid}');
-                print('after LinkParams.isLinkNewMode=${contentsModel.name}');
+                logger.fine('after LinkParams.isLinkNewMode=${contentsModel.mid}');
+                logger.fine('after LinkParams.isLinkNewMode=${contentsModel.name}');
               }
             } else {
               LinkParams.linkCancel(contentsModel);

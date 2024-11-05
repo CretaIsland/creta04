@@ -44,6 +44,8 @@ class FrameManager extends BaseFrameManager {
   //final PageModel pageModel;
   //final BookModel bookModel;
 
+  // frameid , <contentsId, linkManager> map
+
   static Map<FrameModel, FrameModel> oldNewMap = {}; // linkCopy 시에 필요하다.
   static FrameModel? findNew(String oldMid) {
     for (var ele in oldNewMap.entries) {
@@ -628,22 +630,14 @@ class FrameManager extends BaseFrameManager {
   }
 
   ContentsManager newContentsManager(FrameModel frameModel) {
-    // ContentsManager? retval = contentsManagerMap[frameModel.mid];
-    // if (retval == null) {
     ContentsManager retval = ContentsManager(
+      frameManager: this,
       pageModel: pageModel,
       frameModel: frameModel,
       tableName: isPublishedMode ? 'creta_contents_published' : 'creta_contents',
       isPublishedMode: isPublishedMode,
     );
-
-    //print('newContentsManager(${pageModel.mid}, ${frameModel.mid})*******');
-
     contentsManagerMap[frameModel.mid] = retval;
-    //print(
-    //    'newContentsManager(${pageModel.mid}, ${frameModel.mid})*******${contentsManagerMap.length}');
-    retval.setFrameManager(this);
-    //}
     return retval;
   }
 
@@ -1268,17 +1262,13 @@ class FrameManager extends BaseFrameManager {
       BookManager.cloneFrameIdMap[frame.mid] = newModel.mid;
       logger.info('frame: (${frame.mid}) => (${newModel.mid})');
     }
-    final BookModel dummyBook = BookModel('');
-    final PageModel dummyPage = PageModel('', dummyBook);
-    final FrameModel dummyFrame = FrameModel('', '');
-    final ContentsManager copyContentsManagerHolder = cloneToPublishedBook
-        ? ContentsManager(
-            pageModel: dummyPage, frameModel: dummyFrame, tableName: 'creta_contents_published')
-        : ContentsManager(pageModel: dummyPage, frameModel: dummyFrame);
+    final ContentsManager copyContentsManagerHolder = ContentsManager.dummy(BookModel(''),
+        pTableName: cloneToPublishedBook ? 'creta_contents_published' : 'creta_contents');
+
     //contentsManagerMap.forEach((key, value) { }); ==> forEach는 await 처리가 불가능
     for (MapEntry entry in contentsManagerMap.entries) {
       copyContentsManagerHolder.modelList = [...entry.value.modelList];
-      copyContentsManagerHolder.linkManagerMap = Map.from(entry.value.linkManagerMap);
+      //copyContentsManagerHolder.linkManagerMap = Map.from(entry.value.linkManagerMap);
       await copyContentsManagerHolder.makeClone(newBook,
           cloneToPublishedBook: cloneToPublishedBook);
     }
@@ -1318,7 +1308,8 @@ class FrameManager extends BaseFrameManager {
       newModel.copyFrom(model, newMid: newModel.mid, pMid: page.mid);
       await createToDB(newModel);
 
-      ContentsManager contentsManager = ContentsManager(pageModel: page, frameModel: model);
+      ContentsManager contentsManager =
+          ContentsManager(frameManager: this, pageModel: page, frameModel: model);
       await contentsManager.updateParent(newModel, page, bookMid);
     }
   }

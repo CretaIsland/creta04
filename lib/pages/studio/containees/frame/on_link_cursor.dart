@@ -151,7 +151,7 @@ class _OnLinkCursorState extends State<OnLinkCursor> {
           // });
           LinkManager linkManager = widget.contentsManager.newLinkManager(contentsModel.mid);
 
-          print(
+          logger.fine(
               'connectedName=${LinkParams.connectedName}, connectedMid=${LinkParams.connectedMid}, connectedClass=${LinkParams.connectedClass}');
 
           await linkManager.createNextLink(

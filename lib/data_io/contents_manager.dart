@@ -829,7 +829,8 @@ class ContentsManager extends BaseContentsManager {
   bool isVisible(ContentsModel model) {
     if (model.isRemoved.value == true) return false;
     if (model.isShow.value == false) return false;
-    if (BookMainPage.filterManagerHolder!.isVisible(model) == false) return false;
+    if (BookMainPage.filterManagerHolder != null &&
+        BookMainPage.filterManagerHolder!.isVisible(model) == false) return false;
     return true;
   }
 

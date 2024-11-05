@@ -122,6 +122,14 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
     //_sendEvent = sendEvent;
 
     _width = widget.width;
+
+    afterBuild();
+  }
+
+  Future<void> afterBuild() async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      _playManager?.sendEventToLink();
+    });
   }
 
   Future<bool> initChildren() async {

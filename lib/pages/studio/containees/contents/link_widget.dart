@@ -1,12 +1,14 @@
 //import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:creta04/pages/studio/containees/contents/animated_link_icon.dart';
 import 'package:creta04/pages/studio/studio_variables.dart';
 import 'package:creta_common/common/creta_font.dart';
 import 'package:creta_common/lang/creta_lang.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hycop/common/util/logger.dart';
+import 'package:hycop/hycop/absModel/abs_ex_model.dart';
 import 'package:hycop/hycop/enum/model_enums.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
@@ -72,6 +74,8 @@ class _LinkWidgetState extends State<LinkWidget> {
   OffsetEventController? _linkReceiveEvent;
   OffsetEventController? _linkSendEvent;
   FrameEventController? _sendEvent;
+  ContentsEventController? _contentsReceiveEvent;
+
   //BoolEventController? _lineDrawSendEvent;
   bool _isMove = false;
   Offset _position = Offset.zero;
@@ -97,6 +101,10 @@ class _LinkWidgetState extends State<LinkWidget> {
     _linkSendEvent = linkSendEvent;
     final FrameEventController sendEvent = Get.find(tag: 'frame-property-to-main');
     _sendEvent = sendEvent;
+
+    final ContentsEventController contentsReceiveEvent = Get.find(tag: 'play-to-link');
+    _contentsReceiveEvent = contentsReceiveEvent;
+
     // final BoolEventController lineDrawSendEvent = Get.find(tag: 'draw-link');
     // _lineDrawSendEvent = lineDrawSendEvent;
     _bookModel = BookMainPage.bookManagerHolder?.onlyOne() as BookModel?;
@@ -583,23 +591,29 @@ class _LinkWidgetState extends State<LinkWidget> {
           //         child: _mainButton(model))
           // :
           GestureDetector(
-        // onSecondaryTapDown: (details) {
-        //   if (StudioVariables.isPreview == true) return;
-        //   linkManager.setSelectedMid(model.mid);
-        //   _showRightMouseMenu(
-        //       model, linkManager, details.globalPosition.dx, details.globalPosition.dy);
-        // },
+        onSecondaryTapDown: (details) {
+          if (StudioVariables.isPreview == true) return;
+          _showLinkProperty(linkManager, model);
+          if (_linkManager != null) {
+            _showRightMouseMenu(
+              model,
+              _linkManager!,
+              details.globalPosition.dx,
+              details.globalPosition.dy,
+            );
+          }
+        },
         onTapUp: (details) {
           if (StudioVariables.isPreview == false) {
             _showLinkProperty(linkManager, model);
-            if (_linkManager != null) {
-              _showRightMouseMenu(
-                model,
-                _linkManager!,
-                details.globalPosition.dx,
-                details.globalPosition.dy,
-              );
-            }
+            // if (_linkManager != null) {
+            //   _showRightMouseMenu(
+            //     model,
+            //     _linkManager!,
+            //     details.globalPosition.dx,
+            //     details.globalPosition.dy,
+            //   );
+            // }
           } else {
             _goto(model);
           }
@@ -662,104 +676,63 @@ class _LinkWidgetState extends State<LinkWidget> {
       ),
     );
 
-    return nameWidget == null ? linkIcon : Stack(children: [linkIcon, triangle!, nameWidget]);
+    return nameWidget == null
+        ? linkIcon
+        : Stack(children: [
+            linkIcon,
+            triangle!,
+            nameWidget,
+          ]);
   }
 
   Widget _mainButton(LinkModel model) {
     double iconSize = model.iconSize.value;
-    //int index = -1;
-    // if (model.connectedClass == 'page') {
-    //   // 이경우 페이지 번호를 구해야 한다.
-    //   index = BookMainPage.pageManagerHolder!.getIndex(model.connectedMid);
-    // }
+    Widget normalWidget = Container(
+      width: iconSize + 4,
+      height: iconSize + 4,
+      decoration: _getBoxDeco(model),
+      alignment: Alignment.center,
+      child: Icon(
+        key: model.iconKey,
+        LinkIconType.toIcon(model.iconData.value), //Icons.link_outlined,
+        size: iconSize,
+        color: _isMove ? CretaColor.primary : model.bgColor.value,
+      ),
+    );
 
-    return
-        // GestureDetector(
-        //   onTapUp: (details) {
-        //     if (StudioVariables.isPreview == false) {
-        //       if (_linkManager != null) {
-        //         _showRightMouseMenu(
-        //           model,
-        //           _linkManager!,
-        //           details.globalPosition.dx,
-        //           details.globalPosition.dy,
-        //         );
-        //       }
-        //     } else {
-        //       _goto(model);
-        //     }
-        //   },
-        //   child:
+    if (StudioVariables.isPreview == false) {
+      return normalWidget;
+    }
 
-        Consumer<ContaineeNotifier>(builder: (context, manager, child) {
-      return Container(
-        width: iconSize + 4,
-        height: iconSize + 4,
-        decoration: model.mid == _linkManager!.getSelectedMid() &&
-                widget.frameManager.isSelected(widget.frameModel.mid) // 선택된 것.
-            ? BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                border: Border.all(width: 1, color: CretaColor.text[700]!),
-              )
-            : null,
-        //color: Colors.amber.withOpacity(0.5),
-        alignment: Alignment.center,
-        child: Icon(
-          key: model.iconKey,
-          LinkIconType.toIcon(model.iconData.value), //Icons.link_outlined,
-          size: iconSize,
-          color: _isMove ? CretaColor.primary : model.bgColor.value,
-        ),
-      );
-    });
+    return StreamBuilder<AbsExModel>(
+        stream: _contentsReceiveEvent!.eventStream.stream,
+        builder: (context, snapshot) {
+          if (snapshot.data != null && snapshot.data is ContentsModel) {
+            ContentsModel contentsModel = snapshot.data! as ContentsModel;
+            if (model.connectedMid == contentsModel.mid) {
+              print('==========================================================');
+              print('ContentsManager event received');
+              print('current contents is ${contentsModel.name}');
+              print('==========================================================');
+              return AnimatedLinkIcon(linkModel: model);
+            }
+          }
+          return normalWidget;
+        });
+  }
 
-    // child: index < 0 || StudioVariables.isPreview == true
-    //     ? Container(
-    //         width: iconSize + 4,
-    //         height: iconSize + 4,
-    //         //color: Colors.amber.withOpacity(0.5),
-    //         alignment: Alignment.topLeft,
-    //         child: Icon(
-    //           key: model.iconKey,
-    //           LinkIconType.toIcon(model.iconData.value), //Icons.link_outlined,
-    //           size: iconSize,
-    //           color: _isMove ? CretaColor.primary : model.bgColor.value,
-    //         ),
-    //       )
-    //     : Stack(
-    //         alignment: Alignment.centerLeft,
-    //         children: [
-    //           Container(
-    //             width: iconSize + 6,
-    //             height: iconSize,
-    //             //color: Colors.amber.withOpacity(0.5),
-    //             alignment: Alignment.topLeft,
-    //             child: Icon(
-    //               key: model.iconKey,
-    //               LinkIconType.toIcon(
-    //                   model.iconData.value), //Icons.link_outlined,
-    //               size: iconSize,
-    //               color: _isMove ? CretaColor.primary : model.bgColor.value,
-    //             ),
-    //           ),
-    //           Padding(
-    //             padding: const EdgeInsets.only(left: 6.0),
-    //             child: Text(index > 9 ? '$index' : '0$index',
-    //                 style: CretaFont.bodyESmall.copyWith(fontSize: 6, color: Colors.white)),
-    //           ),
-    //         ],
-    //       ),
-    //);
-    // return IconButton(
-    //   icon: Icon(
-    //     Icons.link_outlined,
-    //     size: iconSize,
-    //     color: _isMove ? CretaColor.primary : CretaColor.secondary,
-    //   ),
-    //   onPressed: () {
-    //
-    //   },
-    // );
+  BoxDecoration? _getBoxDeco(LinkModel model) {
+    if (StudioVariables.isPreview == false) {
+      if (model.mid == _linkManager!.getSelectedMid() &&
+          widget.frameManager.isSelected(widget.frameModel.mid)) {
+        return BoxDecoration(
+          borderRadius: BorderRadius.circular(4),
+          border: Border.all(width: 1, color: CretaColor.text[700]!),
+        );
+      }
+    }
+
+    return null;
   }
 
   void _goto(LinkModel model) {
@@ -884,12 +857,8 @@ class _LinkWidgetState extends State<LinkWidget> {
 
   void _openContents(LinkModel model, double posX, double posY) {
     ContentsModel? contentsModel = widget.frameManager.findContentsModel(model.connectedMid);
-    if (contentsModel == null) {
-      logger.severe('connected = ${model.connectedMid} not founded');
-      return;
-    }
     FrameModel? childModel =
-        widget.frameManager.getModel(contentsModel.parentMid.value) as FrameModel?;
+        widget.frameManager.getModel(contentsModel!.parentMid.value) as FrameModel?;
     if (childModel == null) {
       logger.severe('connected frame = ${model.connectedMid} not founded');
       return;
@@ -946,14 +915,10 @@ class _LinkWidgetState extends State<LinkWidget> {
     // 여기까지가 Frame 을 보여준것이고, 이제 타겟 Contents 로 이동해야 한다.
 
     ContentsManager? contentsManager = widget.frameManager.getContentsManager(childModel.mid);
-    if (contentsManager == null) {
-      logger.severe('contentsManager is null');
-      return;
-    }
 
-    contentsManager.playManager?.releasePause();
+    contentsManager?.playManager?.releasePause();
     //print('----------------------------------------');
-    contentsManager.goto(contentsModel.order.value).then((v) {
+    contentsManager?.goto(contentsModel.order.value).then((v) {
       contentsManager.setSelectedMid(contentsModel.mid, doNotify: true); // 현재 선택된 것이 무엇인지 확실시,
     });
     //print('*******************************************${contentsModel.name}');

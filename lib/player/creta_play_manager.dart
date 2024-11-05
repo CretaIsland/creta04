@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:hycop/common/util/logger.dart';
 import 'package:hycop/hycop/enum/model_enums.dart';
 import 'package:synchronized/synchronized.dart';
+import 'package:get/get.dart';
 
 import '../data_io/contents_manager.dart';
 import '../data_io/frame_manager.dart';
@@ -20,6 +21,7 @@ import '../pages/studio/book_main_page.dart';
 import '../pages/studio/containees/containee_nofifier.dart';
 import 'package:creta_user_io/data_io/creta_manager.dart';
 import '../pages/studio/left_menu/left_menu_page.dart';
+import '../pages/studio/studio_getx_controller.dart';
 import '../pages/studio/studio_variables.dart';
 import 'creta_abs_player.dart';
 import 'creta_abs_media_widget.dart';
@@ -37,9 +39,13 @@ import 'video/creta_video_widget.dart';
 class CretaPlayManager extends ChangeNotifier {
   final ContentsManager contentsManager;
   final FrameManager frameManager;
+  ContentsEventController? _sendEvent;
 
   CretaPlayManager(this.contentsManager, this.frameManager) {
     clear();
+
+    final ContentsEventController sendEvent = Get.find(tag: 'play-to-link');
+    _sendEvent = sendEvent;
   }
 
   static void clearPlayerAll() {
@@ -294,6 +300,7 @@ class CretaPlayManager extends ChangeNotifier {
             doNotify:
                 false); //skpark 2024.11.04  ContentsManager 에서는 현재 seletedMid를 가지고 있지 않는 경우가 있다.
         notify();
+        sendEventToLink();
       }
       _forceToChange = false;
       if (_currentModel!.mid != _prevModel!.mid) {
@@ -319,6 +326,13 @@ class CretaPlayManager extends ChangeNotifier {
     }
 
     return true;
+  }
+
+  void sendEventToLink() {
+    if (StudioVariables.isPreview && _currentModel != null) {
+      print('sendEventToLink ${_currentModel!.mid}');
+      _sendEvent?.sendEvent(_currentModel!);
+    }
   }
 
   Future<void> prev() async {

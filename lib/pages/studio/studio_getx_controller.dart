@@ -100,6 +100,8 @@ class StudioGetXController extends GetxController {
     Get.put(ContentsEventController(), tag: 'text-property-to-textplayer');
     Get.put(ContentsEventController(), tag: 'textplayer-to-text-property');
 
+    Get.put(ContentsEventController(), tag: 'play-to-link');
+
     Get.put(OffsetEventController(), tag: 'frame-each-to-on-link');
     Get.put(OffsetEventController(), tag: 'on-link-to-link-widget');
 

@@ -80,7 +80,7 @@ class CretaVideoPlayerWidgetState extends CretaState<CretaVideoWidget> {
         logger.info(
             '*(*(*(*(*(*(*( afterBuild player start !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
         player.playVideoSafe();
-        //}
+      
       }
     });
   }

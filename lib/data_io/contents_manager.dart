@@ -44,6 +44,16 @@ class ContentsManager extends BaseContentsManager {
 
   // for text widget only start
 
+  static Map<ContentsModel, ContentsModel> oldNewMap = {}; // linkCopy 시에 필요하다.
+  static ContentsModel? findNew(String oldMid) {
+    for (var ele in oldNewMap.entries) {
+      if (ele.key.mid == oldMid) {
+        return ele.value;
+      }
+    }
+    return null;
+  }
+
   late final FrameManager frameManager;
 
   KeyHandler textKeyHandler = KeyHandler();
@@ -182,11 +192,13 @@ class ContentsManager extends BaseContentsManager {
     // 이미, publish 되어 있다면, 해당 mid 를 가져와야 한다.
     lock();
     int counter = 0;
+    oldNewMap.clear();
     for (var ele in modelList) {
       if (ele.isRemoved.value == true) {
         continue;
       }
       AbsExModel newOne = await makeCopy(newBookMid, ele, newParentMid);
+      oldNewMap[ele as ContentsModel] = newOne as ContentsModel;
       LinkManager? linkManager = findLinkManager(ele.mid, createIfNotExist: false);
       await linkManager?.copyBook(newBookMid, newOne.mid);
       counter++;
@@ -335,6 +347,7 @@ class ContentsManager extends BaseContentsManager {
   String prefix() => CretaManager.modelPrefix(ExModelType.contents);
 
   Future<int> getContents() async {
+    //print('getContents()*********************************');
     int contentsCount = 0;
     startTransaction();
     try {
@@ -1328,15 +1341,43 @@ class ContentsManager extends BaseContentsManager {
     //   },
     // );
     for (var model in modelList) {
-      LinkManager linkManager = newLinkManager(model.mid);
-      await linkManager.getLink(contentsId: model.mid);
+      LinkManager linkManager = findOrCreateLinkManager(model.mid);
+      await linkManager.getAllLinks(contentsId: model.mid);
       counter++;
     }
     //endTransaction();
     return counter;
   }
 
-  LinkManager newLinkManager(String contentsId) {
+  int createLinkContentsManagerMap() {
+    if (StudioVariables.isPreview == false) {
+      return 0;
+    }
+
+    int counter = 0;
+    //startTransaction();
+    reOrdering();
+    logger.fine('_getAllLinks---------------${getAvailLength()}----------------------------');
+    // orderMapIterator(
+    //   (model) {
+    //     LinkManager linkManager = newLinkManager(model.mid);
+    //     linkManager.getLink(contentsId: model.mid);
+    //     counter++;
+    //   },
+    // );
+
+    for (var model in modelList) {
+      if (model.isRemoved.value == true) continue;
+      LinkManager linkManager = findOrCreateLinkManager(model.mid);
+      print('createLinkContentsManagerMap(${model.mid})');
+      linkManager.createLinkContentsManagerMap();
+      counter++;
+    }
+    //endTransaction();
+    return counter;
+  }
+
+  LinkManager findOrCreateLinkManager(String contentsId) {
     logger.fine('newLinkManager()*******$contentsId');
 
     LinkManager? retval = LinkManager.findLinkManager(contentsId);
@@ -1716,5 +1757,12 @@ class ContentsManager extends BaseContentsManager {
       ContentsModel model = ele as ContentsModel;
       logger.info('*** contents = ${model.name}, ${model.order.value},  ${model.isRemoved.value}');
     }
+  }
+
+  bool isCurrentModel(String mid) {
+    if (playManager == null) {
+      return false;
+    }
+    return playManager!.isCurrentModel(mid);
   }
 }

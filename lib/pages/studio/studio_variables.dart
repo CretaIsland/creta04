@@ -224,6 +224,7 @@ class StudioVariables {
 class LinkParams {
   static bool isLinkNewMode = false;
   static bool isLinkEditMode = false;
+  static String connectedParentMid = '';
   static String connectedMid = '';
   static String connectedClass = '';
   static String connectedName = '';
@@ -239,6 +240,7 @@ class LinkParams {
       if (StudioVariables.isAutoPlay == true) {
         StudioVariables.globalToggleAutoPlay(forceValue: false);
       }
+      LinkParams.connectedParentMid = model.parentMid.value;
       LinkParams.connectedMid = model.mid;
       LinkParams.connectedClass = model.type.name;
 
@@ -259,6 +261,7 @@ class LinkParams {
 
   static bool linkCancel(CretaModel model) {
     if (LinkParams.isLinkNewMode == false) {
+      LinkParams.connectedParentMid = '';
       LinkParams.connectedMid = '';
       LinkParams.connectedClass = '';
       LinkParams.connectedName = '';
@@ -274,6 +277,7 @@ class LinkParams {
   static void linkClear() {
     LinkParams.linkPostion = null;
     LinkParams.orgPostion = null;
+    LinkParams.connectedParentMid = '';
     LinkParams.connectedMid = '';
     LinkParams.connectedClass = '';
     LinkParams.connectedName = '';
@@ -282,6 +286,7 @@ class LinkParams {
   static void linkSet(
     Offset linkPosition,
     Offset orgPosition,
+    String connectedParentMid,
     String connectedMid,
     String connectedClass,
     String connectedName,
@@ -289,6 +294,7 @@ class LinkParams {
   ) {
     LinkParams.linkPostion = linkPosition;
     LinkParams.orgPostion = orgPosition;
+    LinkParams.connectedParentMid = connectedParentMid;
     LinkParams.connectedMid = connectedMid;
     LinkParams.connectedClass = connectedClass;
     LinkParams.connectedName = connectedName;

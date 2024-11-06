@@ -108,7 +108,9 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
   void initState() {
     super.initState();
     _isInitialized = initChildren();
-
+    if (_contentsManager!.onceDBGetComplete == true) {
+      _contentsManager!.createLinkContentsManagerMap(); // link 와 contentsMangaer 의 Map 까지 추가해야 한다.
+    }
     // final OffsetEventController sendEvent = Get.find(tag: 'frame-each-to-on-link');
     // _linkSendEvent = sendEvent;
     final FrameEachEventController linkReceiveEvent = Get.find(tag: 'to-FrameEach');
@@ -127,9 +129,7 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
   }
 
   Future<void> afterBuild() async {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      _playManager?.sendEventToLink();
-    });
+    WidgetsBinding.instance.addPostFrameCallback((_) async {});
   }
 
   Future<bool> initChildren() async {
@@ -149,13 +149,15 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
 
     if (_contentsManager!.onceDBGetComplete == false) {
       try {
-        await _contentsManager!.getContents();
+        await _contentsManager!.getContents(); // link 와 contentsMangaer 의 Map 까지 추가해야 한다.
       } catch (e) {
         logger.severe('contentsManager getContents *(*(*()*)(***()*(**()))) error $e');
       }
-      await _contentsManager!.getContents();
+      //await _contentsManager!.getContents();
+
       _contentsManager!.addRealTimeListen(widget.model.mid);
       _contentsManager!.reOrdering();
+      _contentsManager!.createLinkContentsManagerMap(); // link 와 contentsMangaer 의 Map 까지 추가해야 한다.
     }
     //print('frame initChildren(${_contentsManager!.getAvailLength()})');
 
@@ -195,10 +197,10 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
           value: _playManager!,
         ),
       ],
-      //child: _isInitialized ? _frameDropZone() : _futureBuider(),
+      //child: _isInitialized ? _frameDropZone() : _futureBuilder(),
       child: (StudioVariables.isPreview == true)
           ? _frameBody2()
-          : _futureBuider(), //skpark 이부분 다시 테스트해봐야함. 과연 previewMode 에서는 정말로 wait 를 하지 않아도 되는가??? 그럴리가....한번되면 안해도 되게..
+          : _futureBuilder(), //skpark 이부분 다시 테스트해봐야함. 과연 previewMode 에서는 정말로 wait 를 하지 않아도 되는가??? 그럴리가....한번되면 안해도 되게..
     );
   }
 
@@ -211,7 +213,7 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
   //   return true;
   // }
 
-  Widget _futureBuider() {
+  Widget _futureBuilder() {
     _onceInited = true;
     return FutureBuilder<bool>(
         initialData: false,
@@ -355,10 +357,10 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
     if (_contentsManager == null) {
       return const SizedBox.shrink();
     }
+    print('FrameEach done================++++++++++++++++++++++++++++++++++++');
     if (StudioVariables.isPreview) {
       return _applyAnimate(widget.model);
     }
-
     logger.fine('_frameBody2 ${widget.model.name.value}');
     logger.fine('_frameBody2 ${widget.model.isShow.value}');
     logger.fine('_frameBody2 ${widget.model.mid}');
@@ -403,22 +405,6 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
           );
         });
   }
-
-  // Widget _onLinkNewCursor() {
-  //   if (_contentsManager == null) {
-  //     return const SizedBox.shrink();
-  //   }
-  //   // 새로운 링크를 만들때만 나타나는 투명판이다.
-  //   return OnLinkCursor(
-  //     key: GlobalObjectKey('OnLinkCursor${widget.model.mid}'),
-  //     pageOffset: widget.frameManager.pageOffset,
-  //     frameOffset: widget.frameOffset,
-  //     frameManager: frameManager!,
-  //     frameModel: widget.model,
-  //     contentsManager: _contentsManager!,
-  //     applyScale: widget.applyScale,
-  //   );
-  // }
 
   Future<void> _onDropFrame(String frameId, List<ContentsModel> contentsModelList) async {
     // 콘텐츠 매니저를 생성한다.

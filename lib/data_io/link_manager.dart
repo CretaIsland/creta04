@@ -17,6 +17,7 @@ import '../pages/studio/book_main_page.dart';
 import '../pages/studio/containees/containee_nofifier.dart';
 import '../pages/studio/left_menu/left_menu_page.dart';
 import 'book_manager.dart';
+import 'contents_manager.dart';
 import 'frame_manager.dart';
 import 'page_manager.dart';
 
@@ -36,7 +37,9 @@ class LinkManager extends BaseLinkManager {
     //saveManagerHolder?.registerManager('link', this, postfix: contentsMid);
   }
 
-  static final Map<String, LinkManager> _linkManagerMap = {};
+  static final Map<String, LinkManager> _linkManagerMap = {}; // classMid, LinkManager
+  static final Map<String, ContentsManager> _contentsManagerMap =
+      {}; // linkMid, 그 링크가 지칭하고 있는 콘텐츠의 매니저를 물고 있다. ContentsManager
   static Map<String, LinkManager> get linkManagerMap => _linkManagerMap;
   static void setLinkManager(String contentsId, LinkManager linkManager) {
     _linkManagerMap[contentsId] = linkManager;
@@ -46,10 +49,32 @@ class LinkManager extends BaseLinkManager {
     return _linkManagerMap[contentsMid];
   }
 
+  static ContentsManager? findContentsManager(String linkMid) {
+    return _contentsManagerMap[linkMid];
+  }
+
+  static bool isCurrentModel(String linkMid, String contentsMid) {
+    ContentsManager? contentsManager = findContentsManager(linkMid);
+    if (contentsManager != null) {
+      return contentsManager.isCurrentModel(contentsMid);
+    }
+    return false;
+  }
+
   static void clearLink(String contentsMid) {
     for (var linkManager in _linkManagerMap.values) {
       linkManager.removeLink(contentsMid);
     }
+  }
+
+  LinkModel? findLink(String connectedMid) {
+    for (var ele in modelList) {
+      LinkModel model = ele as LinkModel;
+      if (model.connectedMid == connectedMid) {
+        return model;
+      }
+    }
+    return null;
   }
 
   // @override
@@ -97,7 +122,15 @@ class LinkManager extends BaseLinkManager {
       } else {
         newOne.connectedMid = '';
       }
-      //print('frame link connectedMid = ${oldOne.connectedMid} --> ${newOne.connectedMid}');
+    } else if (oldOne.connectedClass == 'contents') {
+      ContentsModel? contents = ContentsManager.findNew(oldOne.connectedMid);
+      if (contents != null) {
+        newOne.connectedParentMid = contents.parentMid.value;
+        newOne.connectedMid = contents.mid;
+      } else {
+        newOne.connectedParentMid = '';
+        newOne.connectedMid = '';
+      }
     }
 
     await createToDB(newOne);
@@ -107,7 +140,8 @@ class LinkManager extends BaseLinkManager {
   // @override
   // AbsExModel newModel(String mid) => LinkModel(mid, bookMid);
 
-  Future<int> getLink({required String contentsId}) async {
+  Future<int> getAllLinks({required String contentsId}) async {
+    print('getAllLinks($contentsId) ===================================');
     startTransaction();
     try {
       Map<String, QueryValue> query = {};
@@ -119,6 +153,10 @@ class LinkManager extends BaseLinkManager {
       logger.fine('something wrong in LinkManager >> $error');
       return 0;
     }
+    // if (StudioVariables.isPreview == true && hasLinkCache == true) {
+    //   print('insertConnectedContentsManager($contentsId) ===================================');
+    //   await insertConnectedContentsManager();
+    // }
     endTransaction();
     return modelList.length;
   }
@@ -128,6 +166,7 @@ class LinkManager extends BaseLinkManager {
     required double posX,
     required double posY,
     String? name,
+    required String? connectedParentMid,
     String? connectedMid,
     String? connectedClass,
     bool doNotify = true,
@@ -139,6 +178,7 @@ class LinkManager extends BaseLinkManager {
     link.posX.set(posX, save: false, noUndo: true);
     link.posY.set(posY, save: false, noUndo: true);
     link.name.set(name ?? '', save: false, noUndo: true);
+    link.connectedParentMid = connectedParentMid ?? '';
     link.connectedMid = connectedMid ?? '';
     link.connectedClass = connectedClass ?? '';
     link.order.set(getMaxOrder() + 1, save: false, noUndo: true);
@@ -383,5 +423,73 @@ class LinkManager extends BaseLinkManager {
       logger.fine('${linkModel.mid}, ${linkManager.frameModel.mid} is Removed');
     }
     return true;
+  }
+
+  void createLinkContentsManagerMap() {
+    {
+      for (var ele in modelList) {
+        LinkModel linkModel = ele as LinkModel;
+        if (linkModel.isRemoved.value == true) {
+          continue;
+        }
+        if (linkModel.connectedClass != 'contents') {
+          //콘텐츠 연결의 경우만 링크 관리를 한다.
+          continue;
+        }
+        if (_contentsManagerMap[linkModel.mid] != null) {
+          continue;
+        }
+        ContentsManager? contentsManager =
+            _findConnectedContentsManager(linkModel.connectedParentMid, linkModel.connectedMid);
+        if (contentsManager != null) {
+          print(
+              'createLinkContentsManagerMap ${linkModel.mid} = ${contentsManager.frameModel.mid} ---------------');
+          _contentsManagerMap[linkModel.mid] = contentsManager;
+        }
+      }
+    }
+  }
+
+  ContentsManager? _findConnectedContentsManager(String frameId, String connectedMid) {
+    // BookModel book = BookMainPage.bookManagerHolder!.onlyOne() as BookModel;
+    // PageModel pageModel = PageModel('', book);
+    // FrameModel? frameModel = FrameModel('', book.mid);
+
+    // //1. 이 contentsMid 를 관리하는  ContentsManager 를 찾아야 한다.
+    // ContentsManager? dummyContentsManager = ContentsManager.dummy(book);
+    // ContentsModel? connectedContents =
+    //     await dummyContentsManager.getFromDB(connectedMid) as ContentsModel?;
+    // if (connectedContents == null) {
+    //   logger.severe('Failed to find contentsModel $connectedMid');
+    //   return null;
+    // }
+    // //2. 이를 통해 이를 관리하는 frameManager 를 찾는다.  (반드시 dummyManager 를 통해 찾아야 한다.)
+    // FrameManager? dummyFrameManager = FrameManager(pageModel: pageModel, bookModel: book);
+    // //3. 이를 통해  frameModel 을 찾는다.
+    // frameModel =
+    //     await dummyFrameManager.getFromDB(connectedContents.parentMid.value) as FrameModel?;
+    // if (frameModel == null) {
+    //   logger.severe('Failed to find contentsModel $connectedMid');
+    //   return null;
+    // }
+    // //4. 이를 통해 이를 관리하는 contentsManager 를 찾는다.  이때는 진짜 frameManager 를 통해 찾아야 한다.
+    // FrameManager? frameManager =
+    //     BookMainPage.pageManagerHolder!.findFrameManager(frameModel.parentMid.value);
+    // if (frameManager == null) {
+    //   logger.severe('Failed to find frameManager ${frameModel.parentMid.value}');
+    //   return null;
+    // }
+    FrameManager? frameManager = BookMainPage.pageManagerHolder!.findSelectedFrameManager();
+    if (frameManager == null) {
+      logger.severe('Failed to find frameManager ${frameModel.parentMid.value}');
+      return null;
+    }
+    ContentsManager? contentsManager = frameManager.findContentsManagerByMid(frameId);
+    if (contentsManager == null) {
+      logger.severe('Failed to find contentsManager $frameId');
+      return null;
+    }
+
+    return contentsManager;
   }
 }

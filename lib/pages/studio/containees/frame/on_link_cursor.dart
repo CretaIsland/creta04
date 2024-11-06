@@ -149,7 +149,8 @@ class _OnLinkCursorState extends State<OnLinkCursor> {
 
           //   return value;
           // });
-          LinkManager linkManager = widget.contentsManager.newLinkManager(contentsModel.mid);
+          LinkManager linkManager =
+              widget.contentsManager.findOrCreateLinkManager(contentsModel.mid);
 
           logger.fine(
               'connectedName=${LinkParams.connectedName}, connectedMid=${LinkParams.connectedMid}, connectedClass=${LinkParams.connectedClass}');
@@ -160,6 +161,7 @@ class _OnLinkCursorState extends State<OnLinkCursor> {
             posY: dataY,
             doNotify: false,
             name: LinkParams.connectedName,
+            connectedParentMid: LinkParams.connectedParentMid,
             connectedMid: LinkParams.connectedMid,
             connectedClass: LinkParams.connectedClass,
             onComplete: _showTargetFrame,

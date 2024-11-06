@@ -709,13 +709,16 @@ class _LinkWidgetState extends State<LinkWidget> {
         builder: (context, snapshot) {
           if (snapshot.data != null && snapshot.data is ContentsModel) {
             ContentsModel contentsModel = snapshot.data! as ContentsModel;
+            // print('==========================================================');
+            // print('CretaPlayManager event received');
+            // print('current contents is ${contentsModel.name}');
+            // print('==========================================================');
             if (model.connectedMid == contentsModel.mid) {
-              print('==========================================================');
-              print('ContentsManager event received');
-              print('current contents is ${contentsModel.name}');
-              print('==========================================================');
               return AnimatedLinkIcon(linkModel: model);
             }
+          }
+          if (LinkManager.isCurrentModel(model.mid, model.connectedMid)) {
+            return AnimatedLinkIcon(linkModel: model);
           }
           return normalWidget;
         });
@@ -778,6 +781,7 @@ class _LinkWidgetState extends State<LinkWidget> {
     LinkParams.linkSet(
       Offset(posX, posY),
       widget.frameOffset,
+      model.connectedParentMid,
       model.connectedMid,
       'page',
       model.name.value,
@@ -816,6 +820,7 @@ class _LinkWidgetState extends State<LinkWidget> {
       LinkParams.linkSet(
         Offset(posX, posY),
         widget.frameOffset,
+        model.connectedParentMid,
         model.connectedMid,
         'frame',
         model.name.value,
@@ -883,6 +888,7 @@ class _LinkWidgetState extends State<LinkWidget> {
       LinkParams.linkSet(
         Offset(posX, posY),
         widget.frameOffset,
+        model.connectedParentMid,
         model.connectedMid,
         'contents',
         model.name.value,

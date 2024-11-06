@@ -630,6 +630,7 @@ class FrameManager extends BaseFrameManager {
   }
 
   ContentsManager newContentsManager(FrameModel frameModel) {
+    print('newContentsManager(${frameModel.mid})-----');
     ContentsManager retval = ContentsManager(
       frameManager: this,
       pageModel: pageModel,
@@ -909,7 +910,7 @@ class FrameManager extends BaseFrameManager {
       await contentsManager.copyBook(newBookMid, entry.value.mid);
       counter++;
     }
-    oldNewMap.clear();
+    //oldNewMap.clear();
     unlock();
     return counter;
   }
@@ -1375,7 +1376,7 @@ class FrameManager extends BaseFrameManager {
     // print(
     //     'before createContents : frameModel.mid=${frameModel.mid}, ContentsModel.mid=${model.mid}, fontSize=${style.fontSize}');
 
-    ContentsManager.createContents(this, [model], frameModel, pageModel);
+    await ContentsManager.createContents(this, [model], frameModel, pageModel);
     mychangeStack.endTrans();
 
     MiniMenu.setShowFrame(false); //  프레임이 아닌 콘텐츠가 선택되도록 하기 위해.

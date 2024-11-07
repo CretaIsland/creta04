@@ -44,8 +44,8 @@ class PageInfo {
 
 class PageManager extends BasePageManager {
   // BookModel? bookModel;
-  Map<String, FrameManager?> frameManagerMap = {};  // pageMid, FrameManager  
-  
+  Map<String, FrameManager?> frameManagerMap = {}; // pageMid, FrameManager
+
   // //Map<String, GlobalObjectKey> thumbKeyMap = {};
 
   int updateContents(ContentsModel model) {
@@ -916,7 +916,7 @@ class PageManager extends BasePageManager {
     // 이미, publish 되어 있다면, 해당 mid 를 가져와야 한다.
     lock();
     int counter = 0;
-    oldNewMap.clear();
+    //oldNewMap.clear();
     for (var ele in modelList) {
       if (ele.isRemoved.value == true) {
         continue;
@@ -929,7 +929,7 @@ class PageManager extends BasePageManager {
       await frameManager?.copyBook(newBookMid, entry.value);
       counter++;
     }
-    oldNewMap.clear();
+    //oldNewMap.clear();
     unlock();
     return counter;
   }

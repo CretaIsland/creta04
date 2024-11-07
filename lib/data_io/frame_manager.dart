@@ -887,7 +887,7 @@ class FrameManager extends BaseFrameManager {
     // 이미, publish 되어 있다면, 해당 mid 를 가져와야 한다.
     lock();
     int counter = 0;
-    oldNewMap.clear();
+    //oldNewMap.clear();
     for (var ele in modelList) {
       if (ele.isRemoved.value == true) {
         continue;

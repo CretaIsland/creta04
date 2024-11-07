@@ -6,7 +6,8 @@ import 'package:hycop/hycop/database/abs_database.dart';
 import 'package:creta_studio_model/model/frame_model.dart';
 import 'package:creta_studio_model/model/link_model.dart';
 import 'package:creta_common/model/creta_model.dart';
-import 'contents_manager.dart';
+//import 'contents_manager.dart';
+import 'contents_published_manager.dart';
 import 'frame_published_manager.dart';
 import 'link_manager.dart';
 import 'package:creta_user_io/data_io/creta_manager.dart';
@@ -65,7 +66,7 @@ class LinkPublishedManager extends CretaManager {
         newOne.connectedMid = '';
       }
     } else if (oldOne.connectedClass == 'contents') {
-      ContentsModel? contents = ContentsManager.findNew(oldOne.connectedMid);
+      ContentsModel? contents = ContentsPublishedManager.findNew(oldOne.connectedMid);
       if (contents != null) {
         newOne.connectedParentMid = contents.parentMid.value;
         newOne.connectedMid = contents.mid;

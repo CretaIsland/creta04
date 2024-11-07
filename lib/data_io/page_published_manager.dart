@@ -13,7 +13,7 @@ class PagePublishedManager extends CretaManager {
   final PageManager? pageManager;
   final BookModel? bookModel;
 
-  static Map<String, String> oldNewMap = {}; // linkCopy 시에 필요하다.
+  static Map<String, String> oldNewMap = {}; // linkCopy 시에 필요하다.  // old page mid, new page mid
 
   PagePublishedManager(this.pageManager, this.bookModel) : super('creta_page_published', null);
 
@@ -31,6 +31,7 @@ class PagePublishedManager extends CretaManager {
   Future<int> copyBook(String newBookMid, String? newParentMid) async {
     lock();
     int counter = 0;
+    //oldNewMap.clear();
     for (var ele in pageManager!.modelList) {
       if (ele.isRemoved.value == true) {
         continue;
@@ -49,7 +50,7 @@ class PagePublishedManager extends CretaManager {
       await publishedManager.copyBook(newBookMid, entry.value);
       counter++;
     }
-    oldNewMap.clear(); // LinkCopy 가 끝났으므로 지운다.
+    //oldNewMap.clear(); // LinkCopy 가 끝났으므로 지운다.
     unlock();
     return counter;
   }

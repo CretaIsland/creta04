@@ -1761,7 +1761,7 @@ class _BookMainPageState extends State<BookMainPage> {
           Padding(
             padding: EdgeInsets.only(left: padding),
             child: BTN.line_blue_it_m_animation(
-                text: CretaStudioLang['publish']!,
+                text: CretaStudioLang['publish'] ?? '발행하기',
                 image:
                     NetworkImage('https://docs.flutter.dev/assets/images/dash/dash-fainting.gif'),
                 onPressed: () {

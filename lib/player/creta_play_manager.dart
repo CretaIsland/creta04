@@ -232,6 +232,7 @@ class CretaPlayManager extends ChangeNotifier {
       }
     }
     _currentModel = contentsManager.getNthOrder(_currentOrder) as ContentsModel?;
+    //sendEventToLink();
     return _currentModel;
   }
 

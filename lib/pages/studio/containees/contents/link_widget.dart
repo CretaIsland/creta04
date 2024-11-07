@@ -604,6 +604,8 @@ class _LinkWidgetState extends State<LinkWidget> {
           }
         },
         onTapUp: (details) {
+          print(
+              'linkWidget onTapUp --------------------------------------${StudioVariables.isPreview}--');
           if (StudioVariables.isPreview == false) {
             _showLinkProperty(linkManager, model);
             // if (_linkManager != null) {
@@ -717,9 +719,19 @@ class _LinkWidgetState extends State<LinkWidget> {
               return AnimatedLinkIcon(linkModel: model);
             }
           }
-          if (LinkManager.isCurrentModel(model.mid, model.connectedMid)) {
-            return AnimatedLinkIcon(linkModel: model);
+          ContentsModel? currentModel = LinkManager.getCurrentModel(model.mid);
+          if (model.connectedClass == 'contents') {
+            // 문제는 처음에 widget 이 떳을 때는 target contents 가 아직 플레이되기 전이라는 것이다.
+            // 따라서, 처음에는  currentModel  이 null  이어도 허용하는 방법이 있다.
+            if (currentModel == null || currentModel.mid == model.connectedMid) {
+              return AnimatedLinkIcon(linkModel: model);
+            }
           }
+          // if (LinkManager.isCurrentModel(model.mid, model.connectedMid)) {
+          //   ContentsModel? currentModel = LinkManager.getCurrentModel(model.mid);
+          //   print('================ ${currentModel != null ? currentModel.name : 'null'}');
+          //   return AnimatedLinkIcon(linkModel: model);
+          // }
           return normalWidget;
         });
   }
@@ -739,9 +751,9 @@ class _LinkWidgetState extends State<LinkWidget> {
   }
 
   void _goto(LinkModel model) {
-    // print('link button pressed ${model.connectedMid},${model.connectedClass}');
+    print('link button pressed ${model.connectedMid},${model.connectedClass}');
     // print('link button pressed ${widget.frameModel.mid},${widget.frameModel.isShow.value}');
-    BookMainPage.containeeNotifier!.setFrameClick(true);
+    BookMainPage.containeeNotifier?.setFrameClick(true);
 
     //if (widget.contentsModel.isLinkEditMode == true) return;
     if (LinkParams.isLinkNewMode == true) return;
@@ -862,8 +874,12 @@ class _LinkWidgetState extends State<LinkWidget> {
 
   void _openContents(LinkModel model, double posX, double posY) {
     ContentsModel? contentsModel = widget.frameManager.findContentsModel(model.connectedMid);
+    if (contentsModel == null) {
+      logger.severe('connected = ${model.connectedMid} not founded');
+      return;
+    }
     FrameModel? childModel =
-        widget.frameManager.getModel(contentsModel!.parentMid.value) as FrameModel?;
+        widget.frameManager.getModel(contentsModel.parentMid.value) as FrameModel?;
     if (childModel == null) {
       logger.severe('connected frame = ${model.connectedMid} not founded');
       return;

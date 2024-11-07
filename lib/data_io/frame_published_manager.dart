@@ -37,7 +37,7 @@ class FramePublishedManager extends CretaManager {
   Future<int> copyBook(String newBookMid, String? newParentMid) async {
     lock();
     int counter = 0;
-    oldNewMap.clear(); // LinkCopy 가 끝났으므로 지운다.
+    //oldNewMap.clear(); // LinkCopy 가 끝났으므로 지운다.
     for (var ele in frameManager!.modelList) {
       if (ele.isRemoved.value == true) {
         continue;
@@ -66,7 +66,7 @@ class FramePublishedManager extends CretaManager {
       await publishedManager.copyBook(newBookMid, entry.value.mid);
       counter++;
     }
-    oldNewMap.clear(); // LinkCopy 가 끝났으므로 지운다.
+    //oldNewMap.clear(); // LinkCopy 가 끝났으므로 지운다.
     unlock();
     return counter;
   }

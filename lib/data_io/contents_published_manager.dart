@@ -12,6 +12,16 @@ class ContentsPublishedManager extends CretaManager {
   final ContentsManager? contentsManager;
   ContentsPublishedManager(this.contentsManager) : super('creta_contents_published', null);
 
+  static Map<ContentsModel, ContentsModel> oldNewMap = {}; // linkCopy 시에 필요하다.
+  static ContentsModel? findNew(String oldMid) {
+    for (var ele in oldNewMap.entries) {
+      if (ele.key.mid == oldMid) {
+        return ele.value;
+      }
+    }
+    return null;
+  }
+
   @override
   CretaModel cloneModel(CretaModel src) {
     ContentsModel retval = newModel(src.mid) as ContentsModel;
@@ -26,11 +36,13 @@ class ContentsPublishedManager extends CretaManager {
   Future<int> copyBook(String newBookMid, String? newParentMid) async {
     lock();
     int counter = 0;
+    //oldNewMap.clear();
     for (var ele in contentsManager!.modelList) {
       if (ele.isRemoved.value == true) {
         continue;
       }
       AbsExModel newOne = await makeCopy(newBookMid, ele, newParentMid);
+       oldNewMap[ele as ContentsModel] = newOne as ContentsModel;
       LinkManager? linkManager = contentsManager!.findLinkManager(ele.mid);
       if (linkManager == null) {
         continue;
@@ -39,6 +51,7 @@ class ContentsPublishedManager extends CretaManager {
       await publishedManager.copyBook(newBookMid, newOne.mid);
       counter++;
     }
+    //oldNewMap.clear();
     unlock();
     return counter;
   }

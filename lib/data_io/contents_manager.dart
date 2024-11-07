@@ -139,7 +139,8 @@ class ContentsManager extends BaseContentsManager {
   // }
   // for text widget only end
 
-  ContentsEventController? sendEvent;
+  ContentsEventController? _sendEventProperty;
+  ContentsEventController? _sendEventLink;
 
   static ContentsManager? _dummyManager;
   static ContentsManager? get dummyManager {
@@ -160,8 +161,10 @@ class ContentsManager extends BaseContentsManager {
     super.isPublishedMode = false,
   }) {
     //saveManagerHolder?.registerManager('contents', this, postfix: frameModel.mid);
-    final ContentsEventController sendEventVar = Get.find(tag: 'contents-property-to-main');
-    sendEvent = sendEventVar;
+    final ContentsEventController sendEventProperty = Get.find(tag: 'contents-property-to-main');
+    _sendEventProperty = sendEventProperty;
+    final ContentsEventController sendEventLink = Get.find(tag: 'play-to-link');
+    _sendEventLink = sendEventLink;
   }
 
   ContentsManager.dummy(BookModel book,
@@ -174,7 +177,18 @@ class ContentsManager extends BaseContentsManager {
     frameManager = pFrameManager ?? FrameManager(pageModel: pageModel, bookModel: book);
 
     final ContentsEventController sendEventVar = Get.find(tag: 'contents-property-to-main');
-    sendEvent = sendEventVar;
+    _sendEventProperty = sendEventVar;
+  }
+
+  void sendEventToLink() {
+    if (StudioVariables.isPreview) {
+      print('sendEventToLink dummy');
+      _sendEventLink?.sendEvent(ContentsModel('', ''));
+    }
+  }
+
+  void sendEventToProperty(ContentsModel model) {
+    _sendEventProperty?.sendEvent(model);
   }
 
   @override
@@ -192,7 +206,7 @@ class ContentsManager extends BaseContentsManager {
     // 이미, publish 되어 있다면, 해당 mid 를 가져와야 한다.
     lock();
     int counter = 0;
-    oldNewMap.clear();
+    //oldNewMap.clear();
     for (var ele in modelList) {
       if (ele.isRemoved.value == true) {
         continue;
@@ -203,6 +217,7 @@ class ContentsManager extends BaseContentsManager {
       await linkManager?.copyBook(newBookMid, newOne.mid);
       counter++;
     }
+    //oldNewMap.clear(); // copyBook 이 끝나면, 더이상 필요가 없음.
     unlock();
     return counter;
   }
@@ -1372,6 +1387,9 @@ class ContentsManager extends BaseContentsManager {
       print('createLinkContentsManagerMap(${model.mid})');
       linkManager.createLinkContentsManagerMap();
       counter++;
+    }
+    if (counter > 0) {
+      sendEventToLink();
     }
     //endTransaction();
     return counter;

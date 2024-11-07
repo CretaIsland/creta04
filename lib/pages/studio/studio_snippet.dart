@@ -236,7 +236,7 @@ class StudioSnippet {
       if (founded.mid == model.mid) {
         founded.remoteUrl = model.remoteUrl;
         founded.thumbnailUrl = model.thumbnailUrl;
-        contentsManager.sendEvent?.sendEvent(founded);
+        contentsManager.sendEventToProperty(founded);
       }
     }
     //contentsManager.printLog();

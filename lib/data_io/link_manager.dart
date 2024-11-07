@@ -26,6 +26,7 @@ class LinkManager extends BaseLinkManager {
   // final PageModel pageModel;
   // final FrameModel frameModel;
   // final bool isPublishedMode;
+
   LinkManager(
     super.contentsMid,
     super.bookMid,
@@ -61,6 +62,14 @@ class LinkManager extends BaseLinkManager {
     return false;
   }
 
+  static ContentsModel? getCurrentModel(String linkMid) {
+    ContentsManager? contentsManager = findContentsManager(linkMid);
+    if (contentsManager != null) {
+      return contentsManager.getCurrentModel();
+    }
+    return null;
+  }
+
   static void clearLink(String contentsMid) {
     for (var linkManager in _linkManagerMap.values) {
       linkManager.removeLink(contentsMid);
@@ -93,6 +102,7 @@ class LinkManager extends BaseLinkManager {
         continue;
       }
       await makeCopy(newBookMid, ele, newParentMid) as LinkModel;
+      counter++;
     }
     unlock();
     return counter;

@@ -232,7 +232,7 @@ class CretaPlayManager extends ChangeNotifier {
       }
     }
     _currentModel = contentsManager.getNthOrder(_currentOrder) as ContentsModel?;
-    //sendEventToLink();
+    sendEventToLink();
     return _currentModel;
   }
 
@@ -331,7 +331,7 @@ class CretaPlayManager extends ChangeNotifier {
 
   void sendEventToLink() {
     if (StudioVariables.isPreview && _currentModel != null) {
-      print('sendEventToLink ${_currentModel!.name}');
+      //print('sendEventToLink ${_currentModel!.name}');
       _sendEvent?.sendEvent(_currentModel!);
     }
   }

@@ -7,6 +7,7 @@ import 'package:creta_studio_model/model/page_model.dart';
 import 'package:creta_user_io/data_io/creta_manager.dart';
 import 'frame_manager.dart';
 import 'frame_published_manager.dart';
+import 'link_published_manager.dart';
 import 'page_manager.dart';
 
 class PagePublishedManager extends CretaManager {
@@ -30,6 +31,7 @@ class PagePublishedManager extends CretaManager {
   @override
   Future<int> copyBook(String newBookMid, String? newParentMid) async {
     lock();
+    LinkPublishedManager.newLinkList.clear();
     int counter = 0;
     //oldNewMap.clear();
     for (var ele in pageManager!.modelList) {
@@ -51,6 +53,7 @@ class PagePublishedManager extends CretaManager {
       counter++;
     }
     //oldNewMap.clear(); // LinkCopy 가 끝났으므로 지운다.
+    await LinkPublishedManager.updateConnectedMid();
     unlock();
     return counter;
   }

@@ -58,6 +58,7 @@ import 'package:creta_studio_model/model/book_model.dart';
 import '../../design_system/component/cross_scrollbar.dart';
 import 'package:creta_studio_model/model/frame_model.dart';
 import 'package:creta_studio_model/model/page_model.dart';
+import '../../lang/creta_commu_lang.dart';
 import '../../player/creta_play_manager.dart';
 import '../../routes.dart';
 import '../login/creta_account_manager.dart';
@@ -1573,6 +1574,8 @@ class _BookMainPageState extends State<BookMainPage> {
           SizedBox(width: padding),
           BTN.floating_l(
             icon: Icons.copy_outlined,
+            hasShadow: false,
+            tooltip: CretaCommuLang['createCopy'] ?? '사본 만들기',
             onPressed: () async {
               BookModel? model = BookMainPage.bookManagerHolder!.onlyOne() as BookModel?;
               if (model == null) {
@@ -1589,13 +1592,12 @@ class _BookMainPageState extends State<BookMainPage> {
                         .set(BookManager.newbBackgroundMusicFrame, save: false);
                     BookMainPage.bookManagerHolder!.setToDB(newOne);
                   }
+                  //print('url=$url');
                   AppRoutes.launchTab(url);
                   return null;
                 });
               });
             },
-            hasShadow: false,
-            tooltip: CretaLang['makeCopy'] ?? '사본 만들기',
           ),
           SizedBox(width: padding),
           BTN.floating_l(

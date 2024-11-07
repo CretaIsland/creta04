@@ -630,7 +630,7 @@ class FrameManager extends BaseFrameManager {
   }
 
   ContentsManager newContentsManager(FrameModel frameModel) {
-    print('newContentsManager(${frameModel.mid})-----');
+    //print('newContentsManager(${frameModel.mid})-----');
     ContentsManager retval = ContentsManager(
       frameManager: this,
       pageModel: pageModel,

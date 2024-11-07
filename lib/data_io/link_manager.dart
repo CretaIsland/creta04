@@ -38,6 +38,12 @@ class LinkManager extends BaseLinkManager {
     //saveManagerHolder?.registerManager('link', this, postfix: contentsMid);
   }
 
+  LinkManager.dummy() : super('', '', PageModel('', BookModel('')), FrameModel('', '')) {
+    //saveManagerHolder?.registerManager('link', this, postfix: contentsMid);
+  }
+
+  static List<LinkModel> newLinkList = []; // linkCopy 시에 필요하다.
+
   static final Map<String, LinkManager> _linkManagerMap = {}; // classMid, LinkManager
   static final Map<String, ContentsManager> _contentsManagerMap =
       {}; // linkMid, 그 링크가 지칭하고 있는 콘텐츠의 매니저를 물고 있다. ContentsManager
@@ -118,40 +124,74 @@ class LinkManager extends BaseLinkManager {
     newOne.setRealTimeKey(newBookMid);
     //print('makeCopy : newMid=${newOne.mid}, parent=$newParentMid');
 
-    LinkModel oldOne = src as LinkModel;
+    newLinkList.add(newOne);
 
-    //print('connectedClass = ${newOne.connectedClass}, ${oldOne.connectedClass}');
+    // LinkModel oldOne = src as LinkModel;
 
-    if (oldOne.connectedClass == 'page') {
-      newOne.connectedMid = PageManager.oldNewMap[oldOne.connectedMid] ?? '';
-      //print('page link connectedMid = ${oldOne.connectedMid} --> ${newOne.connectedMid}');
-    } else if (oldOne.connectedClass == 'frame') {
-      FrameModel? frame = FrameManager.findNew(oldOne.connectedMid);
-      if (frame != null) {
-        newOne.connectedMid = frame.mid;
-      } else {
-        newOne.connectedMid = '';
-      }
-    } else if (oldOne.connectedClass == 'contents') {
-      ContentsModel? contents = ContentsManager.findNew(oldOne.connectedMid);
-      if (contents != null) {
-        newOne.connectedParentMid = contents.parentMid.value;
-        newOne.connectedMid = contents.mid;
-      } else {
-        newOne.connectedParentMid = '';
-        newOne.connectedMid = '';
-      }
-    }
+    // //print('connectedClass = ${newOne.connectedClass}, ${oldOne.connectedClass}');
 
-    await createToDB(newOne);
+    // if (oldOne.connectedClass == 'page') {
+    //   newOne.connectedMid = PageManager.oldNewMap[oldOne.connectedMid] ?? '';
+    //   //print('page link connectedMid = ${oldOne.connectedMid} --> ${newOne.connectedMid}');
+    // } else if (oldOne.connectedClass == 'frame') {
+    //   FrameModel? frame = FrameManager.findNew(oldOne.connectedMid);
+    //   if (frame != null) {
+    //     newOne.connectedMid = frame.mid;
+    //   } else {
+    //     newOne.connectedMid = '';
+    //   }
+    // } else if (oldOne.connectedClass == 'contents') {
+    //   ContentsModel? contents = ContentsManager.findNew(oldOne.connectedMid);
+    //   if (contents != null) {
+    //     newOne.connectedParentMid = contents.parentMid.value;
+    //     newOne.connectedMid = contents.mid;
+    //   } else {
+    //     newOne.connectedParentMid = '';
+    //     newOne.connectedMid = '';
+    //   }
+    // }
+
+    // await createToDB(newOne);
     return newOne;
+  }
+
+  static Future<void> updateConnectedMid() async {
+    for (var newOne in newLinkList) {
+      String oldConnectedMid = newOne.connectedMid;
+      if (newOne.connectedClass == 'page') {
+        newOne.connectedMid = PageManager.oldNewMap[oldConnectedMid] ?? '';
+        //print('page link connectedMid = ${oldOne.connectedMid} --> ${newOne.connectedMid}');
+      } else if (newOne.connectedClass == 'frame') {
+        FrameModel? frame = FrameManager.findNew(oldConnectedMid);
+        if (frame != null) {
+          newOne.connectedMid = frame.mid;
+        } else {
+          newOne.connectedMid = '';
+        }
+      } else if (newOne.connectedClass == 'contents') {
+        ContentsModel? contents = ContentsManager.findNew(oldConnectedMid);
+        if (contents != null) {
+          newOne.connectedParentMid = contents.parentMid.value;
+          newOne.connectedMid = contents.mid;
+        } else {
+          newOne.connectedParentMid = '';
+          newOne.connectedMid = '';
+        }
+      }
+      LinkManager dummyLinkManager = LinkManager.dummy();
+      await dummyLinkManager.createToDB(newOne);
+    }
+    PageManager.oldNewMap.clear();
+    FrameManager.oldNewMap.clear();
+    ContentsManager.oldNewMap.clear();
+    newLinkList.clear();
   }
 
   // @override
   // AbsExModel newModel(String mid) => LinkModel(mid, bookMid);
 
   Future<int> getAllLinks({required String contentsId}) async {
-    print('getAllLinks($contentsId) ===================================');
+    //print('getAllLinks($contentsId) ===================================');
     startTransaction();
     try {
       Map<String, QueryValue> query = {};
@@ -452,8 +492,8 @@ class LinkManager extends BaseLinkManager {
         ContentsManager? contentsManager =
             _findConnectedContentsManager(linkModel.connectedParentMid, linkModel.connectedMid);
         if (contentsManager != null) {
-          print(
-              'createLinkContentsManagerMap ${linkModel.mid} = ${contentsManager.frameModel.mid} ---------------');
+          // print(
+          //     'createLinkContentsManagerMap ${linkModel.mid} = ${contentsManager.frameModel.mid} ---------------');
           _contentsManagerMap[linkModel.mid] = contentsManager;
         }
       }

@@ -916,6 +916,7 @@ class PageManager extends BasePageManager {
     // 이미, publish 되어 있다면, 해당 mid 를 가져와야 한다.
     lock();
     int counter = 0;
+    LinkManager.newLinkList.clear();
     //oldNewMap.clear();
     for (var ele in modelList) {
       if (ele.isRemoved.value == true) {
@@ -929,6 +930,7 @@ class PageManager extends BasePageManager {
       await frameManager?.copyBook(newBookMid, entry.value);
       counter++;
     }
+    await LinkManager.updateConnectedMid();
     //oldNewMap.clear();
     unlock();
     return counter;

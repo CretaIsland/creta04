@@ -16,6 +16,8 @@ class LinkPublishedManager extends CretaManager {
   final LinkManager? linkManager;
   LinkPublishedManager(this.linkManager) : super('creta_link_published', null);
 
+  static List<LinkModel> newLinkList = []; // linkCopy 시에 필요하다.
+
   @override
   CretaModel cloneModel(CretaModel src) {
     LinkModel retval = newModel(src.mid) as LinkModel;
@@ -51,33 +53,67 @@ class LinkPublishedManager extends CretaManager {
     newOne.setRealTimeKey(newBookMid);
     //print('makeCopy : newMid=${newOne.mid}, parent=$newParentMid');
 
-    LinkModel oldOne = src as LinkModel;
+    newLinkList.add(newOne);
 
-    //print('connectedClass = ${newOne.connectedClass}, ${oldOne.connectedClass}');
+    // LinkModel oldOne = src as LinkModel;
 
-    if (oldOne.connectedClass == 'page') {
-      newOne.connectedMid = PagePublishedManager.oldNewMap[oldOne.connectedMid] ?? '';
-      //print('page link connectedMid = ${oldOne.connectedMid} --> ${newOne.connectedMid}');
-    } else if (oldOne.connectedClass == 'frame') {
-      FrameModel? frame = FramePublishedManager.findNew(oldOne.connectedMid);
-      if (frame != null) {
-        newOne.connectedMid = frame.mid;
-      } else {
-        newOne.connectedMid = '';
-      }
-    } else if (oldOne.connectedClass == 'contents') {
-      ContentsModel? contents = ContentsPublishedManager.findNew(oldOne.connectedMid);
-      if (contents != null) {
-        newOne.connectedParentMid = contents.parentMid.value;
-        newOne.connectedMid = contents.mid;
-      } else {
-        newOne.connectedParentMid = '';
-        newOne.connectedMid = '';
-      }
-    }
+    // //print('connectedClass = ${newOne.connectedClass}, ${oldOne.connectedClass}');
 
-    await createToDB(newOne);
+    // if (newOne.connectedClass == 'page') {
+    //   newOne.connectedMid = PagePublishedManager.oldNewMap[oldOne.connectedMid] ?? '';
+    //   //print('page link connectedMid = ${oldOne.connectedMid} --> ${newOne.connectedMid}');
+    // } else if (newOne.connectedClass == 'frame') {
+    //   FrameModel? frame = FramePublishedManager.findNew(oldOne.connectedMid);
+    //   if (frame != null) {
+    //     newOne.connectedMid = frame.mid;
+    //   } else {
+    //     newOne.connectedMid = '';
+    //   }
+    // } else if (newOne.connectedClass == 'contents') {
+    //   ContentsModel? contents = ContentsPublishedManager.findNew(oldOne.connectedMid);
+    //   if (contents != null) {
+    //     newOne.connectedParentMid = contents.parentMid.value;
+    //     newOne.connectedMid = contents.mid;
+    //   } else {
+    //     newOne.connectedParentMid = '';
+    //     newOne.connectedMid = '';
+    //   }
+    // }
+
+    // await createToDB(newOne);
     return newOne;
+  }
+
+  static Future<void> updateConnectedMid() async {
+    for (var newOne in newLinkList) {
+      String oldConnectedMid = newOne.connectedMid;
+      if (newOne.connectedClass == 'page') {
+        newOne.connectedMid = PagePublishedManager.oldNewMap[oldConnectedMid] ?? '';
+        //print('page link connectedMid = ${oldOne.connectedMid} --> ${newOne.connectedMid}');
+      } else if (newOne.connectedClass == 'frame') {
+        FrameModel? frame = FramePublishedManager.findNew(oldConnectedMid);
+        if (frame != null) {
+          newOne.connectedMid = frame.mid;
+        } else {
+          newOne.connectedMid = '';
+        }
+      } else if (newOne.connectedClass == 'contents') {
+        ContentsModel? contents = ContentsPublishedManager.findNew(oldConnectedMid);
+        if (contents != null) {
+          newOne.connectedParentMid = contents.parentMid.value;
+          newOne.connectedMid = contents.mid;
+        } else {
+          newOne.connectedParentMid = '';
+          newOne.connectedMid = '';
+        }
+      }
+      LinkPublishedManager dummyLinkManager = LinkPublishedManager(null);
+      await dummyLinkManager.createToDB(newOne);
+    }
+    PagePublishedManager.oldNewMap.clear();
+    FramePublishedManager.oldNewMap.clear();
+    ContentsPublishedManager.oldNewMap.clear();
+    newLinkList.clear();
   }
 
   @override

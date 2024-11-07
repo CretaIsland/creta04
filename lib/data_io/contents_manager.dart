@@ -182,7 +182,7 @@ class ContentsManager extends BaseContentsManager {
 
   void sendEventToLink() {
     if (StudioVariables.isPreview) {
-      print('sendEventToLink dummy');
+      //print('sendEventToLink dummy');
       _sendEventLink?.sendEvent(ContentsModel('', ''));
     }
   }
@@ -1384,7 +1384,7 @@ class ContentsManager extends BaseContentsManager {
     for (var model in modelList) {
       if (model.isRemoved.value == true) continue;
       LinkManager linkManager = findOrCreateLinkManager(model.mid);
-      print('createLinkContentsManagerMap(${model.mid})');
+      //print('createLinkContentsManagerMap(${model.mid})');
       linkManager.createLinkContentsManagerMap();
       counter++;
     }

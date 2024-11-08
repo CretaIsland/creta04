@@ -300,7 +300,7 @@ class StickerViewState extends CretaState<StickerView> with SingleTickerProvider
 
     // sdlectedMid 에서 앞뒤로 두 페이지 씩만, 메모리에 가지고 있도록 하기 위해,
     // widget.allPageInfos 에서 selectedMid 의 앞뒤로 두페이지의 mid 를 구한다.
-    List<String> cache = [];
+    Set<String> cache = {};
 
     int maxIndex = widget.allPageInfos!.length - 1;
     for (var pageInfo in widget.allPageInfos!) {
@@ -312,7 +312,10 @@ class StickerViewState extends CretaState<StickerView> with SingleTickerProvider
           if (backword < 0) {
             backword = maxIndex + backword + 1;
           }
-          cache.add(widget.allPageInfos!.elementAt(backword).pageModel.mid);
+          //print('backword=$backword');
+          if (backword <= maxIndex && backword >= 0) {
+            cache.add(widget.allPageInfos!.elementAt(backword).pageModel.mid);
+          }
         }
         cache.add(selectedMid);
         // forwawd 2 page
@@ -321,7 +324,10 @@ class StickerViewState extends CretaState<StickerView> with SingleTickerProvider
           if (maxIndex - forward < 0) {
             forward = forward - maxIndex - 1;
           }
-          cache.add(widget.allPageInfos!.elementAt(forward).pageModel.mid);
+          //print('forward=$forward');
+          if (forward <= maxIndex && forward >= 0) {
+            cache.add(widget.allPageInfos!.elementAt(forward).pageModel.mid);
+          }
         }
         break;
       }

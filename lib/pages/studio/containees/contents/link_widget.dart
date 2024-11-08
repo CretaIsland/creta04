@@ -33,6 +33,7 @@ import '../../../../player/creta_play_manager.dart';
 import '../../book_main_page.dart';
 import '../../book_preview_menu.dart';
 import '../../left_menu/left_menu_page.dart';
+import '../../mouse_hider.dart';
 import '../../studio_constant.dart';
 import '../../studio_getx_controller.dart';
 import '../containee_nofifier.dart';
@@ -108,6 +109,39 @@ class _LinkWidgetState extends State<LinkWidget> {
     // final BoolEventController lineDrawSendEvent = Get.find(tag: 'draw-link');
     // _lineDrawSendEvent = lineDrawSendEvent;
     _bookModel = BookMainPage.bookManagerHolder?.onlyOne() as BookModel?;
+    // WidgetsBinding.instance.addPostFrameCallback((_) async {
+    //   logger.severe('==============================================');
+    //   logger.severe('initial build completed');
+    //   logger.severe('==============================================');
+    //   afterBuild();
+    // });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // every build가 완료된 후에 실행할 콜백
+      logger.info('==============================================');
+      logger.info('Link Widgetr Build completed in didChangeDependencies');
+      logger.info('==============================================');
+      afterBuild();
+    });
+  }
+
+  //bool _isVisible = false;
+  Future<void> afterBuild() async {
+    //WidgetsBinding.instance.addPostFrameCallback((_) async {
+    if (_linkManager != null && _linkManager!.getAvailLength() > 0) {
+      await Future.delayed(const Duration(seconds: 3));
+      if (mounted) {
+        //print('setState again');
+        setState(() {
+          //_isVisible = true;
+        });
+      }
+    } // 링크가 다른 타겟콘텐츠들이 모두 나온다음 나오게 하기 위해 3초 정도 뒤에 한번 더 setState 해줌.
+    //});
   }
 
   @override
@@ -592,7 +626,9 @@ class _LinkWidgetState extends State<LinkWidget> {
           // :
           GestureDetector(
         onSecondaryTapDown: (details) {
-          if (StudioVariables.isPreview == true) return;
+          if (StudioVariables.isPreview == true) {
+            return;
+          }
           _showLinkProperty(linkManager, model);
           if (_linkManager != null) {
             _showRightMouseMenu(
@@ -617,6 +653,7 @@ class _LinkWidgetState extends State<LinkWidget> {
             //   );
             // }
           } else {
+            MouseHider.lastMouseMoveTime = DateTime.now();
             _goto(model);
           }
         },
@@ -678,13 +715,18 @@ class _LinkWidgetState extends State<LinkWidget> {
       ),
     );
 
-    return nameWidget == null
-        ? linkIcon
-        : Stack(children: [
-            linkIcon,
-            triangle!,
-            nameWidget,
-          ]);
+    return
+        //Visibility(
+        //visible: _isVisible,
+        //child:
+        nameWidget == null
+            ? linkIcon
+            : Stack(children: [
+                linkIcon,
+                triangle!,
+                nameWidget,
+              ]);
+    //);
   }
 
   Widget _mainButton(LinkModel model) {

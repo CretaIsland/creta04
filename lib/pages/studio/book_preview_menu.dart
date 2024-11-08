@@ -91,20 +91,21 @@ class _BookPreviewMenuState extends State<BookPreviewMenu> {
                           toggleValue: StudioVariables.isMute,
                         ),
                         const SizedBox(width: 15),
-                        if(widget.pageModel != null)
-                        CretaTrasparentButton(
-                          toggleValue: widget.pageModel!.isCircle.value, //StudioVariables.stopPlay ,
-                          icon1: Icons.push_pin_outlined,
-                          icon2: Icons.loop,
-                          onPressed: widget.toggleLoop,
-                          iconSize: 20,
-                        ),
+                        if (widget.pageModel != null)
+                          CretaTrasparentButton(
+                            toggleValue:
+                                widget.pageModel!.isCircle.value, //StudioVariables.stopPlay ,
+                            icon1: Icons.push_pin_outlined,
+                            icon2: Icons.loop,
+                            onPressed: widget.toggleLoop,
+                            iconSize: 20,
+                          ),
                       ],
                     ),
                     Row(
                       children: [
                         Visibility(
-                          visible: !_buttonIsBusy,
+                          visible: !_buttonIsBusy && widget.totalPage > 1,
                           child: CretaTrasparentButton(
                             tooltip: CretaStudioLang['gotoBackward'] ?? 'backward',
                             onPressed: () async {
@@ -129,7 +130,7 @@ class _BookPreviewMenuState extends State<BookPreviewMenu> {
                           style: CretaFont.buttonLarge.copyWith(color: Colors.white),
                         ),
                         Visibility(
-                          visible: !_buttonIsBusy,
+                          visible: !_buttonIsBusy && widget.totalPage > 1,
                           child: CretaTrasparentButton(
                             tooltip: CretaStudioLang['gotoForward'] ?? 'forward',
                             onPressed: () async {

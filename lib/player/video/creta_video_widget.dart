@@ -72,17 +72,15 @@ class CretaVideoPlayerWidgetState extends CretaState<CretaVideoWidget> {
 
   //build 후 호출되는 함수
   Future<void> afterBuild() async {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      //final CretaVideoPlayer player = widget.player as CretaVideoPlayer;
-
-      if (player.isInit()) {
-        //if (player.getPlayState() != PlayState.start) {
-        logger.info(
-            '*(*(*(*(*(*(*( afterBuild player start !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-        player.playVideoSafe();
-      
-      }
-    });
+    //WidgetsBinding.instance.addPostFrameCallback((_) async {
+    //final CretaVideoPlayer player = widget.player as CretaVideoPlayer;
+    if (player.isInit()) {
+      //if (player.getPlayState() != PlayState.start) {
+      logger.info(
+          '*(*(*(*(*(*(*( afterBuild player start !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+      player.playVideoSafe();
+    }
+    //});
   }
 
   @override

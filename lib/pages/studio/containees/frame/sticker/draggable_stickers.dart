@@ -870,7 +870,7 @@ class _DraggableStickersState extends State<DraggableStickers> {
 
       Sticker? selectedSticker = _getSelectedSticker();
       if (selectedSticker == null) {
-        logger.severe('Selected sticker is null');
+        logger.warning('Selected sticker is null');
         return const SizedBox.shrink();
       }
 

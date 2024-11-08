@@ -1565,7 +1565,11 @@ class _BookMainPageState extends State<BookMainPage> {
               BookModel newBook = BookMainPage.bookManagerHolder!.createSample();
               BookMainPage.bookManagerHolder!.saveSample(newBook).then((value) {
                 String url = '${AppRoutes.studioBookMainPage}?${newBook.mid}';
-                AppRoutes.launchTab(url);
+                if (kReleaseMode) {
+                  AppRoutes.launchTab(url);
+                } else {
+                  Routemaster.of(context).push(url);
+                }
               });
             },
             hasShadow: false,
@@ -1593,7 +1597,11 @@ class _BookMainPageState extends State<BookMainPage> {
                     BookMainPage.bookManagerHolder!.setToDB(newOne);
                   }
                   //print('url=$url');
-                  AppRoutes.launchTab(url);
+                  if (kReleaseMode) {
+                    AppRoutes.launchTab(url);
+                  } else {
+                    Routemaster.of(context).push(url);
+                  }
                   return null;
                 });
               });

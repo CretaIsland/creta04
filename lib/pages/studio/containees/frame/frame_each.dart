@@ -128,14 +128,8 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
     afterBuild();
   }
 
-  bool _isVisible = false;
   Future<void> afterBuild() async {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Future.delayed(const Duration(seconds: 1));
-      setState(() {
-        _isVisible = true;
-      }); // 링크가 다른 타겟콘텐츠들이 모두 나온다음 나오게 하기 위해 딜레이를 줌.
-    });
+    WidgetsBinding.instance.addPostFrameCallback((_) async {});
   }
 
   Future<bool> initChildren() async {
@@ -723,83 +717,79 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
                         if (model.contentsType != ContentsType.document &&
                             model.contentsType != ContentsType.pdf &&
                             model.contentsType != ContentsType.music)
-                          Visibility(
-                            visible: _isVisible,
-                            child: LinkWidget(
-                              key:
-                                  GlobalObjectKey('LinkWidget${widget.pageModel.mid}/${model.mid}'),
-                              applyScale: StudioVariables.applyScale,
-                              frameManager: frameManager!,
-                              frameOffset: widget.frameOffset,
-                              contentsManager: contentsManager,
-                              playManager: playManager,
-                              contentsModel: model,
-                              frameModel: frameModel,
-                              onFrameShowUnshow: () {
-                                logger.fine('onFrameShowUnshow');
+                          LinkWidget(
+                            key: GlobalObjectKey('LinkWidget${widget.pageModel.mid}/${model.mid}'),
+                            applyScale: StudioVariables.applyScale,
+                            frameManager: frameManager!,
+                            frameOffset: widget.frameOffset,
+                            contentsManager: contentsManager,
+                            playManager: playManager,
+                            contentsModel: model,
+                            frameModel: frameModel,
+                            onFrameShowUnshow: () {
+                              logger.fine('onFrameShowUnshow');
+                              widget.frameManager.notify();
+                            },
+                            showContentsIndex: () async {
+                              //print('showContentsIndex in frame_each');
+
+                              ContentsManager? contentsManager =
+                                  frameManager!.getContentsManager(frameModel.mid);
+                              if (contentsManager != null) {
+                                List<CretaModel> contentsList =
+                                    contentsManager.getOrdered().toList();
+
+                                await showGeneralDialog(
+                                  context: context,
+                                  barrierDismissible: true,
+                                  barrierLabel:
+                                      MaterialLocalizations.of(context).modalBarrierDismissLabel,
+                                  barrierColor: Colors.black54,
+                                  transitionDuration: const Duration(milliseconds: 200),
+                                  pageBuilder: (BuildContext buildContext, Animation animation,
+                                      Animation secondaryAnimation) {
+                                    return Align(
+                                      alignment: Alignment.topRight,
+                                      child: PageIndexDialog(
+                                        modelList: contentsList,
+                                        onSelected: (int index) {
+                                          ContentsModel contentsModel =
+                                              contentsList[index] as ContentsModel;
+                                          //print('goto contentsModel.name=${contentsModel.name}');
+
+                                          if (contentsManager.isSelected(contentsModel.mid) ==
+                                              true) {
+                                            return;
+                                          }
+
+                                          contentsManager.playManager?.releasePause();
+                                          contentsManager.goto(contentsModel.order.value);
+                                          contentsManager.setSelectedMid(contentsModel.mid,
+                                              doNotify: true); // 현재 선택된 것이 무엇인지 확실시,
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  transitionBuilder:
+                                      (context, animation, secondaryAnimation, child) {
+                                    return Align(
+                                      alignment: Alignment.topRight,
+                                      child: SlideTransition(
+                                        position: Tween<Offset>(
+                                          begin: const Offset(0.6, -0.3),
+                                          end: const Offset(0.4, -0.3),
+                                        ).animate(animation),
+                                        child: child,
+                                      ),
+                                    );
+                                  },
+                                );
+
                                 widget.frameManager.notify();
-                              },
-                              showContentsIndex: () async {
-                                //print('showContentsIndex in frame_each');
-
-                                ContentsManager? contentsManager =
-                                    frameManager!.getContentsManager(frameModel.mid);
-                                if (contentsManager != null) {
-                                  List<CretaModel> contentsList =
-                                      contentsManager.getOrdered().toList();
-
-                                  await showGeneralDialog(
-                                    context: context,
-                                    barrierDismissible: true,
-                                    barrierLabel:
-                                        MaterialLocalizations.of(context).modalBarrierDismissLabel,
-                                    barrierColor: Colors.black54,
-                                    transitionDuration: const Duration(milliseconds: 200),
-                                    pageBuilder: (BuildContext buildContext, Animation animation,
-                                        Animation secondaryAnimation) {
-                                      return Align(
-                                        alignment: Alignment.topRight,
-                                        child: PageIndexDialog(
-                                          modelList: contentsList,
-                                          onSelected: (int index) {
-                                            ContentsModel contentsModel =
-                                                contentsList[index] as ContentsModel;
-                                            //print('goto contentsModel.name=${contentsModel.name}');
-
-                                            if (contentsManager.isSelected(contentsModel.mid) ==
-                                                true) {
-                                              return;
-                                            }
-
-                                            contentsManager.playManager?.releasePause();
-                                            contentsManager.goto(contentsModel.order.value);
-                                            contentsManager.setSelectedMid(contentsModel.mid,
-                                                doNotify: true); // 현재 선택된 것이 무엇인지 확실시,
-                                          },
-                                        ),
-                                      );
-                                    },
-                                    transitionBuilder:
-                                        (context, animation, secondaryAnimation, child) {
-                                      return Align(
-                                        alignment: Alignment.topRight,
-                                        child: SlideTransition(
-                                          position: Tween<Offset>(
-                                            begin: const Offset(0.6, -0.3),
-                                            end: const Offset(0.4, -0.3),
-                                          ).animate(animation),
-                                          child: child,
-                                        ),
-                                      );
-                                    },
-                                  );
-
-                                  widget.frameManager.notify();
-                                } else {
-                                  logger.severe('contentsManager is null');
-                                }
-                              },
-                            ),
+                              } else {
+                                logger.severe('contentsManager is null');
+                              }
+                            },
                           ),
                         if (frameModel.dragOnMove == true)
                           Container(

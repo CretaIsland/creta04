@@ -12,11 +12,11 @@ import 'package:get/get.dart';
 
 import '../data_io/contents_manager.dart';
 import '../data_io/frame_manager.dart';
-import '../data_io/link_manager.dart';
+//import '../data_io/link_manager.dart';
 import 'package:creta_common/model/app_enums.dart';
 import 'package:creta_studio_model/model/contents_model.dart';
-import 'package:creta_studio_model/model/frame_model.dart';
-import 'package:creta_studio_model/model/link_model.dart';
+//import 'package:creta_studio_model/model/frame_model.dart';
+//import 'package:creta_studio_model/model/link_model.dart';
 import '../pages/studio/book_main_page.dart';
 import '../pages/studio/containees/containee_nofifier.dart';
 import 'package:creta_user_io/data_io/creta_manager.dart';
@@ -307,20 +307,22 @@ class CretaPlayManager extends ChangeNotifier {
       if (_currentModel!.mid != _prevModel!.mid) {
         if (debug) logger.info('notifyToProperty');
         notifyToProperty();
+        // 아니다. 다음 콘텐츠로 넘어갔다고 해서, 열어놓은 프레임이 자동으로 닫히는 일이 있어서는 안된다.
+        // 따라서 다음 코드는 무효화 했다.
+        // // prev 모델의 frame를 inVisible 하게 만들어야 한다.
+        // LinkManager? linkManager = contentsManager.findLinkManager(_prevModel!.mid);
+        // if (linkManager != null) {
+        //   linkManager.listIterator((value) {
+        //     LinkModel link = value as LinkModel;
 
-        // prev 모델의 frame를 inVisible 하게 만들어야 한다.
-        LinkManager? linkManager = contentsManager.findLinkManager(_prevModel!.mid);
-        if (linkManager != null) {
-          linkManager.listIterator((value) {
-            LinkModel link = value as LinkModel;
-            FrameModel? frame = frameManager.getModel(link.connectedMid) as FrameModel?;
-            if (frame != null) {
-              frame.isShow.set(false);
-              frameManager.notify();
-            }
-            return false;
-          });
-        }
+        //     FrameModel? frame = frameManager.getModel(link.connectedMid) as FrameModel?;
+        //     if (frame != null) {
+        //       frame.isShow.set(false);
+        //       frameManager.notify();
+        //     }
+        //     return false;
+        //   });
+        // }
       }
       _currentModel!.copyTo(_prevModel!);
       if (debug) logger.info('CurrentModel changed to ${_currentModel!.name}');

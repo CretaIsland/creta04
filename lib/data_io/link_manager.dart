@@ -49,6 +49,7 @@ class LinkManager extends BaseLinkManager {
       {}; // linkMid, 그 링크가 지칭하고 있는 콘텐츠의 매니저를 물고 있다. ContentsManager
   static Map<String, LinkManager> get linkManagerMap => _linkManagerMap;
   static void setLinkManager(String contentsId, LinkManager linkManager) {
+    //print('setLinkManager($contentsId) ===================================');
     _linkManagerMap[contentsId] = linkManager;
   }
 

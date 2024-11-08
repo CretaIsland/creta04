@@ -108,9 +108,9 @@ class KeyHandler {
         return true;
       }
     } else {
-      logger.severe('missing keyString $keyString');
+      logger.warning('missing keyString $keyString');
     }
-    logger.severe('invalidate failed $keyString');
+    logger.warning('invalidate failed $keyString');
     return false;
   }
 
@@ -122,9 +122,9 @@ class KeyHandler {
         return true;
       }
     } else {
-      logger.severe('missing keyString $keyString');
+      logger.warning('missing keyString $keyString');
     }
-    logger.severe('invalidate failed $keyString');
+    logger.warning('invalidate failed $keyString');
     return false;
   }
 }

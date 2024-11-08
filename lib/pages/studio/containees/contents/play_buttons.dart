@@ -7,6 +7,7 @@ import '../../../../design_system/buttons/creta_button_wrapper.dart';
 import 'package:creta_studio_model/model/frame_model.dart';
 import '../../../../player/creta_play_manager.dart';
 import '../../book_main_page.dart';
+import '../../mouse_hider.dart';
 
 class PlayButton extends StatefulWidget {
   final double applyScale;
@@ -107,6 +108,7 @@ class _PlayButtonState extends State<PlayButton> {
                   await widget.playManager.prev();
                   setState(() {
                     StudioVariables.stopNextContents = false;
+                    MouseHider.lastMouseMoveTime = DateTime.now();
                   });
                 }
               }),
@@ -119,6 +121,7 @@ class _PlayButtonState extends State<PlayButton> {
                 setState(() {
                   StudioVariables.stopNextContents = false;
                   widget.playManager.togglePause();
+                  MouseHider.lastMouseMoveTime = DateTime.now();
                 });
               }),
           BTN.fill_i_s(
@@ -127,11 +130,12 @@ class _PlayButtonState extends State<PlayButton> {
               onPressed: () async {
                 BookMainPage.containeeNotifier!.setFrameClick(true);
                 if (widget.playManager.isNextButtonBusy == false) {
-                 logger.info('next Button pressed');
+                  logger.info('next Button pressed');
                   await widget.playManager.releasePause();
                   await widget.playManager.next();
                   setState(() {
                     StudioVariables.stopNextContents = false;
+                    MouseHider.lastMouseMoveTime = DateTime.now();
                   });
                 } else {
                   logger.info('next Button is busy');

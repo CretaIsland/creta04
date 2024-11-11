@@ -20,10 +20,13 @@ import 'package:creta_common/model/creta_model.dart';
 import 'package:creta_studio_model/model/frame_model.dart';
 import 'package:creta_studio_model/model/page_model.dart';
 import '../pages/studio/book_main_page.dart';
+import '../pages/studio/book_preview_menu.dart';
 import '../pages/studio/containees/containee_nofifier.dart';
 //import '../pages/studio/containees/page/page_main.dart';
 import '../pages/studio/containees/frame/sticker/stickerview.dart';
 import '../pages/studio/left_menu/left_menu_page.dart';
+import '../pages/studio/mouse_hider.dart';
+import '../pages/studio/page_index_dialog.dart';
 import '../pages/studio/studio_constant.dart';
 import '../pages/studio/studio_variables.dart';
 //import 'package:creta_user_io/data_io/creta_manager.dart';
@@ -1298,4 +1301,42 @@ class PageManager extends BasePageManager {
   //     print('$index : selectedMid=$selectedMid');
   //   }
   // }
+
+  Future<void> showPageIndex(BuildContext context) async {
+    List<CretaModel> pageList = getOrdered().toList();
+    await showGeneralDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+      barrierColor: Colors.black54,
+      transitionDuration: const Duration(milliseconds: 200),
+      pageBuilder: (BuildContext buildContext, Animation animation, Animation secondaryAnimation) {
+        return PageIndexDialog(
+          modelList: pageList,
+          onSelected: (int index) {
+            PageModel pageModel = pageList[index] as PageModel;
+            //print('pageModel.name=${pageModel.name.value}');
+            if (isSelected(pageModel.mid) == true) {
+              return;
+            }
+
+            MouseHider.lastMouseMoveTime = DateTime.now();
+            BookPreviewMenu.previewMenuPressed = true;
+            //StudioVariables.stopPaging = false;
+            StudioVariables.stopNextContents = false;
+            gotoPage(pageModel.mid);
+          },
+        );
+      },
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0.6, 0.3),
+            end: const Offset(0.4, 0.3),
+          ).animate(animation),
+          child: child,
+        );
+      },
+    );
+  }
 }

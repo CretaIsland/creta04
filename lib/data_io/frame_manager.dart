@@ -1231,7 +1231,7 @@ class FrameManager extends BaseFrameManager {
     return jsonStr;
   }
 
-  Future<bool> removeSelected(BuildContext context) async {
+  Future<bool> removeSelected(BuildContext context, {bool transaction = true}) async {
     FrameModel? model = getSelected() as FrameModel?;
     if (model == null) {
       showSnackBar(context, CretaLang['frameNotSelected']!, duration: StudioConst.snackBarDuration);
@@ -1239,12 +1239,16 @@ class FrameManager extends BaseFrameManager {
       return false;
     }
 
-    mychangeStack.startTrans();
+    if (transaction) {
+      mychangeStack.startTrans();
+    }
     model.isRemoved.set(true);
     await removeChild(model.mid);
     BookMainPage.containeeNotifier!.set(ContaineeEnum.Page, doNoti: true);
     BookMainPage.pageManagerHolder!.notify();
-    mychangeStack.endTrans();
+    if (transaction) {
+      mychangeStack.endTrans();
+    }
     return true;
   }
 

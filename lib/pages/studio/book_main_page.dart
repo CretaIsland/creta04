@@ -7,7 +7,7 @@ import 'dart:async';
 import 'package:creta04/no_authority.dart';
 import 'package:creta_common/common/creta_vars.dart';
 import 'package:creta_common/model/app_enums.dart';
-import 'package:creta_common/model/creta_model.dart';
+//import 'package:creta_common/model/creta_model.dart';
 import 'package:creta_user_io/data_io/user_property_manager.dart';
 //import 'package:creta_common/common/creta_vars.dart';
 import 'package:flutter/foundation.dart';
@@ -73,7 +73,7 @@ import 'left_menu/left_menu.dart';
 import 'containees/page/page_main.dart';
 import 'left_menu/music/music_player_frame.dart';
 import 'mouse_hider.dart';
-import 'page_index_dialog.dart';
+//import 'page_index_dialog.dart';
 import 'right_menu/book/book_editor_property.dart';
 import 'right_menu/right_menu.dart';
 import 'stick_menu.dart';
@@ -398,7 +398,7 @@ class _BookMainPageState extends State<BookMainPage> {
       onKeyEvent: (node, event) {
         // TextField 의 focusNode 가 onKeyEvent 를 정의하고 있지 않은 경우에만 여기로 도착한다.
         // 만약 정의하고 있으면 그 정의로 도착하고 여기로 도착하지 않게 된다.
-        logger.info('${node.hasFocus}:focusNodeEventHandler  ${event.logicalKey.debugName}');
+        //print('${node.hasFocus}:focusNodeEventHandler  ${event.logicalKey.debugName}');
         if (node.hasFocus) {
           _focusNodeEventHandler(node, event);
         }
@@ -842,6 +842,7 @@ class _BookMainPageState extends State<BookMainPage> {
           _nextContents(true);
           return;
         case LogicalKeyboardKey.pageDown:
+          //print('pageDown');
           BookPreviewMenu.previewMenuPressed = StudioVariables.isPreview;
           BookMainPage.pageManagerHolder?.gotoNext();
           return;
@@ -911,13 +912,13 @@ class _BookMainPageState extends State<BookMainPage> {
       return;
     }
 
-    // if (event is RawKeyUpEvent) {
-    //   if (_singleButtonEvent(event.logicalKey) == true) {
-    //     return;
-    //   }
-    // }
+    if (event is KeyUpEvent) {
+      if (_singleButtonEvent(event.logicalKey) == true) {
+        return;
+      }
+    }
 
-    //logger.severe('RawKeyboardListener  ${event.logicalKey.debugName}');
+    //print('RawKeyboardListener  ${event.logicalKey.debugName}');
     _combiButtonEvent(event);
   }
 
@@ -980,41 +981,51 @@ class _BookMainPageState extends State<BookMainPage> {
     //   keys.remove(key);
     // }
   }
-  // // ignore: unused_element
-  // bool _singleButtonEvent(LogicalKeyboardKey logicalKey) {
-  //   bool retval = __singleButtonEvent(logicalKey);
-  //   if (retval == true) {
-  //     logger.info('main _singleButtonEvent ${logicalKey.debugName} pressed');
-  //   }
-  //   return retval;
-  // }
 
-  // // unused
-  // bool __singleButtonEvent(LogicalKeyboardKey logicalKey) {
-  //   switch (logicalKey) {
-  //     case LogicalKeyboardKey.delete:
-  //       _deleteSelectedModel();
-  //       return true;
-  //     case LogicalKeyboardKey.arrowRight:
-  //       return true;
-  //     case LogicalKeyboardKey.arrowLeft:
-  //       return true;
-  //     case LogicalKeyboardKey.pageDown:
-  //       BookPreviewMenu.previewMenuPressed = StudioVariables.isPreview;
-  //       BookMainPage.pageManagerHolder?.gotoNext();
-  //       return true;
-  //     case LogicalKeyboardKey.pageUp:
-  //       BookPreviewMenu.previewMenuPressed = StudioVariables.isPreview;
-  //       BookMainPage.pageManagerHolder?.gotoPrev();
-  //       return true;
-  //     case LogicalKeyboardKey.insert:
-  //       StudioVariables.globalToggleAutoPlay(save: true);
-  //       BookTopMenu.invalidate();
-  //       return true;
-  //     default:
-  //       return false;
-  //   }
-  // }
+  bool _singleButtonEvent(LogicalKeyboardKey logicalKey) {
+    bool retval = __singleButtonEvent(logicalKey);
+    if (retval == true) {
+      //print('main _singleButtonEvent ${logicalKey.debugName} pressed');
+    }
+    return retval;
+  }
+
+  bool __singleButtonEvent(LogicalKeyboardKey logicalKey) {
+    switch (logicalKey) {
+      case LogicalKeyboardKey.delete:
+        if (StudioVariables.isPreview == false) {
+          _deleteSelectedModel();
+          return true;
+        }
+        return false;
+      case LogicalKeyboardKey.arrowRight:
+        _nextContents(false);
+        return true;
+      case LogicalKeyboardKey.arrowLeft:
+        _nextContents(true);
+        return true;
+      case LogicalKeyboardKey.pageDown:
+        BookPreviewMenu.previewMenuPressed = StudioVariables.isPreview;
+        BookMainPage.pageManagerHolder?.gotoNext();
+        return true;
+      case LogicalKeyboardKey.pageUp:
+        BookPreviewMenu.previewMenuPressed = StudioVariables.isPreview;
+        BookMainPage.pageManagerHolder?.gotoPrev();
+        return true;
+      case LogicalKeyboardKey.insert:
+        if (StudioVariables.isPreview == false) {
+          StudioVariables.globalToggleAutoPlay(save: true);
+          BookTopMenu.invalidate();
+          return true;
+        } else {
+          BookMainPage.pageManagerHolder?.showPageIndex(context);
+          return true;
+        }
+
+      default:
+        return false;
+    }
+  }
 
   Widget mouseArea() {
     return IgnorePointer(
@@ -1824,7 +1835,8 @@ class _BookMainPageState extends State<BookMainPage> {
 
     return KeyboardListener(
       autofocus: true,
-      focusNode: CretaTextField.mainFocusNode!, // _focusNodeEventHandler 가 호출됨.
+      focusNode: CretaTextField
+          .mainFocusNode!, // _focusNodeEventHandler 가 호출 안되고 _keyEventHandler 가 호출된다.r
       onKeyEvent: _keyEventHandler,
       child: Center(
           child: StudioVariables.isPreview
@@ -1983,47 +1995,7 @@ class _BookMainPageState extends State<BookMainPage> {
                     }
                   },
                   showPageIndex: () async {
-                    List<CretaModel> pageList = pageManager.getOrdered().toList();
-                    // for (var ele in pageList) {
-                    //   PageModel pageModel = ele as PageModel;
-                    //   print('pageModel.name=${pageModel.name.value}');
-                    // }
-
-                    await showGeneralDialog(
-                      context: context,
-                      barrierDismissible: true,
-                      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
-                      barrierColor: Colors.black54,
-                      transitionDuration: const Duration(milliseconds: 200),
-                      pageBuilder: (BuildContext buildContext, Animation animation,
-                          Animation secondaryAnimation) {
-                        return PageIndexDialog(
-                          modelList: pageList,
-                          onSelected: (int index) {
-                            PageModel pageModel = pageList[index] as PageModel;
-                            //print('pageModel.name=${pageModel.name.value}');
-                            if (pageManager.isSelected(pageModel.mid) == true) {
-                              return;
-                            }
-
-                            MouseHider.lastMouseMoveTime = DateTime.now();
-                            BookPreviewMenu.previewMenuPressed = true;
-                            //StudioVariables.stopPaging = false;
-                            StudioVariables.stopNextContents = false;
-                            pageManager.gotoPage(pageModel.mid);
-                          },
-                        );
-                      },
-                      transitionBuilder: (context, animation, secondaryAnimation, child) {
-                        return SlideTransition(
-                          position: Tween<Offset>(
-                            begin: const Offset(0.6, 0.3),
-                            end: const Offset(0.4, 0.3),
-                          ).animate(animation),
-                          child: child,
-                        );
-                      },
-                    );
+                    await pageManager.showPageIndex(context);
                   },
                   muteFunction: () {
                     MouseHider.lastMouseMoveTime = DateTime.now();

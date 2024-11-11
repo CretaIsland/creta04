@@ -251,22 +251,26 @@ class _RightMenuFrameAndContentsState extends State<RightMenuFrameAndContents> {
       return SizedBox.shrink();
     }
     //print('333333333333333333333333');
-    ContentsModel? contents = contentsManager.getCurrentModel();
+    ContentsModel? contents = frameManager.getCurrentModel(frame.mid);
     if (contents == null) {
       return SizedBox.shrink();
     }
-    contents = contentsManager.getFirstModel();
+    //print('4444444444444444444444444');
+    contents = contentsManager.frameManager.getCurrentModel(frame.mid);
     if (contents == null) {
       return SizedBox.shrink();
     }
+    //print('555555555555555555555555');
     LinkManager? linkManager = contentsManager.findLinkManager(contents.mid);
     if (linkManager == null) {
       return SizedBox.shrink();
     }
+    //print('6666666666666666666666666');
     LinkModel? linkModel = linkManager.getSelected() as LinkModel?;
     if (linkModel == null) {
       return SizedBox.shrink();
     }
+    //print('777777777777777777777777');
 
     return Column(
       children: [

@@ -125,43 +125,67 @@ class _LinkPropertyState extends State<LinkProperty> with PropertyMixin {
               _whereToLink(),
               _position(),
               propertyLine(
-                // 아이콘 색
-                name: CretaStudioLang['linkColor']!,
-                widget: colorIndicator(
-                  widget.linkModel.bgColor.value,
-                  1.0,
-                  onColorChanged: (color) {
-                    widget.onColorChanged(color);
+                topPadding: 10,
+                name: CretaStudioLang['noIconClickContents'] ?? '아이콘 없이 콘텐츠 클릭으로 연결',
+                widget: CretaToggleButton(
+                  width: 54 * 0.75,
+                  height: 28 * 0.75,
+                  defaultValue: widget.linkModel.noIcon.value,
+                  onSelected: (val) {
+                    // 이경우 콘텐츠는 1개의 링크만 존재해야함.
+                    widget.linkModel.noIcon.set(val);
+                    widget.onPosChanged();
                     setState(() {});
                   },
-                  onClicked: () {},
                 ),
               ),
-              CretaPropertySlider(
-                // 아이콘 투명도
-                key: GlobalKey(),
-                name: CretaStudioLang['opacity']!,
-                min: 0,
-                max: 100,
-                value:
-                    CretaCommonUtils.validCheckDouble(widget.linkModel.bgColor.value.opacity, 0, 1),
-                valueType: SliderValueType.reverse,
-                onChannged: widget.onOpacityChanged,
-                onChanngeComplete: widget.onOpacityChanged,
-                //onChanngeComplete: onOpacityChangeComplete,
-                postfix: '%',
+              Visibility(
+                visible: !widget.linkModel.noIcon.value,
+                child: propertyLine(
+                  // 아이콘 색
+                  name: CretaStudioLang['linkColor']!,
+                  widget: colorIndicator(
+                    widget.linkModel.bgColor.value,
+                    1.0,
+                    onColorChanged: (color) {
+                      widget.onColorChanged(color);
+                      setState(() {});
+                    },
+                    onClicked: () {},
+                  ),
+                ),
               ),
-              CretaPropertySlider(
-                // 아이콘 크기
-                key: GlobalKey(),
-                name: CretaStudioLang['linkIconSize']!,
-                min: 0,
-                max: 50,
-                value: widget.linkModel.iconSize.value,
-                valueType: SliderValueType.normal,
-                onChannged: widget.onSizeChanged,
-                onChanngeComplete: widget.onSizeChanged,
-                //onChanngeComplete: onSpreadChangeComplete,
+              Visibility(
+                visible: !widget.linkModel.noIcon.value,
+                child: CretaPropertySlider(
+                  // 아이콘 투명도
+                  key: GlobalKey(),
+                  name: CretaStudioLang['opacity']!,
+                  min: 0,
+                  max: 100,
+                  value: CretaCommonUtils.validCheckDouble(
+                      widget.linkModel.bgColor.value.opacity, 0, 1),
+                  valueType: SliderValueType.reverse,
+                  onChannged: widget.onOpacityChanged,
+                  onChanngeComplete: widget.onOpacityChanged,
+                  //onChanngeComplete: onOpacityChangeComplete,
+                  postfix: '%',
+                ),
+              ),
+              Visibility(
+                visible: !widget.linkModel.noIcon.value,
+                child: CretaPropertySlider(
+                  // 아이콘 크기
+                  key: GlobalKey(),
+                  name: CretaStudioLang['linkIconSize']!,
+                  min: 0,
+                  max: 50,
+                  value: widget.linkModel.iconSize.value,
+                  valueType: SliderValueType.normal,
+                  onChannged: widget.onSizeChanged,
+                  onChanngeComplete: widget.onSizeChanged,
+                  //onChanngeComplete: onSpreadChangeComplete,
+                ),
               ),
               propertyLine(
                 name: CretaStudioLang['linkClass']!,
@@ -268,7 +292,10 @@ class _LinkPropertyState extends State<LinkProperty> with PropertyMixin {
         ),
 
         propertyDivider(),
-        _shape(),
+        Visibility(
+          visible: !widget.linkModel.noIcon.value,
+          child: _shape(),
+        ),
       ]),
     );
     //});

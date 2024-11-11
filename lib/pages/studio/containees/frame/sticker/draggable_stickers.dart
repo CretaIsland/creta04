@@ -1,5 +1,8 @@
 // ignore_for_file: depend_on_referenced_packages
 
+// import 'dart:io';
+
+import 'package:creta_studio_model/model/link_model.dart';
 import 'package:creta_user_io/data_io/creta_manager.dart';
 import 'package:creta_user_io/data_io/team_manager.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +15,7 @@ import '../../../../../common/creta_utils.dart';
 import '../../../../../data_io/contents_manager.dart';
 import '../../../../../data_io/depot_manager.dart';
 import '../../../../../data_io/frame_manager.dart';
+import '../../../../../data_io/link_manager.dart';
 import '../../../../../design_system/buttons/creta_button_wrapper.dart';
 import '../../../../../design_system/component/autoSizeText/creta_auto_size_text.dart';
 import '../../../../../design_system/component/creta_right_mouse_menu.dart';
@@ -455,7 +459,6 @@ class _DraggableStickersState extends State<DraggableStickers> {
                 _showRightMouseMenu(details, frameModel, sticker);
               },
               onTap: () {
-                //print('DraggableSticker : onTap');
                 if (CretaManager.frameSelectNotifier != null &&
                     CretaManager.frameSelectNotifier!.selectedAssetId == sticker.id) {
                   ContentsManager? contentsManager =
@@ -478,7 +481,7 @@ class _DraggableStickersState extends State<DraggableStickers> {
                   }
                 } else {
                   if (StudioVariables.isPreview == true) {
-                    //print('DraggableSticker : preveiw onTap 2');
+                    //print('콘텐츠에서 클릭함.!!!');
                     ContentsManager? contentsManager =
                         widget.frameManager!.getContentsManager(frameModel.mid);
                     if (contentsManager != null) {
@@ -500,6 +503,17 @@ class _DraggableStickersState extends State<DraggableStickers> {
                           }
                           //CretaUtils.getLineFriendsIds();
                           //CretaUtils.sendLineMessage("skpark33", current.infoUrl.value);
+                        }
+
+                        LinkManager? linkManager = contentsManager.findLinkManager(current.mid);
+                        if (linkManager != null) {
+                          LinkModel? linkModel = linkManager.getNoIconLink();
+                          if (linkModel == null) {
+                            logger.severe('linkModel is null');
+                            return;
+                          }
+                          //print('링크가 있음 !!!');
+                          LinkManager.openLink(linkModel, widget.frameManager!);
                         }
                       }
                     }

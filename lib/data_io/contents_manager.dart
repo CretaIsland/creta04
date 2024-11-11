@@ -583,7 +583,7 @@ class ContentsManager extends BaseContentsManager {
 
       if (model.isImage() == false && model.isVideo() == false && getAvailLength() == 0) {
         // frame 을 지운다.
-        await frameManager.removeSelected(context);
+        //await frameManager.removeSelected(context);  <<-- _removeContents 안쪽으로 옮김.
       } else {
         playManager!.next();
       }
@@ -651,6 +651,11 @@ class ContentsManager extends BaseContentsManager {
     LeftMenuPage.initTreeNodes();
     LeftMenuPage.treeInvalidate();
     removeChild(model.mid);
+
+    if (model.isImage() == false && model.isVideo() == false && getAvailLength() == 0) {
+      // frame 을 지운다.
+      await frameManager.removeSelected(context, transaction: false);
+    }
     mychangeStack.endTrans();
 
     return;

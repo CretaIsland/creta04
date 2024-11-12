@@ -301,3 +301,16 @@ git checkout v1.0.0   이렇게 해당 버전을 checkout 한다.
 7) git push <remote_alias> master  한다.
 8) yaml 에서 해당 패키지를 지우고 git 주소를 depenency 에 추가한다.
 
+
+##########################################
+###  Windows 를 지원하지 않는 패키지들 !!!
+##########################################
+  flutter_dropzone: ^3.0.5
+  youtube_player_iframe: ^4.0.4
+  text_to_speech: ^0.2.3
+  just_audio_background: ^0.0.1-beta.10
+  audio_session: ^0.1.16
+  audio_service: ^0.18.10
+  flutter_html: ^3.0.0-beta.2
+
+

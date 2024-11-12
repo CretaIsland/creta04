@@ -2,7 +2,8 @@
 
 import 'package:creta04/design_system/component/shape/creta_clipper.dart';
 import 'package:creta_common/model/creta_model.dart';
-import 'package:creta04/pages/studio/containees/frame/camera_frame.dart';
+//import 'package:creta04/pages/studio/containees/frame/camera_frame.dart';  // hycop_multi_platform 에서 제외됨
+
 import 'package:creta04/pages/studio/right_menu/frame/transition_types.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:get/get.dart';
@@ -603,9 +604,10 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
     if (model.isTimelineType()) {
       return timelineFrame(model);
     }
-    if (model.isCameraType()) {
-      return CameraFrame(model: model);
-    }
+// hycop_multi_platform 에서 제외됨
+    // if (model.isCameraType()) {
+    //   return CameraFrame(model: model);
+    // }
     //구글맵 임시로 사용안함.
     // if (model.isMapType()) {
     //   return mapFrame(model);

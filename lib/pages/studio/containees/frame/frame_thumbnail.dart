@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages, avoid_web_libraries_in_flutter
 
-import 'package:creta04/pages/studio/containees/frame/camera_frame.dart';
+//import 'package:creta04/pages/studio/containees/frame/camera_frame.dart';  // hycop_multi_platform 에서 제외됨
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:provider/provider.dart';
 
@@ -318,9 +319,10 @@ class FrameThumbnailState extends CretaState<FrameThumbnail> with ContaineeMixin
         return Image.asset('assets/timeline_samples/deliveryHoriz_timeline.png');
       }
     }
-    if (model.isCameraType()) {
-      return CameraFrame(model: model);
-    }
+    // hycop_multi_platform 에서 제외됨
+    // if (model.isCameraType()) {
+    //   return CameraFrame(model: model);
+    // }
     if (model.isMapType()) {
       return Image.asset('assets/google_map_thumbnail.png');
     }

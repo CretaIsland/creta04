@@ -206,26 +206,26 @@ packages:
     dependency: "direct main"
     description:
       name: cached_network_image
-      sha256: f98972704692ba679db144261172a8e20feb145636c617af0eb4022132a6797f
+      sha256: "28ea9690a8207179c319965c13cd8df184d5ee721ae2ce60f398ced1219cea1f"
       url: "https://pub.dev"
     source: hosted
-    version: "3.3.0"
+    version: "3.3.1"
   cached_network_image_platform_interface:
     dependency: transitive
     description:
       name: cached_network_image_platform_interface
-      sha256: "56aa42a7a01e3c9db8456d9f3f999931f1e05535b5a424271e9a38cabf066613"
+      sha256: "9e90e78ae72caa874a323d78fa6301b3fb8fa7ea76a8f96dc5b5bf79f283bf2f"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.0"
+    version: "4.0.0"
   cached_network_image_web:
     dependency: transitive
     description:
       name: cached_network_image_web
-      sha256: "759b9a9f8f6ccbb66c185df805fac107f05730b1dab9c64626d1008cca532257"
+      sha256: "205d6a9f1862de34b93184f22b9d2d94586b2f05c581d546695e3d8f6a805cd7"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "1.2.0"
   carousel_slider:
     dependency: "direct main"
     description:
@@ -344,7 +344,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "6aad130033eaf162e6c22ba6ba33992d5d17eadb"
+      resolved-ref: f014054268721d06bc999b23c234039d41469a82
       url: "https://github.com/CretaIsland/creta_common.git"
     source: git
     version: "0.1.0"
@@ -353,7 +353,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "0dafe67dcada5924ad8c6a5e7cd733c5c946bf2a"
+      resolved-ref: "27801889e92aaf1d0e7e7f8a07cb567483650b7b"
       url: "https://github.com/CretaIsland/creta_studio_io.git"
     source: git
     version: "0.1.0"
@@ -362,7 +362,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: bd73bcf9114493397ae1ae47fcac8966975ac71d
+      resolved-ref: "633dbb51b3a076f0b3a6eacf4bd735201a0d061a"
       url: "https://github.com/CretaIsland/creta_studio_model.git"
     source: git
     version: "0.1.0"
@@ -371,7 +371,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: b4962b289ba2b1d5442b8b21cbe6edaf83109144
+      resolved-ref: "2ee434399576c8d4f1ce8fef334f32d8a069e58f"
       url: "https://github.com/CretaIsland/creta_user_io.git"
     source: git
     version: "0.1.0"
@@ -380,7 +380,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: cb557968b808301a99a94a721b27bc68d07544ce
+      resolved-ref: "540b5e541e97e6619c168361d2db7ad18bc30124"
       url: "https://github.com/CretaIsland/creta_user_model.git"
     source: git
     version: "0.1.0"
@@ -718,18 +718,18 @@ packages:
     dependency: "direct main"
     description:
       name: flex_color_picker
-      sha256: "5c846437069fb7afdd7ade6bf37e628a71d2ab0787095ddcb1253bf9345d5f3a"
+      sha256: "12dc855ae8ef5491f529b1fc52c655f06dcdf4114f1f7fdecafa41eec2ec8d79"
       url: "https://pub.dev"
     source: hosted
-    version: "3.4.1"
+    version: "3.6.0"
   flex_seed_scheme:
     dependency: transitive
     description:
       name: flex_seed_scheme
-      sha256: "4cee2f1d07259f77e8b36f4ec5f35499d19e74e17c7dce5b819554914082bc01"
+      sha256: "7639d2c86268eff84a909026eb169f008064af0fb3696a651b24b0fa24a40334"
       url: "https://pub.dev"
     source: hosted
-    version: "1.5.0"
+    version: "3.4.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -968,7 +968,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_webrtc:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_webrtc
       sha256: "3a07f6840cda81e68014574e65e27880a598c6827b20aeedf74d51cd2db00b36"
@@ -1261,10 +1261,10 @@ packages:
     dependency: "direct main"
     description:
       name: hycop_multi_platform
-      sha256: "8383b7c651c10f56f283685c15f87174fc952b630ebeb5ff2a5c5f189e1b09ff"
+      sha256: b9aed4f8226748ef3ca78c1babdb2d65ac295478cae343a7e29a87c267f0fb54
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.0"
+    version: "0.6.1"
   id3_codec:
     dependency: "direct main"
     description:

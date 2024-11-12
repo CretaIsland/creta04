@@ -5,7 +5,7 @@
 
 import 'package:creta04/design_system/text_field/creta_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 import '../../pages/studio/studio_variables.dart';
 import '../component/snippet.dart';
 import 'package:creta_common/common/creta_color.dart';

@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_final_fields
 
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop/account/account_manager.dart';
+import 'package:hycop_multi_platform/hycop/account/account_manager.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 
 import '../../lang/creta_studio_lang.dart';
 import 'package:creta_common/common/creta_color.dart';

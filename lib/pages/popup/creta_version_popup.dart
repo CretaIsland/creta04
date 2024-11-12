@@ -8,7 +8,7 @@ import 'package:creta04/pages/intro_page.dart';
 import 'package:creta04/pages/login/creta_account_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 
 import '../../design_system/component/snippet.dart';
 

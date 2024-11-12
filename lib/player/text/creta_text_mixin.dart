@@ -1,7 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 import 'package:neonpen/neonpen.dart';
 import 'package:scroll_loop_auto_scroll/scroll_loop_auto_scroll.dart';
 import 'package:uuid/uuid.dart';

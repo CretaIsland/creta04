@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:hycop/hycop/enum/model_enums.dart';
+import 'package:hycop_multi_platform/hycop/enum/model_enums.dart';
 
 import 'package:creta_common/model/creta_model.dart';
 

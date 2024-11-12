@@ -4,7 +4,7 @@
 //import 'package:creta04/pages/studio/left_menu/google_map/google_map_contents.dart';
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 
 import 'package:creta_common/common/creta_color.dart';
 import 'package:creta_common/common/creta_font.dart';

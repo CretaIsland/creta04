@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 //import 'package:get/get.dart';
 
 // import 'package:get/get.dart';
-// import 'package:hycop/hycop/absModel/abs_ex_model.dart';
+// import 'package:hycop_multi_platform/hycop/absModel/abs_ex_model.dart';
 //import 'package:glass/glass.dart';
 import 'package:provider/provider.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 
 //import '../../../../../design_system/component/creta_texture_widget.dart';
 //import '../../../../common/creta_utils.dart';

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 //import 'package:mutex/mutex.dart';
 import 'package:creta_common/common/creta_common_utils.dart';
 

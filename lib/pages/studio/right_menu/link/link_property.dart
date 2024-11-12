@@ -6,7 +6,7 @@ import 'package:creta_studio_model/model/frame_model.dart';
 import 'package:creta_studio_model/model/page_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 import 'package:creta_common/common/creta_common_utils.dart';
 
 import '../../../../data_io/contents_manager.dart';

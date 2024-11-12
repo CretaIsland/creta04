@@ -1,9 +1,9 @@
 import 'package:creta_common/common/creta_const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hycop/common/util/logger.dart';
-import 'package:hycop/hycop/hycop_factory.dart';
-import 'package:hycop/hycop/model/file_model.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
+import 'package:hycop_multi_platform/hycop/hycop_factory.dart';
+import 'package:hycop_multi_platform/hycop/model/file_model.dart';
 import 'package:creta_common/common/creta_common_utils.dart';
 
 import '../../data_io/contents_manager.dart';

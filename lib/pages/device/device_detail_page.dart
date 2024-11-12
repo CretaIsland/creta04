@@ -8,7 +8,7 @@ import 'package:creta_common/common/creta_vars.dart';
 import 'package:creta_common/model/app_enums.dart';
 import 'package:creta_studio_model/model/book_model.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 import 'package:intl/intl.dart';
 import 'package:tcard/tcard.dart';
 

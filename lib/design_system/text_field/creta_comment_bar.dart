@@ -5,13 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hycop/hycop.dart';
-//import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
+//import 'package:hycop_multi_platform/hycop.dart';
 import 'package:creta_common/common/creta_common_utils.dart';
 
 import 'package:creta_common/common/creta_color.dart';
 import 'package:creta_common/common/creta_font.dart';
-//import 'package:hycop/hycop.dart';
+//import 'package:hycop_multi_platform/hycop.dart';
 //import 'package:flutter/material.dart';
 //import 'package:outline_search_bar/outline_search_bar.dart';
 import '../../design_system/buttons/creta_button.dart';

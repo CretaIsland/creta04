@@ -11,7 +11,7 @@ import 'package:creta_user_model/model/user_property_model.dart';
 import 'package:flutter/material.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 //import 'package:url_strategy/url_strategy.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:logging/logging.dart';

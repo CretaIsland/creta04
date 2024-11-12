@@ -1,8 +1,8 @@
 import 'package:creta_common/common/creta_common_utils.dart';
 import 'package:creta_common/model/creta_model.dart';
 import 'package:creta_user_model/model/user_property_model.dart';
-import 'package:hycop/hycop/enum/model_enums.dart';
-import 'package:hycop/hycop/utils/hycop_utils.dart';
+import 'package:hycop_multi_platform/hycop/enum/model_enums.dart';
+import 'package:hycop_multi_platform/hycop/utils/hycop_utils.dart';
 
 // ignore: must_be_immutable
 class EnterpriseModel extends CretaModel {

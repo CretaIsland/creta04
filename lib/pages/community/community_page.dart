@@ -11,8 +11,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 //import 'package:flutter/gestures.dart';
-import 'package:hycop/hycop.dart';
-//import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/hycop.dart';
+//import 'package:hycop_multi_platform/common/util/logger.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:url_launcher/link.dart';
 import '../../data_io/host_manager.dart';

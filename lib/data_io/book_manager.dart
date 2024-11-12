@@ -10,7 +10,7 @@ import 'package:creta_user_io/data_io/creta_manager.dart';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 import '../common/creta_utils.dart';
 import '../design_system/component/tree/src/models/node.dart';
 import 'package:creta_common/lang/creta_lang.dart';

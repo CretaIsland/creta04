@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 //import 'package:another_xlider/another_xlider.dart';
-//import 'package:hycop/common/util/logger.dart';
+//import 'package:hycop_multi_platform/common/util/logger.dart';
 
 //import 'package:creta_common/common/creta_color.dart';
 

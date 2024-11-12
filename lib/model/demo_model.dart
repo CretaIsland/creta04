@@ -1,5 +1,5 @@
 import 'package:creta_common/model/creta_model.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 
 // ignore: must_be_immutable
 class DemoModel extends CretaModel {

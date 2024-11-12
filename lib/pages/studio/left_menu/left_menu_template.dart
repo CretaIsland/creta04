@@ -3,11 +3,11 @@ import 'package:creta_common/common/creta_color.dart';
 import 'package:creta_common/common/creta_font.dart';
 import 'package:creta_studio_model/model/book_model.dart';
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
-import 'package:hycop/hycop/account/account_manager.dart';
+import 'package:hycop_multi_platform/hycop/account/account_manager.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 import '../../../data_io/template_manager.dart';
 import '../../../design_system/buttons/creta_toggle_button.dart';
 import '../../../design_system/text_field/creta_search_bar.dart';

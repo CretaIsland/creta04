@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 // import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 // import 'package:animated_text_kit/animated_text_kit.dart';
 
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 
 //import '../../common/creta_utils.dart';
 import 'package:creta_common/model/app_enums.dart';

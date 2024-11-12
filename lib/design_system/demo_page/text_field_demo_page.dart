@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable, prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 import '../text_field/creta_search_bar.dart';
 import '../component/snippet.dart';
 import '../text_field/creta_text_field.dart';

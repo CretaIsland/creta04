@@ -6,11 +6,11 @@ import 'package:creta04/player/music/creta_music_mixin.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hycop/hycop/absModel/abs_ex_model.dart';
-import 'package:hycop/hycop/enum/model_enums.dart';
+import 'package:hycop_multi_platform/hycop/absModel/abs_ex_model.dart';
+import 'package:hycop_multi_platform/hycop/enum/model_enums.dart';
 //import 'package:glass/glass.dart';
 import 'package:provider/provider.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 import 'package:creta_common/common/creta_common_utils.dart';
 
 import '../../../../data_io/contents_manager.dart';

@@ -6,10 +6,10 @@ import 'package:creta04/lang/creta_studio_lang.dart';
 import 'package:creta_common/common/creta_snippet.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
-import 'package:hycop/common/util/logger.dart';
-import 'package:hycop/hycop/account/account_manager.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
+import 'package:hycop_multi_platform/hycop/account/account_manager.dart';
 import 'package:creta_common/common/creta_common_utils.dart';
-import 'package:hycop/hycop/hycop_factory.dart';
+import 'package:hycop_multi_platform/hycop/hycop_factory.dart';
 
 import '../../data_io/host_manager.dart';
 import '../../design_system/buttons/creta_button_wrapper.dart';

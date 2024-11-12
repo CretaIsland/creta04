@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable, prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 import '../menu/creta_drop_down.dart';
 import '../component/snippet.dart';
 //import 'package:creta_common/common/creta_font.dart';
@@ -20,9 +20,9 @@ class _MenuDemoPageState extends State<MenuDemoPage> {
   Widget build(BuildContext context) {
     return Snippet.CretaScaffold(
       //title: Snippet.logo('Menu Demo'),
-              onFoldButtonPressed: () {
-          setState(() {});
-        },
+      onFoldButtonPressed: () {
+        setState(() {});
+      },
 
       context: context,
       child: Center(

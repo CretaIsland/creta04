@@ -8,12 +8,12 @@ import 'package:creta_user_io/data_io/team_manager.dart';
 import 'package:creta_user_model/model/team_model.dart';
 import 'package:creta_user_model/model/user_property_model.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop/account/account_manager.dart';
-import 'package:hycop/hycop/model/user_model.dart';
+import 'package:hycop_multi_platform/hycop/account/account_manager.dart';
+import 'package:hycop_multi_platform/hycop/model/user_model.dart';
 import 'package:provider/provider.dart';
 
 //import '../../common/window_resize_lisnter.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 
 import '../../design_system/buttons/creta_button_wrapper.dart';
 import '../../design_system/dataTable/my_data_mixin.dart';

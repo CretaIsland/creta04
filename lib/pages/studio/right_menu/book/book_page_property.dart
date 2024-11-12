@@ -4,8 +4,8 @@ import 'package:creta04/pages/studio/right_menu/book/filter_dialog.dart';
 import 'package:creta04/pages/studio/studio_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:hycop/common/undo/undo.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/undo/undo.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 import 'package:creta_common/common/creta_common_utils.dart';
 
 //import '../../../../data_io/book_manager.dart';

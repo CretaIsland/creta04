@@ -4,7 +4,7 @@ import 'package:creta04/model/enterprise_model.dart';
 import 'package:creta_user_io/data_io/user_property_manager.dart';
 import 'package:creta_user_model/model/user_property_model.dart';
 //import 'package:creta04/pages/login_page.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 
 import '../pages/login/creta_account_manager.dart';
 

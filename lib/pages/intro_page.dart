@@ -4,9 +4,9 @@ import 'package:creta04/pages/popup/release_note_popup.dart';
 //import 'package:creta_common/common/creta_vars.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 //import 'package:routemaster/routemaster.dart';
-//import 'package:hycop/hycop.dart';
+//import 'package:hycop_multi_platform/hycop.dart';
 
 //import '../../routes.dart';
 import '../design_system/component/snippet.dart';
@@ -15,6 +15,7 @@ import 'package:creta_common/common/creta_font.dart';
 class IntroPage extends StatefulWidget {
   const IntroPage({super.key});
   static final List<String> cretaVersionList = [
+    "0.7.08",
     "0.7.07",
     "0.7.06",
     "0.7.05",
@@ -29,7 +30,7 @@ class IntroPage extends StatefulWidget {
     "0.6.96",
   ];
   static const String hycopVersion = "0.4.75";
-  static final String buildNumber = "20241111-18(${HycopFactory.toServerTypeString()})";
+  static final String buildNumber = "20241112-17(${HycopFactory.toServerTypeString()})";
 
   @override
   State<IntroPage> createState() => _IntroPageState();

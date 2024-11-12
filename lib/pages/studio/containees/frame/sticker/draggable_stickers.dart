@@ -7,10 +7,10 @@ import 'package:creta_user_io/data_io/creta_manager.dart';
 import 'package:creta_user_io/data_io/team_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hycop/common/undo/undo.dart';
+import 'package:hycop_multi_platform/common/undo/undo.dart';
 import 'package:provider/provider.dart';
 
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 import '../../../../../common/creta_utils.dart';
 import '../../../../../data_io/contents_manager.dart';
 import '../../../../../data_io/depot_manager.dart';

@@ -5,7 +5,7 @@ import 'package:creta_common/model/app_enums.dart';
 import 'package:creta_studio_model/model/book_model.dart';
 import 'package:creta_studio_model/model/page_model.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 //import 'package:get/get.dart';
 import '../../../../data_io/frame_manager.dart';
 import '../../../../design_system/component/creta_right_mouse_menu.dart';

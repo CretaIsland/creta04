@@ -1,7 +1,7 @@
 // // ignore_for_file: prefer_const_constructors
-// import 'package:hycop/common/util/logger.dart';
-// import 'package:hycop/hycop/absModel/abs_ex_model.dart';
-// import 'package:hycop/hycop/enum/model_enums.dart';
+// import 'package:hycop_multi_platform/common/util/logger.dart';
+// import 'package:hycop_multi_platform/hycop/absModel/abs_ex_model.dart';
+// import 'package:hycop_multi_platform/hycop/enum/model_enums.dart';
 
 // import 'creta_model.dart';
 

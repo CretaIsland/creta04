@@ -5,7 +5,7 @@ import 'dart:math' as math;
 import 'package:creta04/pages/studio/studio_variables.dart';
 import 'package:flutter/material.dart';
 
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 import 'package:creta_common/common/creta_color.dart';
 import '../../../../../data_io/key_handler.dart';
 import 'package:creta_studio_model/model/frame_model.dart';

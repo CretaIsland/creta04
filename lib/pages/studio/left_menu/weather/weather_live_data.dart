@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 import '../../../login/creta_account_manager.dart';
 
 class WeatherLiveData extends StatefulWidget {

@@ -2,7 +2,7 @@
 
 import 'package:creta_common/lang/creta_lang.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 
 import '../../../../design_system/component/hash_tag_wrapper.dart';
 import 'package:creta_common/common/creta_color.dart';

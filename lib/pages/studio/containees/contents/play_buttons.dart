@@ -1,6 +1,6 @@
 import 'package:creta04/pages/studio/studio_variables.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 // ignore: depend_on_referenced_packages
 
 import '../../../../design_system/buttons/creta_button_wrapper.dart';

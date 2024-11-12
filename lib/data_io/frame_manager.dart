@@ -5,14 +5,14 @@ import 'package:creta_common/common/creta_const.dart';
 import 'package:creta_common/common/creta_vars.dart';
 import 'package:creta_studio_io/data_io/base_frame_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop/utils/hycop_utils.dart';
+import 'package:hycop_multi_platform/hycop/utils/hycop_utils.dart';
 //import 'package:flutter_treeview/flutter_treeview.dart';
 import '../design_system/component/tree/flutter_treeview.dart';
-//import 'package:hycop/common/undo/save_manager.dart';
-import 'package:hycop/common/undo/undo.dart';
-import 'package:hycop/common/util/logger.dart';
-import 'package:hycop/hycop/absModel/abs_ex_model.dart';
-import 'package:hycop/hycop/database/abs_database.dart';
+//import 'package:hycop_multi_platform/common/undo/save_manager.dart';
+import 'package:hycop_multi_platform/common/undo/undo.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
+import 'package:hycop_multi_platform/hycop/absModel/abs_ex_model.dart';
+import 'package:hycop_multi_platform/hycop/database/abs_database.dart';
 //import '../common/creta_utils.dart';
 import 'package:creta_common/lang/creta_lang.dart';
 import 'package:creta_common/model/app_enums.dart';
@@ -1335,14 +1335,14 @@ class FrameManager extends BaseFrameManager {
       {Offset pos = Offset.zero, Size? size}) async {
     //print('0------------------------------------------');
 
-    late TextStyle style;
+    late TextStyle style1;
     ExtraTextStyle? extraStyle;
     // ignore: use_build_context_synchronously
-    (style, extraStyle) = ExtraTextStyle.getLastTextStyle(context);
+    (style1, extraStyle) = ExtraTextStyle.getLastTextStyle(context);
 
     if (size == null) {
       //print('applyScale=${StudioVariables.applyScale}');
-      double height = ((style.fontSize! * 2) / StudioVariables.applyScale) +
+      double height = ((style1.fontSize! * 2) / StudioVariables.applyScale) +
           (StudioConst.defaultTextPadding * 2); // 모델상의 크기다. 실제 크기가 아니다.
       double width = height * 7;
       size = Size(width, height);
@@ -1371,7 +1371,7 @@ class FrameManager extends BaseFrameManager {
         frameModel.mid, frameModel.realTimeKey, CretaStudioLang['defaultText'] ?? 'Text',
         remoteUrlVal: 'Sample Text',
         applyScale: StudioVariables.applyScale,
-        style: style,
+        style: style1,
         playTimeVal: -1,
         autoSizeTypeVal: AutoSizeType.noAutoSize);
     extraStyle?.setExtraTextStyle(model);

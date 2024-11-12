@@ -1,4 +1,4 @@
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 //import '../pages/login_page.dart';
 //import '../pages/login/creta_account_manager.dart';
 //import '../common/creta_utils.dart';

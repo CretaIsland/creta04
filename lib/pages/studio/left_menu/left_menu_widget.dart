@@ -1,11 +1,11 @@
 import 'package:creta04/lang/creta_studio_lang.dart';
-import 'package:creta04/pages/studio/left_menu/camera/left_menu_camera.dart';
+//import 'package:creta04/pages/studio/left_menu/camera/left_menu_camera.dart';  // hycop_multi_platform 에서 제외됨
 import 'package:creta04/pages/studio/left_menu/music/left_menu_music.dart';
 import 'package:creta04/pages/studio/left_menu/sticker/left_menu_sticker.dart';
 import 'package:creta04/pages/studio/left_menu/timeline/left_menu_timeline.dart';
 import 'package:creta04/pages/studio/studio_variables.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 
 import '../../../design_system/buttons/creta_tab_button.dart';
 import 'package:creta_common/common/creta_color.dart';
@@ -174,13 +174,14 @@ class _LeftMenuWidgetState extends State<LeftMenuWidget> with LeftTemplateMixin 
                 dataStyle: dataStyle,
               ),
               Container(),
-              LeftMenuCamera(
-                title: CretaStudioLang['camera']!,
-                width: _itemWidth,
-                height: _itemHeight,
-                titleStyle: titleStyle,
-                dataStyle: dataStyle,
-              ),
+              // hycop_multi_platform 에서 제외됨
+              // LeftMenuCamera(
+              //   title: CretaStudioLang['camera']!,
+              //   width: _itemWidth,
+              //   height: _itemHeight,
+              //   titleStyle: titleStyle,
+              //   dataStyle: dataStyle,
+              // ),
               // 구글맵 임시로 사용안함.
               // LeftMenuMap(
               //   title: CretaStudioLang['map']!,
@@ -250,15 +251,16 @@ class _LeftMenuWidgetState extends State<LeftMenuWidget> with LeftTemplateMixin 
     if (_selectedType == type[7]) {
       return Container();
     }
-    if (_selectedType == type[8]) {
-      return LeftMenuCamera(
-        title: CretaStudioLang['camera']!,
-        width: _itemWidth,
-        height: _itemHeight,
-        titleStyle: titleStyle,
-        dataStyle: dataStyle,
-      );
-    }
+    // hycop_multi_platform 에서 제외됨
+    // if (_selectedType == type[8]) {
+    //   return LeftMenuCamera(
+    //     title: CretaStudioLang['camera']!,
+    //     width: _itemWidth,
+    //     height: _itemHeight,
+    //     titleStyle: titleStyle,
+    //     dataStyle: dataStyle,
+    //   );
+    // }
     if (_selectedType == type[9]) {
       // 구글맵 임시로 사용안함.
       // return LeftMenuMap(

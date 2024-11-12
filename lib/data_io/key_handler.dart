@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 
 abstract class CretaState<T extends StatefulWidget> extends State<T> {
   void invalidate() {

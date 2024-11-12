@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:creta_studio_io/data_io/base_link_manager.dart';
 import 'package:creta_studio_model/model/page_model.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 
 //import 'package:creta_user_io/data_io/creta_manager.dart';
 import 'package:creta_common/model/creta_model.dart';

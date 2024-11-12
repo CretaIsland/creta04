@@ -5,7 +5,7 @@ import 'package:creta04/lang/creta_studio_lang.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/browser_client.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 
 class GoogleMapContents extends StatefulWidget {
   const GoogleMapContents({super.key});

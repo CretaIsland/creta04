@@ -2,7 +2,7 @@ import 'package:creta04/design_system/buttons/creta_button.dart';
 import 'package:creta_common/common/creta_const.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop/account/account_manager.dart';
+import 'package:hycop_multi_platform/hycop/account/account_manager.dart';
 
 import '../../design_system/buttons/creta_button_wrapper.dart';
 import 'package:creta_common/lang/creta_lang.dart';

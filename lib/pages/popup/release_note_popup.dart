@@ -6,7 +6,7 @@ import 'package:creta04/design_system/menu/creta_drop_down.dart';
 import 'package:creta04/pages/login/creta_account_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 
 // ignore: must_be_immutable
 class ReleaseNoteDialog extends StatefulWidget {

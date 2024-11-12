@@ -1,4 +1,4 @@
-import 'package:hycop/hycop/absModel/abs_ex_model.dart';
+import 'package:hycop_multi_platform/hycop/absModel/abs_ex_model.dart';
 
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
@@ -6,8 +6,8 @@ import 'package:creta_studio_model/model/book_model.dart';
 import 'package:creta_user_io/data_io/creta_manager.dart';
 import 'package:creta_user_io/data_io/team_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
-import 'package:hycop/hycop/account/account_manager.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
+import 'package:hycop_multi_platform/hycop/account/account_manager.dart';
 
 import '../../data_io/book_published_manager.dart';
 import '../../design_system/component/snippet.dart';

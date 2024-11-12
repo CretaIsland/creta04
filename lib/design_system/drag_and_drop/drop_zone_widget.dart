@@ -1,12 +1,12 @@
 //import 'package:flutter/cupertino.dart';
 // ignore: avoid_web_libraries_in_flutter
-import 'dart:html' as html;
+import 'upload_file_io.dart' if (dart.library.html) 'upload_file_web.dart' as upload_utils;
 
 import 'package:creta04/design_system/uploading_popup.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 
 import 'package:creta_studio_model/model/contents_model.dart';
 //import 'package:dotted_border/dotted_border.dart';
@@ -81,25 +81,27 @@ class DropZoneWidgetState extends State<DropZoneWidget> {
     );
   }
 
-  Future<ContentsModel> uploadedFile(dynamic event, String bookMid) async {
-    // this method is called when user drop the file in drop area in flutter
-    html.File file = event as html.File;
-    final name = event.name;
-    final mime = await controller.getFileMIME(event);
-    final byte = await controller.getFileSize(event);
-    final url = await controller.createFileUrl(event);
-    //final blob = await controller.getFileData(event);
+  // Future<ContentsModel> uploadedFile(dynamic event, String bookMid) async {
+  //   // this method is called when user drop the file in drop area in flutter
+  //   //if (kIsWeb) {
+  //   file_io.File file = event as file_io.File;
+  //   final name = event.name;
+  //   final mime = await controller.getFileMIME(event);
+  //   final byte = await controller.getFileSize(event);
+  //   final url = await controller.createFileUrl(event);
+  //   //final blob = await controller.getFileData(event);
 
-    logger.fine('Name : $name');
-    logger.fine('Mime: $mime');
+  //   logger.fine('Name : $name');
+  //   logger.fine('Mime: $mime');
 
-    logger.fine('Size : ${byte / (1024 * 1024)}');
-    logger.fine('URL: $url');
+  //   logger.fine('Size : ${byte / (1024 * 1024)}');
+  //   logger.fine('URL: $url');
 
-    // update the data model with recent file uploaded
-    final droppedFile = ContentsModel.withFile(widget.parentId, bookMid,
-        name: name, mime: mime, bytes: byte, url: url, file: file);
-    //Update the UI
-    return droppedFile;
-  }
+  //   // update the data model with recent file uploaded
+  //   final droppedFile = ContentsModel.withFileDynamic(widget.parentId, bookMid,
+  //       name: name, mime: mime, bytes: byte, url: url, event: file);
+  //   //Update the UI
+  //   return droppedFile;
+  // }
+  //}
 }

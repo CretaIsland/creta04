@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:creta04/design_system/component/custom_image.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 import 'package:quoter/quoter.dart';
 import 'package:translator_plus/translator_plus.dart';
 import 'package:creta_studio_model/model/frame_model.dart';

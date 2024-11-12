@@ -16,9 +16,9 @@ import 'package:creta_common/common/creta_common_utils.dart';
 // ignore: depend_on_referenced_packages
 //import 'package:provider/provider.dart';
 
-//import 'package:hycop/common/util/logger.dart';
+//import 'package:hycop_multi_platform/common/util/logger.dart';
 import 'package:routemaster/routemaster.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 import 'package:creta_common/common/creta_const.dart';
 import 'package:creta_common/common/creta_vars.dart';
 import 'package:url_launcher/link.dart';
@@ -999,72 +999,67 @@ class Snippet {
                     direction: Axis.vertical,
                     spacing: 8, // <-- Spacing between children
                     children: <Widget>[
-                      ...menuItem
-                          .map((item) =>
-                              // BTN.fill_color_ic_el
-                              SizedBox(
-                                width: 246,
-                                height: 56,
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                    overlayColor: WidgetStateProperty.resolveWith<Color?>(
-                                      (Set<WidgetState> states) {
-                                        if (states.contains(WidgetState.hovered)) {
-                                          return const Color.fromARGB(255, 249, 249, 249);
-                                        }
-                                        return (item.selected ? Colors.white : Colors.grey[100]);
-                                      },
-                                    ),
-                                    elevation: WidgetStateProperty.all<double>(0.0),
-                                    shadowColor: WidgetStateProperty.all<Color>(Colors.transparent),
-                                    foregroundColor: WidgetStateProperty.resolveWith<Color?>(
-                                      (Set<WidgetState> states) {
-                                        if (states.contains(WidgetState.hovered)) {
-                                          return Colors.blue[400];
-                                        }
-                                        return (item.selected
-                                            ? Colors.blue[400]
-                                            : Colors.grey[700]);
-                                      },
-                                    ),
-                                    backgroundColor: WidgetStateProperty.all<Color>(
-                                        item.selected ? Colors.white : Colors.grey[100]!),
-                                    shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(38.0),
-                                            side: BorderSide(
-                                                color: item.selected
-                                                    ? Colors.white
-                                                    : Colors.grey[100]!))),
-                                  ),
-                                  onPressed: () => item.onPressed?.call(),
-                                  child: SizedBox(
-                                      width: double.infinity,
-                                      height: 24,
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          const SizedBox(
-                                            width: 20,
-                                          ),
-                                          Icon(item.iconData),
-                                          const SizedBox(
-                                            width: 12,
-                                          ),
-                                          Text(
-                                            item.caption,
-                                            style: CretaFont.titleSmall,
-                                            // const TextStyle(
-                                            //   //color: Colors.blue[400],
-                                            //   fontSize: 20,
-                                            //   fontFamily: 'Pretendard',
-                                            // ),
-                                          ),
-                                        ],
-                                      )),
+                      ...menuItem.map((item) =>
+                          // BTN.fill_color_ic_el
+                          SizedBox(
+                            width: 246,
+                            height: 56,
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                overlayColor: WidgetStateProperty.resolveWith<Color?>(
+                                  (Set<WidgetState> states) {
+                                    if (states.contains(WidgetState.hovered)) {
+                                      return const Color.fromARGB(255, 249, 249, 249);
+                                    }
+                                    return (item.selected ? Colors.white : Colors.grey[100]);
+                                  },
                                 ),
-                              ))
-                          ,
+                                elevation: WidgetStateProperty.all<double>(0.0),
+                                shadowColor: WidgetStateProperty.all<Color>(Colors.transparent),
+                                foregroundColor: WidgetStateProperty.resolveWith<Color?>(
+                                  (Set<WidgetState> states) {
+                                    if (states.contains(WidgetState.hovered)) {
+                                      return Colors.blue[400];
+                                    }
+                                    return (item.selected ? Colors.blue[400] : Colors.grey[700]);
+                                  },
+                                ),
+                                backgroundColor: WidgetStateProperty.all<Color>(
+                                    item.selected ? Colors.white : Colors.grey[100]!),
+                                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(38.0),
+                                        side: BorderSide(
+                                            color:
+                                                item.selected ? Colors.white : Colors.grey[100]!))),
+                              ),
+                              onPressed: () => item.onPressed?.call(),
+                              child: SizedBox(
+                                  width: double.infinity,
+                                  height: 24,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      Icon(item.iconData),
+                                      const SizedBox(
+                                        width: 12,
+                                      ),
+                                      Text(
+                                        item.caption,
+                                        style: CretaFont.titleSmall,
+                                        // const TextStyle(
+                                        //   //color: Colors.blue[400],
+                                        //   fontSize: 20,
+                                        //   fontFamily: 'Pretendard',
+                                        // ),
+                                      ),
+                                    ],
+                                  )),
+                            ),
+                          )),
                     ],
                   );
                 }),

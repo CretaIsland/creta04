@@ -5,7 +5,7 @@ import 'package:creta04/lang/creta_studio_lang.dart';
 import 'package:creta04/pages/studio/left_menu/image_giphy/giphy_service.dart';
 import 'package:creta04/pages/studio/studio_variables.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 import 'package:translator_plus/translator_plus.dart';
 import '../../../../design_system/buttons/creta_button_wrapper.dart';
 import '../../containees/frame/frame_play_mixin.dart';

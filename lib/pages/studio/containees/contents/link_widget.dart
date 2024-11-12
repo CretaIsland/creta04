@@ -7,9 +7,9 @@ import 'package:creta_common/common/creta_font.dart';
 import 'package:creta_common/lang/creta_lang.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hycop/common/util/logger.dart';
-import 'package:hycop/hycop/absModel/abs_ex_model.dart';
-import 'package:hycop/hycop/enum/model_enums.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
+import 'package:hycop_multi_platform/hycop/absModel/abs_ex_model.dart';
+import 'package:hycop_multi_platform/hycop/enum/model_enums.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
 

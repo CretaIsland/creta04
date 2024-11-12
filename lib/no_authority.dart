@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 import 'package:routemaster/routemaster.dart';
 
 import 'design_system/buttons/creta_button.dart';

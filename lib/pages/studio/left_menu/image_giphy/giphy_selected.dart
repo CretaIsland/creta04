@@ -1,6 +1,6 @@
 import 'package:creta04/design_system/component/custom_image.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 
 import '../../../../data_io/frame_manager.dart';
 import 'package:creta_common/common/creta_color.dart';

@@ -6,7 +6,7 @@ import 'package:creta_common/common/creta_color.dart';
 import 'package:creta04/design_system/dialog/creta_dialog.dart';
 import 'package:creta04/pages/login/creta_account_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop/hycop_factory.dart';
+import 'package:hycop_multi_platform/hycop/hycop_factory.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../lang/creta_mypage_lang.dart';

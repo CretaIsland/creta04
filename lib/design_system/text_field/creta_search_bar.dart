@@ -3,11 +3,11 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 
 import 'package:creta_common/common/creta_color.dart';
 import 'package:creta_common/common/creta_font.dart';
-//import 'package:hycop/hycop.dart';
+//import 'package:hycop_multi_platform/hycop.dart';
 //import 'package:flutter/material.dart';
 //import 'package:outline_search_bar/outline_search_bar.dart';
 

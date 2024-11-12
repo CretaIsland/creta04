@@ -12,7 +12,7 @@ import 'package:creta_common/common/creta_vars.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:http/browser_client.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 //import 'package:image/image.dart' as img;
 
 import '../design_system/menu/creta_popup_menu.dart';

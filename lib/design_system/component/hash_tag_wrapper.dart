@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hycop/common/util/logger.dart';
-import 'package:hycop/hycop/absModel/abs_ex_model.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
+import 'package:hycop_multi_platform/hycop/absModel/abs_ex_model.dart';
 import 'package:material_tag_editor/tag_editor.dart';
 import 'package:creta_common/common/creta_common_utils.dart';
 

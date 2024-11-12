@@ -10,7 +10,7 @@ import 'package:creta04/pages/studio/left_menu/left_menu_ele_button.dart';
 import 'package:creta04/pages/studio/left_menu/weather/weather_sticker_elements.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_weather_bg_null_safety/utils/weather_type.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 import 'package:weather_animation/weather_animation.dart';
 
 import '../../../../data_io/frame_manager.dart';

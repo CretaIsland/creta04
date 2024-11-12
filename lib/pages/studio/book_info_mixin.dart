@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop/account/account_manager.dart';
+import 'package:hycop_multi_platform/hycop/account/account_manager.dart';
 
 import 'package:creta_common/common/creta_color.dart';
 import 'package:creta_common/common/creta_font.dart';

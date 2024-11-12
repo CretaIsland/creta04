@@ -1,7 +1,7 @@
 import 'package:creta_common/common/creta_color.dart';
 import 'package:creta_common/common/creta_font.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop/account/account_manager.dart';
+import 'package:hycop_multi_platform/hycop/account/account_manager.dart';
 
 import '../../data_io/host_manager.dart';
 import '../../lang/creta_device_lang.dart';

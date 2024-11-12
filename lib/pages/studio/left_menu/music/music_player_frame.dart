@@ -9,7 +9,7 @@ import 'package:creta04/pages/studio/left_menu/music/control_buttons.dart';
 import 'package:creta_common/model/app_enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:rxdart/rxdart.dart';

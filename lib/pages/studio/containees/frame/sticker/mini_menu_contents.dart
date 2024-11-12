@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 
 import '../../../../../data_io/contents_manager.dart';
 import '../../../../../design_system/buttons/creta_button.dart';

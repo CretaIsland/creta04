@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 
 import 'studio_getx_controller.dart';
 import 'studio_variables.dart';

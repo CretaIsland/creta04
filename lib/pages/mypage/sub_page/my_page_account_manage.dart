@@ -11,7 +11,7 @@ import 'package:creta04/pages/mypage/mypage_common_widget.dart';
 import 'package:creta04/pages/mypage/popup/edit_banner_popup.dart';
 import 'package:creta04/pages/mypage/popup/popup_rateplan.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 import 'package:image_picker/image_picker.dart';
 
 // ignore: depend_on_referenced_packages

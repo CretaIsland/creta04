@@ -7,7 +7,7 @@ import 'package:creta_common/common/creta_color.dart';
 
 // ignore_for_file: prefer_const_constructors
 
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 
 class CretaWidgetDropDown extends StatefulWidget {
   final List<Widget> items;

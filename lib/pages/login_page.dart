@@ -4,7 +4,7 @@
 //import 'package:creta_common/common/creta_vars.dart';
 import 'package:flutter/material.dart';
 //import 'package:get/get.dart';
-// import 'package:hycop/hycop.dart';
+// import 'package:hycop_multi_platform/hycop.dart';
 // import 'package:routemaster/routemaster.dart';
 // import 'package:flutter/gestures.dart';
 //

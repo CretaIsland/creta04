@@ -4,10 +4,10 @@ import 'package:creta04/pages/studio/right_menu/frame/trans_example_box.dart';
 import 'package:creta_common/lang/creta_lang.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hycop/common/undo/undo.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/undo/undo.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:hycop/hycop/absModel/abs_ex_model.dart';
+import 'package:hycop_multi_platform/hycop/absModel/abs_ex_model.dart';
 import 'package:r_dotted_line_border/r_dotted_line_border.dart';
 import 'package:creta_common/common/creta_common_utils.dart';
 

@@ -3,8 +3,8 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:blobs/blobs.dart';
-import 'package:hycop/common/util/logger.dart';
-import 'package:hycop/hycop/absModel/abs_ex_model.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
+import 'package:hycop_multi_platform/hycop/absModel/abs_ex_model.dart';
 
 import '../data_io/contents_manager.dart';
 import 'package:creta_common/model/app_enums.dart';

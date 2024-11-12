@@ -4,8 +4,8 @@ import 'package:creta_common/common/creta_const.dart';
 import 'package:creta_common/lang/creta_lang.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hycop/common/util/logger.dart';
-import 'package:hycop/hycop/account/account_manager.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
+import 'package:hycop_multi_platform/hycop/account/account_manager.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:url_launcher/link.dart';
 //import 'package:creta_common/lang/creta_lang.dart';
@@ -211,7 +211,7 @@ class _CretaLeftBarState extends State<CretaLeftBar> {
                               return BTN.fill_gray_l_profile(
                                 width: 195,
                                 text: AccountManager.currentLoginUser.name,
-                                subText: EnterpriseManager.isEnterpriseUser(enterprise : enterprise)
+                                subText: EnterpriseManager.isEnterpriseUser(enterprise: enterprise)
                                     ? CretaAccountManager.getEnterprise == null
                                         ? enterprise
                                         : CretaAccountManager.getEnterprise!.name

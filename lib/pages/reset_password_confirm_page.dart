@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 import 'package:creta_common/common/creta_common_utils.dart';
 import 'package:creta_common/common/creta_snippet.dart';
 import 'package:routemaster/routemaster.dart';
@@ -57,7 +57,9 @@ class _ResetPasswordConfirmPageState extends State<ResetPasswordConfirmPage> {
       _isJobProcessing = true;
       _successResetPassword = false;
     });
-    HycopFactory.account!.resetPasswordConfirm(widget.userId, widget.secretKey, newPassword).then((value) {
+    HycopFactory.account!
+        .resetPasswordConfirm(widget.userId, widget.secretKey, newPassword)
+        .then((value) {
       setState(() {
         _isJobProcessing = false;
         _successResetPassword = true;
@@ -119,19 +121,23 @@ class _ResetPasswordConfirmPageState extends State<ResetPasswordConfirmPage> {
 
   void checkPasswordStrength(String password) {
     setState(() {
-      _newPasswordError = (password.isEmpty) ? false : !CretaCommonUtils.checkPasswordStrength(password);
+      _newPasswordError =
+          (password.isEmpty) ? false : !CretaCommonUtils.checkPasswordStrength(password);
     });
   }
 
   void checkPasswordConfirmStrength(String password) {
     setState(() {
-      _newPasswordConfirmError = (password.isEmpty) ? false : !CretaCommonUtils.checkPasswordStrength(password);
+      _newPasswordConfirmError =
+          (password.isEmpty) ? false : !CretaCommonUtils.checkPasswordStrength(password);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    String logoUrl = (CretaAccountManager.currentLoginUser.isLoginedUser) ? AppRoutes.communityHome : AppRoutes.intro;
+    String logoUrl = (CretaAccountManager.currentLoginUser.isLoginedUser)
+        ? AppRoutes.communityHome
+        : AppRoutes.intro;
     double displayWidth = MediaQuery.of(context).size.width;
     //double displayHeight = MediaQuery.of(context).size.height;
     // return Snippet.CretaScaffoldOfCommunity(
@@ -258,7 +264,8 @@ class _ResetPasswordConfirmPageState extends State<ResetPasswordConfirmPage> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(40, 8, 0, 0),
                         child: CretaTextField(
-                          textFieldKey: GlobalObjectKey('ResetPasswordConfirmPage.newPasswordConfirm'),
+                          textFieldKey:
+                              GlobalObjectKey('ResetPasswordConfirmPage.newPasswordConfirm'),
                           controller: _newPasswordConfirmTextEditingController,
                           width: 326,
                           height: 30,
@@ -268,7 +275,8 @@ class _ResetPasswordConfirmPageState extends State<ResetPasswordConfirmPage> {
                           autofillHints: const [AutofillHints.newPassword],
                           onEditComplete: (value) {},
                           onChanged: checkPasswordConfirmStrength,
-                          fixedOutlineColor: _newPasswordConfirmError ? CretaColor.stateCritical : null,
+                          fixedOutlineColor:
+                              _newPasswordConfirmError ? CretaColor.stateCritical : null,
                         ),
                       ),
                       Padding(

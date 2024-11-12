@@ -4,9 +4,9 @@ import 'package:creta_common/model/app_enums.dart';
 import 'package:creta04/pages/studio/left_menu/music/music_base.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/common/undo/undo.dart';
-import 'package:hycop/common/util/logger.dart';
-import 'package:hycop/hycop/enum/model_enums.dart';
+import 'package:hycop_multi_platform/common/undo/undo.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
+import 'package:hycop_multi_platform/hycop/enum/model_enums.dart';
 
 import '../../../../data_io/frame_manager.dart';
 import '../../../../design_system/buttons/creta_button_wrapper.dart';

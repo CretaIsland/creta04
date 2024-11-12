@@ -14,17 +14,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hycop/common/undo/save_manager.dart';
-import 'package:hycop/common/undo/undo.dart';
-import 'package:hycop/hycop/account/account_manager.dart';
-import 'package:hycop/hycop/hycop_factory.dart';
-import 'package:hycop/hycop/socket/mouse_tracer.dart';
-import 'package:hycop/hycop/socket/socket_client.dart';
-import 'package:hycop/hycop/webrtc/webrtc_client.dart';
+import 'package:hycop_multi_platform/common/undo/save_manager.dart';
+import 'package:hycop_multi_platform/common/undo/undo.dart';
+import 'package:hycop_multi_platform/hycop/account/account_manager.dart';
+import 'package:hycop_multi_platform/hycop/hycop_factory.dart';
+// import 'package:hycop_multi_platform/hycop/socket/mouse_tracer.dart';
+// import 'package:hycop_multi_platform/hycop/socket/socket_client.dart';
+// import 'package:hycop_multi_platform/hycop/webrtc/webrtc_client.dart';
 import 'package:provider/provider.dart';
-import 'package:hycop/common/util/logger.dart';
-//import 'package:hycop/hycop/absModel/abs_ex_model.dart';
-//import 'package:hycop/hycop/account/account_manager.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
+//import 'package:hycop_multi_platform/hycop/absModel/abs_ex_model.dart';
+//import 'package:hycop_multi_platform/hycop/account/account_manager.dart';
 import 'package:creta04/lang/creta_studio_lang.dart';
 import 'package:creta04/model/connected_user_model.dart';
 import 'package:routemaster/routemaster.dart';
@@ -237,7 +237,8 @@ class _BookMainPageState extends State<BookMainPage> {
   bool dropDownButtonOpened = false;
 
   // for socket
-  SocketClient client = SocketClient();
+  // hycop_multi_platform 에서 제외됨
+  //SocketClient client = SocketClient();
   List<Color> userColorList = [Colors.red, Colors.blue, Colors.green, Colors.yellow, Colors.purple];
   late double screenWidthPercentage;
   late double screenHeightPrecentage;
@@ -362,35 +363,36 @@ class _BookMainPageState extends State<BookMainPage> {
     BookMainPage.clickReceiverHandler.init();
     mychangeStack.clear();
 
-    mouseTracerHolder = MouseTracer();
+    // hycop_multi_platform 에서 제외됨
+    // mouseTracerHolder = MouseTracer();
 
-    if (_useSocket()) {
-      client.initialize(CretaAccountManager.getEnterprise!.socketUrl);
-      client.connectServer(StudioVariables.selectedBookMid);
-    }
+    // if (_useSocket()) {
+    //   client.initialize(CretaAccountManager.getEnterprise!.socketUrl);
+    //   client.connectServer(StudioVariables.selectedBookMid);
+    // }
 
-    mouseTracerHolder!.addListener(() {
-      switch (mouseTracerHolder!.flag) {
-        case 'connectUser':
-          for (var target in mouseTracerHolder!.targetUsers) {
-            BookMainPage.connectedUserHolder!.connectNoti(
-                StudioVariables.selectedBookMid, target["userName"]!, target["userId"]!);
-          }
-          mouseTracerHolder!.flag = '';
-          mouseTracerHolder!.targetUsers.clear();
-          break;
-        case 'disconnectUser':
-          for (var target in mouseTracerHolder!.targetUsers) {
-            BookMainPage.connectedUserHolder!.disconnectNoti(
-                StudioVariables.selectedBookMid, target["userName"]!, target["userId"]!);
-          }
-          mouseTracerHolder!.flag = '';
-          mouseTracerHolder!.targetUsers.clear();
-          break;
-        default:
-          break;
-      }
-    });
+    // mouseTracerHolder!.addListener(() {
+    //   switch (mouseTracerHolder!.flag) {
+    //     case 'connectUser':
+    //       for (var target in mouseTracerHolder!.targetUsers) {
+    //         BookMainPage.connectedUserHolder!.connectNoti(
+    //             StudioVariables.selectedBookMid, target["userName"]!, target["userId"]!);
+    //       }
+    //       mouseTracerHolder!.flag = '';
+    //       mouseTracerHolder!.targetUsers.clear();
+    //       break;
+    //     case 'disconnectUser':
+    //       for (var target in mouseTracerHolder!.targetUsers) {
+    //         BookMainPage.connectedUserHolder!.disconnectNoti(
+    //             StudioVariables.selectedBookMid, target["userName"]!, target["userId"]!);
+    //       }
+    //       mouseTracerHolder!.flag = '';
+    //       mouseTracerHolder!.targetUsers.clear();
+    //       break;
+    //     default:
+    //       break;
+    //   }
+    // });
 
     DepotDisplay.initDepotTeamManagers();
 
@@ -625,13 +627,14 @@ class _BookMainPageState extends State<BookMainPage> {
   //   }
   // }
 
-  bool _useSocket() {
-    // 임시로 소켓을 사용하지 않음.
-    return false;
-    // return ((widget.isPublishedMode ?? false) == false &&
-    //     StudioVariables.isPreview == false &&
-    //     AccountManager.currentLoginUser.isLoginedUser);
-  }
+// hycop_multi_platform 에서 제외됨
+  // bool _useSocket() {
+  //   // 임시로 소켓을 사용하지 않음.
+  //   return false;
+  //   // return ((widget.isPublishedMode ?? false) == false &&
+  //   //     StudioVariables.isPreview == false &&
+  //   //     AccountManager.currentLoginUser.isLoginedUser);
+  // }
 
   @override
   void dispose() {
@@ -651,12 +654,13 @@ class _BookMainPageState extends State<BookMainPage> {
       _staticValuseDispose();
     }
 
-    if (_useSocket()) {
-      client.disconnect(notify: false);
-    }
-    if (webRTCClient != null) {
-      webRTCClient!.close();
-    }
+    // hycop_multi_platform 에서 제외됨
+    // if (_useSocket()) {
+    //   client.disconnect(notify: false);
+    // }
+    // if (webRTCClient != null) {
+    //   webRTCClient!.close();
+    // }
 
     BookMainPage.pageManagerHolder?.stopTimeBaseScheduleTimer();
 
@@ -739,7 +743,8 @@ class _BookMainPageState extends State<BookMainPage> {
         ChangeNotifierProvider<ConnectedUserManager>.value(
           value: BookMainPage.connectedUserHolder!,
         ),
-        ChangeNotifierProvider<MouseTracer>.value(value: mouseTracerHolder!),
+        // ChangeNotifierProvider<MouseTracer>.value(value: mouseTracerHolder!),     // hycop_multi_platform 에서 제외됨
+
         ChangeNotifierProvider<UserPropertyManager>.value(
             value: CretaAccountManager.userPropertyManagerHolder),
       ],
@@ -808,22 +813,25 @@ class _BookMainPageState extends State<BookMainPage> {
                 MouseRegion(
                   onHover: (pointerEvent) {
                     //if (StudioVariables.allowMutilUser == true) {
-                    if (mouseTracerHolder!.mouseCursorList.isEmpty) return;
-                    if (_useSocket()) {
-                      if (lastEventTime.add(Duration(milliseconds: 100)).isBefore(DateTime.now())) {
-                        client.changeCursorPosition(
-                            pointerEvent.position.dx / screenWidthPercentage,
-                            (pointerEvent.position.dy - 50) / screenHeightPrecentage);
 
-                        lastEventTime = DateTime.now();
-                      }
-                    }
+                    // hycop_multi_platform 에서 제외됨
+                    // if (mouseTracerHolder!.mouseCursorList.isEmpty) return;
+                    // if (_useSocket()) {
+                    //   if (lastEventTime.add(Duration(milliseconds: 100)).isBefore(DateTime.now())) {
+                    //     client.changeCursorPosition(
+                    //         pointerEvent.position.dx / screenWidthPercentage,
+                    //         (pointerEvent.position.dy - 50) / screenHeightPrecentage);
+
+                    //     lastEventTime = DateTime.now();
+                    //   }
+                    // }
                     //}
                   },
                   child: _waitBook(),
                 ),
                 //if (StudioVariables.allowMutilUser == true) mouseArea(),
-                mouseArea(), // 프레임이나 텍스트를 원하는 위치에 그릴 수 있도록 추적하는 기능
+                // hycop_multi_platform 에서 제외됨
+                //_mouseArea(), // 프레임이나 텍스트를 원하는 위치에 그릴 수 있도록 추적하는 기능
               ],
             ),
           );
@@ -1027,39 +1035,41 @@ class _BookMainPageState extends State<BookMainPage> {
     }
   }
 
-  Widget mouseArea() {
-    return IgnorePointer(
-      child: Consumer<MouseTracer>(builder: (context, mouseTracerManager, child) {
-        return Stack(
-          children: [
-            for (int i = 0; i < mouseTracerHolder!.mouseCursorList.length; i++)
-              cursorWidget(i, mouseTracerHolder!)
-          ],
-        );
-      }),
-    );
-  }
+// hycop_multi_platform 에서 제외됨
+  // Widget _mouseArea() {
+  //   return IgnorePointer(
+  //     child: Consumer<MouseTracer>(builder: (context, mouseTracerManager, child) {
+  //       return Stack(
+  //         children: [
+  //           for (int i = 0; i < mouseTracerHolder!.mouseCursorList.length; i++)
+  //             _cursorWidget(i, mouseTracerHolder!)
+  //         ],
+  //       );
+  //     }),
+  //   );
+  // }
 
-  Widget cursorWidget(int index, MouseTracer mouseTracer) {
-    Color mouseColor = mouseTracer.mouseCursorList[index].cursorColor;
-    return Positioned(
-        left: mouseTracer.mouseCursorList[index].x * screenWidthPercentage,
-        top: mouseTracer.mouseCursorList[index].y * screenHeightPrecentage,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Icon(
-            Icons.pan_tool_alt,
-            size: 30,
-            color: mouseColor,
-          ),
-          Container(
-            width: mouseTracer.mouseCursorList[index].userName.length * 10,
-            height: 20,
-            decoration: BoxDecoration(color: mouseColor, borderRadius: BorderRadius.circular(20)),
-            child: Text(mouseTracer.mouseCursorList[index].userName,
-                style: const TextStyle(color: Colors.white), textAlign: TextAlign.center),
-          )
-        ]));
-  }
+// hycop_multi_platform 에서 제외됨
+  // Widget _cursorWidget(int index, MouseTracer mouseTracer) {
+  //   Color mouseColor = mouseTracer.mouseCursorList[index].cursorColor;
+  //   return Positioned(
+  //       left: mouseTracer.mouseCursorList[index].x * screenWidthPercentage,
+  //       top: mouseTracer.mouseCursorList[index].y * screenHeightPrecentage,
+  //       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+  //         Icon(
+  //           Icons.pan_tool_alt,
+  //           size: 30,
+  //           color: mouseColor,
+  //         ),
+  //         Container(
+  //           width: mouseTracer.mouseCursorList[index].userName.length * 10,
+  //           height: 20,
+  //           decoration: BoxDecoration(color: mouseColor, borderRadius: BorderRadius.circular(20)),
+  //           child: Text(mouseTracer.mouseCursorList[index].userName,
+  //               style: const TextStyle(color: Colors.white), textAlign: TextAlign.center),
+  //         )
+  //       ]));
+  // }
 
   // Widget _waitBook() {
   //   while (_onceDBGetComplete == false) {

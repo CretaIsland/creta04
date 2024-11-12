@@ -4,7 +4,7 @@ import 'package:creta_studio_model/model/contents_model.dart';
 import 'package:creta_studio_model/model/page_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 
 class PageIndexDialog extends StatefulWidget {
   final List<CretaModel> modelList;

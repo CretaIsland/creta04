@@ -1,7 +1,7 @@
 import 'package:creta_user_io/data_io/team_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop/account/account_manager.dart';
-import 'package:hycop/hycop/enum/model_enums.dart';
+import 'package:hycop_multi_platform/hycop/account/account_manager.dart';
+import 'package:hycop_multi_platform/hycop/enum/model_enums.dart';
 
 import '../../data_io/enterprise_manager.dart';
 import '../../lang/creta_device_lang.dart';

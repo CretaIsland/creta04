@@ -2,7 +2,7 @@ import 'package:creta04/design_system/buttons/creta_toggle_button.dart';
 import 'package:creta04/pages/login/creta_account_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 //import '../common/creta_utils.dart';
 //import '../design_system/menu/creta_popup_menu.dart';
 //import 'package:creta_common/lang/creta_lang.dart';

@@ -3,7 +3,7 @@ import 'package:creta_user_io/data_io/team_manager.dart';
 import 'package:creta04/pages/studio/left_menu/depot/depot_display.dart';
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 import '../../../design_system/buttons/creta_tab_button.dart';
 import 'package:creta_common/common/creta_color.dart';
 import 'package:creta_common/common/creta_font.dart';

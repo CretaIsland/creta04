@@ -2,7 +2,7 @@
 
 import 'package:creta04/pages/studio/containees/frame/frame_mixin.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data_io/frame_manager.dart';

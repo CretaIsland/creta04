@@ -6,7 +6,7 @@ import 'package:creta_common/common/creta_vars.dart';
 import 'package:creta_common/model/app_enums.dart';
 import 'package:creta_user_io/data_io/team_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 //import '../common/creta_utils.dart';
 //import '../design_system/menu/creta_popup_menu.dart';
 //import 'package:creta_common/lang/creta_lang.dart';

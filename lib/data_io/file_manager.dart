@@ -1,8 +1,8 @@
 // import 'package:flutter/material.dart';
-// import 'package:hycop/common/util/config.dart';
-// import 'package:hycop/hycop/enum/model_enums.dart';
-// import 'package:hycop/hycop/hycop_factory.dart';
-// import 'package:hycop/hycop/model/file_model.dart';
+// import 'package:hycop_multi_platform/common/util/config.dart';
+// import 'package:hycop_multi_platform/hycop/enum/model_enums.dart';
+// import 'package:hycop_multi_platform/hycop/hycop_factory.dart';
+// import 'package:hycop_multi_platform/hycop/model/file_model.dart';
 // // ignore: unnecessary_import
 // import 'package:flutter/foundation.dart';
 

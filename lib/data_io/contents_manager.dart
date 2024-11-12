@@ -9,7 +9,7 @@ import 'package:creta_studio_io/data_io/base_contents_manager.dart';
 import 'package:flutter/material.dart';
 import '../design_system/component/tree/flutter_treeview.dart' as tree;
 import 'package:get/get.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 import 'package:creta_common/lang/creta_lang.dart';
 import 'package:creta_common/model/app_enums.dart';
 import 'package:creta_studio_model/model/book_model.dart';

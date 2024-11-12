@@ -1,4 +1,4 @@
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 // ignore: depend_on_referenced_packages
 import 'package:logging/logging.dart';
 import 'package:creta04/lang/creta_commu_lang.dart';
@@ -7,7 +7,7 @@ import 'package:creta_common/common/creta_vars.dart';
 import 'package:creta_common/lang/creta_lang.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop/account/account_manager.dart';
+import 'package:hycop_multi_platform/hycop/account/account_manager.dart';
 import 'package:routemaster/routemaster.dart';
 
 import 'data_io/enterprise_manager.dart';

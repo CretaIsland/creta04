@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
-import 'package:hycop/common/util/logger.dart';
-import 'package:hycop/hycop/account/account_manager.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
+import 'package:hycop_multi_platform/hycop/account/account_manager.dart';
 // import 'package:logging/logging.dart';
 
 import '../../common/util/config.dart';

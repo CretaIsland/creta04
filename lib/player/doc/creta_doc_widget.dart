@@ -5,8 +5,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
-import 'package:hycop/common/util/logger.dart';
-import 'package:hycop/hycop/absModel/abs_ex_model.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
+import 'package:hycop_multi_platform/hycop/absModel/abs_ex_model.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 
 import '../../data_io/frame_manager.dart';

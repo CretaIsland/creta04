@@ -4,7 +4,7 @@ import 'package:creta04/pages/login/creta_account_manager.dart';
 import 'package:creta04/pages/login/login_dialog.dart';
 import 'package:creta04/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 import 'package:routemaster/routemaster.dart';
 
 class ServiceTermsPage extends StatefulWidget {

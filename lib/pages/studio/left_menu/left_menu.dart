@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:creta04/pages/studio/left_menu/left_menu_image.dart';
 import 'package:creta04/pages/studio/left_menu/left_menu_template.dart';
-import 'package:creta04/pages/studio/left_menu/left_menu_web_conference.dart';
+//import 'package:creta04/pages/studio/left_menu/left_menu_web_conference.dart';  // hycop_multi_platform 에서 제외됨
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
@@ -238,8 +238,9 @@ class LeftMenuState
         return Container();
       case LeftMenuEnum.Widget:
         return LeftMenuWidget(maxHeight: _maxHeight);
-      case LeftMenuEnum.Camera:
-        return LeftMenuWebConference(maxHeight: _maxHeight);
+// hycop_multi_platform 에서 제외됨
+      // case LeftMenuEnum.Camera:
+      //   return LeftMenuWebConference(maxHeight: _maxHeight);
       case LeftMenuEnum.Comment:
         return Container();
       default:

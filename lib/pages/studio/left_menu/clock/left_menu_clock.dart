@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 //import 'package:flutter_analog_clock/flutter_analog_clock.dart';
-import 'package:hycop/common/undo/undo.dart';
-import 'package:hycop/hycop/enum/model_enums.dart';
+import 'package:hycop_multi_platform/common/undo/undo.dart';
+import 'package:hycop_multi_platform/hycop/enum/model_enums.dart';
 
 import '../../../../data_io/contents_manager.dart';
 import '../../../../data_io/frame_manager.dart';

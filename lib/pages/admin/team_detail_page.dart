@@ -8,7 +8,7 @@ import 'package:creta_common/common/creta_font.dart';
 import 'package:creta_user_model/model/team_model.dart';
 import 'package:creta_user_model/model/user_property_model.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../common/creta_utils.dart';
 import '../../data_io/enterprise_manager.dart';

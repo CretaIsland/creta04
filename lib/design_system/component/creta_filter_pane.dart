@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-//import 'package:hycop/hycop/account/account_manager.dart';
+//import 'package:hycop_multi_platform/hycop/account/account_manager.dart';
 
 import 'package:creta_common/lang/creta_lang.dart';
 //import '../../pages/studio/studio_constant.dart';
@@ -134,11 +134,9 @@ class _CretaFilterPaneState extends State<CretaFilterPane> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const SizedBox(width: 8),
-                      ...listOfListFilterOnRight
-                          .map(
-                            (e) => CretaDropDownButton(height: 36, dropDownMenuItemList: e),
-                          )
-                          ,
+                      ...listOfListFilterOnRight.map(
+                        (e) => CretaDropDownButton(height: 36, dropDownMenuItemList: e),
+                      ),
                     ],
                   )
           ],

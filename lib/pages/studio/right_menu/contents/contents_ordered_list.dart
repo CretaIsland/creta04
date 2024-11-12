@@ -4,7 +4,7 @@ import 'package:creta04/design_system/text_field/creta_text_field.dart';
 import 'package:creta_common/common/creta_vars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 import 'package:provider/provider.dart';
 import 'package:creta_common/common/creta_common_utils.dart';
 

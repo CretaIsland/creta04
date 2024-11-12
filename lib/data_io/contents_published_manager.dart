@@ -1,5 +1,5 @@
-import 'package:hycop/hycop/absModel/abs_ex_model.dart';
-import 'package:hycop/hycop/database/abs_database.dart';
+import 'package:hycop_multi_platform/hycop/absModel/abs_ex_model.dart';
+import 'package:hycop_multi_platform/hycop/database/abs_database.dart';
 
 import 'package:creta_studio_model/model/contents_model.dart';
 import 'package:creta_common/model/creta_model.dart';
@@ -42,7 +42,7 @@ class ContentsPublishedManager extends CretaManager {
         continue;
       }
       AbsExModel newOne = await makeCopy(newBookMid, ele, newParentMid);
-       oldNewMap[ele as ContentsModel] = newOne as ContentsModel;
+      oldNewMap[ele as ContentsModel] = newOne as ContentsModel;
       LinkManager? linkManager = contentsManager!.findLinkManager(ele.mid);
       if (linkManager == null) {
         continue;

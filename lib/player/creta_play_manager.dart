@@ -5,8 +5,8 @@ import 'package:creta04/player/pdf/creta_pdf_player.dart';
 import 'package:creta04/player/pdf/creta_pdf_widget.dart';
 import 'package:flutter/material.dart';
 //import 'package:get/get.dart';
-import 'package:hycop/common/util/logger.dart';
-import 'package:hycop/hycop/enum/model_enums.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
+import 'package:hycop_multi_platform/hycop/enum/model_enums.dart';
 import 'package:synchronized/synchronized.dart';
 import 'package:get/get.dart';
 

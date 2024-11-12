@@ -1,6 +1,6 @@
 import 'package:creta_studio_model/model/contents_model.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 
 import 'package:creta_common/common/creta_const.dart';
 import 'package:creta_user_io/data_io/creta_manager.dart';

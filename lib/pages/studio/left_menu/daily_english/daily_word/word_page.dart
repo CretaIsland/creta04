@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:creta_common/common/creta_snippet.dart';
 import 'package:creta_common/common/creta_color.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:creta_studio_model/model/frame_model.dart';

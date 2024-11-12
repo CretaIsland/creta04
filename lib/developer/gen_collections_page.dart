@@ -2,7 +2,7 @@
 import 'dart:html' as html;
 
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 import 'package:routemaster/routemaster.dart';
 
 //import 'package:creta_studio_model/model/book_model.dart';
@@ -47,7 +47,6 @@ class _GenCollectionsPageState extends State<GenCollectionsPage> {
                   saveLogToFile(jsonStr, "log.json");
                 },
               ),
-             
               IconButton(
                   onPressed: () {
                     Routemaster.of(context).push(AppRoutes.communityHome);

@@ -6,7 +6,7 @@ import 'dart:math';
 //import 'package:creta_common/model/app_enums.dart';
 //import 'package:creta_common/model/app_enums.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 import 'package:video_player/video_player.dart';
 import 'package:creta_common/common/creta_common_utils.dart';
 import 'package:creta_common/common/creta_snippet.dart';

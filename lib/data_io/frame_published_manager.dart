@@ -1,6 +1,6 @@
 import 'package:creta04/data_io/book_published_manager.dart';
-import 'package:hycop/hycop/absModel/abs_ex_model.dart';
-import 'package:hycop/hycop/database/abs_database.dart';
+import 'package:hycop_multi_platform/hycop/absModel/abs_ex_model.dart';
+import 'package:hycop_multi_platform/hycop/database/abs_database.dart';
 
 import 'package:creta_common/model/creta_model.dart';
 import 'package:creta_studio_model/model/frame_model.dart';

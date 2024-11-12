@@ -29,7 +29,7 @@ import 'pages/device/device_main_page.dart';
 import 'pages/login/creta_account_manager.dart';
 import 'pages/studio/book_grid_page.dart';
 import 'pages/studio/book_main_page.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 //import 'pages/studio/sample_data.dart';
 import 'pages/community/community_page.dart';
 import 'pages/community/sub_pages/community_right_book_pane.dart';

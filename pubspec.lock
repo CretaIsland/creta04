@@ -98,14 +98,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  appwrite:
-    dependency: transitive
-    description:
-      name: appwrite
-      sha256: c717091605055873e0c8d282059e0c07405c54ece6af1e5ec03ebada1c3ea554
-      url: "https://pub.dev"
-    source: hosted
-    version: "12.0.4"
   archive:
     dependency: transitive
     description:
@@ -202,14 +194,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
-  bloc:
-    dependency: transitive
-    description:
-      name: bloc
-      sha256: "6f1b87b6eca9041d5672b6e29273cd1594db48ebb66fd2471066e9f3c3a516bd"
-      url: "https://pub.dev"
-    source: hosted
-    version: "7.2.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -347,14 +331,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
-  cookie_jar:
-    dependency: transitive
-    description:
-      name: cookie_jar
-      sha256: a6ac027d3ed6ed756bfce8f3ff60cb479e266f3b0fdabd6242b804b6765e52de
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.8"
   coverage:
     dependency: transitive
     description:
@@ -368,46 +344,46 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: b1bda28a9af6dda5e2e88dbc20e684c8917b9fd9
+      resolved-ref: "6aad130033eaf162e6c22ba6ba33992d5d17eadb"
       url: "https://github.com/CretaIsland/creta_common.git"
     source: git
-    version: "0.0.5"
+    version: "0.1.0"
   creta_studio_io:
     dependency: "direct main"
     description:
       path: "."
       ref: main
-      resolved-ref: "856392f1495fa8e19afd6365fb6008059f7b06dc"
+      resolved-ref: "0dafe67dcada5924ad8c6a5e7cd733c5c946bf2a"
       url: "https://github.com/CretaIsland/creta_studio_io.git"
     source: git
-    version: "0.0.6"
+    version: "0.1.0"
   creta_studio_model:
     dependency: "direct main"
     description:
       path: "."
       ref: main
-      resolved-ref: d5f0e6af3edea3a2a4e1c3639b0d07848da0a5ba
+      resolved-ref: bd73bcf9114493397ae1ae47fcac8966975ac71d
       url: "https://github.com/CretaIsland/creta_studio_model.git"
     source: git
-    version: "0.0.5"
+    version: "0.1.0"
   creta_user_io:
     dependency: "direct main"
     description:
       path: "."
       ref: main
-      resolved-ref: aeb8db6456cf069f0f9eaa64013e5f03c65e07a2
+      resolved-ref: b4962b289ba2b1d5442b8b21cbe6edaf83109144
       url: "https://github.com/CretaIsland/creta_user_io.git"
     source: git
-    version: "0.0.5"
+    version: "0.1.0"
   creta_user_model:
     dependency: "direct main"
     description:
       path: "."
       ref: main
-      resolved-ref: "73e407143f47ce1df5810823992055a2620fa451"
+      resolved-ref: cb557968b808301a99a94a721b27bc68d07544ce
       url: "https://github.com/CretaIsland/creta_user_model.git"
     source: git
-    version: "0.0.5"
+    version: "0.1.0"
   cross_file:
     dependency: transitive
     description:
@@ -449,14 +425,6 @@ packages:
       url: "https://github.com/CretaIsland/custom_radio_grouped_button-2.2.1.git"
     source: git
     version: "2.2.1"
-  dart_appwrite:
-    dependency: transitive
-    description:
-      name: dart_appwrite
-      sha256: f773e28b67268b0e48254bfde93395388cb0e8f208f7491e549f11cac6af7883
-      url: "https://pub.dev"
-    source: hosted
-    version: "11.0.3"
   dart_webrtc:
     dependency: transitive
     description:
@@ -775,14 +743,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.5.0"
-  flutter_bloc:
-    dependency: transitive
-    description:
-      name: flutter_bloc
-      sha256: cdd1351ced09eeb46cfa7946e095b7679344af927415ca9cd972928fa6d5b23f
-      url: "https://pub.dev"
-    source: hosted
-    version: "7.3.3"
   flutter_cache_manager:
     dependency: transitive
     description:
@@ -1002,22 +962,6 @@ packages:
       url: "https://github.com/CretaIsland/flutter_weather_bg_null_safety-1.0.0.git"
     source: git
     version: "1.0.0"
-  flutter_web_auth_2:
-    dependency: transitive
-    description:
-      name: flutter_web_auth_2
-      sha256: "4d3d2fd3d26bf1a26b3beafd4b4b899c0ffe10dc99af25abc58ffe24e991133c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.2"
-  flutter_web_auth_2_platform_interface:
-    dependency: transitive
-    description:
-      name: flutter_web_auth_2_platform_interface
-      sha256: e8669e262005a8354389ba2971f0fc1c36188481234ff50d013aaf993f30f739
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.0"
   flutter_web_plugins:
     dependency: "direct main"
     description: flutter
@@ -1313,14 +1257,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
-  hycop:
+  hycop_multi_platform:
     dependency: "direct main"
     description:
-      name: hycop
-      sha256: "5d8d229fa06bee81b98dfe027628845a643b62c764a6211797cd7d91e49f5868"
+      name: hycop_multi_platform
+      sha256: "8383b7c651c10f56f283685c15f87174fc952b630ebeb5ff2a5c5f189e1b09ff"
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.75"
+    version: "0.6.0"
   id3_codec:
     dependency: "direct main"
     description:
@@ -1587,14 +1531,6 @@ packages:
       url: "https://github.com/CretaIsland/material_tag_editor-0.1.2.git"
     source: git
     version: "0.1.2"
-  md5_file_checksum:
-    dependency: transitive
-    description:
-      name: md5_file_checksum
-      sha256: bb84388dd9f1d6175958d1fdcee67037bec31f780805462ad57b10c8064d931e
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.4"
   mediasoup_client_flutter:
     dependency: "direct main"
     description:
@@ -1701,22 +1637,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
-  package_info_plus:
-    dependency: transitive
-    description:
-      name: package_info_plus
-      sha256: a75164ade98cb7d24cfd0a13c6408927c6b217fa60dee5a7ff5c116a58f28918
-      url: "https://pub.dev"
-    source: hosted
-    version: "8.0.2"
-  package_info_plus_platform_interface:
-    dependency: transitive
-    description:
-      name: package_info_plus_platform_interface
-      sha256: ac1f4a4847f1ade8e6a87d1f39f5d7c67490738642e2542f559ec38c37489a66
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.1"
   path:
     dependency: transitive
     description:
@@ -1797,6 +1717,54 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.1"
+  permission_handler:
+    dependency: transitive
+    description:
+      name: permission_handler
+      sha256: "18bf33f7fefbd812f37e72091a15575e72d5318854877e0e4035a24ac1113ecb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "11.3.1"
+  permission_handler_android:
+    dependency: transitive
+    description:
+      name: permission_handler_android
+      sha256: "71bbecfee799e65aff7c744761a57e817e73b738fedf62ab7afd5593da21f9f1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "12.0.13"
+  permission_handler_apple:
+    dependency: transitive
+    description:
+      name: permission_handler_apple
+      sha256: e6f6d73b12438ef13e648c4ae56bd106ec60d17e90a59c4545db6781229082a0
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.4.5"
+  permission_handler_html:
+    dependency: transitive
+    description:
+      name: permission_handler_html
+      sha256: af26edbbb1f2674af65a8f4b56e1a6f526156bc273d0e65dd8075fab51c78851
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.3+2"
+  permission_handler_platform_interface:
+    dependency: transitive
+    description:
+      name: permission_handler_platform_interface
+      sha256: e9c8eadee926c4532d0305dff94b85bf961f16759c3af791486613152af4b4f9
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.3"
+  permission_handler_windows:
+    dependency: transitive
+    description:
+      name: permission_handler_windows
+      sha256: "1a790728016f79a41216d88672dbc5df30e686e811ad4e698bfc51f76ad91f1e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.1"
   petitparser:
     dependency: transitive
     description:
@@ -2100,22 +2068,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
-  socket_io_client:
-    dependency: transitive
-    description:
-      name: socket_io_client
-      sha256: ede469f3e4c55e8528b4e023bdedbc20832e8811ab9b61679d1ba3ed5f01f23b
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.3+1"
-  socket_io_common:
-    dependency: transitive
-    description:
-      name: socket_io_common
-      sha256: "2ab92f8ff3ebbd4b353bf4a98bee45cc157e3255464b2f90f66e09c4472047eb"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.3"
   source_map_stack_trace:
     dependency: transitive
     description:
@@ -2677,14 +2629,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.4"
-  window_to_front:
-    dependency: transitive
-    description:
-      name: window_to_front
-      sha256: "7aef379752b7190c10479e12b5fd7c0b9d92adc96817d9e96c59937929512aee"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.3"
   xdg_directories:
     dependency: transitive
     description:

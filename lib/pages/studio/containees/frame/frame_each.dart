@@ -6,10 +6,10 @@ import 'package:creta04/pages/studio/containees/frame/camera_frame.dart';
 import 'package:creta04/pages/studio/right_menu/frame/transition_types.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:get/get.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-//import 'package:hycop/common/util/logger.dart';
+//import 'package:hycop_multi_platform/common/util/logger.dart';
 import 'package:creta_common/common/creta_common_utils.dart';
 import 'package:creta_common/common/creta_snippet.dart';
 

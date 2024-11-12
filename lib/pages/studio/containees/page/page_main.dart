@@ -4,9 +4,9 @@ import 'package:creta04/pages/studio/containees/page/top_menu_tracer.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hycop/hycop/absModel/abs_ex_model.dart';
+import 'package:hycop_multi_platform/hycop/absModel/abs_ex_model.dart';
 //import 'package:glass/glass.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 
 //import '../../../../../design_system/component/creta_texture_widget.dart';
 import '../../../../data_io/frame_manager.dart';

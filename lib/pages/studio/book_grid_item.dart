@@ -4,8 +4,8 @@ import 'dart:math';
 
 import 'package:creta04/lang/creta_studio_lang.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
-import 'package:hycop/hycop/account/account_manager.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
+import 'package:hycop_multi_platform/hycop/account/account_manager.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:url_launcher/link.dart';
 import 'package:creta_common/common/creta_common_utils.dart';

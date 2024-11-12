@@ -2,7 +2,7 @@
 // ignore_for_file: prefer_final_fields, depend_on_referenced_packages, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 
 import 'package:creta_common/model/app_enums.dart';
 import '../../data_io/key_handler.dart';

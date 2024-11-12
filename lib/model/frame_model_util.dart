@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:creta_studio_model/model/book_model.dart';
 import 'package:creta_common/common/creta_common_utils.dart';
 import 'package:creta_common/model/app_enums.dart';
-import 'package:hycop/common/undo/undo.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/undo/undo.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 
 import '../data_io/frame_manager.dart';
 import '../pages/studio/book_main_page.dart';

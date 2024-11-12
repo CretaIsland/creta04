@@ -1,6 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages, prefer_const_constructors, prefer_final_fields
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop/account/account_manager.dart';
+import 'package:hycop_multi_platform/hycop/account/account_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:routemaster/routemaster.dart';
 
@@ -9,7 +9,7 @@ import 'package:creta_common/model/app_enums.dart';
 import 'package:creta_user_io/data_io/user_property_manager.dart';
 
 //import '../../common/window_resize_lisnter.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 
 import '../../design_system/component/creta_basic_layout_mixin.dart';
 import '../../design_system/component/creta_popup.dart';

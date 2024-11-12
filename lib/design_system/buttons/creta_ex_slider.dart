@@ -1,6 +1,6 @@
 import 'package:expandable_slider/expandable_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 
 //import '../component/creta_cupertino_slider.dart';
 import '../component/creta_proprty_slider.dart';

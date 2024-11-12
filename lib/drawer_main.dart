@@ -9,7 +9,7 @@ import 'package:creta_common/common/creta_font.dart';
 import 'package:creta_common/common/creta_vars.dart';
 import 'package:creta_user_model/model/user_property_model.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop/account/account_manager.dart';
+import 'package:hycop_multi_platform/hycop/account/account_manager.dart';
 import 'package:routemaster/routemaster.dart';
 
 import 'design_system/buttons/creta_button_wrapper.dart';

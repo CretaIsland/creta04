@@ -8,7 +8,7 @@ import 'package:creta_common/common/creta_font.dart';
 import 'package:creta_user_model/model/user_property_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 import '../../design_system/buttons/creta_button_wrapper.dart';
 import '../../lang/creta_device_lang.dart';
 import '../../model/enterprise_model.dart';

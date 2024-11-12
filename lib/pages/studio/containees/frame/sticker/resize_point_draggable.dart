@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hycop/common/undo/undo.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/undo/undo.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 
 import '../../../studio_variables.dart';
 import 'draggable_point.dart';

@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 //import 'package:flutter_awesome_select/flutter_awesome_select.dart';
 //import 'package:roundcheckbox/roundcheckbox.dart';
 

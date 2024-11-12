@@ -5,7 +5,7 @@ import 'package:creta04/data_io/page_manager.dart';
 import 'package:creta_common/lang/creta_lang.dart';
 import 'package:creta_studio_io/data_io/base_book_manager.dart';
 
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 import 'package:creta_common/common/creta_common_utils.dart';
 import 'package:creta_common/common/creta_vars.dart';
 
@@ -18,7 +18,7 @@ import 'page_published_manager.dart';
 
 //class BookPublishedManager extends CretaManager {
 class BookPublishedManager extends BaseBookManager {
-  BookPublishedManager() : super(tableName : 'creta_book_published') {
+  BookPublishedManager() : super(tableName: 'creta_book_published') {
     saveManagerHolder?.registerManager('book_published', this);
   }
 

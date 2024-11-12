@@ -1,4 +1,4 @@
-// import 'package:hycop/hycop/absModel/abs_ex_model.dart';
+// import 'package:hycop_multi_platform/hycop/absModel/abs_ex_model.dart';
 // import 'package:creta_common/model/creta_model.dart';
 // import '../model/message_model.dart';
 // import 'package:creta_user_io/data_io/creta_manager.dart';

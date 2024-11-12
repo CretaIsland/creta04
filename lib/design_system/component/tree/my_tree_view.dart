@@ -18,8 +18,8 @@ import '../../buttons/creta_button.dart';
 import '../../buttons/creta_button_wrapper.dart';
 import 'package:creta_common/common/creta_font.dart';
 import 'flutter_treeview.dart' as tree;
-import 'package:hycop/common/util/logger.dart';
-import 'package:hycop/hycop/enum/model_enums.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
+import 'package:hycop_multi_platform/hycop/enum/model_enums.dart';
 
 import '../../../data_io/contents_manager.dart';
 import '../../../data_io/frame_manager.dart';

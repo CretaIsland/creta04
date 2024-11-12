@@ -3,7 +3,7 @@ import 'package:creta04/pages/studio/containees/frame/frame_play_mixin.dart';
 import 'package:creta04/pages/studio/left_menu/currency_exchange/dropdown_row.dart';
 import 'package:creta04/pages/studio/left_menu/currency_exchange/rate_result.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../data_io/frame_manager.dart';

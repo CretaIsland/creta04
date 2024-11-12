@@ -2,7 +2,7 @@
 
 import 'package:creta04/design_system/buttons/creta_checkbox.dart';
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 //import '../buttons/creta_button.dart';
 import '../../lang/creta_commu_lang.dart';
 import '../buttons/creta_button_wrapper.dart';

@@ -9,7 +9,7 @@ import 'package:creta_user_model/model/team_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // ignore: depend_on_referenced_packages
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 
 import '../../data_io/enterprise_manager.dart';
 //import '../../design_system/buttons/creta_button_wrapper.dart';

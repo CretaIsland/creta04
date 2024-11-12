@@ -5,10 +5,10 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:hycop/common/util/logger.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:creta_common/common/creta_common_utils.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 
 import '../../data_io/key_handler.dart';
 import 'package:creta_common/model/app_enums.dart';

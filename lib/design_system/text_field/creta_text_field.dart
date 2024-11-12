@@ -5,8 +5,8 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hycop/common/util/logger.dart';
-import 'package:hycop/hycop.dart';
+import 'package:hycop_multi_platform/common/util/logger.dart';
+import 'package:hycop_multi_platform/hycop.dart';
 import 'package:creta_common/common/creta_common_utils.dart';
 
 //import '../../common/creta_utils.dart';

@@ -28,7 +28,7 @@ import '../pages/studio/containees/containee_nofifier.dart';
 //import '../pages/studio/containees/frame/sticker/stickerview.dart';
 import '../pages/studio/containees/frame/sticker/mini_menu.dart';
 import '../pages/studio/left_menu/left_menu_page.dart';
-import '../pages/studio/left_menu/music/music_player_frame.dart';
+//import '../pages/studio/left_menu/music/music_player_frame.dart';    // hycop_multi_platform 에서 제외됨
 import '../pages/studio/studio_constant.dart';
 import '../pages/studio/studio_getx_controller.dart';
 import '../pages/studio/studio_variables.dart';
@@ -83,29 +83,30 @@ class FrameManager extends BaseFrameManager {
     return const SizedBox.shrink();
   }
 
-  static void stopBackgroundMusic(FrameModel frameModel) {
-    for (var musicKey in BookMainPage.musicKeyMap.values) {
-      GlobalObjectKey<MusicPlayerFrameState> player = musicKey;
-      player.currentState!.stopMusic();
-    }
+   // hycop_multi_platform 에서 제외됨
+  // static void stopBackgroundMusic(FrameModel frameModel) {
+  //   for (var musicKey in BookMainPage.musicKeyMap.values) {
+  //     GlobalObjectKey<MusicPlayerFrameState> player = musicKey;
+  //     player.currentState!.stopMusic();
+  //   }
 
-    // FrameManager? frameManager =
-    //     BookMainPage.pageManagerHolder!.frameManagerMap[frameModel.parentMid.value];
-    // if (frameManager == null) {
-    //   return;
-    // }
-    // ContentsManager contentsManager = frameManager.findContentsManager(frameModel);
-    // ContentsModel? model = contentsManager.getFirstModel();
-    // if (model == null) {
-    //   return;
-    // }
-    // if (contentsManager.playManager == null) {
-    //   return;
-    // }
-    // print('background music stop');
-    // contentsManager.playManager?.stop();
-    // return;
-  }
+  //   // FrameManager? frameManager =
+  //   //     BookMainPage.pageManagerHolder!.frameManagerMap[frameModel.parentMid.value];
+  //   // if (frameManager == null) {
+  //   //   return;
+  //   // }
+  //   // ContentsManager contentsManager = frameManager.findContentsManager(frameModel);
+  //   // ContentsModel? model = contentsManager.getFirstModel();
+  //   // if (model == null) {
+  //   //   return;
+  //   // }
+  //   // if (contentsManager.playManager == null) {
+  //   //   return;
+  //   // }
+  //   // print('background music stop');
+  //   // contentsManager.playManager?.stop();
+  //   // return;
+  // }
 
   // GlobalKey? _frameMainKey;
   // void setFrameMainKey(GlobalKey key) {
@@ -439,9 +440,10 @@ class FrameManager extends BaseFrameManager {
         if (parentMid != null && ele.parentMid.value != parentMid!) {
           continue; // overlay 는 빠져야 한다.
         }
-        if (BookMainPage.musicKeyMap[ele.mid] != null) {
-          continue; // 백그라운드 뮤직도 빠져야 한다.
-        }
+          // hycop_multi_platform 에서 제외됨
+        // if (BookMainPage.musicKeyMap[ele.mid] != null) {
+        //   continue; // 백그라운드 뮤직도 빠져야 한다.
+        // }
         ContentsManager? contentsManager = getContentsManager(ele.mid);
         if (contentsManager != null && contentsManager.getAvailLength() > 0) {
           retval = ele.mid;

@@ -1,6 +1,6 @@
 //import 'dart:async';
 
-import 'package:text_to_speech/text_to_speech.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 import '../../pages/studio/studio_variables.dart';
 
@@ -13,7 +13,13 @@ class MyTTS {
   MyTTS();
   void setLang(String lang) => languageCode = lang;
 
-  TextToSpeech tts = TextToSpeech();
+  // Future<void> setLang(String lang) async {
+  //   languageCode = lang;
+  //   await tts.setLanguage(languageCode);
+  //   await tts.setPitch(pitch);
+  // }
+
+  final FlutterTts tts = FlutterTts();
 
   double volume = 1; // Range: 0-1
   double rate = 1.0; // Range: 0-2
@@ -68,23 +74,20 @@ class MyTTS {
 
   //bool get supportResume => defaultTargetPlatform != TargetPlatform.android;
 
-  void speak(String text) {
-    tts.setVolume(StudioVariables.isMute ? 0 : volume);
-    tts.setRate(rate);
-    //if (languageCode != null) {
-    tts.setLanguage(languageCode);
-    //}
-    tts.setPitch(pitch);
-    tts.speak(text);
+  Future<void> speak(String text) async{
+    await tts.setVolume(StudioVariables.isMute ? 0 : volume);
+    await tts.setLanguage(languageCode);
+    await tts.setPitch(pitch);
+    await tts.speak(text);
   }
 
   void stop() {
     tts.stop();
   }
 
-  void resume() {
-    tts.resume();
-  }
+  // void resume() {
+  //   tts.resume();
+  // }
 
   void pause() {
     tts.pause();

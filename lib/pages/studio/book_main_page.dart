@@ -34,7 +34,7 @@ import 'package:creta_common/common/creta_const.dart';
 import '../../data_io/book_manager.dart';
 import '../../data_io/connected_user_manager.dart';
 import '../../data_io/contents_manager.dart';
-import 'package:creta_user_io/data_io/creta_manager.dart';
+//import 'package:creta_user_io/data_io/creta_manager.dart';    // hycop_multi_platform 에서 제외됨
 import '../../data_io/filter_manager.dart';
 import '../../data_io/frame_manager.dart';
 import '../../data_io/page_manager.dart';
@@ -71,7 +71,7 @@ import 'containees/page/top_menu_notifier.dart';
 import 'left_menu/depot/depot_display.dart';
 import 'left_menu/left_menu.dart';
 import 'containees/page/page_main.dart';
-import 'left_menu/music/music_player_frame.dart';
+//import 'left_menu/music/music_player_frame.dart';    // hycop_multi_platform 에서 제외됨
 import 'mouse_hider.dart';
 //import 'page_index_dialog.dart';
 import 'right_menu/book/book_editor_property.dart';
@@ -168,9 +168,10 @@ class BookMainPage extends StatefulWidget {
   static GlobalKey leftMenuKey = GlobalObjectKey('LeftMenu');
   static GlobalKey rightMenuKey = GlobalObjectKey('RightMenu');
 
-  // Music widget
-  static Map<String, GlobalObjectKey<MusicPlayerFrameState>> musicKeyMap = {};
-  static FrameModel? backGroundMusic;
+  // hycop_multi_platform 에서 제외됨
+  // // Music widget
+  // static Map<String, GlobalObjectKey<MusicPlayerFrameState>> musicKeyMap = {};
+  // static FrameModel? backGroundMusic;
 
   // overlay 관련 모음
   static final Map<String, FrameModel> _overlayFrameMap = {};
@@ -272,8 +273,9 @@ class _BookMainPageState extends State<BookMainPage> {
     // final FrameEachEventController autoPlaySendEvent = Get.find(tag: 'to-FrameEach');
     // _autoPlaySendEvent = autoPlaySendEvent;
     BookMainPage.clearOverlay();
-    BookMainPage.musicKeyMap.clear();
-    BookMainPage.backGroundMusic = null;
+    // hycop_multi_platform 에서 제외됨
+    // BookMainPage.musicKeyMap.clear();
+    // BookMainPage.backGroundMusic = null;
 
     //CretaAccountManager.initUserProperty();
 
@@ -524,13 +526,14 @@ class _BookMainPageState extends State<BookMainPage> {
       HycopFactory.realtime!.setPrefix(CretaConst.superAdmin);
     }
 
-    if (model.backgroundMusicFrame.value.isNotEmpty) {
-      BookMainPage.backGroundMusic = await CretaManager.getModelFromDB(
-        model.backgroundMusicFrame.value,
-        (widget.isPublishedMode ?? false) ? "creta_frame_published" : "creta_frame",
-        FrameModel('', model.mid),
-      ) as FrameModel?;
-    }
+    // hycop_multi_platform 에서 제외됨
+    // if (model.backgroundMusicFrame.value.isNotEmpty) {
+    //   BookMainPage.backGroundMusic = await CretaManager.getModelFromDB(
+    //     model.backgroundMusicFrame.value,
+    //     (widget.isPublishedMode ?? false) ? "creta_frame_published" : "creta_frame",
+    //     FrameModel('', model.mid),
+    //   ) as FrameModel?;
+    // }
 
     _onceDBGetComplete = true;
   }
@@ -640,9 +643,10 @@ class _BookMainPageState extends State<BookMainPage> {
   void dispose() {
     logger.severe('BookMainPage.dispose');
 
-    if (BookMainPage.backGroundMusic != null) {
-      FrameManager.stopBackgroundMusic(BookMainPage.backGroundMusic!);
-    }
+    // hycop_multi_platform 에서 제외됨
+    // if (BookMainPage.backGroundMusic != null) {
+    //   FrameManager.stopBackgroundMusic(BookMainPage.backGroundMusic!);
+    // }
 
     // 아직 save  되지 않은 Queue 를 모두 save 한다.
     saveManagerHolder?.stopTimer();
@@ -1171,8 +1175,9 @@ class _BookMainPageState extends State<BookMainPage> {
       ],
       child: Stack(
         children: [
-          if (BookMainPage.backGroundMusic != null)
-            FrameManager.backgroundMusic(BookMainPage.backGroundMusic!),
+          // hycop_multi_platform 에서 제외됨
+          // if (BookMainPage.backGroundMusic != null)
+          //   FrameManager.backgroundMusic(BookMainPage.backGroundMusic!),
           Column(
             children: [
               SizedBox(height: StudioVariables.topMenuBarHeight),

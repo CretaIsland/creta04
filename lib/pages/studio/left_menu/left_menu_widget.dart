@@ -1,6 +1,6 @@
 import 'package:creta04/lang/creta_studio_lang.dart';
 //import 'package:creta04/pages/studio/left_menu/camera/left_menu_camera.dart';  // hycop_multi_platform 에서 제외됨
-import 'package:creta04/pages/studio/left_menu/music/left_menu_music.dart';
+//import 'package:creta04/pages/studio/left_menu/music/left_menu_music.dart'; // hycop_multi_platform 에서 제외됨
 import 'package:creta04/pages/studio/left_menu/sticker/left_menu_sticker.dart';
 import 'package:creta04/pages/studio/left_menu/timeline/left_menu_timeline.dart';
 import 'package:creta04/pages/studio/studio_variables.dart';
@@ -139,11 +139,12 @@ class _LeftMenuWidgetState extends State<LeftMenuWidget> with LeftTemplateMixin 
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              LeftMenuMusic(
-                title: CretaStudioLang['music']!,
-                titleStyle: titleStyle,
-                dataStyle: dataStyle,
-              ),
+              // hycop_multi_platform 에서 제외됨
+              // LeftMenuMusic(
+              //   title: CretaStudioLang['music']!,
+              //   titleStyle: titleStyle,
+              //   dataStyle: dataStyle,
+              // ),
               LeftMenuWeather(
                 title: CretaStudioLang['weather']!,
                 width: _itemWidth,
@@ -196,13 +197,14 @@ class _LeftMenuWidgetState extends State<LeftMenuWidget> with LeftTemplateMixin 
         ),
       );
     }
-    if (_selectedType == type[1]) {
-      return LeftMenuMusic(
-        title: CretaStudioLang['music']!,
-        titleStyle: titleStyle,
-        dataStyle: dataStyle,
-      );
-    }
+    // hycop_multi_platform 에서 제외됨
+    // if (_selectedType == type[1]) {
+    //   return LeftMenuMusic(
+    //     title: CretaStudioLang['music']!,
+    //     titleStyle: titleStyle,
+    //     dataStyle: dataStyle,
+    //   );
+    // }
     if (_selectedType == type[2]) {
       return LeftMenuWeather(
         title: CretaStudioLang['weather']!,

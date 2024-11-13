@@ -1,6 +1,8 @@
 // ignore: implementation_imports
 // ignore_for_file: prefer_final_fields, depend_on_referenced_packages, must_be_immutable
 
+import 'dart:async';
+
 import 'package:creta04/pages/studio/studio_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,6 +26,8 @@ class CretaTextWidget extends CretaAbsMediaWidget {
 class CretaTextPlayerWidgetState extends CretaState<CretaTextWidget> with CretaTextMixin {
   ContentsEventController? _receiveEvent;
 
+  Timer? _ttsTimer;
+
   @override
   void setState(VoidCallback fn) {
     if (mounted) super.setState(fn);
@@ -38,12 +42,37 @@ class CretaTextPlayerWidgetState extends CretaState<CretaTextWidget> with CretaT
     //applyScale = StudioVariables.applyScale;
     // final FrameEventController regiSendEvent = Get.find(tag: 'frame-property-to-main ..unused');
     // sendEvent = regiSendEvent;
+    afterBuild();
+  }
+
+  Future<void> afterBuild() async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (mounted) {
+        //print('afterBuild=====================================');
+        if (widget.player.shouldBePlay()) {
+          if (widget.player.model!.isTTS.value) {
+            ContentsModel model = widget.player.getModel();
+            //print('afterBuild=====================================${model.playTime.value.round()}');
+            if (model.playTime.value > 0) {
+              _ttsTimer?.cancel();
+              _ttsTimer =
+                  Timer.periodic(Duration(milliseconds: model.playTime.value.round()), (timer) {
+                setState(() {
+                  //print('setState============================');
+                });
+              });
+            }
+          }
+        }
+      }
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
     widget.player.stop();
+    _ttsTimer?.cancel();
   }
 
   @override

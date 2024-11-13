@@ -21,7 +21,7 @@ import '../pages/studio/book_main_page.dart';
 import '../pages/studio/containees/containee_nofifier.dart';
 import '../pages/studio/left_menu/depot/depot_display.dart';
 import '../pages/studio/left_menu/left_menu_page.dart';
-import '../pages/studio/left_menu/music/music_player_frame.dart';
+//import '../pages/studio/left_menu/music/music_player_frame.dart';  // hycop_multi_platform 에서 제외됨
 import '../pages/studio/studio_constant.dart';
 import '../pages/studio/studio_getx_controller.dart';
 import '../pages/studio/studio_snippet.dart';
@@ -672,9 +672,10 @@ class ContentsManager extends BaseContentsManager {
   @override
   Future<void> removeAll() async {
     //playManager?.stop();
-    if (BookMainPage.backGroundMusic != null) {
-      FrameManager.stopBackgroundMusic(BookMainPage.backGroundMusic!);
-    }
+     // hycop_multi_platform 에서 제외됨
+    // if (BookMainPage.backGroundMusic != null) {
+    //   FrameManager.stopBackgroundMusic(BookMainPage.backGroundMusic!);
+    // }
     super.removeAll();
   }
 
@@ -687,7 +688,6 @@ class ContentsManager extends BaseContentsManager {
   }
 
   Future<void> setSoundOff({String mid = ''}) async {
-    String frameId = frameModel.mid;
     for (var player in _playerMap.values) {
       if (player.model != null && player.model!.isVideo()) {
         CretaVideoPlayer video = player as CretaVideoPlayer;
@@ -703,20 +703,21 @@ class ContentsManager extends BaseContentsManager {
           }
         }
       }
-      if (player.model != null && player.model!.isMusic()) {
-        logger.info('setMusicSoundOff ${player.model!.name}');
-        GlobalObjectKey<MusicPlayerFrameState>? musicKey = BookMainPage.musicKeyMap[frameId];
-        if (musicKey != null) {
-          musicKey.currentState?.mutedMusic(player.model!);
-        } else {
-          logger.severe('musicKey is null');
-        }
-      }
+      // hycop_multi_platform 에서 제외됨
+      // if (player.model != null && player.model!.isMusic()) {
+      //    String frameId = frameModel.mid;
+      //   logger.info('setMusicSoundOff ${player.model!.name}');
+      //   GlobalObjectKey<MusicPlayerFrameState>? musicKey = BookMainPage.musicKeyMap[frameId];
+      //   if (musicKey != null) {
+      //     musicKey.currentState?.mutedMusic(player.model!);
+      //   } else {
+      //     logger.severe('musicKey is null');
+      //   }
+      // }
     }
   }
 
   Future<void> resumeSound({String mid = ''}) async {
-    String frameId = frameModel.mid;
     for (var player in _playerMap.values) {
       if (player.model != null && player.model!.isVideo()) {
         CretaVideoPlayer video = player as CretaVideoPlayer;
@@ -732,20 +733,21 @@ class ContentsManager extends BaseContentsManager {
           }
         }
       }
-      if (player.model != null && player.model!.isMusic()) {
-        logger.info('resumeMusicSound ${player.model!.name}');
-        GlobalObjectKey<MusicPlayerFrameState>? musicKey = BookMainPage.musicKeyMap[frameId];
-        if (musicKey != null) {
-          musicKey.currentState?.resumedMusic(player.model!);
-        } else {
-          logger.severe('musicKey is null');
-        }
-      }
+      // hycop_multi_platform 에서 제외됨
+      // if (player.model != null && player.model!.isMusic()) {
+      //    String frameId = frameModel.mid;
+      //   logger.info('resumeMusicSound ${player.model!.name}');
+      //   GlobalObjectKey<MusicPlayerFrameState>? musicKey = BookMainPage.musicKeyMap[frameId];
+      //   if (musicKey != null) {
+      //     musicKey.currentState?.resumedMusic(player.model!);
+      //   } else {
+      //     logger.severe('musicKey is null');
+      //   }
+      // }
     }
   }
 
   Future<void> pause({bool all = false}) async {
-    String frameId = frameModel.mid;
     for (var player in _playerMap.values) {
       if (player.model == null) {
         continue;
@@ -765,20 +767,21 @@ class ContentsManager extends BaseContentsManager {
         //notify();  notify 는 전체에 이벤트가 가므로 지정된 놈만 이벤트가 가기 위해, invalidate 로 바꿈
         invalidatePlayerWidget(player.model!);
       }
-      if (player.model!.isMusic()) {
-        logger.info('--------------pauseMusic ${player.model!.name}');
-        GlobalObjectKey<MusicPlayerFrameState>? musicKey = BookMainPage.musicKeyMap[frameId];
-        if (musicKey != null) {
-          musicKey.currentState?.pausedMusic(player.model!);
-        } else {
-          logger.severe('musicKey is null');
-        }
-      }
+      // hycop_multi_platform 에서 제외됨
+      // if (player.model!.isMusic()) {
+      // String frameId = frameModel.mid;
+      //   logger.info('--------------pauseMusic ${player.model!.name}');
+      //   GlobalObjectKey<MusicPlayerFrameState>? musicKey = BookMainPage.musicKeyMap[frameId];
+      //   if (musicKey != null) {
+      //     musicKey.currentState?.pausedMusic(player.model!);
+      //   } else {
+      //     logger.severe('musicKey is null');
+      //   }
+      // }
     }
   }
 
   Future<void> disposeVideo() async {
-    String frameId = frameModel.mid;
     for (var player in _playerMap.values) {
       if (player.model == null) {
         continue;
@@ -791,21 +794,21 @@ class ContentsManager extends BaseContentsManager {
           logger.info('================ video.wcontroller!.dispose() =================');
         }
       }
-
-      if (player.model!.isMusic()) {
-        logger.info('--------------pauseMusic ${player.model!.name}');
-        GlobalObjectKey<MusicPlayerFrameState>? musicKey = BookMainPage.musicKeyMap[frameId];
-        if (musicKey != null) {
-          musicKey.currentState?.pausedMusic(player.model!);
-        } else {
-          logger.severe('musicKey is null');
-        }
-      }
+      // hycop_multi_platform 에서 제외됨
+      // if (player.model!.isMusic()) {
+      //    String frameId = frameModel.mid;
+      //   logger.info('--------------pauseMusic ${player.model!.name}');
+      //   GlobalObjectKey<MusicPlayerFrameState>? musicKey = BookMainPage.musicKeyMap[frameId];
+      //   if (musicKey != null) {
+      //     musicKey.currentState?.pausedMusic(player.model!);
+      //   } else {
+      //     logger.severe('musicKey is null');
+      //   }
+      // }
     }
   }
 
   Future<void> resume() async {
-    String frameId = frameModel.mid;
     for (var player in _playerMap.values) {
       if (player.model == null) {
         continue;
@@ -823,14 +826,16 @@ class ContentsManager extends BaseContentsManager {
       if (player.model!.isImage() || player.model!.aniType.value != TextAniType.none) {
         notify();
       }
-      if (player.model!.isMusic()) {
-        GlobalObjectKey<MusicPlayerFrameState>? musicKey = BookMainPage.musicKeyMap[frameId];
-        if (musicKey != null) {
-          musicKey.currentState?.playedMusic(player.model!);
-        } else {
-          logger.severe('musicKey is null');
-        }
-      }
+      // hycop_multi_platform 에서 제외됨
+      // if (player.model!.isMusic()) {
+      //    String frameId = frameModel.mid;
+      //   GlobalObjectKey<MusicPlayerFrameState>? musicKey = BookMainPage.musicKeyMap[frameId];
+      //   if (musicKey != null) {
+      //     musicKey.currentState?.playedMusic(player.model!);
+      //   } else {
+      //     logger.severe('musicKey is null');
+      //   }
+      // }
       if (player.model!.isText()) {
         invalidatePlayerWidget(player.model!);
       }
@@ -1181,18 +1186,19 @@ class ContentsManager extends BaseContentsManager {
           isResizeFrame: true,
           // onUploadComplete: onUploadComplete,
           onUploadComplete: (currentModel) {
-            if (currentModel.isMusic()) {
-              logger.info(
-                  'Dropping song named ${currentModel.name} with remoteUrl ${currentModel.remoteUrl}');
+            // hycop_multi_platform 에서 제외됨
+            // if (currentModel.isMusic()) {
+            //   logger.info(
+            //       'Dropping song named ${currentModel.name} with remoteUrl ${currentModel.remoteUrl}');
 
-              String mid = contentsManager.frameModel.mid;
-              GlobalObjectKey<MusicPlayerFrameState>? musicKey = BookMainPage.musicKeyMap[mid];
-              if (musicKey != null) {
-                musicKey.currentState?.addMusic(currentModel);
-              } else {
-                logger.info('musicKey is INVALID');
-              }
-            }
+            //   String mid = contentsManager.frameModel.mid;
+            //   GlobalObjectKey<MusicPlayerFrameState>? musicKey = BookMainPage.musicKeyMap[mid];
+            //   if (musicKey != null) {
+            //     musicKey.currentState?.addMusic(currentModel);
+            //   } else {
+            //     logger.info('musicKey is INVALID');
+            //   }
+            // }
           },
         );
       }
@@ -1503,63 +1509,64 @@ class ContentsManager extends BaseContentsManager {
     return conNodes;
   }
 
-  void unshowMusic(ContentsModel model) {
-    if (model.isMusic() == false) {
-      return;
-    }
-    String frameId = frameModel.mid;
-    GlobalObjectKey<MusicPlayerFrameState>? musicKey = BookMainPage.musicKeyMap[frameId];
-    if (musicKey == null) {
-      logger.severe('musicKey is null');
-      return;
-    }
-    musicKey.currentState?.removeMusic(model);
-  }
+// hycop_multi_platform 에서 제외됨
+  // void unshowMusic(ContentsModel model) {
+  //   if (model.isMusic() == false) {
+  //     return;
+  //   }
+  //   String frameId = frameModel.mid;
+  //   GlobalObjectKey<MusicPlayerFrameState>? musicKey = BookMainPage.musicKeyMap[frameId];
+  //   if (musicKey == null) {
+  //     logger.severe('musicKey is null');
+  //     return;
+  //   }
+  //   musicKey.currentState?.removeMusic(model);
+  // }
 
-  void showMusic(ContentsModel model, int index) {
-    if (model.isMusic() == false) {
-      return;
-    }
-    String frameId = frameModel.mid;
-    GlobalObjectKey<MusicPlayerFrameState>? musicKey = BookMainPage.musicKeyMap[frameId];
-    if (musicKey == null) {
-      logger.severe('musicKey is null');
-      return;
-    }
-    musicKey.currentState?.unhiddenMusic(model, index);
-  }
+  // void showMusic(ContentsModel model, int index) {
+  //   if (model.isMusic() == false) {
+  //     return;
+  //   }
+  //   String frameId = frameModel.mid;
+  //   GlobalObjectKey<MusicPlayerFrameState>? musicKey = BookMainPage.musicKeyMap[frameId];
+  //   if (musicKey == null) {
+  //     logger.severe('musicKey is null');
+  //     return;
+  //   }
+  //   musicKey.currentState?.unhiddenMusic(model, index);
+  // }
 
-  void selectMusic(ContentsModel model, int index) {
-    if (model.isMusic() == false) {
-      return;
-    }
-    String frameId = frameModel.mid;
-    GlobalObjectKey<MusicPlayerFrameState>? musicKey = BookMainPage.musicKeyMap[frameId];
-    if (musicKey == null) {
-      logger.severe('musicKey is null');
-      return;
-    }
-    musicKey.currentState?.selectedSong(model, index);
-  }
+  // void selectMusic(ContentsModel model, int index) {
+  //   if (model.isMusic() == false) {
+  //     return;
+  //   }
+  //   String frameId = frameModel.mid;
+  //   GlobalObjectKey<MusicPlayerFrameState>? musicKey = BookMainPage.musicKeyMap[frameId];
+  //   if (musicKey == null) {
+  //     logger.severe('musicKey is null');
+  //     return;
+  //   }
+  //   musicKey.currentState?.selectedSong(model, index);
+  // }
 
-  void removeMusic(ContentsModel model) {
-    if (model.isMusic() == false) {
-      return;
-    }
-    String frameId = frameModel.mid;
-    GlobalObjectKey<MusicPlayerFrameState>? musicKey = BookMainPage.musicKeyMap[frameId];
-    if (musicKey == null) {
-      logger.severe('musicKey is null');
-      return;
-    }
-    musicKey.currentState?.removeMusic(model);
-  }
+  // void removeMusic(ContentsModel model) {
+  //   if (model.isMusic() == false) {
+  //     return;
+  //   }
+  //   String frameId = frameModel.mid;
+  //   GlobalObjectKey<MusicPlayerFrameState>? musicKey = BookMainPage.musicKeyMap[frameId];
+  //   if (musicKey == null) {
+  //     logger.severe('musicKey is null');
+  //     return;
+  //   }
+  //   musicKey.currentState?.removeMusic(model);
+  // }
 
   void afterShowUnshow(ContentsModel model, int index, void Function()? invalidate) {
     int len = getShowLength();
     ContentsModel? current = getCurrentModel();
     if (model.isShow.value == false) {
-      unshowMusic(model);
+      //unshowMusic(model);  // hycop_multi_platform 에서 제외됨
       if (current != null && current.mid == model.mid) {
         // 현재 방송중인 것을 unshow 하려고 한다.
         if (len > 0) {
@@ -1569,7 +1576,7 @@ class ContentsManager extends BaseContentsManager {
         }
       }
     } else {
-      showMusic(model, index);
+      //showMusic(model, index); // hycop_multi_platform 에서 제외됨
       // show 했는데, current 가 null 이다.
       if (current == null && isEmptySelected()) {
         if (len > 0) {

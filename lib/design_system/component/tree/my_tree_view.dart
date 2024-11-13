@@ -471,9 +471,10 @@ class MyTreeViewState extends State<MyTreeView> {
       } else {
         contentsManager.setSelectedMid(contentsModel.mid, doNotify: true);
       }
-      if (contentsModel.isMusic()) {
-        contentsManager.selectMusic(contentsModel, index);
-      }
+      // hycop_multi_platform 에서 제외됨
+      // if (contentsModel.isMusic()) {
+      //   contentsManager.selectMusic(contentsModel, index);
+      // }
     }
   }
 
@@ -587,10 +588,11 @@ class MyTreeViewState extends State<MyTreeView> {
         }
         if (model.type == ExModelType.contents) {
           widget.removeContents(model as ContentsModel);
-          if (model.isMusic()) {
-            ContentsManager? contentsManager = _findContentsManager(model);
-            contentsManager?.removeMusic(model);
-          }
+          // hycop_multi_platform 에서 제외됨
+          // if (model.isMusic()) {
+          //   ContentsManager? contentsManager = _findContentsManager(model);
+          //   contentsManager?.removeMusic(model);
+          // }
           return;
         }
         if (model.type == ExModelType.link) {
@@ -629,14 +631,15 @@ class MyTreeViewState extends State<MyTreeView> {
     if (model.type == ExModelType.contents) {
       ContentsModel contents = model as ContentsModel;
       contents.isShow.set(!(contents.isShow.value));
-      if (contents.isMusic()) {
-        ContentsManager? contentsManager = _findContentsManager(model);
-        if (contents.isShow.value == true) {
-          contentsManager?.showMusic(model, index);
-        } else {
-          contentsManager?.unshowMusic(model);
-        }
-      }
+      // hycop_multi_platform 에서 제외됨
+      // if (contents.isMusic()) {
+      //   ContentsManager? contentsManager = _findContentsManager(model);
+      //   if (contents.isShow.value == true) {
+      //     contentsManager?.showMusic(model, index);
+      //   } else {
+      //     contentsManager?.unshowMusic(model);
+      //   }
+      // }
     }
   }
 
@@ -674,6 +677,7 @@ class MyTreeViewState extends State<MyTreeView> {
     }
   }
 
+  // ignore: unused_element
   ContentsManager? _findContentsManager(ContentsModel model) {
     PageModel? pageModel = widget.pageManager.getSelected() as PageModel?;
     if (pageModel == null) {

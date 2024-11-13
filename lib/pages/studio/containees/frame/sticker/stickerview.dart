@@ -9,7 +9,7 @@ import 'package:creta_studio_model/model/contents_model.dart';
 import 'package:creta_studio_model/model/frame_model.dart';
 import '../../../../../model/frame_model_util.dart';
 import 'package:creta_studio_model/model/page_model.dart';
-import '../../../../../player/music/creta_music_mixin.dart';
+// import '../../../../../player/music/creta_music_mixin.dart';    // hycop_multi_platform 에서 제외됨
 import '../../../book_main_page.dart';
 import '../../../studio_variables.dart';
 //import '../frame_each.dart';
@@ -497,7 +497,8 @@ class Sticker extends StatefulWidget {
   StickerState createState() => StickerState();
 }
 
-class StickerState extends CretaState<Sticker> with CretaMusicMixin {
+class StickerState
+    extends CretaState<Sticker> /* with CretaMusicMixin   // hycop_multi_platform 에서 제외됨 */ {
   // void refresh({bool deep = false}) {
   //   setState(() {
   //     widget.frameManager.invalidateFrameEach(widget.pageMid, widget.model.mid);
@@ -514,13 +515,13 @@ class StickerState extends CretaState<Sticker> with CretaMusicMixin {
   @override
   Widget build(BuildContext context) {
     bool isVisible = FrameModelUtil.isVisible(widget.pageMid, widget.model);
-
-    if (FrameModelUtil.isBackgroundMusic(widget.model) &&
-        isVisible == false &&
-        StudioVariables.isPreview == false) {
-      //print('showBGM');
-      return showBGM(StudioVariables.applyScale);
-    }
+    // hycop_multi_platform 에서 제외됨
+    // if (FrameModelUtil.isBackgroundMusic(widget.model) &&
+    //     isVisible == false &&
+    //     StudioVariables.isPreview == false) {
+    //   //print('showBGM');
+    //   return showBGM(StudioVariables.applyScale);
+    // }
     return Visibility(visible: isVisible, child: widget.child ?? Container());
   }
 

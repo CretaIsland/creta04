@@ -32,9 +32,9 @@ import 'package:creta_studio_model/model/book_model.dart';
 import 'package:creta_studio_model/model/contents_model.dart';
 import 'package:creta_common/model/creta_model.dart';
 import 'package:creta_studio_model/model/frame_model.dart';
-import '../../book_main_page.dart';
+//import '../../book_main_page.dart';    // hycop_multi_platform 에서 제외됨
 import '../../left_menu/left_menu_page.dart';
-import '../../left_menu/music/music_player_frame.dart';
+//import '../../left_menu/music/music_player_frame.dart';    // hycop_multi_platform 에서 제외됨
 import '../../studio_constant.dart';
 import '../../studio_getx_controller.dart';
 import '../../studio_snippet.dart';
@@ -208,13 +208,14 @@ class _ContentsOrderedListState extends State<ContentsOrderedList> with Property
                         if (currentModel.isMusic()) {
                           debugPrint(
                               '--------------add song named ${currentModel.name} to playlist');
-                          GlobalObjectKey<MusicPlayerFrameState>? musicKey =
-                              BookMainPage.musicKeyMap[frameId];
-                          if (musicKey != null) {
-                            musicKey.currentState?.addMusic(currentModel);
-                          } else {
-                            logger.severe('musicKey  is null');
-                          }
+                          // hycop_multi_platform 에서 제외됨
+                          // GlobalObjectKey<MusicPlayerFrameState>? musicKey =
+                          //     BookMainPage.musicKeyMap[frameId];
+                          // if (musicKey != null) {
+                          //   musicKey.currentState?.addMusic(currentModel);
+                          // } else {
+                          //   logger.severe('musicKey  is null');
+                          // }
                         }
                       },
                     );
@@ -240,16 +241,13 @@ class _ContentsOrderedListState extends State<ContentsOrderedList> with Property
                         onComplete: () async {
                           // order 의 변경을 _currentOrder 에도 적용한다.
                           widget.contentsManager.reOrdering();
-                          if (model != null && model.isMusic()) {
-                            String frameId = _frameModel.mid;
-                            GlobalObjectKey<MusicPlayerFrameState>? musicKey =
-                                BookMainPage.musicKeyMap[frameId];
-                            if (musicKey != null) {
-                              musicKey.currentState?.reorderPlaylist(model, oldIndex, newIndex);
-                            } else {
-                              logger.severe('musicKey is null');
-                            }
-                          }
+                            // hycop_multi_platform 에서 제외됨
+                          // if (model != null && model.isMusic()) {
+                          //   String frameId = _frameModel.mid;
+                          //   GlobalObjectKey<MusicPlayerFrameState>? musicKey =
+                          //       BookMainPage.musicKeyMap[frameId];
+                          //   musicKey.currentState?.reorderPlaylist(model, oldIndex, newIndex);
+                          // }
                           LeftMenuPage.treeInvalidate();
                           LeftMenuPage.initTreeNodes();
                         },
@@ -315,7 +313,7 @@ class _ContentsOrderedListState extends State<ContentsOrderedList> with Property
                     setState(() {
                       _selectedIndex = index;
                       logger.fine('ContentsOrderedList $_selectedIndex $index');
-                      widget.contentsManager.selectMusic(model, index); // 내부에서 뮤직일떄만 동작하도록 되어 있음
+                      //widget.contentsManager.selectMusic(model, index); // 내부에서 뮤직일떄만 동작하도록 되어 있음    // hycop_multi_platform 에서 제외됨
                     });
                   }
                 },
@@ -504,7 +502,7 @@ class _ContentsOrderedListState extends State<ContentsOrderedList> with Property
                 });
                 widget.contentsManager.removeContents(context, model).then((value) {
                   if (value == true) {
-                    widget.contentsManager.removeMusic(model);
+                    //widget.contentsManager.removeMusic(model);   // hycop_multi_platform 에서 제외됨
                     showSnackBar(context, model.name + CretaLang['contentsDeleted']!);
                   }
                 });

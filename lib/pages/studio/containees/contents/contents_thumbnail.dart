@@ -2,7 +2,7 @@
 import 'dart:math';
 
 import 'package:creta04/player/doc/creta_doc_mixin.dart';
-import 'package:creta04/player/music/creta_music_mixin.dart';
+//import 'package:creta04/player/music/creta_music_mixin.dart';    // hycop_multi_platform 에서 제외됨
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,17 +18,17 @@ import '../../../../data_io/frame_manager.dart';
 import '../../../../data_io/key_handler.dart';
 import 'package:creta_common/common/creta_color.dart';
 import 'package:creta_common/common/creta_font.dart';
-import '../../../../lang/creta_studio_lang.dart';
-import 'package:creta_common/model/app_enums.dart';
+//import '../../../../lang/creta_studio_lang.dart';    // hycop_multi_platform 에서 제외됨
+//import 'package:creta_common/model/app_enums.dart';    // hycop_multi_platform 에서 제외됨
 import 'package:creta_studio_model/model/contents_model.dart';
 import 'package:creta_user_io/data_io/creta_manager.dart';
 import 'package:creta_studio_model/model/frame_model.dart';
-import '../../../../model/frame_model_util.dart';
+//import '../../../../model/frame_model_util.dart';    // hycop_multi_platform 에서 제외됨
 import 'package:creta_studio_model/model/page_model.dart';
 import '../../../../player/text/creta_text_mixin.dart';
-import '../../book_main_page.dart';
-import '../../left_menu/music/music_player_frame.dart';
-import '../../studio_constant.dart';
+//import '../../book_main_page.dart';    // hycop_multi_platform 에서 제외됨
+//import '../../left_menu/music/music_player_frame.dart';    // hycop_multi_platform 에서 제외됨
+//import '../../studio_constant.dart';    // hycop_multi_platform 에서 제외됨
 import '../../studio_getx_controller.dart';
 
 class ContentsThumbnail extends StatefulWidget {
@@ -56,7 +56,7 @@ class ContentsThumbnail extends StatefulWidget {
 }
 
 class ContentsThumbnailState extends CretaState<ContentsThumbnail>
-    with CretaTextMixin, CretaDocMixin, CretaMusicMixin {
+    with CretaTextMixin, CretaDocMixin /* ,CretaMusicMixin   // hycop_multi_platform 에서 제외됨 */ {
   //ContentsManager? _contentsManager;
   //CretaPlayManager? _playerHandler;
   ContentsEventController? _receiveEvent;
@@ -166,78 +166,80 @@ class ContentsThumbnailState extends CretaState<ContentsThumbnail>
               logger.fine('there is no contents');
               return SizedBox.shrink();
             });
-      } else if (widget.frameModel.isMusicType()) {
-        //print('this is music frame'); // 뮤직의 경우
-        if (FrameModelUtil.isBackgroundMusic(widget.frameModel)) {
-          return showBGM(applyScale);
-        }
-        return StreamBuilder<AbsExModel>(
-            stream: _receiveEvent!.eventStream.stream,
-            builder: (context, snapshot) {
-              if (snapshot.data != null && snapshot.data is ContentsModel) {
-                ContentsModel model = snapshot.data! as ContentsModel;
-                contentsManager.updateModel(model);
-                logger.fine('model updated ${model.name}, ${model.url}');
-              }
-              //logger.fine('ContentsThumbnail StreamBuilder<AbsExModel> $contentsCount');
-
-              if (contentsCount > 0) {
-                if (widget.frameModel.frameType == FrameType.music) {
-                  GlobalObjectKey<MusicPlayerFrameState>? musicKey =
-                      BookMainPage.musicKeyMap[widget.frameModel.mid];
-                  if (musicKey == null) {
-                    musicKey = GlobalObjectKey<MusicPlayerFrameState>(
-                        'Music${widget.pageModel.mid}/${widget.frameModel.mid}');
-                    BookMainPage.musicKeyMap[widget.frameModel.mid] = musicKey;
-                  }
-                  //print(model.remoteUrl!);
-
-                  String selectedSize = '';
-                  int index = 0;
-                  FrameModel frameModel = widget.contentsManager.frameModel;
-                  Size frameSize = Size(frameModel.width.value, frameModel.height.value);
-                  for (Size ele in StudioConst.musicPlayerSize) {
-                    if (frameSize == ele) {
-                      selectedSize = CretaStudioLang['playerSize']!.values.toList()[index];
-                      break;
-                    }
-                    index++;
-                  }
-                  List<dynamic> size = CretaStudioLang['playerSize']!.values.toList();
-                  if (selectedSize == size[0]) {
-                    return Container(
-                      alignment: Alignment.center,
-                      // child: Image.asset('bigSize_music_app.png'),
-                      child: Image.asset('music-visual-big.png'),
-                    );
-                  } else if (selectedSize == size[1]) {
-                    return Container(
-                      alignment: Alignment.center,
-                      // child: Image.asset('medSize_music_app.png'),
-                      child: Image.asset('music-visual-med.png'),
-                    );
-                  } else if (selectedSize == size[2]) {
-                    return Container(
-                      alignment: Alignment.center,
-                      // child: Image.asset('smallSize_music_app.png'),
-                      child: Image.asset('music-visual-small.png'),
-                    );
-                  } else if (selectedSize == size[3]) {
-                    return Container(
-                      alignment: Alignment.center,
-                      // child: Image.asset('miniSize_music_app.png'),
-                      child: Image.asset('music-tiny.png'),
-                    );
-                  }
-                  return const SizedBox.shrink();
-                }
-              } else {
-                //print('No music contents here');
-              }
-              logger.fine('Music thumbnailUrl has NO content');
-              return SizedBox.shrink();
-            });
       }
+      // hycop_multi_platform 에서 제외됨
+      // else if (widget.frameModel.isMusicType()) {
+      //   //print('this is music frame'); // 뮤직의 경우
+      //   if (FrameModelUtil.isBackgroundMusic(widget.frameModel)) {
+      //     return showBGM(applyScale);
+      //   }
+      //   return StreamBuilder<AbsExModel>(
+      //       stream: _receiveEvent!.eventStream.stream,
+      //       builder: (context, snapshot) {
+      //         if (snapshot.data != null && snapshot.data is ContentsModel) {
+      //           ContentsModel model = snapshot.data! as ContentsModel;
+      //           contentsManager.updateModel(model);
+      //           logger.fine('model updated ${model.name}, ${model.url}');
+      //         }
+      //         //logger.fine('ContentsThumbnail StreamBuilder<AbsExModel> $contentsCount');
+
+      //         if (contentsCount > 0) {
+      //           if (widget.frameModel.frameType == FrameType.music) {
+      //             GlobalObjectKey<MusicPlayerFrameState>? musicKey =
+      //                 BookMainPage.musicKeyMap[widget.frameModel.mid];
+      //             if (musicKey == null) {
+      //               musicKey = GlobalObjectKey<MusicPlayerFrameState>(
+      //                   'Music${widget.pageModel.mid}/${widget.frameModel.mid}');
+      //               BookMainPage.musicKeyMap[widget.frameModel.mid] = musicKey;
+      //             }
+      //             //print(model.remoteUrl!);
+
+      //             String selectedSize = '';
+      //             int index = 0;
+      //             FrameModel frameModel = widget.contentsManager.frameModel;
+      //             Size frameSize = Size(frameModel.width.value, frameModel.height.value);
+      //             for (Size ele in StudioConst.musicPlayerSize) {
+      //               if (frameSize == ele) {
+      //                 selectedSize = CretaStudioLang['playerSize']!.values.toList()[index];
+      //                 break;
+      //               }
+      //               index++;
+      //             }
+      //             List<dynamic> size = CretaStudioLang['playerSize']!.values.toList();
+      //             if (selectedSize == size[0]) {
+      //               return Container(
+      //                 alignment: Alignment.center,
+      //                 // child: Image.asset('bigSize_music_app.png'),
+      //                 child: Image.asset('music-visual-big.png'),
+      //               );
+      //             } else if (selectedSize == size[1]) {
+      //               return Container(
+      //                 alignment: Alignment.center,
+      //                 // child: Image.asset('medSize_music_app.png'),
+      //                 child: Image.asset('music-visual-med.png'),
+      //               );
+      //             } else if (selectedSize == size[2]) {
+      //               return Container(
+      //                 alignment: Alignment.center,
+      //                 // child: Image.asset('smallSize_music_app.png'),
+      //                 child: Image.asset('music-visual-small.png'),
+      //               );
+      //             } else if (selectedSize == size[3]) {
+      //               return Container(
+      //                 alignment: Alignment.center,
+      //                 // child: Image.asset('miniSize_music_app.png'),
+      //                 child: Image.asset('music-tiny.png'),
+      //               );
+      //             }
+      //             return const SizedBox.shrink();
+      //           }
+      //         } else {
+      //           //print('No music contents here');
+      //         }
+      //         logger.fine('Music thumbnailUrl has NO content');
+      //         return SizedBox.shrink();
+      //       });
+      // }
       // 텍스트가 아닌 경우.
       return StreamBuilder<ContentsModel>(
           stream: _receiveEvent!.eventStream.stream,

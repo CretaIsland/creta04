@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:creta_studio_model/model/book_model.dart';
+// import 'package:creta_studio_model/model/book_model.dart';    // hycop_multi_platform 에서 제외됨
 import 'package:creta_common/common/creta_common_utils.dart';
 import 'package:creta_common/model/app_enums.dart';
 import 'package:hycop_multi_platform/common/undo/undo.dart';
@@ -86,31 +86,33 @@ class FrameModelUtil {
         model.height.value * StudioVariables.applyScale);
   }
 
-  static void toggeleBackgoundMusic(
-      bool value, FrameManager frameManager, BookModel book, FrameModel model) {
-    // 뮤직인 경우 백그라운드 뮤직이 된다.
-    mychangeStack.startTrans();
-    if (value == true) {
-      //print('set background');
-      BookMainPage.backGroundMusic = model;
-      book.backgroundMusicFrame.set(model.mid);
-      model.isShow.set(false);
-    } else {
-      //print('release background');
-      BookMainPage.backGroundMusic = null;
-      book.backgroundMusicFrame.set('');
-      model.isShow.set(true);
-    }
-    mychangeStack.endTrans();
-    BookMainPage.bookManagerHolder?.notify();
-    return;
-  }
+  // hycop_multi_platform 에서 제외됨
+  // static void toggeleBackgoundMusic(
+  //     bool value, FrameManager frameManager, BookModel book, FrameModel model) {
+  //   // 뮤직인 경우 백그라운드 뮤직이 된다.
+  //   mychangeStack.startTrans();
+  //   if (value == true) {
+  //     //print('set background');
+  //     BookMainPage.backGroundMusic = model;
+  //     book.backgroundMusicFrame.set(model.mid);
+  //     model.isShow.set(false);
+  //   } else {
+  //     //print('release background');
+  //     BookMainPage.backGroundMusic = null;
+  //     book.backgroundMusicFrame.set('');
+  //     model.isShow.set(true);
+  //   }
+  //   mychangeStack.endTrans();
+  //   BookMainPage.bookManagerHolder?.notify();
+  //   return;
+  // }
 
-  static bool isBackgroundMusic(FrameModel model) {
-    return model.isMusicType() &&
-        BookMainPage.backGroundMusic != null &&
-        BookMainPage.backGroundMusic!.mid == model.mid;
-  }
+  // hycop_multi_platform 에서 제외됨
+  // static bool isBackgroundMusic(FrameModel model) {
+  //   return model.isMusicType() &&
+  //       BookMainPage.backGroundMusic != null &&
+  //       BookMainPage.backGroundMusic!.mid == model.mid;
+  // }
 
   static bool isVisible(String pageMid, FrameModel model) {
     if (model.isRemoved.value == true) return false;

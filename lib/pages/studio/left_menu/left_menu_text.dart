@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, depend_on_referenced_packages
 
-import 'package:creta04/pages/studio/left_menu/word_pad/left_wordpad_template.dart';
+//import 'package:creta04/pages/studio/left_menu/word_pad/left_wordpad_template.dart';
+import 'package:creta_common/common/creta_common_utils.dart';
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:flutter/material.dart';
 import 'package:hycop_multi_platform/common/util/logger.dart';
@@ -28,12 +29,12 @@ class _LeftMenuTextState extends State<LeftMenuText> {
 
   final double borderThick = 4;
 
-  late double bodyHeight;
-  late double bodyWidth;
-  late double cardHeight;
+  //late double bodyHeight;
+  //late double bodyWidth;
+  //late double cardHeight;
 
-  double itemWidth = -1;
-  double itemHeight = -1;
+  // double itemWidth = -1;
+  // double itemHeight = -1;
 
   late String _selectedTab;
 
@@ -109,12 +110,16 @@ class _LeftMenuTextState extends State<LeftMenuText> {
     }
     if (_selectedTab == menu[1]) {
       // ignore: sized_box_for_whitespace
-      return Container(
-        // padding: EdgeInsets.symmetric(vertical: horizontalPadding),
-        padding: EdgeInsets.all(horizontalPadding),
+      // return Container(
+      //   // padding: EdgeInsets.symmetric(vertical: horizontalPadding),
+      //   padding: EdgeInsets.all(horizontalPadding),
+      //   width: LayoutConst.rightMenuWidth,
+      //   //child: Center(child: Text('HTML EDITOR')),
+      //   child: LeftWordPadTemplate(),
+      // );
+      return CretaCommonUtils.underConstruction(
         width: LayoutConst.rightMenuWidth,
-        //child: Center(child: Text('HTML EDITOR')),
-        child: LeftWordPadTemplate(),
+        //height: null,
       );
     }
     if (_selectedTab == menu[2]) {

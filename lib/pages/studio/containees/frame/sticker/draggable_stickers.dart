@@ -649,21 +649,22 @@ class _DraggableStickersState extends State<DraggableStickers> {
                 _notifyToThumbnail();
               });
             }),
-        if (FrameModelUtil.isBackgroundMusic(frameModel) == false)
-          CretaMenuItem(
-              caption:
-                  frameModel.isShow.value ? CretaStudioLang['unshow']! : CretaStudioLang['show']!,
-              onPressed: () {
-                BookMainPage.containeeNotifier!.setFrameClick(true);
-                mychangeStack.startTrans();
-                frameModel.isShow.set(!frameModel.isShow.value);
-                widget.frameManager?.changeOrderByIsShow(frameModel);
-                mychangeStack.endTrans();
-                widget.onFrameShowUnshow?.call(frameModel.mid, frameModel.isShow.value);
-                if (frameModel.isOverlay.value == true) {
-                  BookMainPage.pageManagerHolder!.notify();
-                }
-              }),
+        // hycop_multi_platform 에서 제외됨
+        // if (FrameModelUtil.isBackgroundMusic(frameModel) == false)
+        //   CretaMenuItem(
+        //       caption:
+        //           frameModel.isShow.value ? CretaStudioLang['unshow']! : CretaStudioLang['show']!,
+        //       onPressed: () {
+        //         BookMainPage.containeeNotifier!.setFrameClick(true);
+        //         mychangeStack.startTrans();
+        //         frameModel.isShow.set(!frameModel.isShow.value);
+        //         widget.frameManager?.changeOrderByIsShow(frameModel);
+        //         mychangeStack.endTrans();
+        //         widget.onFrameShowUnshow?.call(frameModel.mid, frameModel.isShow.value);
+        //         if (frameModel.isOverlay.value == true) {
+        //           BookMainPage.pageManagerHolder!.notify();
+        //         }
+        //       }),
         if (StudioVariables.isPreview == false)
           CretaMenuItem(caption: '', onPressed: () {}), //divider
         if (StudioVariables.isPreview == false)
@@ -710,24 +711,25 @@ class _DraggableStickersState extends State<DraggableStickers> {
               }),
         if (StudioVariables.isPreview == false)
           CretaMenuItem(caption: '', onPressed: () {}), //divider
-        if (StudioVariables.isPreview == false && frameModel.isMusicType() == true) // 뮤직의 경우
-          CretaMenuItem(
-              caption: FrameModelUtil.isBackgroundMusic(frameModel)
-                  ? CretaStudioLang['foregroundMusic']!
-                  : CretaStudioLang['backgroundMusic']!,
-              onPressed: () {
-                logger.fine('${CretaStudioLang['backgroundMusic']!} menu clicked');
-                setState(() {
-                  FrameModelUtil.toggeleBackgoundMusic(
-                    !FrameModelUtil.isBackgroundMusic(frameModel),
-                    widget.frameManager!,
-                    widget.book,
-                    frameModel,
-                  );
-                  //_sendEvent!.sendEvent(frameModel);
-                  BookMainPage.pageManagerHolder!.notify();
-                });
-              }),
+        // hycop_multi_platform 에서 제외됨
+        // if (StudioVariables.isPreview == false && frameModel.isMusicType() == true) // 뮤직의 경우
+        //   CretaMenuItem(
+        //       caption: FrameModelUtil.isBackgroundMusic(frameModel)
+        //           ? CretaStudioLang['foregroundMusic']!
+        //           : CretaStudioLang['backgroundMusic']!,
+        //       onPressed: () {
+        //         logger.fine('${CretaStudioLang['backgroundMusic']!} menu clicked');
+        //         setState(() {
+        //           FrameModelUtil.toggeleBackgoundMusic(
+        //             !FrameModelUtil.isBackgroundMusic(frameModel),
+        //             widget.frameManager!,
+        //             widget.book,
+        //             frameModel,
+        //           );
+        //           //_sendEvent!.sendEvent(frameModel);
+        //           BookMainPage.pageManagerHolder!.notify();
+        //         });
+        //       }),
         if (StudioVariables.isPreview == false && frameModel.isMusicType() == false)
           CretaMenuItem(
               caption: frameModel.isOverlay.value

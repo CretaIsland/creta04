@@ -17,7 +17,7 @@ import 'package:creta_common/model/app_enums.dart';
 import 'package:creta_studio_model/model/book_model.dart';
 import 'package:creta_user_io/data_io/creta_manager.dart';
 import 'package:creta_studio_model/model/frame_model.dart';
-import '../../../../model/frame_model_util.dart';
+//import '../../../../model/frame_model_util.dart';    // hycop_multi_platform 에서 제외됨
 import 'package:creta_studio_model/model/page_model.dart';
 //import '../../../../player/abs_player.dart';
 import '../../book_main_page.dart';
@@ -314,10 +314,12 @@ class PageThumbnailState extends CretaState<PageThumbnail> with ContaineeMixin {
           FrameModel frameModel = model as FrameModel;
 
           //if (_frameManager!.isVisible(model) == false) {
-          if (FrameModelUtil.isVisible(widget.pageModel.mid, frameModel) == false &&
-              FrameModelUtil.isBackgroundMusic(frameModel) == false) {
-            return SizedBox.shrink();
-          }
+          // hycop_multi_platform 에서 제외됨
+          // if (FrameModelUtil.isVisible(widget.pageModel.mid, frameModel) == false &&
+
+          //     FrameModelUtil.isBackgroundMusic(frameModel) == false) {
+          //   return SizedBox.shrink();
+          // }
           // if (frameModel.parentMid.value != widget.pageModel.mid) {
           //   if (frameModel.isOverlay.value == true) {
           //     return SizedBox.shrink();

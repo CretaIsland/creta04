@@ -1,67 +1,70 @@
-// ignore: implementation_imports
-// ignore_for_file: prefer_final_fields, depend_on_referenced_packages, must_be_immutable
 
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:hycop_multi_platform/common/util/logger.dart';
-import 'package:hycop_multi_platform/hycop/absModel/abs_ex_model.dart';
+//   // hycop_multi_platform 에서 제외됨
+// // ignore: implementation_imports
+// // ignore_for_file: prefer_final_fields, depend_on_referenced_packages, must_be_immutable
 
-import 'package:creta_studio_model/model/contents_model.dart';
-import '../../data_io/key_handler.dart';
-import '../../pages/studio/studio_getx_controller.dart';
-import '../creta_abs_media_widget.dart';
-import 'creta_music_mixin.dart';
-import 'creta_music_player.dart';
+// import 'package:flutter/material.dart';
+// import 'package:get/get.dart';
+// import 'package:hycop_multi_platform/common/util/logger.dart';
+// import 'package:hycop_multi_platform/hycop/absModel/abs_ex_model.dart';
 
-class CretaMusicWidget extends CretaAbsMediaWidget {
-  CretaMusicWidget({super.key, required super.player, super.timeExpired});
+// import 'package:creta_studio_model/model/contents_model.dart';
+// import '../../data_io/key_handler.dart';
+// import '../../pages/studio/studio_getx_controller.dart';
+// import '../creta_abs_media_widget.dart';
+// // import 'creta_music_mixin.dart';    // hycop_multi_platform 에서 제외됨
+// import 'creta_music_player.dart';
 
-  @override
-  CretaMusicPlayerWidgetState createState() => CretaMusicPlayerWidgetState();
-}
+// class CretaMusicWidget extends CretaAbsMediaWidget {
+//   CretaMusicWidget({super.key, required super.player, super.timeExpired});
 
-class CretaMusicPlayerWidgetState extends CretaState<CretaMusicWidget> with CretaMusicMixin {
-  ContentsEventController? _receiveEvent;
+//   @override
+//   CretaMusicPlayerWidgetState createState() => CretaMusicPlayerWidgetState();
+// }
 
-  @override
-  void setState(VoidCallback fn) {
-    if (mounted) super.setState(fn);
-  }
+// class CretaMusicPlayerWidgetState extends CretaState<
+//     CretaMusicWidget> /* with CretaMusicMixin   // hycop_multi_platform 에서 제외됨 */ {
+//   ContentsEventController? _receiveEvent;
 
-  @override
-  void initState() {
-    // print('++++++++++++++++++++++++++++++++++++++++++ creta_music_widget');
-    super.initState();
-    //widget.player.afterBuild();
-    final ContentsEventController receiveEvent = Get.find(tag: 'text-property-to-textplayer');
-    _receiveEvent = receiveEvent;
-  }
+//   @override
+//   void setState(VoidCallback fn) {
+//     if (mounted) super.setState(fn);
+//   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    widget.player.stop();
-  }
+//   @override
+//   void initState() {
+//     // print('++++++++++++++++++++++++++++++++++++++++++ creta_music_widget');
+//     super.initState();
+//     //widget.player.afterBuild();
+//     final ContentsEventController receiveEvent = Get.find(tag: 'text-property-to-textplayer');
+//     _receiveEvent = receiveEvent;
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    final CretaMusicPlayer player = widget.player as CretaMusicPlayer;
-    return StreamBuilder<AbsExModel>(
-        stream: _receiveEvent!.eventStream.stream,
-        builder: (context, snapshot) {
-          if (snapshot.data != null && snapshot.data! is ContentsModel) {
-            ContentsModel model = snapshot.data! as ContentsModel;
-            player.acc.updateModel(model);
-            logger.fine('model updated ${model.name}, ${model.font.value}');
-          }
-          logger.fine('Music StreamBuilder<AbsExModel>');
+//   @override
+//   void dispose() {
+//     super.dispose();
+//     widget.player.stop();
+//   }
 
-          return playMusic(
-            context,
-            player,
-            player.model!,
-            player.acc.getRealSize(),
-          );
-        });
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     final CretaMusicPlayer player = widget.player as CretaMusicPlayer;
+//     return StreamBuilder<AbsExModel>(
+//         stream: _receiveEvent!.eventStream.stream,
+//         builder: (context, snapshot) {
+//           if (snapshot.data != null && snapshot.data! is ContentsModel) {
+//             ContentsModel model = snapshot.data! as ContentsModel;
+//             player.acc.updateModel(model);
+//             logger.fine('model updated ${model.name}, ${model.font.value}');
+//           }
+//           logger.fine('Music StreamBuilder<AbsExModel>');
+
+//           return playMusic(
+//             context,
+//             player,
+//             player.model!,
+//             player.acc.getRealSize(),
+//           );
+//         });
+//   }
+// }

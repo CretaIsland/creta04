@@ -95,10 +95,10 @@ dependencies:
     git:
       url: https://github.com/CretaIsland/video_player-2.8.6.git
       ref: main
-  just_audio:
-    git:
-      url: https://github.com/CretaIsland/just_audio-0.9.37.git
-      ref: main
+  # just_audio:
+  #   git:
+  #     url: https://github.com/CretaIsland/just_audio-0.9.37.git
+  #     ref: main
   scroll_loop_auto_scroll:
     git:
       url: https://github.com/CretaIsland/scroll_loop_auto_scroll-0.0.5.git
@@ -164,12 +164,13 @@ dependencies:
   blobs: ^2.0.0
   # video_player: 2.8.6
   # youtube_player_iframe: ^3.1.0
-  youtube_player_iframe: ^4.0.4
+  # youtube_player_iframe: ^4.0.4
   animated_text_kit: ^4.2.2
   #auto_size_text: ^3.0.0
   # scroll_loop_auto_scroll: ^0.0.5
   widget_and_text_animator: ^1.0.9
-  text_to_speech: ^0.2.3
+  # text_to_speech: ^0.2.3
+  flutter_tts: ^4.1.0
   image_picker: ^0.8.7
   intl: ^0.19.0
   translator_plus: ^1.0.1
@@ -195,10 +196,10 @@ dependencies:
   file_picker: ^5.3.1
   # flutter_weather_bg_null_safety: ^1.0.0
   weather_animation: ^0.0.2
-  just_audio_background: ^0.0.1-beta.10
+  # just_audio_background: ^0.0.1-beta.10
   flutter_excel: ^1.0.1
   collection: ^1.17.1
-  audio_session: ^0.1.16
+  # audio_session: ^0.1.16
   audio_video_progress_bar: ^1.0.1
 
   rxdart: ^0.27.7
@@ -209,7 +210,7 @@ dependencies:
   protoo_client: ^0.3.3
   #flutter_webrtc: ^0.9.35
   random_string: ^2.3.1
-  audio_service: ^0.18.10
+  # audio_service: ^0.18.10
   # just_audio: ^0.9.37
   mini_music_visualizer: ^1.0.2
   marquee: ^2.2.3

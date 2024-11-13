@@ -2,7 +2,7 @@
 import 'package:creta_common/common/creta_const.dart';
 import 'package:provider/provider.dart';
 import 'package:creta04/design_system/text_field/creta_text_field.dart';
-import 'package:creta04/pages/studio/left_menu/music/music_player_frame.dart';
+//import 'package:creta04/pages/studio/left_menu/music/music_player_frame.dart';    // hycop_multi_platform 에서 제외됨
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hycop_multi_platform/hycop.dart';
@@ -60,7 +60,7 @@ class _ContentsPropertyState extends State<ContentsProperty> with PropertyMixin 
   //static bool _isTextFontColorOpen = false;
   static bool _textAIOpen = false;
   static bool _isTextBorderOpen = false;
-  static bool _isMusicAudioControl = false;
+  // static bool _isMusicAudioControl = false;    // hycop_multi_platform 에서 제외됨
   static bool _isTextAni = false;
 
   // static bool _isImageFilterOpen = false;
@@ -156,7 +156,7 @@ class _ContentsPropertyState extends State<ContentsProperty> with PropertyMixin 
         if (isNormalText) propertyDivider(height: 28),
         if (isNormalText) _textAI(),
         if (isNormalText) propertyDivider(height: 28),
-        if (widget.model.isMusic()) _musicAudioControl(),
+        //if (widget.model.isMusic()) _musicAudioControl(),    // hycop_multi_platform 에서 제외됨
         if (widget.model.isMusic() || widget.model.isImage()) propertyDivider(height: 28),
         _infoUrl(),
         propertyDivider(height: 28),
@@ -165,121 +165,121 @@ class _ContentsPropertyState extends State<ContentsProperty> with PropertyMixin 
     );
     //});
   }
+  // hycop_multi_platform 에서 제외됨
+  // Widget _musicAudioControl() {
+  //   String musicMuted;
+  //   if (_contentsManager!.frameModel.mute.value == true) {
+  //     musicMuted = CretaStudioLang["mute"]; //'음소거'; //muted
+  //   } else {
+  //     musicMuted = CretaStudioLang["unmute"]; //'음소거 해제'; //unmuted
+  //   }
+  //   String trails = '${_contentsManager!.frameModel.volume.value.round()}, $musicMuted';
+  //   return Padding(
+  //     padding: EdgeInsets.only(left: horizontalPadding, right: horizontalPadding, top: 5),
+  //     child: propertyCard(
+  //       isOpen: _isMusicAudioControl,
+  //       onPressed: () {
+  //         setState(() {
+  //           _isMusicAudioControl = !_isMusicAudioControl;
+  //         });
+  //       },
+  //       titleWidget: Text(CretaStudioLang['musicAudioControl']!, style: CretaFont.titleSmall),
+  //       trailWidget: Text(trails, style: CretaFont.bodySmall),
+  //       hasRemoveButton: false,
+  //       onDelete: () {},
+  //       bodyWidget: _musicAudioSettingBody(),
+  //     ),
+  //   );
+  // }
 
-  Widget _musicAudioControl() {
-    String musicMuted;
-    if (_contentsManager!.frameModel.mute.value == true) {
-      musicMuted = CretaStudioLang["mute"]; //'음소거'; //muted
-    } else {
-      musicMuted = CretaStudioLang["unmute"]; //'음소거 해제'; //unmuted
-    }
-    String trails = '${_contentsManager!.frameModel.volume.value.round()}, $musicMuted';
-    return Padding(
-      padding: EdgeInsets.only(left: horizontalPadding, right: horizontalPadding, top: 5),
-      child: propertyCard(
-        isOpen: _isMusicAudioControl,
-        onPressed: () {
-          setState(() {
-            _isMusicAudioControl = !_isMusicAudioControl;
-          });
-        },
-        titleWidget: Text(CretaStudioLang['musicAudioControl']!, style: CretaFont.titleSmall),
-        trailWidget: Text(trails, style: CretaFont.bodySmall),
-        hasRemoveButton: false,
-        onDelete: () {},
-        bodyWidget: _musicAudioSettingBody(),
-      ),
-    );
-  }
+  // Widget _musicAudioSettingBody() {
+  //   return Column(
+  //     children: [
+  //       _musicVolSlider(),
+  //       _musicMutedBody(),
+  //     ],
+  //   );
+  // }
 
-  Widget _musicAudioSettingBody() {
-    return Column(
-      children: [
-        _musicVolSlider(),
-        _musicMutedBody(),
-      ],
-    );
-  }
+  // Widget _musicMutedBody() {
+  //   return Padding(
+  //     padding: const EdgeInsets.only(top: 16.0),
+  //     child: propertyLine(
+  //       name: CretaStudioLang['musicMutedControl']!,
+  //       widget: _musicMutedToggle(),
+  //     ),
+  //   );
+  // }
 
-  Widget _musicMutedBody() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 16.0),
-      child: propertyLine(
-        name: CretaStudioLang['musicMutedControl']!,
-        widget: _musicMutedToggle(),
-      ),
-    );
-  }
+  // Widget _musicMutedToggle() {
+  //   bool isMusicMuted = _contentsManager!.frameModel.mute.value;
+  //   return CretaToggleButton(
+  //     key: GlobalObjectKey('_musicMutedToggle$isMusicMuted${widget.model.mid}'),
+  //     width: 54 * 0.75,
+  //     height: 28 * 0.75,
+  //     defaultValue: isMusicMuted,
+  //     onSelected: (value) {
+  //       isMusicMuted = value;
+  //       GlobalObjectKey<MusicPlayerFrameState>? musicKey =
+  //           BookMainPage.musicKeyMap[widget.model.parentMid.value];
+  //       if (musicKey != null) {
+  //         if (_contentsManager!.frameModel.mute.value == false) {
+  //           musicKey.currentState?.mutedMusic(widget.model);
+  //         } else {
+  //           musicKey.currentState?.resumedMusic(widget.model);
+  //         }
+  //       } else {
+  //         logger.severe('musicKey is null');
+  //       }
+  //       widget.frameManager.notify();
+  //       setState(() {});
+  //       // }
+  //     },
+  //   );
+  // }
 
-  Widget _musicMutedToggle() {
-    bool isMusicMuted = _contentsManager!.frameModel.mute.value;
-    return CretaToggleButton(
-      key: GlobalObjectKey('_musicMutedToggle$isMusicMuted${widget.model.mid}'),
-      width: 54 * 0.75,
-      height: 28 * 0.75,
-      defaultValue: isMusicMuted,
-      onSelected: (value) {
-        isMusicMuted = value;
-        GlobalObjectKey<MusicPlayerFrameState>? musicKey =
-            BookMainPage.musicKeyMap[widget.model.parentMid.value];
-        if (musicKey != null) {
-          if (_contentsManager!.frameModel.mute.value == false) {
-            musicKey.currentState?.mutedMusic(widget.model);
-          } else {
-            musicKey.currentState?.resumedMusic(widget.model);
-          }
-        } else {
-          logger.severe('musicKey is null');
-        }
-        widget.frameManager.notify();
-        setState(() {});
-        // }
-      },
-    );
-  }
+  // Widget _musicVolSlider() {
+  //   double minVol = 0.0;
+  //   double maxVol = 100.0;
+  //   double musicVol = _contentsManager!.frameModel.volume.value;
 
-  Widget _musicVolSlider() {
-    double minVol = 0.0;
-    double maxVol = 100.0;
-    double musicVol = _contentsManager!.frameModel.volume.value;
-
-    if (musicVol < minVol) {
-      musicVol = minVol;
-    } else if (musicVol > maxVol) {
-      musicVol = maxVol;
-    }
-    return propertyLine(
-      name: CretaStudioLang['musicVol']!,
-      widget: CretaExSlider(
-        valueType: SliderValueType.normal,
-        value: musicVol,
-        textType: CretaTextFieldType.number,
-        min: minVol,
-        max: maxVol,
-        onChanngeComplete: (val) {
-          GlobalObjectKey<MusicPlayerFrameState>? musicKey =
-              BookMainPage.musicKeyMap[widget.model.parentMid.value];
-          if (musicKey != null) {
-            musicKey.currentState?.adjustVol(widget.model, val);
-          } else {
-            logger.severe('musicKey is null');
-          }
-          widget.frameManager.notify();
-        },
-        onChannged: (val) {
-          GlobalObjectKey<MusicPlayerFrameState>? musicKey =
-              BookMainPage.musicKeyMap[widget.model.parentMid.value];
-          if (musicKey != null) {
-            musicKey.currentState?.adjustVol(widget.model, val);
-          } else {
-            logger.severe('musicKey is null');
-          }
-          // _contentsManager!.frameModel.volume.set(val);
-          widget.frameManager.notify();
-        },
-      ),
-    );
-  }
+  //   if (musicVol < minVol) {
+  //     musicVol = minVol;
+  //   } else if (musicVol > maxVol) {
+  //     musicVol = maxVol;
+  //   }
+  //   return propertyLine(
+  //     name: CretaStudioLang['musicVol']!,
+  //     widget: CretaExSlider(
+  //       valueType: SliderValueType.normal,
+  //       value: musicVol,
+  //       textType: CretaTextFieldType.number,
+  //       min: minVol,
+  //       max: maxVol,
+  //       onChanngeComplete: (val) {
+  //         GlobalObjectKey<MusicPlayerFrameState>? musicKey =
+  //             BookMainPage.musicKeyMap[widget.model.parentMid.value];
+  //         if (musicKey != null) {
+  //           musicKey.currentState?.adjustVol(widget.model, val);
+  //         } else {
+  //           logger.severe('musicKey is null');
+  //         }
+  //         widget.frameManager.notify();
+  //       },
+  //       onChannged: (val) {
+  //         GlobalObjectKey<MusicPlayerFrameState>? musicKey =
+  //             BookMainPage.musicKeyMap[widget.model.parentMid.value];
+  //         if (musicKey != null) {
+  //           musicKey.currentState?.adjustVol(widget.model, val);
+  //         } else {
+  //           logger.severe('musicKey is null');
+  //         }
+  //         // _contentsManager!.frameModel.volume.set(val);
+  //         widget.frameManager.notify();
+  //       },
+  //     ),
+  //   );
+  // }
 
   Widget _textFontColor() {
     return Padding(

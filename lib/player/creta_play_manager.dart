@@ -30,7 +30,7 @@ import 'doc/creta_doc_widget.dart';
 import 'image/creta_image_player.dart';
 import 'image/creta_image_widget.dart';
 import 'music/creta_music_player.dart';
-import 'music/creta_music_widget.dart';
+//import 'music/creta_music_widget.dart';    // hycop_multi_platform 에서 제외됨
 import 'text/creta_text_player.dart';
 import 'text/creta_text_widget.dart';
 import 'video/creta_video_player.dart';
@@ -516,12 +516,13 @@ class CretaPlayManager extends ChangeNotifier {
           player: player,
           frameManager: frameManager,
         );
-      case ContentsType.music:
-        // logger.info('-------------createMusicWidget${model.name}, ${model.contentsType})------------');
-        return CretaMusicWidget(
-          key: contentsManager.registerPlayerWidgetKey(player.keyString, model.contentsType),
-          player: player,
-        );
+          // hycop_multi_platform 에서 제외됨
+      // case ContentsType.music:
+      //   // logger.info('-------------createMusicWidget${model.name}, ${model.contentsType})------------');
+      //   return CretaMusicWidget(
+      //     key: contentsManager.registerPlayerWidgetKey(player.keyString, model.contentsType),
+      //     player: player,
+      //   );
       case ContentsType.pdf:
         return CretaPdfWidget(
           key: contentsManager.registerPlayerWidgetKey(player.keyString, model.contentsType),

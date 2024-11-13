@@ -31,9 +31,9 @@ import 'package:creta_studio_model/model/frame_model.dart';
 import '../../../../model/frame_model_util.dart';
 import 'package:creta_studio_model/model/page_model.dart';
 import '../../../../player/creta_play_manager.dart';
-import '../../book_main_page.dart';
+//import '../../book_main_page.dart';    // hycop_multi_platform 에서 제외됨
 import '../../left_menu/depot/depot_display.dart';
-import '../../left_menu/music/music_player_frame.dart';
+//import '../../left_menu/music/music_player_frame.dart';    // hycop_multi_platform 에서 제외됨
 import '../../page_index_dialog.dart';
 import '../../studio_getx_controller.dart';
 import '../../studio_snippet.dart';
@@ -418,15 +418,16 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
     await ContentsManager.createContents(
         frameManager, contentsModelList, frameModel, widget.pageModel, isResizeFrame: false,
         onUploadComplete: (model) {
-      if (model.isMusic()) {
-        GlobalObjectKey<MusicPlayerFrameState>? musicKey =
-            BookMainPage.musicKeyMap[widget.model.mid];
-        if (musicKey != null) {
-          musicKey.currentState!.addMusic(model);
-        } else {
-          debugPrint('musicKey is INVALID');
-        }
-      }
+      // hycop_multi_platform 에서 제외됨
+      // if (model.isMusic()) {
+      //   GlobalObjectKey<MusicPlayerFrameState>? musicKey =
+      //       BookMainPage.musicKeyMap[widget.model.mid];
+      //   if (musicKey != null) {
+      //     musicKey.currentState!.addMusic(model);
+      //   } else {
+      //     debugPrint('musicKey is INVALID');
+      //   }
+      // }
     });
   }
 

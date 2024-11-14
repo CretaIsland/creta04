@@ -50,7 +50,7 @@ class NewTeamInputState extends State<NewTeamInput> {
                     child: TextFormField(
                       initialValue: widget.data.name,
                       onChanged: (value) {
-                        widget.data.name = value;
+                        widget.data.name = value.replaceAll(' ', ''); // remove space
                         widget.data.message = '';
                       },
                       decoration: InputDecoration(hintText: CretaDeviceLang['teamName']!),

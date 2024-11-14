@@ -177,7 +177,17 @@ class EnterpriseGridItemState extends State<EnterpriseGridItem> {
       caption: CretaDeviceLang['newEnterprise']!,
       captionStyle: CretaFont.bodyMedium,
       radius: 20.0,
-      onPressed: widget.onInsert,
+      onPressed: () {
+        if (AccountManager.currentLoginUser.isSuperUser) {
+          widget.onInsert.call();
+        } else {
+          showSnackBar(
+              context,
+              CretaDeviceLang['noPermitionToCreateEnterprise'] ??
+                  '새로운 엔터프라이즈를 만들 권한이 없습니다. 서비스 제공사에 문의하시기 바랍니다',
+              duration: StudioConst.snackBarDuration);
+        }
+      },
       icon: const Icon(
         Icons.add_outlined,
         size: 96,

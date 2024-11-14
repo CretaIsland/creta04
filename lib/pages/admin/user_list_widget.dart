@@ -858,7 +858,7 @@ class _UserListWidgetState extends State<UserListWidget> with MyDataMixin {
           return CretaAlertDialog(
             hasCancelButton: false,
             height: 400,
-            title: "New User Creadted",
+            title: "New User Created",
 
             padding: EdgeInsets.only(left: 20, right: 20),
             //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),

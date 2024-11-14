@@ -175,13 +175,13 @@ class _UserDetailPageState extends State<UserDetailPage> {
             width: widget.width * 0.45,
             child: ListView(
               children: <Widget>[
+                _boolRow('Verified', widget.userModel.verified, true, onChanged: (v) {
+                  widget.userModel.verified = v;
+                }),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: Text('User Logo image', style: titleStyle),
                 ),
-                _boolRow('Verified', widget.userModel.verified, true, onChanged: (v) {
-                  widget.userModel.verified = v;
-                }),
                 MyPageCommonWidget.profileImgComponent(
                   width: 200,
                   height: 200,
@@ -238,8 +238,25 @@ class _UserDetailPageState extends State<UserDetailPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(name, style: titleStyle),
-          Text(value.isEmpty ? '-' : value, textAlign: TextAlign.right, style: dataStyle),
+          SizedBox(
+              //color: Colors.green,
+              width: 82,
+              child: Text(
+                name,
+                style: titleStyle,
+                maxLines: 2,
+                overflow: TextOverflow.fade,
+              )),
+          SizedBox(
+              //color: Colors.amberAccent,
+              width: textWidth - 40,
+              child: Text(
+                value.isEmpty ? '-' : value,
+                textAlign: TextAlign.right,
+                style: dataStyle,
+                maxLines: 2,
+                overflow: TextOverflow.fade,
+              )),
         ],
       ),
     );

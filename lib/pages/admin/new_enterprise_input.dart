@@ -54,7 +54,7 @@ class NewEnterpriseInputState extends State<NewEnterpriseInput> {
                     child: TextFormField(
                       initialValue: widget.data.name,
                       onChanged: (value) {
-                        widget.data.name = value;
+                        widget.data.name = value.replaceAll(' ', ''); // remove space
                         widget.data.message = '';
                       },
                       decoration: InputDecoration(hintText: CretaDeviceLang['enterpriseName']!),

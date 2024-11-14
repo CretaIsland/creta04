@@ -87,8 +87,8 @@ class NewUserInputState extends State<NewUserInput> {
                     widget.data.message = '';
                   },
                   decoration: InputDecoration(
-                    hintText: CretaDeviceLang['userEmail'] ?? '유저 ID',
-                    labelText: CretaDeviceLang['userEmail'] ?? '유저 ID',
+                    hintText: CretaDeviceLang['userEmail'] ?? '유저 Email(ID)',
+                    labelText: CretaDeviceLang['userEmail'] ?? '유저 Email(ID)',
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -129,7 +129,7 @@ class NewUserInputState extends State<NewUserInput> {
                   ),
                 ),
                 TextButton(
-                  child: Text(CretaDeviceLang['dupCheck']!),
+                  child: Text(CretaDeviceLang['dupCheckIDandNickName'] ?? 'ID/이름 중복체크'),
                   onPressed: () async {
                     //if (widget.data.formKey!.currentState!.validate()) {
                     widget.data.formKey!.currentState!.validate();

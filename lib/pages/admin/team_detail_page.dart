@@ -371,7 +371,16 @@ class _TeamDetailPageState extends State<TeamDetailPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(name, style: titleStyle),
-          Text(value.isEmpty ? '-' : value, textAlign: TextAlign.right, style: dataStyle),
+          SizedBox(
+            width: textWidth - 24,
+            child: Text(
+              value.isEmpty ? '-' : value,
+              textAlign: TextAlign.right,
+              style: dataStyle,
+              overflow: TextOverflow.fade,
+              maxLines: 2,
+            ),
+          ),
         ],
       ),
     );

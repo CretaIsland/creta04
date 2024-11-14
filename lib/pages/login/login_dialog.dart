@@ -1156,13 +1156,14 @@ class _LoginDialogState extends State<LoginDialog> {
           ),
           Padding(
             padding: EdgeInsets.fromLTRB(36, 20, 0, 0),
-            child: Row(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   CretaCommuLang["notMember"]!,
                   style: CretaFont.bodyESmall.copyWith(color: CretaColor.text[700]),
                 ),
-                SizedBox(width: 8),
+                SizedBox(height: 18),
                 BTN.line_blue_t_m(
                   text: CretaCommuLang["emailSignUp"]!,
                   //width: 82, // 114,

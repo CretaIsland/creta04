@@ -895,14 +895,17 @@ class _LandingPageState extends State<LandingPage> {
                   ),
                 ),
                 experienceQuickBTN(
-                    CretaCommuLang['presentation']!, //"프레젠테이션",
-                    "Create and present",
-                    const Offset(18, 14), () {
-                  CretaAccountManager.experienceWithoutLogin = true;
-                  Routemaster.of(context).push(AppRoutes.studioBookMainPage);
-                }),
+                  CretaCommuLang['presentation']!, //"프레젠테이션",
+                  "Create and present",
+                  const Offset(18, 14),
+                  () {
+                    CretaAccountManager.experienceWithoutLogin = true;
+                    Routemaster.of(context).push(AppRoutes.studioBookMainPage);
+                  },
+                  width: 240,
+                ),
                 experienceQuickBTN(
-                    width: 220,
+                    width: 240,
                     CretaCommuLang['community']!,
                     //"커뮤니티",
                     "Share and communicate",
@@ -915,7 +918,8 @@ class _LandingPageState extends State<LandingPage> {
                     //"디지털사이니지",
                     "Create and broadcast",
                     const Offset(1460, 0),
-                    () {})
+                    () {},
+                    width: 240),
               ],
             ),
           ),
@@ -1047,7 +1051,7 @@ class _LandingPageState extends State<LandingPage> {
   // ************************************ promotion section ************************************
   Widget promotionSection() {
     return SizedBox(
-      width: 1256 + 52,
+      width: 1256 + 52 + 65,
       height: 1161,
       child: Row(
         children: [
@@ -1214,7 +1218,7 @@ class _LandingPageState extends State<LandingPage> {
   // ************************************ creta guide section ************************************
   Widget guideSection() {
     return SizedBox(
-      width: 1360 + 66 + 8,
+      width: 1360 + 66 + 8 + 65,
       height: 792,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

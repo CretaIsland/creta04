@@ -617,7 +617,7 @@ class _TeamListWidgetState extends State<TeamListWidget> with MyDataMixin {
           return CretaAlertDialog(
             hasCancelButton: false,
             height: 400,
-            title: "New Team Creadted",
+            title: "New Team Created",
 
             padding: EdgeInsets.only(left: 20, right: 20),
             //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),

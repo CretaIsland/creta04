@@ -205,14 +205,15 @@ class _EnterpriseListWidgetState extends State<EnterpriseListWidget> with MyData
                   });
                 },
               ),
-              BTN.fill_gray_i_l(
-                tooltip: ' add new device ',
-                tooltipBg: Colors.black12,
-                // refresh
-                icon: Icons.add_outlined,
-                iconSize: 24,
-                onPressed: insertItem,
-              ),
+              if (AccountManager.currentLoginUser.isSuperUser)
+                BTN.fill_gray_i_l(
+                  tooltip: CretaDeviceLang['newEnterprise']!,
+                  tooltipBg: Colors.black12,
+                  // refresh
+                  icon: Icons.add_outlined,
+                  iconSize: 24,
+                  onPressed: insertItem,
+                ),
             ]),
           ),
           if (AccountManager.currentLoginUser.isSuperUser)
@@ -648,7 +649,7 @@ class _EnterpriseListWidgetState extends State<EnterpriseListWidget> with MyData
           return CretaAlertDialog(
             hasCancelButton: false,
             height: 400,
-            title: "New Enterprise Creadted",
+            title: "New Enterprise Created",
 
             padding: EdgeInsets.only(left: 20, right: 20),
             //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),

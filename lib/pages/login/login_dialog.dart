@@ -13,6 +13,7 @@ import 'package:creta_common/common/creta_common_utils.dart';
 
 //import '../login_page.dart';
 import '../../lang/creta_commu_lang.dart';
+import '../../routes.dart';
 import 'creta_account_manager.dart';
 //import '../../routes.dart';
 import 'package:creta_common/common/creta_snippet.dart';
@@ -656,6 +657,10 @@ class _LoginDialogState extends State<LoginDialog> {
   @override
   void initState() {
     super.initState();
+
+    //String customer = AppRoutes.getFirstTokenBeforeDot();
+    //print('customer: $customer ===============================================');
+
     _currentPageState = widget.loginPageState;
 
     stringAgreeTerms = CretaCommuLang["termsAgreementRequired"]!;
@@ -859,6 +864,10 @@ class _LoginDialogState extends State<LoginDialog> {
         teamModel.channelId = teamChannelModel.mid;
         userModel.channelId = myChannelModel.mid;
         userModel.teams = [teamModel.mid];
+        // Default Customer
+        if (AppRoutes.isSpecialCustomer()) {
+          userModel.enterprise = AppRoutes.firstAddress.toUpperCase();
+        }
         // create to DB
         await CretaAccountManager.channelManagerHolder.createChannel(teamChannelModel);
         await CretaAccountManager.channelManagerHolder.createChannel(myChannelModel);
@@ -1625,35 +1634,38 @@ class _LoginDialogState extends State<LoginDialog> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        _setErrorMessage(
-                            snsLoginErrorMessage: CretaCommuLang["featureNotSupported"]!);
-                        _isLoginProcessing = false;
-                      });
-                    },
-                    child: Image(
-                        width: 32, height: 32, image: AssetImage('assets/social/facebook.png')),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      _loginByGoogle();
-                    },
-                    child: SvgPicture.asset('assets/google__g__logo.svg',
-                        fit: BoxFit.contain, width: 32, height: 32),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        _setErrorMessage(
-                            snsLoginErrorMessage: CretaCommuLang["featureNotSupported"]!);
-                        _isLoginProcessing = false;
-                      });
-                    },
-                    child: Image(
-                        width: 32, height: 32, image: AssetImage('assets/social/kakaotalk.png')),
-                  ),
+                  if (!AppRoutes.isSpecialCustomer())
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          _setErrorMessage(
+                              snsLoginErrorMessage: CretaCommuLang["featureNotSupported"]!);
+                          _isLoginProcessing = false;
+                        });
+                      },
+                      child: Image(
+                          width: 32, height: 32, image: AssetImage('assets/social/facebook.png')),
+                    ),
+                  if (!AppRoutes.isSpecialCustomer())
+                    InkWell(
+                      onTap: () {
+                        _loginByGoogle();
+                      },
+                      child: SvgPicture.asset('assets/google__g__logo.svg',
+                          fit: BoxFit.contain, width: 32, height: 32),
+                    ),
+                  if (!AppRoutes.isSpecialCustomer())
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          _setErrorMessage(
+                              snsLoginErrorMessage: CretaCommuLang["featureNotSupported"]!);
+                          _isLoginProcessing = false;
+                        });
+                      },
+                      child: Image(
+                          width: 32, height: 32, image: AssetImage('assets/social/kakaotalk.png')),
+                    ),
                 ],
               ),
             ),

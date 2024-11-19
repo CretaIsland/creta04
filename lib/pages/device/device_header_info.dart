@@ -89,18 +89,13 @@ class DeviceHeaderInfo {
                   "width": 100
               },
               {
-                  "name": "requestedBook2",
-                  "label": "requestedBook2",
-                  "width": 100
-              },
-              {
-                  "name": "playingBook2",
-                  "label": "playingBook2",
-                  "width": 100
-              },
-              {
                   "name": "request",
-                  "label": "request",
+                  "label": "command",
+                  "width": 100
+              },
+              {
+                  "name": "requestedTime",
+                  "label": "commandTime",
                   "width": 100
               },
               {
@@ -114,11 +109,6 @@ class DeviceHeaderInfo {
                   "width": 100
               },
               {
-                  "name": "requestedTime",
-                  "label": "requestedTime",
-                  "width": 200
-              },
-              {
                   "name": "updateTime",
                   "label": "updateTime",
                   "width": 200
@@ -127,6 +117,16 @@ class DeviceHeaderInfo {
                   "name": "createTime",
                   "label": "createTime",
                   "width": 200
+              },
+               {
+                  "name": "requestedBook2",
+                  "label": "requestedBook2",
+                  "width": 100
+              },
+              {
+                  "name": "playingBook2",
+                  "label": "playingBook2",
+                  "width": 100
               }
           ]
       }''';

@@ -122,7 +122,7 @@ dependencies:
   flutter_speed_dial: ^6.1.0+1
   routemaster: ^1.0.1
   #hycop: ^0.4.75  
-  hycop_multi_platform: ^0.6.1  
+  hycop_multi_platform: ^0.6.3  
   outline_search_bar: ^2.3.0
   # custom_radio_grouped_button: ^2.2.1
   # elegant_radio_button_group: ^0.0.1

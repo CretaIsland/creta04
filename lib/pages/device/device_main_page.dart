@@ -30,6 +30,7 @@ import 'package:creta_common/common/creta_font.dart';
 import '../../design_system/dataTable/my_data_table.dart';
 import '../../design_system/menu/creta_popup_menu.dart';
 import '../../design_system/dataTable/web_data_table.dart';
+import '../../lang/creta_commu_lang.dart';
 import '../../lang/creta_device_lang.dart';
 import '../../lang/creta_studio_lang.dart';
 import '../../model/enterprise_model.dart';
@@ -143,6 +144,9 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
 
   bool _isGridView = false;
 
+  List<String> _teams = [];
+  Map<String, String> _teamNames = {}; // teamMid, teamName
+
   // ignore: unused_field
 
   late List<CretaMenuItem> _leftMenuItemList;
@@ -150,6 +154,7 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
   late List<CretaMenuItem> _dropDownMenuItemList2;
   late List<CretaMenuItem> _dropDownMenuItemList3;
   late List<CretaMenuItem> _dropDownMenuItemList4;
+  late List<CretaMenuItem> _dropDownMenuItemList5;
 
   bool dropDownButtonOpened = false;
   GlobalKey dropDownButtonKey = GlobalKey();
@@ -291,9 +296,10 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
     }
   }
 
-  Future<List<String>> _getTeams() async {
+  Future<void> _getTeams() async {
     List<AbsExModel>? modelList;
-    List<String> teamMids = [];
+    _teams.clear();
+    _teamNames.clear();
     if (AccountManager.currentLoginUser.isSuperUser == false) {
       // 자기 것만 가져온다.
       if (CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.teams.isNotEmpty) {
@@ -313,17 +319,18 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
       for (var ele in modelList) {
         TeamModel model = ele as TeamModel;
         DeviceMainPage.teamMap[model.name] = model;
-        teamMids.add(model.mid);
+        _teams.add(model.mid);
+        _teamNames[model.mid] = model.name;
       }
     } else {
       logger.severe('No Team list fetched');
     }
 
-    return teamMids;
+    return; // (teamMids, teamNames);
   }
 
   Future<bool>? _initData() async {
-    List<String> teams = await _getTeams();
+    await _getTeams();
     if (HycopFactory.serverType == ServerType.firebase ||
         HycopFactory.serverType == ServerType.supabase) {
       if (widget.selectedPage == DeviceSelectedPage.myPage) {
@@ -342,7 +349,7 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
         // if (AccountManager.currentLoginUser.isSuperUser == false) {
         //   teams = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.teams;
         // }
-        hostManagerHolder!.initTeamStream(teams);
+        hostManagerHolder!.initTeamStream(_teams);
       }
     } else {
       if (widget.selectedPage == DeviceSelectedPage.myPage) {
@@ -373,7 +380,7 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
         // if (AccountManager.currentLoginUser.isSuperUser == false) {
         //   teams = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.teams;
         // }
-        hostManagerHolder!.teamData(teams).then((value) {
+        hostManagerHolder!.teamData(_teams).then((value) {
           if (value.isNotEmpty) {
             hostManagerHolder!.addRealTimeListen(value.first.mid);
           }
@@ -449,6 +456,7 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
     _dropDownMenuItemList2 = getSortMenu((() => setState(() {})));
     _dropDownMenuItemList3 = getConnectedFilterMenu((() => setState(() {})));
     _dropDownMenuItemList4 = getUsageFilterMenu((() => setState(() {})));
+    _dropDownMenuItemList5 = getTeamFilterMenu((() => setState(() {})));
   }
 
   void _scrollListener(bool bannerSizeChanged) {
@@ -557,7 +565,9 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
                         _dropDownMenuItemList1,
                         _dropDownMenuItemList2,
                         _dropDownMenuItemList3,
-                        _dropDownMenuItemList4
+                        _dropDownMenuItemList4,
+                        if (widget.selectedPage == DeviceSelectedPage.teamPage)
+                          _dropDownMenuItemList5
                       ],
                       //mainWidget: sizeListener.isResizing() ? Container() : _deviceMain(context))),
                       onSearch: (value) {
@@ -687,7 +697,6 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
     double itemWidth = -1;
     double itemHeight = -1;
 
-    // print('rightPaneRect.childWidth=${rightPaneRect.childWidth}');
     // print('CretaConst.cretaPaddingPixel=${CretaConst.cretaPaddingPixel}');
     // print('CretaConst.bookThumbSize.width=${CretaConst.bookThumbSize.width}');
     // int columnCount = (rightPaneRect.childWidth - CretaConst.cretaPaddingPixel * 2) ~/
@@ -1212,6 +1221,41 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
     ];
   }
 
+  List<CretaMenuItem> getTeamFilterMenu(Function? onModelFiltered) {
+    return _teams.map((team) {
+      return CretaMenuItem(
+        caption: _teamNames[team]!,
+        onPressed: () {
+          hostManagerHolder!.initTeamStream([team]);
+        },
+      );
+    }).toList();
+
+    // return [
+    //   CretaMenuItem(
+    //     caption: CretaDeviceLang['usageHostFilter']![0],
+    //     onPressed: () {
+    //       hostManagerHolder?.toFiltered(null, null, AccountManager.currentLoginUser.email,
+    //           onModelFiltered: onModelFiltered);
+    //     },
+    //   ),
+    //   CretaMenuItem(
+    //     caption: CretaDeviceLang['usageHostFilter']![1],
+    //     onPressed: () {
+    //       hostManagerHolder?.toFiltered('isUsed', true, AccountManager.currentLoginUser.email,
+    //           onModelFiltered: onModelFiltered);
+    //     },
+    //   ),
+    //   CretaMenuItem(
+    //     caption: CretaDeviceLang['usageHostFilter']![2], //
+    //     onPressed: () {
+    //       hostManagerHolder?.toFiltered('isUsed', false, AccountManager.currentLoginUser.email,
+    //           onModelFiltered: onModelFiltered);
+    //     },
+    //   ),
+    // ];
+  }
+
   List<CretaMenuItem> getConnectedFilterMenu(Function? onModelFiltered) {
     return [
       CretaMenuItem(
@@ -1334,7 +1378,7 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
           text: CretaDeviceLang['notice']!,
           icon: Icons.notifications_outlined,
           onPressed: () {
-            // Handle menu button press
+            showSnackBar(context, CretaCommuLang['featureNotSupported']!);
           },
         ),
 

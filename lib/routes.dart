@@ -79,6 +79,27 @@ abstract class AppRoutes {
     return pathSegments.isNotEmpty ? pathSegments[0] : '';
   }
 
+  static String getFirstTokenBeforeDot() {
+    if (firstAddress.isNotEmpty) {
+      return firstAddress;
+    }
+    Uri uri = Uri.parse(window.location.href);
+    String host = uri.host;
+    int dotIndex = host.indexOf('.');
+    if (dotIndex != -1) {
+      firstAddress = host.substring(0, dotIndex);
+      return firstAddress;
+    }
+    return ''; // 점이 없는 경우 빈 문자열을 반환합니다.
+  }
+
+  static bool isSpecialCustomer({String? customer}) {
+    if (customer != null) {
+      return firstAddress == customer;
+    }
+    return firstAddress == 'prm' || firstAddress == 'mobis';
+  }
+
   static String _getMiddlePath(String inputString) {
     // Find the index of the second occurrence of '/'
     int firstSlashIndex = inputString.indexOf('/');
@@ -96,6 +117,8 @@ abstract class AppRoutes {
     }
     return result;
   }
+
+  static String firstAddress = '';
 
   static const String wait = '/wait';
   static const String intro = '/intro';

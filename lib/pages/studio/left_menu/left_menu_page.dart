@@ -733,7 +733,6 @@ class LeftMenuPageState extends State<LeftMenuPage> {
         ),
       );
     });
-
     Widget timeBase = Container(
       color: Colors.white.withOpacity(0.5),
       height: _bodyHeight - borderThick * 2,
@@ -742,18 +741,69 @@ class LeftMenuPageState extends State<LeftMenuPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              '${model.startDate.value} ${model.startTime.value}',
-              style: CretaFont.titleMedium.copyWith(color: CretaColor.primary),
+            Stack(
+              children: [
+                // 외곽선을 그리는 텍스트
+                Text(
+                  '${model.startDate.value} ${model.startTime.value}',
+                  style: CretaFont.titleLarge.copyWith(
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = 2
+                      ..color = Colors.black,
+                  ),
+                ),
+                // 실제 텍스트
+                Text(
+                  '${model.startDate.value} ${model.startTime.value}',
+                  style: CretaFont.titleLarge.copyWith(color: CretaColor.primary),
+                ),
+              ],
             ),
-            Text(
-              '${model.endDate.value} ${model.endTime.value}',
-              style: CretaFont.titleMedium.copyWith(color: CretaColor.primary),
+            SizedBox(height: 10),
+            Stack(
+              children: [
+                // 외곽선을 그리는 텍스트
+                Text(
+                  '${model.endDate.value} ${model.endTime.value}',
+                  style: CretaFont.titleLarge.copyWith(
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = 2
+                      ..color = Colors.black,
+                  ),
+                ),
+                // 실제 텍스트
+                Text(
+                  '${model.endDate.value} ${model.endTime.value}',
+                  style: CretaFont.titleLarge.copyWith(color: CretaColor.primary),
+                ),
+              ],
             ),
           ],
         ),
       ),
     );
+    // Widget timeBase = Container(
+    //   color: Colors.white.withOpacity(0.5),
+    //   height: _bodyHeight - borderThick * 2,
+    //   width: _bodyWidth - borderThick * 2,
+    //   child: Center(
+    //     child: Column(
+    //       mainAxisAlignment: MainAxisAlignment.center,
+    //       children: [
+    //         Text(
+    //           '${model.startDate.value} ${model.startTime.value}',
+    //           style: CretaFont.titleMedium.copyWith(color: CretaColor.primary),
+    //         ),
+    //         Text(
+    //           '${model.endDate.value} ${model.endTime.value}',
+    //           style: CretaFont.titleMedium.copyWith(color: CretaColor.primary),
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
 
     return GestureDetector(
       key: ValueKey(model.mid),

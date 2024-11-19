@@ -339,10 +339,10 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "2ee434399576c8d4f1ce8fef334f32d8a069e58f"
+      resolved-ref: "0bf5e231ca648d7485959272461e3eed157d6af9"
       url: "https://github.com/CretaIsland/creta_user_io.git"
     source: git
-    version: "0.1.0"
+    version: "0.1.1"
   creta_user_model:
     dependency: "direct main"
     description:
@@ -1237,10 +1237,10 @@ packages:
     dependency: "direct main"
     description:
       name: hycop_multi_platform
-      sha256: b9aed4f8226748ef3ca78c1babdb2d65ac295478cae343a7e29a87c267f0fb54
+      sha256: dfb8da4125c30186d0c29531f37182b467929cc60fce79b6ee7d2307121c55ee
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.1"
+    version: "0.6.3"
   id3_codec:
     dependency: "direct main"
     description:

@@ -163,13 +163,12 @@ class HostManager extends CretaManager {
   }
 
   void initTeamStream(List<String> teams, {int? limit}) {
-    //print('initTeamStream($teams)');
-
     Map<String, QueryValue> query = {};
-    // if (teams.isEmpty) {
-    //   return;
-    // }
-    query['team'] = QueryValue(value: teams, operType: OperType.whereIn);
+    if (teams.isEmpty) {
+      return;
+    }
+    //query['team'] = QueryValue(value: teams, operType: OperType.whereIn);
+    query['team'] = QueryValue(value: teams[0]);
     query['isRemoved'] = QueryValue(value: false);
     if (HycopFactory.serverType == ServerType.supabase) {
       _supabaseStream = initStream(where: query, orderBy: 'updateTime', limit: limit);

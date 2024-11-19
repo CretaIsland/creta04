@@ -362,7 +362,6 @@ class ContentsManager extends BaseContentsManager {
   String prefix() => CretaManager.modelPrefix(ExModelType.contents);
 
   Future<int> getContents() async {
-    //print('getContents()*********************************');
     int contentsCount = 0;
     startTransaction();
     try {
@@ -383,6 +382,7 @@ class ContentsManager extends BaseContentsManager {
     query['isRemoved'] = QueryValue(value: false);
     Map<String, OrderDirection> orderBy = {};
     orderBy[HycopUtils.order] = OrderDirection.ascending;
+
     await queryFromDB(query, orderBy: orderBy, limit: limit);
     logger.finest('getContents ${modelList.length}');
     return modelList.length;
@@ -621,8 +621,10 @@ class ContentsManager extends BaseContentsManager {
         playManager?.reOrdering();
       },
     );
+
     //await setToDB(model);
-    //remove(model);
+    remove(model);
+    //reOrdering();
     //print('remove contents ${model.name}, ${model.mid}');
     await playManager?.reOrdering();
 
@@ -647,13 +649,11 @@ class ContentsManager extends BaseContentsManager {
       frameManager.notify();
       //print('getVisibleLength is not 0');
     }
-
     LeftMenuPage.initTreeNodes();
     LeftMenuPage.treeInvalidate();
-    removeChild(model.mid);
+    await removeChild(model.mid);
 
     if (model.isImage() == false && model.isVideo() == false && getAvailLength() == 0) {
-      // frame 을 지운다.
       await frameManager.removeSelected(context, transaction: false);
     }
     mychangeStack.endTrans();
@@ -672,7 +672,7 @@ class ContentsManager extends BaseContentsManager {
   @override
   Future<void> removeAll() async {
     //playManager?.stop();
-     // hycop_multi_platform 에서 제외됨
+    // hycop_multi_platform 에서 제외됨
     // if (BookMainPage.backGroundMusic != null) {
     //   FrameManager.stopBackgroundMusic(BookMainPage.backGroundMusic!);
     // }
@@ -1203,7 +1203,6 @@ class ContentsManager extends BaseContentsManager {
         );
       }
       // 콘텐츠 객체를 DB에 Creta 한다.
-      //print('createNextContents (contents=${contentsModel.mid})');
       await contentsManager.createNextContents(contentsModel, doNotify: false);
     }
     BookMainPage.containeeNotifier!.set(ContaineeEnum.Contents, doNoti: true);

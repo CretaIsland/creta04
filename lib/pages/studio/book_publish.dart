@@ -406,7 +406,7 @@ class _BookPublishDialogState extends State<BookPublishDialog> with BookInfoMixi
                                   ),
                                   const SizedBox(width: 10),
                                   BTN.fill_blue_t_m(
-                                    width: 55,
+                                    width: 65,
                                     text: CretaLang['close']!,
                                     onPressed: () {
                                       setState(() {

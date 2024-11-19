@@ -1004,6 +1004,12 @@ class _BookMainPageState extends State<BookMainPage> {
 
   bool __singleButtonEvent(LogicalKeyboardKey logicalKey) {
     switch (logicalKey) {
+      case LogicalKeyboardKey.escape:
+        if (StudioVariables.isPreview == false) {
+          return false;
+        }
+        _gobackProcess();
+        return true;
       case LogicalKeyboardKey.delete:
         if (StudioVariables.isPreview == false) {
           _deleteSelectedModel();
@@ -1586,6 +1592,20 @@ class _BookMainPageState extends State<BookMainPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           BTN.floating_l(
+            icon: Icons.list_alt_outlined,
+            onPressed: () async {
+              //  이전 목록으로 돌아가기 (저장할 필요는 없다)
+              if (kReleaseMode) {
+                AppRoutes.launchTab(AppRoutes.studioBookGridPage);
+              } else {
+                Routemaster.of(context).push(AppRoutes.studioBookGridPage);
+              }
+            },
+            hasShadow: false,
+            tooltip: CretaStudioLang['backToList'] ?? '목록으로 돌아가기',
+          ),
+          SizedBox(width: padding),
+          BTN.floating_l(
             icon: Icons.note_add_outlined,
             onPressed: () async {
               BookModel newBook = BookMainPage.bookManagerHolder!.createSample();
@@ -1989,26 +2009,7 @@ class _BookMainPageState extends State<BookMainPage> {
                   totalPage: totalPage,
                   isPublishedMode: widget.isPublishedMode,
                   toggleFullscreen: widget.toggleFullscreen,
-                  goBackProcess: () async {
-                    //setState(() {
-                    await StudioVariables.pauseAll();
-                    StudioVariables.isPreview = false;
-                    //});
-                    // 돌아기기
-                    _fromPriviewToMain = true;
-                    //StudioVariables.stopPaging = false;
-                    StudioVariables.stopNextContents = false;
-
-                    if (kReleaseMode) {
-                      // String url = '${AppRoutes.studioBookPreviewPage}?${StudioVariables.selectedBookMid}';
-                      // AppRoutes.launchTab(url);
-                      Routemaster.of(context).push(
-                          '${AppRoutes.studioBookMainPage}?${StudioVariables.selectedBookMid}');
-                    } else {
-                      Routemaster.of(context).push(
-                          '${AppRoutes.studioBookMainPage}?${StudioVariables.selectedBookMid}');
-                    }
-                  },
+                  goBackProcess: _gobackProcess,
                   showPageIndex: () async {
                     await pageManager.showPageIndex(context);
                   },
@@ -2261,14 +2262,18 @@ class _BookMainPageState extends State<BookMainPage> {
 
   Future<void> _nextContents(bool backWard) async {
     if (BookMainPage.pageManagerHolder == null) return;
-    FrameModel? frameModel = BookMainPage.pageManagerHolder!.getSelectedFrame();
-    if (frameModel == null) {
-      return;
-    }
     FrameManager? frameManager = BookMainPage.pageManagerHolder!.getSelectedFrameManager();
     if (frameManager == null || frameManager.getAvailLength() == 0) {
       return;
     }
+    FrameModel? frameModel = BookMainPage.pageManagerHolder!.getSelectedFrame();
+    if (frameModel == null) {
+      frameModel = frameManager.getMainFrame();
+      if (frameModel == null) {
+        return;
+      }
+    }
+
     ContentsManager? contentsManager = frameManager.getContentsManager(frameModel.mid);
     if (contentsManager == null || contentsManager.getAvailLength() == 0) {
       return;
@@ -2280,5 +2285,25 @@ class _BookMainPageState extends State<BookMainPage> {
       contentsManager.gotoNext();
     }
     contentsManager.notify();
+  }
+
+  Future<void> _gobackProcess() async {
+    await StudioVariables.pauseAll();
+    StudioVariables.isPreview = false;
+    //});
+    // 돌아기기
+    _fromPriviewToMain = true;
+    //StudioVariables.stopPaging = false;
+    StudioVariables.stopNextContents = false;
+
+    if (kReleaseMode) {
+      // String url = '${AppRoutes.studioBookPreviewPage}?${StudioVariables.selectedBookMid}';
+      // AppRoutes.launchTab(url);
+      Routemaster.of(context)
+          .push('${AppRoutes.studioBookMainPage}?${StudioVariables.selectedBookMid}');
+    } else {
+      Routemaster.of(context)
+          .push('${AppRoutes.studioBookMainPage}?${StudioVariables.selectedBookMid}');
+    }
   }
 }

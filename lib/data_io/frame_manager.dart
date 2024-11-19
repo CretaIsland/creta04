@@ -83,7 +83,7 @@ class FrameManager extends BaseFrameManager {
     return const SizedBox.shrink();
   }
 
-   // hycop_multi_platform 에서 제외됨
+  // hycop_multi_platform 에서 제외됨
   // static void stopBackgroundMusic(FrameModel frameModel) {
   //   for (var musicKey in BookMainPage.musicKeyMap.values) {
   //     GlobalObjectKey<MusicPlayerFrameState> player = musicKey;
@@ -440,7 +440,7 @@ class FrameManager extends BaseFrameManager {
         if (parentMid != null && ele.parentMid.value != parentMid!) {
           continue; // overlay 는 빠져야 한다.
         }
-          // hycop_multi_platform 에서 제외됨
+        // hycop_multi_platform 에서 제외됨
         // if (BookMainPage.musicKeyMap[ele.mid] != null) {
         //   continue; // 백그라운드 뮤직도 빠져야 한다.
         // }

@@ -1572,7 +1572,7 @@ class _LandingPageState extends State<LandingPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                          width: 251,
+                          width: 300,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -1587,7 +1587,7 @@ class _LandingPageState extends State<LandingPage> {
                                     Routemaster.of(context).push(AppRoutes.serviceTerms);
                                   }),
                               customButton(
-                                  width: 115,
+                                  width: 150,
                                   height: 19,
                                   child: Text(CretaCommuLang['privacyPolicy']!, // "개인정보처리방침",
                                       style: CretaFont.bodyMedium.copyWith(color: Colors.white)),

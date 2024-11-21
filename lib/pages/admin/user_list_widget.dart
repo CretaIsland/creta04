@@ -800,7 +800,7 @@ class _UserListWidgetState extends State<UserListWidget> with MyDataMixin {
     // UserAccount 도 지워주어야 하고,
 
     try {
-      AccountManager.deleteAccountByUser(model.parentMid.value);
+      AccountManager.deleteAccountByUser(model.parentMid.value, deleteNow: true);
       //print('${model.parentMid.value} deleted ------------------');
     } catch (e) {
       logger.severe('delete Account failed $e');
@@ -809,7 +809,9 @@ class _UserListWidgetState extends State<UserListWidget> with MyDataMixin {
     //print('${model.mid} deleted ------------------');
     model.isRemoved.set(true, save: false, noUndo: true);
     userManagerHolder?.remove(model);
-    await userManagerHolder?.setToDB(model);
+    // user는 완전히 지워야 한다.
+    //await userManagerHolder?.setToDB(model);
+    await userManagerHolder?.removeToDB(model.mid);
 
     //if (_isGridView == false) {
     //setState(() {});

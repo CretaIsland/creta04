@@ -1368,7 +1368,7 @@ class _CommunityRightBookPaneState extends State<CommunityRightBookPane> {
               Expanded(child: Container()),
               BTN.fill_gray_t_es(
                 text: CretaCommuLang['viewAll'],
-                width: 66,
+                width: 77,
                 textColor: CretaColor.text[400],
                 onPressed: () {
                   setState(() {

@@ -607,7 +607,7 @@ class _DraggableStickersState extends State<DraggableStickers> {
 
     bool isFullScreen = frameModel.isFullScreenTest(widget.book);
 
-    double menuWidth = 320;
+    double menuWidth = 420;
 
     ContentsModel? contentsModel = widget.frameManager!.getFirstContents(frameModel.mid);
     ContentsManager? contentsManager = widget.frameManager!.getContentsManager(frameModel.mid);
@@ -639,6 +639,8 @@ class _DraggableStickersState extends State<DraggableStickers> {
                 //     widget.frameManager!.getContentsManager(frameModel.mid);
                 // contentsManager?.putInDepot(null);
               }),
+        if (StudioVariables.isPreview == false)
+          CretaMenuItem(caption: '', onPressed: () {}), //divider
         CretaMenuItem(
             caption: isFullScreen ? CretaStudioLang['realSize']! : CretaStudioLang['maxSize']!,
             onPressed: () {

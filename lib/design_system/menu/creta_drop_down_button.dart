@@ -282,7 +282,7 @@ class _CretaDropDownButtonState extends State<CretaDropDownButton> {
                   children: menuItem.map((item) {
                     _itemIndex++;
                     return SizedBox(
-                      width: width + 8,
+                      width: width + 8 + 12,
                       height: itemHeight,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 2.0),

@@ -294,17 +294,17 @@ class _TemplateListClassState extends State<TemplateList> {
               //   //pageModel.copyFrom(templateModel!, newMid: pageModel.mid);
               // }
             }),
-        CretaMenuItem(
-            caption: CretaStudioLang['modifyTemplate'] ?? "템플릿 편집",
-            onPressed: () async {
-              // 아직 구현 안했음.
-              showSnackBar(context, 'Not yet implemented');
-            }),
+        // CretaMenuItem(
+        //     caption: CretaStudioLang['modifyTemplate'] ?? "템플릿 편집",
+        //     onPressed: () async {
+        //       // 아직 구현 안했음.
+        //       showSnackBar(context, 'Not yet implemented');
+        //     }),
       ],
       itemHeight: 24,
       x: details.globalPosition.dx,
       y: details.globalPosition.dy,
-      width: 280,
+      width: 300,
       height: 110,
       iconSize: 12,
       alwaysShowBorder: true,

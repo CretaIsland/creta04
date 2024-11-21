@@ -138,31 +138,31 @@ class HostManager extends CretaManager {
     return host;
   }
 
-  void initMyStream(String userId, {int? limit}) {
+  void initMyStream(String userId, {String orderBy = 'updateTime', int? limit}) {
     Map<String, QueryValue> query = {};
     query['creator'] = QueryValue(value: userId);
     query['isRemoved'] = QueryValue(value: false);
     if (HycopFactory.serverType == ServerType.supabase) {
-      _supabaseStream = initStream(where: query, orderBy: 'updateTime', limit: limit);
+      _supabaseStream = initStream(where: query, orderBy: orderBy, limit: limit);
     } else {
-      _firebaseStream = initStream(where: query, orderBy: 'updateTime', limit: limit);
+      _firebaseStream = initStream(where: query, orderBy: orderBy, limit: limit);
     }
   }
 
-  void initSharedStream(String enterprise, {int? limit}) {
+  void initSharedStream(String enterprise, {String orderBy = 'updateTime', int? limit}) {
     Map<String, QueryValue> query = {};
     if (enterprise.isNotEmpty) {
       query['enterprise'] = QueryValue(value: enterprise);
     }
     query['isRemoved'] = QueryValue(value: false);
     if (HycopFactory.serverType == ServerType.supabase) {
-      _supabaseStream = initStream(where: query, orderBy: 'updateTime', limit: limit);
+      _supabaseStream = initStream(where: query, orderBy: orderBy, limit: limit);
     } else {
-      _firebaseStream = initStream(where: query, orderBy: 'updateTime', limit: limit);
+      _firebaseStream = initStream(where: query, orderBy: orderBy, limit: limit);
     }
   }
 
-  void initTeamStream(List<String> teams, {int? limit}) {
+  void initTeamStream(List<String> teams, {String orderBy = 'updateTime', int? limit}) {
     Map<String, QueryValue> query = {};
     if (teams.isEmpty) {
       return;
@@ -171,9 +171,9 @@ class HostManager extends CretaManager {
     query['team'] = QueryValue(value: teams[0]);
     query['isRemoved'] = QueryValue(value: false);
     if (HycopFactory.serverType == ServerType.supabase) {
-      _supabaseStream = initStream(where: query, orderBy: 'updateTime', limit: limit);
+      _supabaseStream = initStream(where: query, orderBy: orderBy, limit: limit);
     } else {
-      _firebaseStream = initStream(where: query, orderBy: 'updateTime', limit: limit);
+      _firebaseStream = initStream(where: query, orderBy: orderBy, limit: limit);
     }
   }
 

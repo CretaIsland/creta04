@@ -10,7 +10,7 @@ import 'package:creta_common/common/creta_snippet.dart';
 import 'package:creta_common/common/creta_vars.dart';
 import 'package:creta_user_io/data_io/creta_manager.dart';
 import 'package:creta_common/common/creta_const.dart';
-import 'package:creta_common/lang/creta_lang.dart';
+//import 'package:creta_common/lang/creta_lang.dart';
 import 'package:creta_common/model/app_enums.dart';
 import 'package:creta_user_io/data_io/team_manager.dart';
 import 'package:creta_user_io/data_io/user_property_manager.dart';
@@ -145,13 +145,15 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
   bool _isGridView = false;
 
   List<String> _teams = [];
+  List<String>? _currentTeams;
   Map<String, String> _teamNames = {}; // teamMid, teamName
+  Map<String, bool?> _realTimeFilter = {}; // filterName, value
 
   // ignore: unused_field
 
   late List<CretaMenuItem> _leftMenuItemList;
   late List<CretaMenuItem> _dropDownMenuItemList1;
-  late List<CretaMenuItem> _dropDownMenuItemList2;
+  //late List<CretaMenuItem> _dropDownMenuItemList2;
   late List<CretaMenuItem> _dropDownMenuItemList3;
   late List<CretaMenuItem> _dropDownMenuItemList4;
   late List<CretaMenuItem> _dropDownMenuItemList5;
@@ -333,24 +335,25 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
     await _getTeams();
     if (HycopFactory.serverType == ServerType.firebase ||
         HycopFactory.serverType == ServerType.supabase) {
-      if (widget.selectedPage == DeviceSelectedPage.myPage) {
-        hostManagerHolder!.initMyStream(
-          AccountManager.currentLoginUser.email,
-        );
-      } else if (widget.selectedPage == DeviceSelectedPage.sharedPage) {
-        String enterprise = CretaConst.superAdmin;
-        if (AccountManager.currentLoginUser.isSuperUser == false) {
-          enterprise = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.enterprise;
-        }
-        hostManagerHolder!.initSharedStream(
-          enterprise,
-        );
-      } else if (widget.selectedPage == DeviceSelectedPage.teamPage) {
-        // if (AccountManager.currentLoginUser.isSuperUser == false) {
-        //   teams = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.teams;
-        // }
-        hostManagerHolder!.initTeamStream(_teams);
-      }
+      _initStream();
+      // if (widget.selectedPage == DeviceSelectedPage.myPage) {
+      //   hostManagerHolder!.initMyStream(
+      //     AccountManager.currentLoginUser.email,
+      //   );
+      // } else if (widget.selectedPage == DeviceSelectedPage.sharedPage) {
+      //   String enterprise = CretaConst.superAdmin;
+      //   if (AccountManager.currentLoginUser.isSuperUser == false) {
+      //     enterprise = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.enterprise;
+      //   }
+      //   hostManagerHolder!.initSharedStream(
+      //     enterprise,
+      //   );
+      // } else if (widget.selectedPage == DeviceSelectedPage.teamPage) {
+      //   // if (AccountManager.currentLoginUser.isSuperUser == false) {
+      //   //   teams = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.teams;
+      //   // }
+      //   hostManagerHolder!.initTeamStream(_teams);
+      // }
     } else {
       if (widget.selectedPage == DeviceSelectedPage.myPage) {
         hostManagerHolder!
@@ -453,7 +456,7 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
     ];
 
     _dropDownMenuItemList1 = getFilterMenu((() => setState(() {})));
-    _dropDownMenuItemList2 = getSortMenu((() => setState(() {})));
+    //_dropDownMenuItemList2 = getSortMenu((() => setState(() {})));
     _dropDownMenuItemList3 = getConnectedFilterMenu((() => setState(() {})));
     _dropDownMenuItemList4 = getUsageFilterMenu((() => setState(() {})));
     _dropDownMenuItemList5 = getTeamFilterMenu((() => setState(() {})));
@@ -563,7 +566,7 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
                       bannerDescription: getDeviceDesc(),
                       listOfListFilter: [
                         _dropDownMenuItemList1,
-                        _dropDownMenuItemList2,
+                        //_dropDownMenuItemList2,
                         _dropDownMenuItemList3,
                         _dropDownMenuItemList4,
                         if (widget.selectedPage == DeviceSelectedPage.teamPage)
@@ -693,6 +696,26 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
     });
   }
 
+  bool _isFilterOut(HostModel model) {
+    DateTime now = DateTime.now();
+    DateTime lastUpdateTime = model.lastUpdateTime;
+    int period = model.managePeriod;
+    bool isConnected = (now.difference(lastUpdateTime).inSeconds < (period + 15));
+    model.isConnected = isConnected;
+    if (_realTimeFilter.isNotEmpty) {
+      if (_realTimeFilter['isConnected'] != null) {
+        if (isConnected != _realTimeFilter['isConnected']!) {
+          return true; // 조건에 맞지 않으면 다음 요소로 넘어감
+        }
+      }
+
+      if (_realTimeFilter['isUsed'] != null && model.isUsed != _realTimeFilter['isUsed']!) {
+        return true; // 조건에 맞지 않으면 다음 요소로 넘어감
+      }
+    }
+    return false;
+  }
+
   Widget _hostList(HostManager hostManager) {
     double itemWidth = -1;
     double itemHeight = -1;
@@ -724,6 +747,15 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
       initAvailableRowPerPage(initialRowPerPage);
     }
 
+    // data 를 이곳에서 필터링한다.
+    List<Map<String, dynamic>> rows = [];
+    for (var e in hostManager.modelList) {
+      HostModel model = e as HostModel;
+      if (!_isFilterOut(model)) {
+        rows.add(model.toMap());
+      }
+    }
+
     Widget dataTable = ListView.builder(
         controller: scrollContoller, // Provide the controller to ListView
         itemCount: 1,
@@ -746,18 +778,19 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
             availableRowsPerPage: availableRowPerPage,
             source: WebDataTableSource(
               preProcessRow: (row, index, key) {
-                // Row 를 그리기 전에 할일이 있으면 이곳에 적어야 한다.
-                // row['lastUpdateTime'] 이 현재 시간보다 90초 이상 과거라면, row['isConnected'] = false 로 놓고 그렇지 않다면 true 로 해야 한다.;
-                //print('${row['lastUpdateTime']}-------------------------------------------');
-                DateTime now = DateTime.now();
-                DateTime lastUpdateTime = DateTime.parse(row['lastUpdateTime']);
-                int period = row['managePeriod'] ?? 60;
+                // 위에서 했기  때문에 여기서 하지 않는 걸로 바뀌었다.
+                // // Row 를 그리기 전에 할일이 있으면 이곳에 적어야 한다.
+                // // row['lastUpdateTime'] 이 현재 시간보다 90초 이상 과거라면, row['isConnected'] = false 로 놓고 그렇지 않다면 true 로 해야 한다.;
+                // print('$key $index-------------------------------------------');
+                // DateTime now = DateTime.now();
+                // DateTime lastUpdateTime = DateTime.parse(row['lastUpdateTime']);
+                // int period = row['managePeriod'] ?? 60;
 
-                if (now.difference(lastUpdateTime).inSeconds >= (period + 15)) {
-                  row['isConnected'] = false;
-                } else {
-                  row['isConnected'] = true;
-                }
+                // if (now.difference(lastUpdateTime).inSeconds >= (period + 15)) {
+                //   row['isConnected'] = false;
+                // } else {
+                //   row['isConnected'] = true;
+                // }
                 return;
               },
               sortColumnName: sortColumnName,
@@ -768,7 +801,7 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
                 'isConnected': ConditionColor(Colors.yellow, true),
                 'isValidLicense': ConditionColor(Colors.redAccent, false),
               },
-              rows: hostManager.modelList.map((e) => e.toMap()).toList(),
+              rows: rows,
               //rows: hostManager.getOrdered().map((e) => e.toMap()).toList(),
               selectedRowKeys: selectedRowKeys,
               onTapRow: (rows, index) {
@@ -1004,7 +1037,11 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
         return Container();
       }
       //logger.fine('HostModel.name = ${model.name.value}');
+      if (_isFilterOut(itemModel)) {
+        return Container();
+      }
     }
+
     //print('----------------------');
     //if (isValidIndex(index)) {
     return GestureDetector(
@@ -1052,7 +1089,7 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
               enterpriseUrl: enterpriseUrl,
               hostManager: hostManager,
               index: index - 1,
-              itemKey: selectNotifierHolder.getKey(itemModel?.mid ?? ''),
+              itemKey: selectNotifierHolder.getKey(itemModel == null ? '' : itemModel.mid),
               // key: isValidIndex(index)
               //     ? (bookManager.findByIndex(index - 1) as CretaModel).key
               //     : GlobalKey(),
@@ -1103,23 +1140,53 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
   //   await hostManager.setToDB(savedItem);
   // }
 
-  List<CretaMenuItem> getSortMenu(Function? onModelSorted) {
-    return [
-      CretaMenuItem(
-          caption: CretaLang['basicBookSortFilter']![0],
-          onPressed: () {
-            hostManagerHolder?.toSorted('lastUpdateTime',
-                descending: true, onModelSorted: onModelSorted);
-          },
-          selected: true),
-      CretaMenuItem(
-          caption: CretaLang['basicBookSortFilter']![1],
-          onPressed: () {
-            hostManagerHolder?.toSorted('name', onModelSorted: onModelSorted);
-          },
-          selected: false),
-    ];
+  void _initStream({String orderBy = 'updateTime'}) {
+    if (widget.selectedPage == DeviceSelectedPage.myPage) {
+      hostManagerHolder!.initMyStream(
+        AccountManager.currentLoginUser.email,
+        orderBy: orderBy,
+      );
+    } else if (widget.selectedPage == DeviceSelectedPage.sharedPage) {
+      String enterprise = CretaConst.superAdmin;
+      if (AccountManager.currentLoginUser.isSuperUser == false) {
+        enterprise = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.enterprise;
+      }
+      hostManagerHolder!.initSharedStream(
+        enterprise,
+        orderBy: orderBy,
+      );
+    } else if (widget.selectedPage == DeviceSelectedPage.teamPage) {
+      // if (AccountManager.currentLoginUser.isSuperUser == false) {
+      //   teams = CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.teams;
+      // }
+      //_currentTeams ??= (_teams.isEmpty || _teams.first.isEmpty) ? ['no team'] : [..._teams];
+      hostManagerHolder!.initTeamStream(
+        _currentTeams == null ? _teams : _currentTeams!,
+        //_currentTeams!,
+        orderBy: orderBy,
+      );
+    }
   }
+
+  // List<CretaMenuItem> getSortMenu(Function? onModelSorted) {
+  //   return [
+  //     CretaMenuItem(
+  //         caption: CretaLang['basicBookSortFilter']![0],
+  //         onPressed: () {
+  //           //_initStream(orderBy: 'lastUpdateTime');
+  //           // hostManagerHolder?.toSorted('lastUpdateTime',
+  //           //     descending: true, onModelSorted: onModelSorted);
+  //         },
+  //         selected: true),
+  //     CretaMenuItem(
+  //         caption: CretaLang['basicBookSortFilter']![1],
+  //         onPressed: () {
+  //           //_initStream(orderBy: 'hostName');
+  //           //hostManagerHolder?.toSorted('name', onModelSorted: onModelSorted);
+  //         },
+  //         selected: false),
+  //   ];
+  // }
 
   List<CretaMenuItem> getFilterMenu(Function? onModelFiltered) {
     return [
@@ -1200,22 +1267,29 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
       CretaMenuItem(
         caption: CretaDeviceLang['usageHostFilter']![0],
         onPressed: () {
-          hostManagerHolder?.toFiltered(null, null, AccountManager.currentLoginUser.email,
-              onModelFiltered: onModelFiltered);
+          _realTimeFilter['isUsed'] = null;
+          onModelFiltered?.call();
+
+          // hostManagerHolder?.toFiltered(null, null, AccountManager.currentLoginUser.email,
+          //     onModelFiltered: onModelFiltered);
         },
       ),
       CretaMenuItem(
         caption: CretaDeviceLang['usageHostFilter']![1],
         onPressed: () {
-          hostManagerHolder?.toFiltered('isUsed', true, AccountManager.currentLoginUser.email,
-              onModelFiltered: onModelFiltered);
+          _realTimeFilter['isUsed'] = true;
+          onModelFiltered?.call();
+          // hostManagerHolder?.toFiltered('isUsed', true, AccountManager.currentLoginUser.email,
+          //     onModelFiltered: onModelFiltered);
         },
       ),
       CretaMenuItem(
         caption: CretaDeviceLang['usageHostFilter']![2], //
         onPressed: () {
-          hostManagerHolder?.toFiltered('isUsed', false, AccountManager.currentLoginUser.email,
-              onModelFiltered: onModelFiltered);
+          _realTimeFilter['isUsed'] = false;
+          onModelFiltered?.call();
+          // hostManagerHolder?.toFiltered('isUsed', false, AccountManager.currentLoginUser.email,
+          //     onModelFiltered: onModelFiltered);
         },
       ),
     ];
@@ -1226,7 +1300,9 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
       return CretaMenuItem(
         caption: _teamNames[team]!,
         onPressed: () {
-          hostManagerHolder!.initTeamStream([team]);
+          _currentTeams?.clear();
+          _currentTeams = [team];
+          hostManagerHolder!.initTeamStream(_currentTeams!);
         },
       );
     }).toList();
@@ -1261,22 +1337,28 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
       CretaMenuItem(
         caption: CretaDeviceLang['connectedHostFilter']![0],
         onPressed: () {
-          hostManagerHolder?.toFiltered(null, null, AccountManager.currentLoginUser.email,
-              onModelFiltered: onModelFiltered);
+          _realTimeFilter['isConnected'] = null;
+          onModelFiltered?.call();
+          // hostManagerHolder?.toFiltered(null, null, AccountManager.currentLoginUser.email,
+          //     onModelFiltered: onModelFiltered);
         },
       ),
       CretaMenuItem(
         caption: CretaDeviceLang['connectedHostFilter']![1],
         onPressed: () {
-          hostManagerHolder?.toFiltered('isConnected', true, AccountManager.currentLoginUser.email,
-              onModelFiltered: onModelFiltered);
+          _realTimeFilter['isConnected'] = true;
+          onModelFiltered?.call();
+          // hostManagerHolder?.toFiltered('isConnected', true, AccountManager.currentLoginUser.email,
+          //     onModelFiltered: onModelFiltered);
         },
       ),
       CretaMenuItem(
         caption: CretaDeviceLang['connectedHostFilter']![2], //
         onPressed: () {
-          hostManagerHolder?.toFiltered('isConnected', false, AccountManager.currentLoginUser.email,
-              onModelFiltered: onModelFiltered);
+          _realTimeFilter['isConnected'] = false;
+          onModelFiltered?.call();
+          // hostManagerHolder?.toFiltered('isConnected', false, AccountManager.currentLoginUser.email,
+          //     onModelFiltered: onModelFiltered);
         },
       ),
     ];

@@ -512,6 +512,7 @@ class _CretaBookUIItemState extends State<CretaBookUIItem> {
       globalKey: widget.key as GlobalKey,
       popupMenu: _popupMenuList,
       initFunc: setPopmenuOpen,
+      width: 200,
     ).then((value) {
       logger.finest('팝업메뉴 닫기');
       setState(() {

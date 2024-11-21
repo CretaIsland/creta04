@@ -1453,8 +1453,15 @@ class _CommunityPageState extends State<CommunityPage> with CretaBasicLayoutMixi
                     children: [
                       if (_currentBookModel!.isEditable)
                         BTN.fill_gray_i_l(
+                          tooltip: CretaCommuLang['edit'] ?? '스튜디오로 이동',
                           icon: Icons.edit_outlined,
-                          onPressed: () {},
+                          onPressed: () {
+                            //studio 로 이동
+                            String url =
+                                '${AppRoutes.studioBookMainPage}?${_currentBookModel?.sourceMid}';
+                            Routemaster.of(context).push(url);
+                            //AppRoutes.launchTab(url);
+                          },
                           buttonColor: CretaButtonColor.blueAndWhiteTitle,
                           iconColor: Colors.white,
                         ),
@@ -1513,7 +1520,7 @@ class _CommunityPageState extends State<CommunityPage> with CretaBasicLayoutMixi
                             context: context,
                             globalKey: menuButtonKey,
                             xOffset: -100,
-                            width: 160,
+                            width: 200,
                             popupMenu: [
                               //CretaMenuItem(caption: CretaCommuLang['play'], onPressed: () {}),
                               if (_currentBookModel!.isEditable)
@@ -1522,8 +1529,9 @@ class _CommunityPageState extends State<CommunityPage> with CretaBasicLayoutMixi
                                   onPressed: () {
                                     String url =
                                         '${AppRoutes.studioBookMainPage}?${_currentBookModel?.sourceMid}';
-                                    //Routemaster.of(context).push(url);
-                                    AppRoutes.launchTab(url);
+                                    Routemaster.of(context).push(url);
+
+                                    //AppRoutes.launchTab(url);
                                   },
                                 ),
                               if (AccountManager.currentLoginUser.isLoginedUser)

@@ -306,7 +306,7 @@ git checkout v1.0.0   이렇게 해당 버전을 checkout 한다.
 ###  Windows 를 지원하지 않는 패키지들 !!!
 ##########################################
   flutter_dropzone: ^3.0.5  <-- 컴파일은 되지만, 구현은 안되어 있음
-  video_player : local git
+  video_player : --> video_player_media_kit 1.0.5
   html_editor_enhanced : local git  <-- 컴파일은 되지만, 구현은 안되어 있음
 
   just_audio : local git <-- 제거하였음.
@@ -316,4 +316,34 @@ git checkout v1.0.0   이렇게 해당 버전을 checkout 한다.
   audio_service: ^0.18.10  <-- 제거하였음.
   text_to_speech: ^0.2.3  --> flutter_tts 로 교체
 
+
+
+###### Windows version build #############
+
+1. Visual Studio Community 다운로드 및 설치:
+
+Visual Studio 다운로드 페이지로 이동합니다. https://visualstudio.microsoft.com/ko/downloads/
+"Visual Studio Community"를 선택하고 설치 프로그램을 다운로드합니다.
+설치 프로그램을 실행합니다.
+필요한 워크로드 선택:
+
+설치 프로그램에서 "Desktop development with C++" 워크로드를 선택합니다.
+"MSVC v142 - VS 2019 C++ x64/x86 build tools"와 "Windows 10 SDK"를 포함하여 설치합니다.
+"C++ CMake tools for Windows"도 선택합니다.
+필요한 개별 구성 요소 선택:
+
+"개별 구성 요소" 탭으로 이동하여 다음 항목을 선택합니다:
+"NuGet package manager"
+"C++/CLI support"
+"C++ ATL for v142 build tools (x86 & x64)"
+"C++ MFC for v142 build tools (x86 & x64)"
+"C++/WinRT"
+설치 완료:
+
+선택한 구성 요소를 설치합니다.
+
+1.  NUGET  설치
+3rdpary 아래에 nuget.exe (커맨드 라인용) 을 설치하고,  시스템 패스를 잡아준다.,
+
+2. flutter run -d windows --dart-define=serviceType=barricade --dart-define=serverType=firebase
 

@@ -2,6 +2,7 @@
 
 // ignore: avoid_web_libraries_in_flutter
 //import 'dart:html';
+import 'package:video_player_media_kit/video_player_media_kit.dart';
 
 import 'package:creta_common/common/creta_color.dart'; //import 'package:creta04/pages/studio/sample_data.dart';
 import 'package:creta_common/common/creta_snippet.dart';
@@ -58,6 +59,11 @@ void main() async {
   usePathUrlStrategy(); // <-- 이렇게 사용함
 
   WidgetsFlutterBinding.ensureInitialized();
+
+  VideoPlayerMediaKit.ensureInitialized(
+    windows: true,
+  );
+
   setupLogger();
   const String level = String.fromEnvironment('logLevel', defaultValue: 'severe');
   Logger.root.level = logLevelFromString(level);

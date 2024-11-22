@@ -91,10 +91,10 @@ dependencies:
     git:
       url: https://github.com/CretaIsland/custom_radio_grouped_button-2.2.1.git
       ref: main
-  video_player:
-    git:
-      url: https://github.com/CretaIsland/video_player-2.8.6.git
-      ref: main
+  # video_player:
+  #   git:
+  #     url: https://github.com/CretaIsland/video_player-2.8.6.git
+  #     ref: main
   # just_audio:
   #   git:
   #     url: https://github.com/CretaIsland/just_audio-0.9.37.git
@@ -116,7 +116,8 @@ dependencies:
       url: https://github.com/CretaIsland/carousel_slider-4.2.1.git
       ref: main
 
-
+  video_player: ^2.8.6
+  video_player_media_kit: ^1.0.5
   cupertino_icons: ^1.0.2
   flutter_riverpod: ^1.0.4
   flutter_speed_dial: ^6.1.0+1
@@ -245,6 +246,9 @@ dependencies:
   animate_icons: ^2.0.0
   tcard: ^1.3.5
   auto_size_text: ^3.0.0
+  # media_kit: ^1.1.11
+  # media_kit_video: ^1.2.5 # For video rendering.
+  # media_kit_libs_video: ^1.0.5 # Native video dependencies.
   # flutter_web_data_table: ^1.0.0
 
 dev_dependencies:

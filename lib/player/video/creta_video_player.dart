@@ -6,7 +6,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hycop_multi_platform/common/util/logger.dart';
 import 'package:video_player/video_player.dart';
-import 'package:video_player_platform_interface/video_player_platform_interface.dart';
+//import 'package:video_player_platform_interface/video_player_platform_interface.dart';
 
 import 'package:creta_common/model/app_enums.dart';
 import '../../pages/studio/studio_variables.dart';
@@ -24,7 +24,7 @@ class CretaVideoPlayer extends CretaAbsPlayer {
   }
 
   VideoPlayerController? wcontroller;
-  VideoEventType prevEvent = VideoEventType.unknown;
+  //VideoEventType prevEvent = VideoEventType.unknown;
   Size? _outSize;
   Size? getSize() => _outSize;
   //bool _isMute = false;
@@ -71,9 +71,23 @@ class CretaVideoPlayer extends CretaAbsPlayer {
         .set(wcontroller!.value.duration.inMilliseconds.toDouble(), noUndo: true, save: false);
     await wcontroller!.setLooping(false);
     await wcontroller!.seekTo(Duration.zero); //skpark 2023.11.24 제일앞으로 보낸다.
-    wcontroller!.timerInterval = 150;
-    wcontroller!.onAfterVideoEvent = (event, position, duration) async {
-      if (event.eventType == VideoEventType.completed) {
+    //wcontroller!.timerInterval = 150;
+    wcontroller!.addListener(() {
+      //print('addListener');
+      if (wcontroller!.value.hasError) {
+        logger.severe("======================================================");
+        logger.severe('video play error(${model?.name},${wcontroller!.value.errorDescription})');
+        logger.severe("======================================================");
+      }
+      // if (wcontroller!.value.isPlaying) {
+      //   logger.info('video play(${model?.name})');
+      // }
+      // 비디오가 컴플릿 되면, 다음 비디오로 넘어가야 한다.
+      Duration position = wcontroller!.value.position;
+      Duration duration = wcontroller!.value.duration;
+
+      if (position.inMilliseconds >= duration.inMilliseconds) {
+        logger.info('video play completed(${model?.name})');
         model?.setPlayState(PlayState.end);
         //   //skpark 2023.11.24 제일앞으로 보낸다.
         //   // 아래 문장을 하지 않으면, complete 가 계속오게 되는데,  이게 전에는 안그랬는데,
@@ -85,27 +99,41 @@ class CretaVideoPlayer extends CretaAbsPlayer {
 
         onAfterEvent?.call(position, duration);
       }
-      prevEvent = event.eventType;
-    };
-    wcontroller!.onErrorVideoEvent = (error, timer) async {
-      logger.severe("======================================================");
-      logger.severe(
-          'onErrorVideoEvent : video play error(${model?.name},${error.message}, ${error.code})');
-      logger.severe("======================================================");
-      if (error.code == "AbortError") {
-        logger.severe('${error.code}, recovered by play() again');
-        await wcontroller!.play();
-      }
-/*
-video play error(The Chargers Display
-You Need to See - Shargeek Retro 67 #shorts #cooltech.mp4,The ()play   
-request was interrupted by a call to pause(). https://goo.gl/LdLk22,   
-AbortError)
-*/
-      // timer?.cancel();
-      // await wcontroller!.initialize();
-      // await wcontroller!.play();
-    };
+    });
+    // wcontroller!.onAfterVideoEvent = (event, position, duration) async {
+    //   if (event.eventType == VideoEventType.completed) {
+    //     model?.setPlayState(PlayState.end);
+    //     //   //skpark 2023.11.24 제일앞으로 보낸다.
+    //     //   // 아래 문장을 하지 않으면, complete 가 계속오게 되는데,  이게 전에는 안그랬는데,
+    //     //   // 갑자기 계속 오기 시작한다
+    //     //   // // 화면이 제일 처음으로 자꾸 돌아가고, 그 다음 다음 동영상으로 넘어가는 문제가 있어서 다시 뺌..
+    //     //   //wcontroller!.seekTo(Duration.zero);
+    //     logger.info(
+    //         'onAfterVideoEvent : video play completed(${model?.name},postion=$position, duration=$duration)');
+
+    //     onAfterEvent?.call(position, duration);
+    //   }
+    //   prevEvent = event.eventType;
+    // };
+//     wcontroller!.onErrorVideoEvent = (error, timer) async {
+//       logger.severe("======================================================");
+//       logger.severe(
+//           'onErrorVideoEvent : video play error(${model?.name},${error.message}, ${error.code})');
+//       logger.severe("======================================================");
+//       if (error.code == "AbortError") {
+//         logger.severe('${error.code}, recovered by play() again');
+//         await wcontroller!.play();
+//       }
+// /*
+// video play error(The Chargers Display
+// You Need to See - Shargeek Retro 67 #shorts #cooltech.mp4,The ()play
+// request was interrupted by a call to pause(). https://goo.gl/LdLk22,
+// AbortError)
+// */
+//       // timer?.cancel();
+//       // await wcontroller!.initialize();
+//       // await wcontroller!.play();
+//     };
 
     if (_outSize == null) {
       _outSize = getOuterSize(wcontroller!.value.aspectRatio);

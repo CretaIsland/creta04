@@ -342,8 +342,30 @@ Visual Studio 다운로드 페이지로 이동합니다. https://visualstudio.mi
 
 선택한 구성 요소를 설치합니다.
 
-1.  NUGET  설치
-3rdpary 아래에 nuget.exe (커맨드 라인용) 을 설치하고,  시스템 패스를 잡아준다.,
 
-2. flutter run -d windows --dart-define=serviceType=barricade --dart-define=serverType=firebase
+2. build 디렉토리에 
+
+packages/Microsoft.Windows.CppWinRT.2.0.220418.1 를 copy 한다.
+검색 창에 Microsoft.Windows.CppWinRT를 입력하고 검색합니다.
+검색 결과에서 Microsoft.Windows.CppWinRT 패키지를 클릭합니다.
+Versions tab 을 클릭해서, 2.0.220418.1  과  2.0.210806.1  버전을 다운로드 받는다.
+.nupkg 파일의 확장자를 .zip으로 변경하고 압축을 푼다.
+폴더명을  Microsoft.Windows.CppWinRT.2.0.210806.1  과   Microsoft.Windows.CppWinRT.2.0.220418.1 로 바꾼다.
+
+windows\flutter\ephemeral\.plugin_symlinks\permition_handler_windows\windows\CMakeLists.txt  파일과
+windows\flutter\ephemeral\.plugin_symlinks\geolocator_windows\windows\CMakeLists.txt  파일에서
+
+# execute_process(COMMAND
+#     ${NUGET} install Microsoft.Windows.CppWinRT -Version ${CPPWINRT_VERSION} -OutputDirectory packages
+#     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+#     RESULT_VARIABLE ret)
+# if (NOT ret EQUAL 0)
+#     message(FATAL_ERROR "Failed to install nuget package Microsoft.Windows.CppWinRT.${CPPWINRT_VERSION}")
+# endif()
+
+위 부분을 주석처리한다.
+
+
+
+3. flutter run -d windows --dart-define=serviceType=barricade --dart-define=serverType=firebase
 

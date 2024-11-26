@@ -200,15 +200,15 @@ class LeftMenuState
       case LeftMenuEnum.Storage:
         return false;
       case LeftMenuEnum.Image:
-        return false;
+        return true;
       case LeftMenuEnum.Video:
         return true;
       case LeftMenuEnum.Text:
-        return false;
+        return true;
       case LeftMenuEnum.Figure:
         return true;
       case LeftMenuEnum.Widget:
-        return false;
+        return true;
       case LeftMenuEnum.Camera:
         return true;
       case LeftMenuEnum.Comment:

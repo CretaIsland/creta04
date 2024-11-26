@@ -1,6 +1,7 @@
 // ignore: avoid_web_libraries_in_flutter
-import 'dart:html' as html;
+//import 'dart:io' if (dart.library.html) 'dart:html' as file_io;
 
+import 'package:creta_common/common/creta_common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:hycop_multi_platform/hycop.dart';
 import 'package:routemaster/routemaster.dart';
@@ -44,7 +45,7 @@ class _GenCollectionsPageState extends State<GenCollectionsPage> {
                 onPressed: () {
                   // print('Generate Collection Json');
                   String jsonStr = genJson();
-                  saveLogToFile(jsonStr, "log.json");
+                  CretaCommonUtils.saveLogToFile(jsonStr, "log.json");
                 },
               ),
               IconButton(
@@ -65,14 +66,14 @@ class _GenCollectionsPageState extends State<GenCollectionsPage> {
   }
 }
 
-void saveLogToFile(String logData, String outFileName, {String folder = "download"}) {
-  final blob = html.Blob([logData]);
-  final url = html.Url.createObjectUrlFromBlob(blob);
-  html.AnchorElement(href: url)
-    ..setAttribute(folder, outFileName)
-    ..click();
-  html.Url.revokeObjectUrl(url);
-}
+// void saveLogToFile1(String logData, String outFileName, {String folder = "download"}) {
+//   final blob = file_io.Blob([logData]);
+//   final url = file_io.Url.createObjectUrlFromBlob(blob);
+//   file_io.AnchorElement(href: url)
+//     ..setAttribute(folder, outFileName)
+//     ..click();
+//   file_io.Url.revokeObjectUrl(url);
+// }
 
 String projectId = '65362b549aa9f85f813d';
 String projectName = 'hycop-example';

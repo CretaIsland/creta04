@@ -1,8 +1,11 @@
 // ignore: avoid_web_libraries_in_flutter
-import 'dart:html';
+//import 'dart:html';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:creta_common/common/creta_font.dart';
+
+import 'package:creta_common/common/save_log_to_file_io.dart'
+    if (dart.library.html) 'package:creta_common/common/save_log_to_file_web.dart' as savelog;
 import 'package:creta04/design_system/text_field/creta_text_field.dart';
 import 'package:creta04/pages/studio/studio_variables.dart';
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
@@ -111,22 +114,25 @@ class _LeftMenuImageState extends State<LeftMenuImage> {
     //   ..download = fileName
     //   ..click();
 
-    http
-        .post(Uri.parse("${CretaAccountManager.getEnterprise!.mediaApiUrl}/downloadAiImg"),
-            headers: {"Content-type": "application/json"},
-            body: jsonEncode(
-                {"userId": myConfig!.serverConfig.storageConnInfo.bucketId, "imgUrl": urlImage}))
-        .then((value) async {
-      final res = jsonDecode(value.body);
-      final imgRes = await http.get(Uri.parse(res["fileView"]));
+    await savelog.downloadImage(urlImage, myConfig!.serverConfig.storageConnInfo.bucketId,
+        CretaAccountManager.getEnterprise!.mediaApiUrl);
 
-      final fileBlob = Blob([imgRes.bodyBytes]);
-      AnchorElement(href: Url.createObjectUrlFromBlob(fileBlob))
-        ..download = "${res["fileName"].toString().split('/').last}.png"
-        ..click();
+    // http
+    //     .post(Uri.parse("${CretaAccountManager.getEnterprise!.mediaApiUrl}/downloadAiImg"),
+    //         headers = {"Content-type": "application/json"},
+    //         body = jsonEncode(
+    //             {"userId": myConfig!.serverConfig.storageConnInfo.bucketId, "imgUrl": urlImage}))
+    //     .then((value) async {
+    //   final res = jsonDecode(value.body);
+    //   final imgRes = await http.get(Uri.parse(res["fileView"]));
 
-      debugPrint(res.body);
-    });
+    //   final fileBlob = Blob([imgRes.bodyBytes]);
+    //   AnchorElement(href: Url.createObjectUrlFromBlob(fileBlob))
+    //     ..download = "${res["fileName"].toString().split('/').last}.png"
+    //     ..click();
+
+    //   debugPrint(res.body);
+    // });
   }
 
   Future<void> storageImage(String urlImage) async {

@@ -312,10 +312,10 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "9cb33429918c48ca0b6be299081202f3a134a3be"
+      resolved-ref: aad5bc663d29da326af0642af536e2a1b5e29015
       url: "https://github.com/CretaIsland/creta_common.git"
     source: git
-    version: "0.1.0"
+    version: "0.1.1"
   creta_studio_io:
     dependency: "direct main"
     description:
@@ -330,10 +330,10 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: b25a007ba65a5e384ab1b2f33d6ec169b6803ee5
+      resolved-ref: "065a609264ef91cb328620fb1da0642152e7d62d"
       url: "https://github.com/CretaIsland/creta_studio_model.git"
     source: git
-    version: "0.1.0"
+    version: "0.1.1"
   creta_user_io:
     dependency: "direct main"
     description:
@@ -1629,7 +1629,7 @@ packages:
     source: hosted
     version: "3.0.1"
   path:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path
       sha256: "087ce49c3f0dc39180befefc60fdb4acd8f8620e5682fe2476afd0b3688bb4af"

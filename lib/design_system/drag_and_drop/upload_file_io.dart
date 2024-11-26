@@ -2,7 +2,7 @@ import 'package:creta_studio_model/model/contents_model.dart';
 import 'package:hycop_multi_platform/common/util/logger.dart';
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:io' as file_io;
-
+import 'package:path/path.dart';
 import 'drop_zone_widget.dart';
 
 extension UploadExt on DropZoneWidgetState {
@@ -10,7 +10,7 @@ extension UploadExt on DropZoneWidgetState {
     // this method is called when user drop the file in drop area in flutter
     //if (kIsWeb) {
     file_io.File file = event as file_io.File;
-    final name = event.path;
+    final name = basename(event.path);
     final mime = await controller.getFileMIME(event);
     final byte = await controller.getFileSize(event);
     final url = await controller.createFileUrl(event);

@@ -1,7 +1,7 @@
 import 'package:creta_studio_model/model/contents_model.dart';
 import 'package:hycop_multi_platform/common/util/logger.dart';
 // ignore: avoid_web_libraries_in_flutter
-import 'dart:html' as file_io;
+import 'dart:html' as html;
 
 import 'drop_zone_widget.dart';
 
@@ -9,7 +9,7 @@ extension UploadExt on DropZoneWidgetState {
   Future<ContentsModel> uploadedFile(dynamic event, String bookMid) async {
     // this method is called when user drop the file in drop area in flutter
     //if (kIsWeb) {
-    file_io.File file = event as file_io.File;
+    html.File file = event as html.File;
     final name = event.name;
     final mime = await controller.getFileMIME(event);
     final byte = await controller.getFileSize(event);

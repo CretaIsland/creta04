@@ -2,7 +2,9 @@
 
 import 'dart:async';
 import 'dart:typed_data';
-import 'dart:html' as html;
+//import 'dart:html' as html;
+//import 'dart:io' if (dart.library.html) 'dart:html' as file_io;
+
 import 'dart:ui' as ui;
 
 import 'package:creta_studio_io/data_io/base_contents_manager.dart';
@@ -17,6 +19,7 @@ import 'package:creta_studio_model/model/contents_model.dart';
 import 'package:creta_common/model/creta_model.dart';
 import 'package:creta_studio_model/model/frame_model.dart';
 import 'package:creta_studio_model/model/page_model.dart';
+import '../design_system/uploading_popup.dart';
 import '../pages/studio/book_main_page.dart';
 import '../pages/studio/containees/containee_nofifier.dart';
 import '../pages/studio/left_menu/depot/depot_display.dart';
@@ -24,7 +27,6 @@ import '../pages/studio/left_menu/left_menu_page.dart';
 //import '../pages/studio/left_menu/music/music_player_frame.dart';  // hycop_multi_platform 에서 제외됨
 import '../pages/studio/studio_constant.dart';
 import '../pages/studio/studio_getx_controller.dart';
-import '../pages/studio/studio_snippet.dart';
 import '../pages/studio/studio_variables.dart';
 import '../player/creta_abs_player.dart';
 import '../player/creta_play_manager.dart';
@@ -1157,10 +1159,16 @@ class ContentsManager extends BaseContentsManager {
             isResizeFrame: isResizeFrame);
       } else if (contentsModel.contentsType == ContentsType.video) {
         contentsManager.setIsVideoResize(isResizeFrame);
-        await _videoProcess(contentsManager, contentsModel, isResizeFrame: isResizeFrame);
+        await _videoProcess(
+          contentsManager,
+          contentsModel,
+        );
       } else if (contentsModel.contentsType == ContentsType.pdf) {
         frameModel.frameType = FrameType.text;
-        await _uploadProcess(contentsManager, contentsModel, isResizeFrame: isResizeFrame);
+        await _uploadProcess(
+          contentsManager,
+          contentsModel,
+        );
       } else if (contentsModel.contentsType == ContentsType.music) {
         Size musicFrameSize = StudioConst.musicPlayerSize[0];
 
@@ -1183,23 +1191,6 @@ class ContentsManager extends BaseContentsManager {
         await _uploadProcess(
           contentsManager,
           contentsModel,
-          isResizeFrame: true,
-          // onUploadComplete: onUploadComplete,
-          onUploadComplete: (currentModel) {
-            // hycop_multi_platform 에서 제외됨
-            // if (currentModel.isMusic()) {
-            //   logger.info(
-            //       'Dropping song named ${currentModel.name} with remoteUrl ${currentModel.remoteUrl}');
-
-            //   String mid = contentsManager.frameModel.mid;
-            //   GlobalObjectKey<MusicPlayerFrameState>? musicKey = BookMainPage.musicKeyMap[mid];
-            //   if (musicKey != null) {
-            //     musicKey.currentState?.addMusic(currentModel);
-            //   } else {
-            //     logger.info('musicKey is INVALID');
-            //   }
-            // }
-          },
         );
       }
       // 콘텐츠 객체를 DB에 Creta 한다.
@@ -1222,10 +1213,13 @@ class ContentsManager extends BaseContentsManager {
       {required bool isResizeFrame}) async {
     if (contentsModel.file == null) return;
 
-    final reader = html.FileReader();
-    reader.readAsArrayBuffer(contentsModel.file!);
-    await reader.onLoad.first;
-    Uint8List blob = reader.result as Uint8List;
+    // final reader = file_io.FileReader();
+    // reader.readAsArrayBuffer(contentsModel.file!);
+    // await reader.onLoad.first;
+    // Uint8List blob = reader.result as Uint8List;
+    Uint8List? blob = await contentsModel.getBlob();
+    if (blob == null) return;
+
     ui.Image image = await decodeImageFromList(blob);
     // } else if (contentsModel.remoteUrl != null) {
     //   image = await CretaCommonUtils.loadImageFromUrl(contentsModel.remoteUrl!);
@@ -1274,83 +1268,44 @@ class ContentsManager extends BaseContentsManager {
     // 업로드는  async 로 진행한다.
     if (contentsModel.remoteUrl == null || contentsModel.remoteUrl!.isEmpty) {
       // upload 되어 있지 않으므로 업로드한다.
-      StudioSnippet.uploadFile(contentsModel, contentsManager, blob);
+      contentsModel.uploadFile(
+        blob,
+        manager: contentsManager,
+        uploadStartDialog: UploadingPopup.uploadStart,
+        uploadEndDialog: UploadingPopup.uploadEnd,
+      );
+      //StudioSnippet.uploadFile(contentsModel, contentsManager, blob);
     }
 
     return;
   }
 
-  static Future<void> _videoProcess(ContentsManager contentsManager, ContentsModel contentsModel,
-      {required bool isResizeFrame}) async {
+  static Future<void> _videoProcess(
+    ContentsManager contentsManager,
+    ContentsModel contentsModel,
+  ) async {
     //dropdown 하는 순간에 이미 플레이되고 있는 video 가 있다면, 정지시켜야 한다.
     //contentsManager.pause();
 
-    if (contentsModel.file != null) {
-      //bool uploadComplete = false;
-      html.FileReader fileReader = html.FileReader();
-      fileReader.onLoadEnd.listen((event) async {
-        logger.fine('upload waiting ...............${contentsModel.name}');
-        StudioSnippet.uploadFile(
-          contentsModel,
-          contentsManager,
-          fileReader.result as Uint8List,
-        );
-        fileReader = html.FileReader(); // file reader 초기화
-        //uploadComplete = true;
-        logger.fine('upload complete');
-      });
+    contentsModel.upload(
+        manager: contentsManager,
+        uploadStartDialog: UploadingPopup.uploadStart,
+        uploadEndDialog: UploadingPopup.uploadEnd);
 
-      // while (uploadComplete) {
-      //   await Future.delayed(const Duration(milliseconds: 100));
-      // }
-
-      fileReader.onError.listen((err) {
-        logger.severe('message: ${err.toString()}');
-      });
-
-      fileReader.readAsArrayBuffer(contentsModel.file!);
-      return;
-    }
     // 이미 remoteUrl 에 값이 있는 경우는 아무것도 하지않아도 된다.
   }
 
-  static Future<void> _uploadProcess(ContentsManager contentsManager, ContentsModel contentsModel,
-      {required bool isResizeFrame, void Function(ContentsModel)? onUploadComplete}) async {
+  static Future<void> _uploadProcess(
+    ContentsManager contentsManager,
+    ContentsModel contentsModel,
+  ) async {
     //dropdown 하는 순간에 이미 플레이되고 있는 video 가 있다면, 정지시켜야 한다.
     //contentsManager.pause();
 
-    if (contentsModel.file == null) {
-      return;
-    }
-
-    //bool uploadComplete = false;
-    html.FileReader fileReader = html.FileReader();
-    fileReader.onLoadEnd.listen((event) async {
-      logger.fine('upload waiting ...............${contentsModel.name}');
-      StudioSnippet.uploadFile(
-        contentsModel,
-        contentsManager,
-        fileReader.result as Uint8List,
-      ).then((value) {
-        onUploadComplete?.call(contentsModel);
-        return null;
-      });
-      //
-      fileReader = html.FileReader(); // file reader 초기화
-      //uploadComplete = true;
-      logger.fine('upload complete ${contentsModel.remoteUrl!}');
-    });
-
-    // while (uploadComplete) {
-    //   await Future.delayed(const Duration(milliseconds: 100));
-    // }
-
-    fileReader.onError.listen((err) {
-      logger.severe('message: ${err.toString()}');
-    });
-
-    fileReader.readAsArrayBuffer(contentsModel.file!);
-    return;
+    contentsModel.upload(
+        manager: contentsManager,
+        uploadStartDialog: UploadingPopup.uploadStart,
+        uploadEndDialog: UploadingPopup.uploadEnd);
   }
 
   Future<int> _getAllLinks() async {

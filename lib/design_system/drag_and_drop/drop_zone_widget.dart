@@ -1,6 +1,6 @@
 //import 'package:flutter/cupertino.dart';
 // ignore: avoid_web_libraries_in_flutter
-import 'upload_file_io.dart' if (dart.library.html) 'upload_file_web.dart' as upload_utils;
+import 'upload_file_io.dart' if (dart.library.html) 'upload_file_web.dart';
 
 import 'package:creta04/design_system/uploading_popup.dart';
 import 'package:flutter/foundation.dart';

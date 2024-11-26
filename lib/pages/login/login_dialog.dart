@@ -1440,7 +1440,7 @@ class _LoginDialogState extends State<LoginDialog> {
                   style: CretaFont.titleLarge.copyWith(color: CretaColor.text[700]),
                 ),
                 Text(
-                  (kDebugMode) ? '  for ${ServerType.appwrite.name}' : '',
+                  (kDebugMode) ? '  for ${HycopFactory.serverType.name}' : '',
                   style: CretaFont.titleLarge.copyWith(color: CretaColor.text[200]),
                 ),
               ],

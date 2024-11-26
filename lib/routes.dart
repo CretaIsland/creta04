@@ -1,8 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 // ignore: avoid_web_libraries_in_flutter
-import 'dart:html';
+//import 'dart:html';
 //import 'package:appflowy_editor/appflowy_editor.dart';
 //import 'package:creta_studio_model/model/contents_model.dart';
+import 'package:creta_common/common/save_log_to_file_io.dart'
+    if (dart.library.html) 'package:creta_common/common/save_log_to_file_web.dart' as savelog;
+
 import 'package:creta04/pages/landing_page.dart';
 import 'package:creta04/pages/mypage/mypage.dart';
 import 'package:creta04/pages/privacy_policy_page.dart';
@@ -72,25 +75,14 @@ abstract class AppRoutes {
   }
 
   static String getFirstPath() {
-    Uri uri = Uri.parse(window.location.href);
-    // URL의 경로 세그먼트를 가져옵니다.
-    List<String> pathSegments = uri.pathSegments;
-    // 첫 번째 디렉토리 이름을 반환합니다. 경로가 없거나 첫 번째 디렉토리가 없는 경우 빈 문자열을 반환합니다.
-    return pathSegments.isNotEmpty ? pathSegments[0] : '';
+    return savelog.getFirstPath();
   }
 
   static String getFirstTokenBeforeDot() {
     if (firstAddress.isNotEmpty) {
       return firstAddress;
     }
-    Uri uri = Uri.parse(window.location.href);
-    String host = uri.host;
-    int dotIndex = host.indexOf('.');
-    if (dotIndex != -1) {
-      firstAddress = host.substring(0, dotIndex);
-      return firstAddress;
-    }
-    return ''; // 점이 없는 경우 빈 문자열을 반환합니다.
+    return savelog.getFirstTokenBeforeDot(); // 점이 없는 경우 빈 문자열을 반환합니다.
   }
 
   static bool isSpecialCustomer({String? customer}) {

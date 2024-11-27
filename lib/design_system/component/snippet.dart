@@ -1230,7 +1230,7 @@ class Snippet {
   static void setFont(LanguageType language) {
     switch (language) {
       case LanguageType.japanese:
-        CretaFont.resetFont(family: 'NotoSerifJP');
+        CretaFont.resetFont(family: 'NotoSansJP');
         break;
       default:
         CretaFont.resetFont(family: 'Pretendard');

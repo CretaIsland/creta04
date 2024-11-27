@@ -309,7 +309,7 @@ class StudioConst {
   static Map<String, List<int>> fontWeightListMap = {
     'NotoSans': [100, 200, 300, 400, 500, 600, 700, 800, 900],
     'Pretendard': [100, 200, 300, 400, 500, 600, 700, 800, 900],
-    'NotoSerifJP': [200, 300, 400, 500, 600, 700, 900],
+    'NotoSansJP': [100, 300, 400, 500, 700, 900],
     'NanumMyeongjo': [400, 700, 800],
     'Jua': [400],
     'NanumGothic': [400, 700, 800],

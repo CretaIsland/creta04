@@ -460,6 +460,7 @@ class FrameManager extends BaseFrameManager {
       Color? bgColor1,
       FrameType? type,
       int? subType,
+      double? opacity,
       ShapeType? shape}) async {
     size ??= CretaVars.instance.defaultSize();
     pos ??= Offset.zero;
@@ -481,6 +482,9 @@ class FrameManager extends BaseFrameManager {
     }
     if (shape != null) {
       defaultFrame.shape.set(shape, save: false, noUndo: true);
+    }
+    if (opacity != null) {
+      defaultFrame.opacity.set(opacity, save: false, noUndo: true);
     }
 
     if (!hasMainFrame()) {
@@ -1361,7 +1365,8 @@ class FrameManager extends BaseFrameManager {
     FrameModel frameModel = await createNextFrame(
       pos: pos,
       size: size,
-      bgColor1: Colors.transparent,
+      bgColor1: Colors.white,
+      opacity: 0.0,
       type: FrameType.text,
     );
     //print('2------------------------------------------');

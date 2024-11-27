@@ -241,7 +241,7 @@ class _ContentsOrderedListState extends State<ContentsOrderedList> with Property
                         onComplete: () async {
                           // order 의 변경을 _currentOrder 에도 적용한다.
                           widget.contentsManager.reOrdering();
-                            // hycop_multi_platform 에서 제외됨
+                          // hycop_multi_platform 에서 제외됨
                           // if (model != null && model.isMusic()) {
                           //   String frameId = _frameModel.mid;
                           //   GlobalObjectKey<MusicPlayerFrameState>? musicKey =
@@ -280,7 +280,7 @@ class _ContentsOrderedListState extends State<ContentsOrderedList> with Property
   Widget _itemWidget(int index, List<CretaModel> items) {
     ContentsModel model = items[index] as ContentsModel;
 
-    //('orderedList=${model.name}, ${model.isRemoved.value}');
+    //print('orderedList=${model.name}, ${model.order.value}');
 
     String? uri = model.thumbnailUrl;
     if (uri != null && uri.isEmpty) {

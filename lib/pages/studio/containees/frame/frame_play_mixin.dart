@@ -495,7 +495,8 @@ mixin FramePlayMixin {
       doNotify: false,
       size: Size(width, height),
       pos: Offset(x, y),
-      bgColor1: Colors.transparent,
+      bgColor1: Colors.white,
+      opacity: 0.0,
       type: FrameType.text,
     );
     ContentsModel model = ContentsModel.text(

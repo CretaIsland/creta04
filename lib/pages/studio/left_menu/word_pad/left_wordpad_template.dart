@@ -90,6 +90,7 @@ class _LeftWordPadTemplate extends State<LeftWordPadTemplate>
       size: Size(width, height),
       pos: Offset(x, y),
       bgColor1: Colors.white,
+      opacity: 0.0,
       type: FrameType.text,
     );
     ContentsModel model = await _createTextContent(frameModel.mid, frameModel.realTimeKey);

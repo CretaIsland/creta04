@@ -312,7 +312,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: aad5bc663d29da326af0642af536e2a1b5e29015
+      resolved-ref: "1325c6a5c1cf6a419172f0e28354316a55ca1bf7"
       url: "https://github.com/CretaIsland/creta_common.git"
     source: git
     version: "0.1.1"
@@ -330,7 +330,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "065a609264ef91cb328620fb1da0642152e7d62d"
+      resolved-ref: "523ca1dde0e935299464c35eb7270e09422debed"
       url: "https://github.com/CretaIsland/creta_studio_model.git"
     source: git
     version: "0.1.1"

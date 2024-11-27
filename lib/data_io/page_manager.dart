@@ -1339,4 +1339,23 @@ class PageManager extends BasePageManager {
       },
     );
   }
+
+  bool isMainFrameHasContents() {
+    if (getAvailLength() == 0) {
+      return false;
+    }
+    for (var pageModel in modelList) {
+      if (pageModel.isRemoved.value == true) {
+        continue;
+      }
+      FrameManager? frameManager = findFrameManager(pageModel.mid);
+      if (frameManager == null) {
+        continue;
+      }
+      if (frameManager.isMainFrameHasContents() == false) {
+        return false;
+      }
+    }
+    return true;
+  }
 }

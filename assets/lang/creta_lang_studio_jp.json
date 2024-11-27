@@ -621,5 +621,8 @@
     "whereToLink": "リンクされたコンテンツ",
     "tooltipPin": "ページ固定",
     "tooltipRolling": "ページローリング",
+    "NoContentsInMainFrame": "メインフレームにはコンテンツがありません。",
+    "MainFrameShouldHaveContents": "メインフレームにはコンテンツが必要です。",
+    "TryAgainAfterInsertContentsInEmptyMainFrame": "メインフレームにコンテンツを挿入してからもう一度お試しください。",
     "end": "End"
 }

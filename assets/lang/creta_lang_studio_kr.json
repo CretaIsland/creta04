@@ -616,5 +616,8 @@
   "whereToLink": "링크된 콘텐츠",
   "tooltipPin": "페이지 고정",
   "tooltipRolling": "페이지 롤링",
+  "NoContentsInMainFrame": "콘텐츠가 없는 메인 프레임이 있습니다",
+  "MainFrameShouldHaveContents": "메인 프레임에는 적어도 하나 이상의 콘텐츠가 들어있어야 합니다.",
+  "TryAgainAfterInsertContentsInEmptyMainFrame": "메인 프레임에 콘텐츠를 넣고 다시 시도하시기 바랍니다.",
   "end": "End"
 }

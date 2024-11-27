@@ -616,6 +616,8 @@
   "whereToLink": "Linked content",
   "tooltipPin": "Pin",
   "tooltipRolling": "Rolling",
-
+  "NoContentsInMainFrame": "There is no content in the main frame.",
+  "MainFrameShouldHaveContents": "There must be at least one content in the main frame.",
+  "TryAgainAfterInsertContentsInEmptyMainFrame": "Please try again after inserting content into the empty main frame.",
   "end": "End"
 }

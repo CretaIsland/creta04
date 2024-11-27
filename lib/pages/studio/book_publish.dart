@@ -23,6 +23,7 @@ import '../../design_system/component/hash_tag_wrapper.dart';
 import '../../design_system/component/snippet.dart';
 import 'package:creta_common/common/creta_color.dart';
 import 'package:creta_common/common/creta_font.dart';
+import '../../design_system/dialog/creta_alert_dialog.dart';
 import '../../design_system/menu/creta_drop_down_button.dart';
 import '../../design_system/text_field/creta_text_field.dart';
 import 'package:creta_common/lang/creta_lang.dart';
@@ -280,6 +281,34 @@ class _BookPublishDialogState extends State<BookPublishDialog> with BookInfoMixi
   Widget build(BuildContext context) {
     if (currentStep > totalSteps) {
       Navigator.of(context).pop();
+    }
+
+    if (BookMainPage.pageManagerHolder!.isMainFrameHasContents() == false) {
+      return CretaAlertDialog(
+        hasCancelButton: false,
+        height: 400,
+        title: "Main Frame should have contents",
+        padding: const EdgeInsets.only(left: 20, right: 20),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(CretaStudioLang['NoContentsInMainFrame'] ?? "콘텐츠가 없는 메인 프레임이 있습니다",
+                style: CretaFont.titleLarge.copyWith(height: 1.5)),
+            const SizedBox(height: 10),
+            Text(
+                CretaStudioLang['MainFrameShouldHaveContents'] ??
+                    "메인 프레임에는 적어도 하나 이상의 콘텐츠가 들어있어야 합니다.",
+                style: CretaFont.titleLarge.copyWith(height: 1.5)),
+            Text(
+                CretaStudioLang['TryAgainAfterInsertContentsInEmptyMainFrame'] ??
+                    "메인 프레임에 콘텐츠를 넣고 다시 시도하시기 바랍니다.",
+                style: CretaFont.titleLarge.copyWith(height: 1.5)),
+          ],
+        ),
+        onPressedOK: () {
+          Navigator.of(context).pop();
+        },
+      );
     }
 
     return Dialog(

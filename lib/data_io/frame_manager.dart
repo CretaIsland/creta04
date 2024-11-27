@@ -1392,4 +1392,19 @@ class FrameManager extends BaseFrameManager {
 
     MiniMenu.setShowFrame(false); //  프레임이 아닌 콘텐츠가 선택되도록 하기 위해.
   }
+
+  bool isMainFrameHasContents() {
+    FrameModel? mainFrame = getMainFrame();
+    if (mainFrame == null) {
+      return false;
+    }
+    ContentsManager? contentsManager = findContentsManager(mainFrame);
+    if (contentsManager == null) {
+      return false;
+    }
+    if (contentsManager.getAvailLength() == 0) {
+      return false;
+    }
+    return true;
+  }
 }

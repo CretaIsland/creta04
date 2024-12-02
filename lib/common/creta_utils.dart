@@ -8,10 +8,10 @@
 import 'dart:convert';
 
 import 'package:creta_common/common/creta_common_utils.dart';
+import 'package:creta_common/common/creta_platform_dep_utils.dart' as utils;
 import 'package:creta_common/common/creta_vars.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:http/browser_client.dart';
 import 'package:hycop_multi_platform/hycop.dart';
 //import 'package:image/image.dart' as img;
 
@@ -201,59 +201,59 @@ class CretaUtils {
     return SystemMouseCursors.basic;
   }
 
-  static Future<http.Response?> post(
-    String url,
-    Map<String, dynamic> body, {
-    void Function(String code)? onError,
-    void Function(String code)? onException,
-  }) async {
-    String jsonString = '{\n';
-    int count = 0;
-    for (var ele in body.entries) {
-      if (count > 0) {
-        jsonString += ',\n';
-      }
-      jsonString += '"${ele.key}": ${ele.value}';
-      count++;
-    }
-    jsonString += '\n}';
+  // static Future<http.Response?> post(
+  //   String url,
+  //   Map<String, dynamic> body, {
+  //   void Function(String code)? onError,
+  //   void Function(String code)? onException,
+  // }) async {
+  //   String jsonString = '{\n';
+  //   int count = 0;
+  //   for (var ele in body.entries) {
+  //     if (count > 0) {
+  //       jsonString += ',\n';
+  //     }
+  //     jsonString += '"${ele.key}": ${ele.value}';
+  //     count++;
+  //   }
+  //   jsonString += '\n}';
 
-    //String encodedJson = base64Encode(utf8.encode(jsonString));
+  //   //String encodedJson = base64Encode(utf8.encode(jsonString));
 
-    //print(jsonString);
+  //   //print(jsonString);
 
-    try {
-      http.Client client = http.Client();
-      if (client is BrowserClient) {
-        client.withCredentials = true;
-      }
-      // HTTP POST 요청 수행
-      http.Response response = await client.post(
-        Uri.parse(url),
-        headers: {
-          'Content-Type': 'application/json',
-          // 추가적인 헤더를 설정할 수 있습니다.
-        },
-        body: jsonString, //encodedJson, //jsonString,
-      );
-      if (response.statusCode != 200) {
-        // 에러 처리
-        logger.severe('$url Failed to send data');
-        logger.severe('Status code: ${response.statusCode}');
-        onError?.call('${response.statusCode}');
-        return null;
-      }
+  //   try {
+  //     http.Client client = http.Client();
+  //     if (client is BrowserClient) {
+  //       client.withCredentials = true;
+  //     }
+  //     // HTTP POST 요청 수행
+  //     http.Response response = await client.post(
+  //       Uri.parse(url),
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         // 추가적인 헤더를 설정할 수 있습니다.
+  //       },
+  //       body: jsonString, //encodedJson, //jsonString,
+  //     );
+  //     if (response.statusCode != 200) {
+  //       // 에러 처리
+  //       logger.severe('$url Failed to send data');
+  //       logger.severe('Status code: ${response.statusCode}');
+  //       onError?.call('${response.statusCode}');
+  //       return null;
+  //     }
 
-      logger.fine('pos $url succeed');
-      return response;
-    } catch (e) {
-      // 예외 처리
-      logger.severe('$url Failed to send data');
-      logger.severe('An error occurred: $e');
-      onException?.call('$e');
-      return null;
-    }
-  }
+  //     logger.fine('pos $url succeed');
+  //     return response;
+  //   } catch (e) {
+  //     // 예외 처리
+  //     logger.severe('$url Failed to send data');
+  //     logger.severe('An error occurred: $e');
+  //     onException?.call('$e');
+  //     return null;
+  //   }
+  // }
 
   static Future<bool> inviteBook(
       BuildContext context, String email, String bookMid, String bookName, String userName) async {
@@ -272,7 +272,7 @@ class CretaUtils {
       "emailOption": option,
     };
 
-    http.Response? res = await CretaUtils.post(url, body, onError: (code) {
+    http.Response? res = await utils.post(url, body, onError: (code) {
       showSnackBar(context, '${CretaStudioLang['inviteEmailFailed']!}($code)');
     }, onException: (e) {
       showSnackBar(context, '${CretaStudioLang['inviteEmailFailed']!}($e)');
@@ -302,7 +302,7 @@ class CretaUtils {
       "emailOption": option,
     };
 
-    http.Response? res = await CretaUtils.post(url, body, onError: (code) {
+    http.Response? res = await utils.post(url, body, onError: (code) {
       showSnackBar(context, '${CretaStudioLang['inviteEmailFailed']!}($code)');
     }, onException: (e) {
       showSnackBar(context, '${CretaStudioLang['inviteEmailFailed']!}($e)');
@@ -339,7 +339,7 @@ class CretaUtils {
       "emailOption": option,
     };
 
-    http.Response? res = await CretaUtils.post(url, body, onError: (code) {
+    http.Response? res = await utils.post(url, body, onError: (code) {
       //showSnackBar(context, '${CretaStudioLang['inviteEmailFailed']!}($code)');
       logger.severe('${CretaStudioLang['inviteEmailFailed']!}($code)');
     }, onException: (e) {
@@ -379,7 +379,7 @@ class CretaUtils {
       "emailOption": option,
     };
 
-    http.Response? res = await CretaUtils.post(url, body, onError: (code) {
+    http.Response? res = await utils.post(url, body, onError: (code) {
       //showSnackBar(context, '${CretaStudioLang['inviteEmailFailed']!}($code)');
     }, onException: (e) {
       //showSnackBar(context, '${CretaStudioLang['inviteEmailFailed']!}($e)');
@@ -422,7 +422,7 @@ class CretaUtils {
       "emailOption": option,
     };
 
-    http.Response? res = await CretaUtils.post(url, body, onError: (code) {
+    http.Response? res = await utils.post(url, body, onError: (code) {
       //showSnackBar(context, '${CretaStudioLang['inviteEmailFailed']!}($code)');
     }, onException: (e) {
       //showSnackBar(context, '${CretaStudioLang['inviteEmailFailed']!}($e)');

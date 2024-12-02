@@ -1142,7 +1142,7 @@ class PageManager extends BasePageManager {
       notify();
     }
     LinkManager.deleteLinkReferenceMe('page', model.mid);
-    BookMainPage.containeeNotifier!.set(ContaineeEnum.Page);
+    BookMainPage.containeeNotifier?.set(ContaineeEnum.Page);
     LeftMenuPage.treeInvalidate();
 
     //mychangeStack.startTrans();

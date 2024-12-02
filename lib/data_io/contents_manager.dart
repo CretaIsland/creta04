@@ -587,7 +587,7 @@ class ContentsManager extends BaseContentsManager {
         // frame 을 지운다.
         //await frameManager.removeSelected(context);  <<-- _removeContents 안쪽으로 옮김.
       } else {
-        playManager!.next();
+        playManager?.next();
       }
       iamBusy = false;
       return true;
@@ -624,7 +624,7 @@ class ContentsManager extends BaseContentsManager {
       },
     );
 
-    //await setToDB(model);
+    await setToDB(model);
     remove(model);
     //reOrdering();
     //print('remove contents ${model.name}, ${model.mid}');
@@ -642,11 +642,11 @@ class ContentsManager extends BaseContentsManager {
 
     if (getAvailLength() == 0) {
       //print('getVisibleLength is 0');
-      BookMainPage.containeeNotifier!.set(ContaineeEnum.Frame);
-      BookMainPage.containeeNotifier!.notify();
+      BookMainPage.containeeNotifier?.set(ContaineeEnum.Frame);
+      BookMainPage.containeeNotifier?.notify();
       frameManager.notify();
     } else {
-      BookMainPage.containeeNotifier!.notify();
+      BookMainPage.containeeNotifier?.notify();
       LeftMenuPage.treeInvalidate();
       frameManager.notify();
       //print('getVisibleLength is not 0');
@@ -1156,18 +1156,20 @@ class ContentsManager extends BaseContentsManager {
 
       if (contentsModel.contentsType == ContentsType.image) {
         await _imageProcess(pFrameManager, contentsManager, contentsModel, frameModel, pageModel,
-            isResizeFrame: isResizeFrame);
+            isResizeFrame: isResizeFrame, onUploadComplete: onUploadComplete);
       } else if (contentsModel.contentsType == ContentsType.video) {
         contentsManager.setIsVideoResize(isResizeFrame);
         await _videoProcess(
           contentsManager,
           contentsModel,
+          onUploadComplete: onUploadComplete,
         );
       } else if (contentsModel.contentsType == ContentsType.pdf) {
         frameModel.frameType = FrameType.text;
         await _uploadProcess(
           contentsManager,
           contentsModel,
+          onUploadComplete: onUploadComplete,
         );
       } else if (contentsModel.contentsType == ContentsType.music) {
         Size musicFrameSize = StudioConst.musicPlayerSize[0];
@@ -1191,6 +1193,7 @@ class ContentsManager extends BaseContentsManager {
         await _uploadProcess(
           contentsManager,
           contentsModel,
+          onUploadComplete: onUploadComplete,
         );
       }
       // 콘텐츠 객체를 DB에 Creta 한다.
@@ -1210,7 +1213,7 @@ class ContentsManager extends BaseContentsManager {
 
   static Future<void> _imageProcess(FrameManager? pFrameManager, ContentsManager contentsManager,
       ContentsModel contentsModel, FrameModel frameModel, PageModel pageModel,
-      {required bool isResizeFrame}) async {
+      {required bool isResizeFrame, void Function(ContentsModel)? onUploadComplete}) async {
     if (contentsModel.file == null) return;
 
     // final reader = file_io.FileReader();
@@ -1272,7 +1275,11 @@ class ContentsManager extends BaseContentsManager {
         blob,
         manager: contentsManager,
         uploadStartDialog: UploadingPopup.uploadStart,
-        uploadEndDialog: UploadingPopup.uploadEnd,
+        uploadEndDialog: (value) {
+          UploadingPopup.uploadEnd(value);
+          onUploadComplete?.call(contentsModel);
+          contentsManager.sendEventToProperty(contentsModel);
+        },
       );
       //StudioSnippet.uploadFile(contentsModel, contentsManager, blob);
     }
@@ -1280,32 +1287,38 @@ class ContentsManager extends BaseContentsManager {
     return;
   }
 
-  static Future<void> _videoProcess(
-    ContentsManager contentsManager,
-    ContentsModel contentsModel,
-  ) async {
+  static Future<void> _videoProcess(ContentsManager contentsManager, ContentsModel contentsModel,
+      {void Function(ContentsModel)? onUploadComplete}) async {
     //dropdown 하는 순간에 이미 플레이되고 있는 video 가 있다면, 정지시켜야 한다.
     //contentsManager.pause();
 
     contentsModel.upload(
-        manager: contentsManager,
-        uploadStartDialog: UploadingPopup.uploadStart,
-        uploadEndDialog: UploadingPopup.uploadEnd);
+      manager: contentsManager,
+      uploadStartDialog: UploadingPopup.uploadStart,
+      uploadEndDialog: (value) {
+        UploadingPopup.uploadEnd(value);
+        onUploadComplete?.call(contentsModel);
+        contentsManager.sendEventToProperty(contentsModel);
+      },
+    );
 
     // 이미 remoteUrl 에 값이 있는 경우는 아무것도 하지않아도 된다.
   }
 
-  static Future<void> _uploadProcess(
-    ContentsManager contentsManager,
-    ContentsModel contentsModel,
-  ) async {
+  static Future<void> _uploadProcess(ContentsManager contentsManager, ContentsModel contentsModel,
+      {void Function(ContentsModel)? onUploadComplete}) async {
     //dropdown 하는 순간에 이미 플레이되고 있는 video 가 있다면, 정지시켜야 한다.
     //contentsManager.pause();
 
     contentsModel.upload(
-        manager: contentsManager,
-        uploadStartDialog: UploadingPopup.uploadStart,
-        uploadEndDialog: UploadingPopup.uploadEnd);
+      manager: contentsManager,
+      uploadStartDialog: UploadingPopup.uploadStart,
+      uploadEndDialog: (value) {
+        UploadingPopup.uploadEnd(value);
+        onUploadComplete?.call(contentsModel);
+        contentsManager.sendEventToProperty(contentsModel);
+      },
+    );
   }
 
   Future<int> _getAllLinks() async {

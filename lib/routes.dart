@@ -3,8 +3,7 @@
 //import 'dart:html';
 //import 'package:appflowy_editor/appflowy_editor.dart';
 //import 'package:creta_studio_model/model/contents_model.dart';
-import 'package:creta_common/common/save_log_to_file_io.dart'
-    if (dart.library.html) 'package:creta_common/common/save_log_to_file_web.dart' as savelog;
+import 'package:creta_common/common/creta_platform_dep_utils.dart' as utils;
 
 import 'package:creta04/pages/landing_page.dart';
 import 'package:creta04/pages/mypage/mypage.dart';
@@ -75,14 +74,15 @@ abstract class AppRoutes {
   }
 
   static String getFirstPath() {
-    return savelog.getFirstPath();
+    return utils.getFirstPath();
   }
 
   static String getFirstTokenBeforeDot() {
     if (firstAddress.isNotEmpty) {
       return firstAddress;
     }
-    return savelog.getFirstTokenBeforeDot(); // 점이 없는 경우 빈 문자열을 반환합니다.
+    firstAddress = utils.getFirstTokenBeforeDot();
+    return firstAddress; // 점이 없는 경우 빈 문자열을 반환합니다.
   }
 
   static bool isSpecialCustomer({String? customer}) {

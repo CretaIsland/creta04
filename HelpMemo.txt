@@ -366,6 +366,7 @@ windows\flutter\ephemeral\.plugin_symlinks\geolocator_windows\windows\CMakeLists
 위 부분을 주석처리한다.
 
 
+그런데, windows 에서는 관리자권한으로 실행하지 않으면 run 이 안된다!!!
 
-3. flutter run -d windows --dart-define=serviceType=barricade --dart-define=serverType=firebase
+3. flutter run --release -d windows --dart-define=serviceType=barricade --dart-define=serverType=firebase
 

@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:creta_common/common/creta_common_utils.dart';
 
+// skpark temporary blocked
 import 'package:creta_common/common/window_screenshot.dart';
 import '../../../data_io/link_manager.dart';
 import '../../../data_io/page_manager.dart';
@@ -1336,9 +1337,10 @@ class LeftMenuPageState extends State<LeftMenuPage> {
       return;
     }
 
-    // print(
-    //     '_takeAScreenShot(${thumbArea.left.round()},${thumbArea.top.round()},${thumbArea.width.round()},${thumbArea.height.round()} )');
+    //print(
+    //    'takePageScreenShot(${thumbArea.left.round()},${thumbArea.top.round()},${thumbArea.width.round()},${thumbArea.height.round()} )');
 
+    // skpark temporary blocked
     String url = await WindowScreenshot.uploadScreenshot(
       bookId: HycopUtils.midToKey(pageModel.mid),
       offset: thumbArea.topLeft,

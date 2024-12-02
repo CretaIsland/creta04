@@ -426,7 +426,7 @@ class LinkManager extends BaseLinkManager {
     LinkManager? dummyLinkManager = LinkManager('', book.mid, pageModel, frameModel);
     List<AbsExModel>? linkModelList = await dummyLinkManager.getLinkModels(className, classMid);
     if (linkModelList == null) {
-      logger.severe('Failed to find linkModel $classMid');
+      logger.warning('Failed to find linkModel $classMid');
       return false;
     }
 

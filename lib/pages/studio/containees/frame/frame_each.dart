@@ -418,6 +418,7 @@ class FrameEachState extends CretaState<FrameEach> with ContaineeMixin, FramePla
     await ContentsManager.createContents(
         frameManager, contentsModelList, frameModel, widget.pageModel, isResizeFrame: false,
         onUploadComplete: (model) {
+      //print('onUploadComplete ${model.name}');
       // hycop_multi_platform 에서 제외됨
       // if (model.isMusic()) {
       //   GlobalObjectKey<MusicPlayerFrameState>? musicKey =

@@ -130,7 +130,7 @@ mixin FramePlayMixin {
     }
 
     return (model.bgColor1.value == pageModel.bgColor1.value ||
-            model.bgColor1.value == Colors.transparent) &&
+            model.bgColor1.value == Colors.white) &&
         (model.borderWidth.value == 0 || model.borderColor.value == pageModel.bgColor1.value) &&
         (model.isNoShadow());
   }

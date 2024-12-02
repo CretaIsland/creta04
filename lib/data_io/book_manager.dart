@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'package:creta_common/common/creta_common_utils.dart';
+import 'package:creta_common/common/creta_platform_dep_utils.dart' as utils;
 import 'package:creta_common/common/creta_vars.dart';
 import 'package:creta_studio_io/data_io/base_book_manager.dart';
 import 'package:creta_user_io/data_io/creta_manager.dart';
@@ -11,7 +12,7 @@ import 'package:creta_user_io/data_io/creta_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:hycop_multi_platform/hycop.dart';
-import '../common/creta_utils.dart';
+//import '../common/creta_utils.dart';
 import '../design_system/component/tree/src/models/node.dart';
 import 'package:creta_common/lang/creta_lang.dart';
 import '../lang/creta_studio_lang.dart';
@@ -342,7 +343,7 @@ class BookManager extends BaseBookManager {
     //'https://devcreta.com:444/';
     String url = '$apiServer/downloadZip';
 
-    Response? res = await CretaUtils.post(url, body, onError: (code) {
+    Response? res = await utils.post(url, body, onError: (code) {
       showSnackBar(context, '${CretaStudioLang['zipRequestFailed']!}($code)');
     }, onException: (e) {
       showSnackBar(context, '${CretaStudioLang['zipRequestFailed']!}($e)');
@@ -369,7 +370,7 @@ class BookManager extends BaseBookManager {
         "cloudType": '"${HycopFactory.toServerTypeString()}"',
       }; // 'appwrite' or 'firebase'
 
-      Response? res = await CretaUtils.post(url, body, onError: (code) {
+      Response? res = await utils.post(url, body, onError: (code) {
         showSnackBar(context, '1.${CretaStudioLang['zipCompleteFailed']!}($code)');
       }, onException: (e) {
         showSnackBar(context, '2.${CretaStudioLang['zipCompleteFailed']!}($e)');

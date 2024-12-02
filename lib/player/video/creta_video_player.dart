@@ -57,21 +57,25 @@ class CretaVideoPlayer extends CretaAbsPlayer {
       formatHint: VideoFormat.hls,
       videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
     );
-    await wcontroller!.initialize();
+    try {
+      await wcontroller!.initialize();
 
-    //.then((_) {
-    logger.info('initialize complete(${model?.name}, ${acc.getAvailLength()})');
-    if (StudioVariables.isMute == false && model!.mute.value == false) {
-      await wcontroller!.setVolume(model!.volume.value);
-    } else {
-      await wcontroller!.setVolume(0.0);
+      //.then((_) {
+      logger.info('initialize complete(${model?.name}, ${acc.getAvailLength()})');
+      if (StudioVariables.isMute == false && model!.mute.value == false) {
+        await wcontroller!.setVolume(model!.volume.value);
+      } else {
+        await wcontroller!.setVolume(0.0);
+      }
+      model!.aspectRatio.set(wcontroller!.value.aspectRatio, noUndo: true, save: false);
+      model!.videoPlayTime
+          .set(wcontroller!.value.duration.inMilliseconds.toDouble(), noUndo: true, save: false);
+      await wcontroller!.setLooping(false);
+      await wcontroller!.seekTo(Duration.zero); //skpark 2023.11.24 제일앞으로 보낸다.
+      //wcontroller!.timerInterval = 150;
+    } catch (e) {
+      logger.severe('video initialize error : $e');
     }
-    model!.aspectRatio.set(wcontroller!.value.aspectRatio, noUndo: true, save: false);
-    model!.videoPlayTime
-        .set(wcontroller!.value.duration.inMilliseconds.toDouble(), noUndo: true, save: false);
-    await wcontroller!.setLooping(false);
-    await wcontroller!.seekTo(Duration.zero); //skpark 2023.11.24 제일앞으로 보낸다.
-    //wcontroller!.timerInterval = 150;
     wcontroller!.addListener(() {
       //print('addListener');
       if (wcontroller!.value.hasError) {
@@ -303,8 +307,16 @@ class CretaVideoPlayer extends CretaAbsPlayer {
     }
 
     if (shouldBePlay()) {
-      await Future.delayed(const Duration(milliseconds: 149)); // build 할 시간적 여유를 주기 위함이다.
-      await play();
+      bool playSucceed = false;
+      while (!playSucceed) {
+        await Future.delayed(const Duration(milliseconds: 149)); // build 할 시간적 여유를 주기 위함이다.
+        try {
+          await play();
+          playSucceed = true;
+        } catch (e) {
+          logger.severe('playVideoSafe error : $e,');
+        }
+      }
     }
     buttonIdle();
     return;

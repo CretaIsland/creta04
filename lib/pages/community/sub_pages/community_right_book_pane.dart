@@ -7,7 +7,9 @@ import 'package:creta04/model/favorites_model.dart';
 import 'package:creta04/model/subscription_model.dart';
 //import 'package:creta04/pages/community/community_book_page.dart';
 import 'package:flutter/rendering.dart';
-import 'package:universal_html/html.dart';
+//import 'package:universal_html/html.dart';
+import 'package:creta_common/common/creta_platform_dep_utils.dart' as utils;
+
 import 'package:creta04/design_system/buttons/creta_button.dart';
 import 'package:creta04/model/watch_history_model.dart';
 import 'package:flutter/foundation.dart';
@@ -819,11 +821,13 @@ class _CommunityRightBookPaneState extends State<CommunityRightBookPane> {
   void _toggleFullscreen() {
     //setState(() {
     StudioVariables.isFullscreen = !StudioVariables.isFullscreen;
-    if (StudioVariables.isFullscreen) {
-      document.documentElement?.requestFullscreen();
-    } else {
-      document.exitFullscreen();
-    }
+    utils.toggleFullscreen(StudioVariables.isFullscreen);
+
+    // if (StudioVariables.isFullscreen) {
+    //   document.documentElement?.requestFullscreen();
+    // } else {
+    //   document.exitFullscreen();
+    // }
     //});
   }
 

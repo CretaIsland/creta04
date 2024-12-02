@@ -491,6 +491,7 @@ class _ContentsOrderedListState extends State<ContentsOrderedList> with Property
             ),
           if (index >= 0)
             BTN.fill_gray_image_m(
+              tooltip: CretaStudioLang['deleteConTooltip']!,
               buttonSize: lineHeight,
               iconSize: 12,
               //tooltip: CretaStudioLang['tooltipDelete']!,
@@ -502,6 +503,7 @@ class _ContentsOrderedListState extends State<ContentsOrderedList> with Property
                 });
                 widget.contentsManager.removeContents(context, model).then((value) {
                   if (value == true) {
+                    widget.contentsManager.notify();
                     //widget.contentsManager.removeMusic(model);   // hycop_multi_platform 에서 제외됨
                     showSnackBar(context, model.name + CretaLang['contentsDeleted']!);
                   }

@@ -4,8 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:creta_common/common/creta_font.dart';
 
-import 'package:creta_common/common/save_log_to_file_io.dart'
-    if (dart.library.html) 'package:creta_common/common/save_log_to_file_web.dart' as savelog;
+import 'package:creta_common/common/creta_platform_dep_utils.dart' as utils;
 import 'package:creta04/design_system/text_field/creta_text_field.dart';
 import 'package:creta04/pages/studio/studio_variables.dart';
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
@@ -114,7 +113,7 @@ class _LeftMenuImageState extends State<LeftMenuImage> {
     //   ..download = fileName
     //   ..click();
 
-    await savelog.downloadImage(urlImage, myConfig!.serverConfig.storageConnInfo.bucketId,
+    await utils.downloadImage(urlImage, myConfig!.serverConfig.storageConnInfo.bucketId,
         CretaAccountManager.getEnterprise!.mediaApiUrl);
 
     // http

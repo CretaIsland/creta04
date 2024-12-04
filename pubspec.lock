@@ -1246,10 +1246,10 @@ packages:
     dependency: "direct main"
     description:
       name: hycop_multi_platform
-      sha256: dfb8da4125c30186d0c29531f37182b467929cc60fce79b6ee7d2307121c55ee
+      sha256: cf8a7fa6643c10e26bd246811b6494906582e2eaa508c714c72c059bcc179697
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.3"
+    version: "0.6.4"
   id3_codec:
     dependency: "direct main"
     description:

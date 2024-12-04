@@ -302,15 +302,15 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
     List<AbsExModel>? modelList;
     _teams.clear();
     _teamNames.clear();
-    if (AccountManager.currentLoginUser.isSuperUser == false) {
-      // 자기 것만 가져온다.
+    if (AccountManager.currentLoginUser.isSuperUser == true) {
+      // team목록을 미리 모두 가져온다.
       if (CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.teams.isNotEmpty) {
         //print('============= My Team case =============');
         modelList = await TeamManager.teamManagerHolder?.getTeamModelByMid(
             CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.teams);
       }
     } else {
-      // team목록을 미리 모두 가져온다.
+      // 자기 것만 가져온다.
       //print('============= Enterprise Team case =============');
       modelList = await TeamManager.teamManagerHolder
           ?.myDataOnly(CretaAccountManager.userPropertyManagerHolder.userPropertyModel!.enterprise);
@@ -320,6 +320,9 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
       //print('============= Team list fetched = ${modelList.length}');
       for (var ele in modelList) {
         TeamModel model = ele as TeamModel;
+        if (model.isRemoved.value == true) {
+          continue;
+        }
         DeviceMainPage.teamMap[model.name] = model;
         _teams.add(model.mid);
         _teamNames[model.mid] = model.name;
@@ -1303,6 +1306,7 @@ class _DeviceMainPageState extends State<DeviceMainPage> with CretaBasicLayoutMi
           _currentTeams?.clear();
           _currentTeams = [team];
           hostManagerHolder!.initTeamStream(_currentTeams!);
+          onModelFiltered?.call();
         },
       );
     }).toList();

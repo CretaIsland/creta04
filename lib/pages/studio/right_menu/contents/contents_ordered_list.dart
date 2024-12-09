@@ -503,7 +503,19 @@ class _ContentsOrderedListState extends State<ContentsOrderedList> with Property
                 });
                 widget.contentsManager.removeContents(context, model).then((value) {
                   if (value == true) {
+                    //widget.contentsManager.notify();
+                    widget.contentsManager.reOrdering();
                     widget.contentsManager.notify();
+                    // hycop_multi_platform 에서 제외됨
+                    // if (model != null && model.isMusic()) {
+                    //   String frameId = _frameModel.mid;
+                    //   GlobalObjectKey<MusicPlayerFrameState>? musicKey =
+                    //       BookMainPage.musicKeyMap[frameId];
+                    //   musicKey.currentState?.reorderPlaylist(model, oldIndex, newIndex);
+                    // }
+                    LeftMenuPage.treeInvalidate();
+                    LeftMenuPage.initTreeNodes();
+
                     //widget.contentsManager.removeMusic(model);   // hycop_multi_platform 에서 제외됨
                     showSnackBar(context, model.name + CretaLang['contentsDeleted']!);
                   }
